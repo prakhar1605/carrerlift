@@ -587,30 +587,30 @@
     }
 
     .research-areas {
-      background: var(--bg-gray);
-      padding: 12px;
-      border-radius: 4px;
+      background: #f8f9fa;
+      padding: 16px;
+      border-radius: 6px;
       margin-bottom: 16px;
-      max-height: 200px;
+      max-height: 300px;
       overflow-y: auto;
+      border: 1px solid #e0e0e0;
     }
 
     .research-areas-title {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
-      color: var(--text-muted);
-      margin-bottom: 8px;
+      color: var(--primary);
+      margin-bottom: 12px;
       text-transform: uppercase;
-      position: sticky;
-      top: 0;
-      background: var(--bg-gray);
-      padding-bottom: 4px;
+      letter-spacing: 0.5px;
     }
 
     .research-areas-content {
       font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.6;
+      color: var(--text-primary);
+      line-height: 1.7;
+      word-wrap: break-word;
+      white-space: pre-wrap;
     }
 
     /* Empty State */
@@ -1294,9 +1294,9 @@
         .map(x => x[0]);
     }
 
-    // Helper to get research areas field (handles different column names)
+    // Helper to get research areas field
     function getResearchAreas(prof) {
-      return prof['Area of Interest'] || prof['Area of interest'] || prof['Research Areas'] || '';
+      return prof['Area of Interest'] || '';
     }
 
     // Score item based on keywords
@@ -1335,39 +1335,12 @@
       return score;
     }
 
-    // Call AI API with context awareness
+    // Call AI API
     async function analyzeResume(resumeText, context = 'jobs') {
-      const prompt = context === 'jobs' 
-        ? `Please analyze this resume and provide:
-
-1. KEY SKILLS: List the main technical and soft skills
-2. EXPERIENCE LEVEL: Junior/Mid/Senior and domain
-3. TOP JOB ROLES: 3-5 best-fit positions based on skills
-4. KEYWORDS: Extract 20-30 important technical keywords from the resume
-
-Resume:
-${resumeText.slice(0, 3500)}
-
-Keep your response clear, structured, and under 400 words.`
-        : `Please analyze this resume for research opportunities and provide:
-
-1. KEY SKILLS: List the main technical and research skills
-2. ACADEMIC LEVEL: BTech/MTech/PhD and specialization
-3. RESEARCH INTERESTS: What research areas match this candidate's background
-4. KEYWORDS: Extract 20-30 important technical/research keywords from the resume
-
-Resume:
-${resumeText.slice(0, 3500)}
-
-Keep your response clear, structured, and under 400 words.`;
-
       const response = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          resume: resumeText,
-          prompt: prompt 
-        })
+        body: JSON.stringify({ resume: resumeText })
       });
       
       if (!response.ok) {
@@ -1511,8 +1484,8 @@ Keep your response clear, structured, and under 400 words.`;
         const score = matchScores[key] || 0;
         const isMatched = score > 0;
         
-        // Get research areas - handle different possible column names
-        const researchAreas = prof['Area of Interest'] || prof['Area of interest'] || prof['Research Areas'] || '';
+        // Debug: log what we have
+        console.log('Professor:', prof.Name, 'Area of Interest:', prof['Area of Interest'] ? 'YES ✓' : 'NO ✗');
         
         return `
           <div class="professor-card ${isMatched ? 'matched' : ''}">
@@ -1525,18 +1498,16 @@ Keep your response clear, structured, and under 400 words.`;
               ${isMatched ? `<div class="match-score"><i class="fas fa-check-circle"></i> ${Math.round(score)}% Match</div>` : ''}
             </div>
             
-            ${researchAreas ? `
-              <div class="research-areas">
-                <div class="research-areas-title">Research Areas</div>
-                <div class="research-areas-content">
-                  ${researchAreas}
-                </div>
+            <div class="research-areas">
+              <div class="research-areas-title"><i class="fas fa-microscope"></i> Research Areas</div>
+              <div class="research-areas-content">
+                ${prof['Area of Interest'] || 'No research areas listed'}
               </div>
-            ` : ''}
+            </div>
             
             <div class="job-actions">
-              ${prof['Mail id'] || prof['Email'] ? `
-                <a href="mailto:${prof['Mail id'] || prof['Email']}" class="btn-apply">
+              ${prof['Mail id'] ? `
+                <a href="mailto:${prof['Mail id']}" class="btn-apply">
                   <i class="fas fa-envelope"></i> Email Professor
                 </a>
               ` : ''}
@@ -1621,8 +1592,7 @@ Keep your response clear, structured, and under 400 words.`;
       const department = elements.profDepartmentFilter.value;
       
       let filtered = allProfessors.filter(prof => {
-        const researchAreas = prof['Area of Interest'] || prof['Area of interest'] || prof['Research Areas'] || '';
-        const haystack = `${prof.Name} ${prof['College Name']} ${prof.Department} ${researchAreas}`.toLowerCase();
+        const haystack = `${prof.Name} ${prof['College Name']} ${prof.Department} ${prof['Area of Interest'] || ''}`.toLowerCase();
         const matchesQuery = !query || haystack.includes(query);
         const matchesInstitution = !institution || prof['College Name'] === institution;
         const matchesDepartment = !department || prof.Department === department;
