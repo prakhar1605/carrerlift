@@ -1294,6 +1294,41 @@
         .map(x => x[0]);
     }
 
+    // Helper to get email field - try everything!
+    function getProfessorEmail(prof) {
+      // Try all possible column name variations
+      const possibilities = [
+        'Mail id',
+        'Mail Id',
+        'mail id',
+        'Email',
+        'email',
+        'E-mail',
+        'e-mail',
+        'Contact',
+        'contact'
+      ];
+      
+      for (let key of possibilities) {
+        if (prof[key] && String(prof[key]).includes('@')) {
+          return prof[key];
+        }
+      }
+      
+      // If none found, check if there's a column with "mail" or "email" in the name
+      const keys = Object.keys(prof);
+      for (let key of keys) {
+        const lowerKey = key.toLowerCase();
+        if ((lowerKey.includes('mail') || lowerKey.includes('email') || lowerKey.includes('contact')) 
+            && prof[key] && String(prof[key]).includes('@')) {
+          console.log(`Found email in column: "${key}"`);
+          return prof[key];
+        }
+      }
+      
+      return '';
+    }
+
     // Helper to get research areas field - try everything!
     function getResearchAreas(prof) {
       // Try all possible column name variations
@@ -1514,14 +1549,18 @@
         const score = matchScores[key] || 0;
         const isMatched = score > 0;
         
-        // Use the smart helper function
+        // Use the smart helper functions
         const researchAreas = getResearchAreas(prof);
+        const email = getProfessorEmail(prof);
         
         // Debug: log the actual data for first few professors
         if (sortedProfs.indexOf(prof) < 3) {
-          console.log('Professor:', prof.Name);
+          console.log('===== Professor Debug =====');
+          console.log('Name:', prof.Name);
           console.log('All keys:', Object.keys(prof));
-          console.log('Research areas found:', researchAreas ? 'YES ✓ (' + researchAreas.substring(0, 50) + '...)' : 'NO ✗');
+          console.log('Research areas:', researchAreas ? 'YES ✓ (' + researchAreas.substring(0, 50) + '...)' : 'NO ✗');
+          console.log('Email:', email ? 'YES ✓ (' + email + ')' : 'NO ✗');
+          console.log('========================');
         }
         
         return `
@@ -1543,11 +1582,15 @@
             </div>
             
             <div class="job-actions">
-              ${prof['Mail id'] || prof['Email'] || prof['email'] ? `
-                <a href="mailto:${prof['Mail id'] || prof['Email'] || prof['email']}" class="btn-apply">
+              ${email ? `
+                <a href="mailto:${email}" class="btn-apply">
                   <i class="fas fa-envelope"></i> Email Professor
                 </a>
-              ` : ''}
+              ` : `
+                <button class="btn-apply" style="opacity: 0.5; cursor: not-allowed;" disabled>
+                  <i class="fas fa-envelope"></i> No Email Available
+                </button>
+              `}
             </div>
           </div>
         `;
