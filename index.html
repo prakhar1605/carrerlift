@@ -1296,7 +1296,13 @@
 
     // Helper to get research areas field
     function getResearchAreas(prof) {
-      return prof['Area of Interest'] || '';
+      return prof['Area of Interest'] || 
+             prof['Area of interest'] || 
+             prof['area of interest'] || 
+             prof['Research Areas'] || 
+             prof['Research Area'] ||
+             prof['Area'] ||
+             '';
     }
 
     // Score item based on keywords
@@ -1484,8 +1490,21 @@
         const score = matchScores[key] || 0;
         const isMatched = score > 0;
         
-        // Debug: log what we have
-        console.log('Professor:', prof.Name, 'Area of Interest:', prof['Area of Interest'] ? 'YES ✓' : 'NO ✗');
+        // Try ALL possible column name variations for research areas
+        const researchAreas = prof['Area of Interest'] || 
+                             prof['Area of interest'] || 
+                             prof['area of interest'] || 
+                             prof['Research Areas'] || 
+                             prof['Research Area'] ||
+                             prof['Area'] ||
+                             '';
+        
+        // Debug: log the actual data for first few professors
+        if (sortedProfs.indexOf(prof) < 3) {
+          console.log('Professor:', prof.Name);
+          console.log('All keys:', Object.keys(prof));
+          console.log('Research areas found:', researchAreas ? 'YES ✓ (' + researchAreas.substring(0, 50) + '...)' : 'NO ✗');
+        }
         
         return `
           <div class="professor-card ${isMatched ? 'matched' : ''}">
@@ -1501,13 +1520,13 @@
             <div class="research-areas">
               <div class="research-areas-title"><i class="fas fa-microscope"></i> Research Areas</div>
               <div class="research-areas-content">
-                ${prof['Area of Interest'] || 'No research areas listed'}
+                ${researchAreas || 'No research areas listed'}
               </div>
             </div>
             
             <div class="job-actions">
-              ${prof['Mail id'] ? `
-                <a href="mailto:${prof['Mail id']}" class="btn-apply">
+              ${prof['Mail id'] || prof['Email'] || prof['email'] ? `
+                <a href="mailto:${prof['Mail id'] || prof['Email'] || prof['email']}" class="btn-apply">
                   <i class="fas fa-envelope"></i> Email Professor
                 </a>
               ` : ''}
@@ -1592,7 +1611,8 @@
       const department = elements.profDepartmentFilter.value;
       
       let filtered = allProfessors.filter(prof => {
-        const haystack = `${prof.Name} ${prof['College Name']} ${prof.Department} ${prof['Area of Interest'] || ''}`.toLowerCase();
+        const researchAreas = getResearchAreas(prof);
+        const haystack = `${prof.Name} ${prof['College Name']} ${prof.Department} ${researchAreas}`.toLowerCase();
         const matchesQuery = !query || haystack.includes(query);
         const matchesInstitution = !institution || prof['College Name'] === institution;
         const matchesDepartment = !department || prof.Department === department;
@@ -2026,6 +2046,16 @@
 
         allJobs = jobs;
         allProfessors = professors;
+
+        // DEBUG: Check what columns we actually have
+        console.log('=== PROFESSOR DATA DEBUG ===');
+        console.log('Total professors loaded:', professors.length);
+        if (professors.length > 0) {
+          console.log('Column names:', Object.keys(professors[0]));
+          console.log('First professor full data:', professors[0]);
+          console.log('Area of Interest value:', professors[0]['Area of Interest']);
+        }
+        console.log('=========================');
 
         populateFilters();
         applyJobFilters();
