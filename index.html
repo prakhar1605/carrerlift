@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NeuroHire AI - Next-Gen Hiring Platform</title>
-  <meta name="description" content="AI-powered job matching with semantic resume analysis. Built with LangChain, RAG, and FastAPI." />
+  <title>CareerLift - AI-Powered Jobs & Research Platform</title>
+  <meta name="description" content="Find jobs and research internships with AI-powered resume matching. Connect with 1500+ IIT professors and top companies." />
   
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FRMVZ6H187"></script>
@@ -15,9 +15,8 @@
     gtag('config', 'G-FRMVZ6H187');
   </script>
   
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
   <style>
     * {
       margin: 0;
@@ -26,261 +25,293 @@
     }
 
     :root {
-      /* Dark Theme Colors */
-      --bg-primary: #0A0E27;
-      --bg-secondary: #151932;
-      --bg-card: #1A1F3A;
-      --bg-elevated: #252B47;
-      
-      /* Accent Colors */
-      --accent-cyan: #00D9FF;
-      --accent-purple: #B026FF;
-      --accent-green: #00FF88;
-      --accent-orange: #FF6B35;
-      
-      /* Text Colors */
-      --text-primary: #FFFFFF;
-      --text-secondary: #A0AEC0;
-      --text-muted: #64748B;
-      
-      /* Gradients */
-      --gradient-primary: linear-gradient(135deg, #00D9FF 0%, #B026FF 100%);
-      --gradient-secondary: linear-gradient(135deg, #B026FF 0%, #FF6B35 100%);
-      --gradient-success: linear-gradient(135deg, #00FF88 0%, #00D9FF 100%);
-      
-      /* Effects */
-      --glass-bg: rgba(255, 255, 255, 0.05);
-      --glass-border: rgba(255, 255, 255, 0.1);
-      --shadow-glow: 0 0 20px rgba(0, 217, 255, 0.3);
-      --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+      --primary: #0A66C2;
+      --primary-hover: #004182;
+      --secondary: #378FE9;
+      --success: #057642;
+      --danger: #CC1016;
+      --warning: #F5A623;
+      --text-primary: #000000;
+      --text-secondary: #666666;
+      --text-muted: #9E9E9E;
+      --border: #D9D9D9;
+      --bg-white: #FFFFFF;
+      --bg-gray: #F3F2F0;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 8px rgba(0,0,0,0.1);
+      --shadow-lg: 0 8px 16px rgba(0,0,0,0.12);
     }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg-primary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-gray);
       color: var(--text-primary);
       line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    /* Animated Background */
-    .animated-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      opacity: 0.4;
-      background: 
-        radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(176, 38, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 20%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
     }
 
     /* Header */
     .header {
-      background: rgba(10, 14, 39, 0.8);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--glass-border);
-      padding: 20px 0;
+      background: var(--bg-white);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
       position: sticky;
       top: 0;
       z-index: 100;
+      box-shadow: var(--shadow-sm);
     }
 
     .header-content {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .logo {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 28px;
-      font-weight: 700;
-      background: var(--gradient-primary);
+      font-size: 24px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0A66C2 0%, #378FE9 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       text-decoration: none;
-      letter-spacing: -0.5px;
+      transition: all 0.3s ease;
     }
 
-    .tech-badges {
+    .logo:hover {
+      transform: scale(1.05);
+      filter: brightness(1.2);
+    }
+
+    @media (max-width: 768px) {
+      .logo {
+        font-size: 20px;
+      }
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    /* Tab Navigation */
+    .tab-navigation {
+      background: var(--bg-white);
+      border-bottom: 2px solid var(--border);
+      position: sticky;
+      top: 65px;
+      z-index: 99;
+    }
+
+    .tab-nav-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
       display: flex;
       gap: 8px;
-      flex-wrap: wrap;
     }
 
-    .tech-badge {
-      padding: 6px 12px;
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 20px;
-      font-size: 11px;
+    .tab-btn {
+      padding: 16px 24px;
+      background: transparent;
+      border: none;
+      border-bottom: 3px solid transparent;
+      font-size: 15px;
       font-weight: 600;
-      color: var(--accent-cyan);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tab-btn:hover {
+      color: var(--primary);
+      background: rgba(10, 102, 194, 0.05);
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
     }
 
     /* Main Container */
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 40px 24px;
-      position: relative;
-      z-index: 1;
+      padding: 24px 20px;
     }
 
-    /* Hero Section */
-    .hero {
-      text-align: center;
-      padding: 60px 0;
-      margin-bottom: 60px;
+    /* Tab Content */
+    .tab-content {
+      display: none;
     }
 
-    .hero-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 56px;
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Search Section */
+    .search-section {
+      background: var(--bg-white);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .search-title {
+      font-size: 20px;
       font-weight: 700;
       margin-bottom: 16px;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1.2;
+      color: var(--text-primary);
     }
 
-    .hero-subtitle {
-      font-size: 20px;
-      color: var(--text-secondary);
-      margin-bottom: 40px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .hero-stats {
+    .search-bar {
       display: flex;
-      gap: 40px;
-      justify-content: center;
-      margin-top: 40px;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
     }
 
-    .stat-item {
-      text-align: center;
+    .search-input-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 250px;
     }
 
-    .stat-number {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 36px;
-      font-weight: 700;
-      background: var(--gradient-success);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
     }
 
-    .stat-label {
+    .search-input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
       font-size: 14px;
-      color: var(--text-secondary);
-      margin-top: 4px;
+      font-family: inherit;
     }
 
-    /* Upload Card */
-    .upload-card {
-      background: var(--bg-card);
-      border: 1px solid var(--glass-border);
-      border-radius: 16px;
-      padding: 40px;
-      margin-bottom: 40px;
-      box-shadow: var(--shadow-card);
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.1);
     }
 
-    .upload-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-
-    .upload-subtitle {
-      font-size: 16px;
-      color: var(--text-secondary);
-      margin-bottom: 32px;
-    }
-
-    .upload-area {
-      background: var(--glass-bg);
-      border: 2px dashed var(--glass-border);
-      border-radius: 12px;
-      padding: 48px 32px;
-      text-align: center;
+    .filter-select {
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 14px;
+      font-family: inherit;
+      background: white;
       cursor: pointer;
-      transition: all 0.3s ease;
+      min-width: 150px;
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    /* Resume Upload Card */
+    .resume-card {
+      background: linear-gradient(135deg, #0A66C2 0%, #378FE9 100%);
+      border-radius: 8px;
+      padding: 32px 24px;
+      margin-bottom: 24px;
+      color: white;
+      box-shadow: var(--shadow-md);
+    }
+
+    .resume-card-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .resume-card-subtitle {
+      font-size: 14px;
+      opacity: 0.9;
       margin-bottom: 24px;
     }
 
-    .upload-area:hover {
-      border-color: var(--accent-cyan);
-      background: rgba(0, 217, 255, 0.05);
-    }
-
-    .upload-area.dragover {
-      border-color: var(--accent-cyan);
-      background: rgba(0, 217, 255, 0.1);
-      box-shadow: var(--shadow-glow);
-    }
-
-    .upload-icon {
-      font-size: 56px;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .upload-area {
+      background: rgba(255, 255, 255, 0.15);
+      border: 2px dashed rgba(255, 255, 255, 0.4);
+      border-radius: 8px;
+      padding: 32px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
       margin-bottom: 16px;
     }
 
+    .upload-area:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .upload-area.dragover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: white;
+    }
+
+    .upload-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.8;
+    }
+
     .upload-text {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 600;
       margin-bottom: 8px;
     }
 
     .upload-hint {
-      font-size: 14px;
-      color: var(--text-secondary);
+      font-size: 13px;
+      opacity: 0.8;
     }
 
     .file-name-display {
-      background: rgba(0, 217, 255, 0.1);
-      border: 1px solid rgba(0, 217, 255, 0.3);
-      padding: 12px 20px;
-      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 12px 16px;
+      border-radius: 4px;
       font-size: 14px;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
       display: none;
-      color: var(--accent-cyan);
+    }
+
+    .upload-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
     /* Buttons */
     .btn {
-      padding: 14px 32px;
-      border-radius: 8px;
-      font-size: 15px;
+      padding: 12px 24px;
+      border-radius: 4px;
+      font-size: 14px;
       font-weight: 600;
       border: none;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.2s;
       font-family: inherit;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .btn:disabled {
@@ -289,53 +320,407 @@
     }
 
     .btn-primary {
-      background: var(--gradient-primary);
-      color: white;
-      box-shadow: 0 4px 16px rgba(0, 217, 255, 0.3);
+      background: white;
+      color: var(--primary);
     }
 
     .btn-primary:hover:not(:disabled) {
-      box-shadow: 0 6px 24px rgba(0, 217, 255, 0.5);
-      transform: translateY(-2px);
+      background: #f8f9fa;
     }
 
     .btn-secondary {
-      background: var(--glass-bg);
-      color: var(--text-primary);
-      border: 1px solid var(--glass-border);
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.4);
     }
 
     .btn-secondary:hover:not(:disabled) {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: var(--accent-cyan);
+      background: rgba(255, 255, 255, 0.3);
     }
 
-    .upload-actions {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-    }
-
-    /* AI Analysis Dashboard */
-    .analysis-dashboard {
-      background: var(--bg-card);
-      border: 1px solid var(--glass-border);
-      border-radius: 16px;
-      padding: 40px;
-      margin-bottom: 40px;
-      box-shadow: var(--shadow-card);
+    /* Analysis Section */
+    .analysis-section {
+      background: var(--bg-white);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-md);
       display: none;
-      animation: slideUp 0.5s ease-out;
     }
 
-    .analysis-dashboard.active {
+    .analysis-section.active {
       display: block;
     }
 
-    @keyframes slideUp {
+    .analysis-section.collapsed .analysis-content {
+      display: none;
+    }
+
+    .btn-toggle {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-toggle:hover {
+      background: var(--bg-gray);
+    }
+
+    .btn-toggle i {
+      transition: transform 0.3s;
+    }
+
+    .analysis-section.collapsed .btn-toggle i {
+      transform: rotate(180deg);
+    }
+
+    .analysis-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+    }
+
+    .analysis-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .match-count {
+      background: var(--primary);
+      color: white;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .analysis-content {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      white-space: pre-wrap;
+    }
+
+    /* Results Section */
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .results-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .results-count {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .count-separator {
+      display: inline;
+    }
+
+    @media (max-width: 768px) {
+      .results-count {
+        font-size: 12px;
+        max-width: 200px;
+        text-align: right;
+        line-height: 1.3;
+      }
+      
+      .count-separator {
+        display: block;
+      }
+    }
+
+    .results-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    /* Job Card */
+    .job-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .job-card:hover {
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+
+    .job-card.matched {
+      border-left: 4px solid var(--primary);
+    }
+
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      gap: 12px;
+    }
+
+    .job-info {
+      flex: 1;
+    }
+
+    .company-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .role-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .match-score {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .trending-badge {
+      background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.9;
+        transform: scale(1.02);
+      }
+    }
+
+    .job-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .job-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .job-meta-item i {
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .job-description {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .job-actions {
+      display: flex;
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn-apply {
+      flex: 1;
+      background: var(--primary);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-apply:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-save {
+      background: white;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-save:hover {
+      background: #f0f7ff;
+    }
+
+    /* Professor Card */
+    .professor-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .professor-card:hover {
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+
+    .professor-card.matched {
+      border-left: 4px solid var(--primary);
+    }
+
+    .professor-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      gap: 12px;
+    }
+
+    .professor-info {
+      flex: 1;
+    }
+
+    .professor-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .professor-institution {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+
+    .professor-department {
+      font-size: 14px;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .research-areas {
+      background: #f8f9fa;
+      padding: 16px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid #e0e0e0;
+    }
+
+    .research-areas-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .research-areas-content {
+      font-size: 14px;
+      color: var(--text-primary);
+      line-height: 1.7;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+    }
+
+    /* Empty State */
+    .empty-state {
+      background: var(--bg-white);
+      border-radius: 8px;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .empty-icon {
+      font-size: 64px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .empty-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .empty-text {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    /* Status Alert */
+    .status-alert {
+      padding: 12px 16px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
       from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(-10px);
       }
       to {
         opacity: 1;
@@ -343,549 +728,419 @@
       }
     }
 
-    .analysis-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 32px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid var(--glass-border);
+    .status-alert.success {
+      background: #D1F4E0;
+      color: var(--success);
+      border: 1px solid var(--success);
     }
 
-    .analysis-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 24px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .status-alert.error {
+      background: #FDE8E8;
+      color: var(--danger);
+      border: 1px solid var(--danger);
     }
 
-    .ai-badge {
-      padding: 6px 12px;
-      background: var(--gradient-primary);
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    .status-alert.info {
+      background: #FFF4E5;
+      color: var(--warning);
+      border: 1px solid var(--warning);
     }
 
-    .toggle-btn {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 8px;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      color: var(--text-secondary);
-    }
-
-    .toggle-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--accent-cyan);
-    }
-
-    /* Processing State */
-    .processing-state {
-      text-align: center;
-      padding: 40px;
-    }
-
-    .processing-state.hidden {
-      display: none;
-    }
-
-    .ai-spinner {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 24px;
-      position: relative;
-    }
-
-    .ai-spinner::before {
-      content: '';
-      display: block;
-      width: 80px;
-      height: 80px;
-      border: 3px solid transparent;
-      border-top-color: var(--accent-cyan);
-      border-right-color: var(--accent-purple);
+    /* Loading State */
+    .loading {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(0,0,0,0.1);
+      border-top-color: var(--primary);
       border-radius: 50%;
-      animation: spin 1s linear infinite;
+      animation: spin 0.6s linear infinite;
     }
 
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
 
-    .processing-steps {
-      margin-top: 32px;
-    }
-
-    .process-step {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px;
-      margin-bottom: 8px;
-      border-radius: 8px;
-      background: var(--glass-bg);
-      font-size: 14px;
-      opacity: 0.5;
-      transition: all 0.3s ease;
-    }
-
-    .process-step.active {
-      opacity: 1;
-      background: rgba(0, 217, 255, 0.1);
-      border-left: 3px solid var(--accent-cyan);
-    }
-
-    .process-step.completed {
-      opacity: 0.8;
-    }
-
-    .process-step i {
-      width: 20px;
-      text-align: center;
-    }
-
-    .process-step .fa-check-circle {
-      color: var(--accent-green);
-    }
-
-    .process-step .fa-spinner {
-      color: var(--accent-cyan);
-      animation: spin 1s linear infinite;
-    }
-
-    /* Skills Section */
-    .skills-grid {
-      display: grid;
-      gap: 16px;
-      margin-bottom: 32px;
-    }
-
-    .skills-grid.hidden {
+    /* Paste Modal */
+    .modal {
       display: none;
-    }
-
-    .skill-category {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
       padding: 20px;
     }
 
-    .category-header {
+    .modal.active {
       display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 16px;
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--accent-cyan);
     }
 
-    .skill-item {
-      margin-bottom: 16px;
+    .modal-content {
+      background: white;
+      border-radius: 8px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
     }
 
-    .skill-item:last-child {
-      margin-bottom: 0;
-    }
-
-    .skill-header {
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
     }
 
-    .skill-name {
-      font-weight: 600;
-      font-size: 15px;
-    }
-
-    .skill-score {
-      font-family: 'Space Grotesk', sans-serif;
+    .modal-title {
+      font-size: 18px;
       font-weight: 700;
-      font-size: 15px;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
 
-    .skill-bar {
-      height: 8px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .skill-fill {
-      height: 100%;
-      background: var(--gradient-primary);
-      border-radius: 4px;
-      transition: width 1s ease-out;
-      width: 0%;
-    }
-
-    .skill-evidence {
-      font-size: 12px;
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
       color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    /* Stats Cards */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin-bottom: 32px;
-    }
-
-    .stats-grid.hidden {
-      display: none;
-    }
-
-    .stat-card {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      padding: 24px;
-      text-align: center;
-    }
-
-    .stat-icon {
-      font-size: 32px;
-      margin-bottom: 12px;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .stat-value {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 32px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-
-    .stat-description {
-      font-size: 13px;
-      color: var(--text-secondary);
-    }
-
-    /* Insights Section */
-    .insights-section {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-bottom: 32px;
-    }
-
-    .insights-section.hidden {
-      display: none;
-    }
-
-    .insight-card {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      padding: 24px;
-    }
-
-    .insight-header {
+      cursor: pointer;
+      padding: 0;
+      width: 32px;
+      height: 32px;
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 16px;
-      font-weight: 700;
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      justify-content: center;
+      border-radius: 4px;
     }
 
-    .insight-header.strengths {
-      color: var(--accent-green);
+    .modal-close:hover {
+      background: var(--bg-gray);
     }
 
-    .insight-header.growth {
-      color: var(--accent-orange);
-    }
-
-    .insight-list {
-      list-style: none;
-    }
-
-    .insight-list li {
-      padding: 8px 0;
-      padding-left: 24px;
-      position: relative;
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    .insight-list li::before {
-      content: '✓';
-      position: absolute;
-      left: 0;
-      color: var(--accent-green);
-      font-weight: bold;
-    }
-
-    .insight-list.growth li::before {
-      content: '→';
-      color: var(--accent-orange);
-    }
-
-    /* Full Analysis Text */
-    .full-analysis {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
+    .modal-body {
       padding: 24px;
-      margin-top: 32px;
     }
 
-    .full-analysis.hidden {
-      display: none;
-    }
-
-    .full-analysis h4 {
-      margin-bottom: 16px;
+    .paste-textarea {
+      width: 100%;
+      min-height: 300px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
       font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--accent-cyan);
+      font-family: 'Courier New', monospace;
+      resize: vertical;
     }
 
-    .full-analysis-text {
-      font-size: 14px;
-      line-height: 1.8;
-      color: var(--text-secondary);
-      white-space: pre-wrap;
+    .paste-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.1);
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-content {
+        padding: 0 16px;
+      }
+
+      .container {
+        padding: 16px;
+      }
+
+      .search-section {
+        padding: 20px 16px;
+      }
+
+      .search-bar {
+        flex-direction: column;
+      }
+
+      .search-input-wrapper {
+        min-width: 100%;
+      }
+
+      .filter-select {
+        width: 100%;
+      }
+
+      .resume-card {
+        padding: 24px 16px;
+      }
+
+      .upload-area {
+        padding: 24px 16px;
+      }
+
+      .upload-actions {
+        flex-direction: column;
+      }
+
+      .upload-actions .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .job-header, .professor-header {
+        flex-direction: column;
+      }
+
+      .match-score {
+        align-self: flex-start;
+      }
+
+      .job-actions {
+        flex-direction: column;
+      }
+
+      .btn-apply,
+      .btn-save {
+        width: 100%;
+      }
+
+      .tab-btn {
+        padding: 12px 16px;
+        font-size: 14px;
+      }
     }
 
     /* Hide file input */
     #resumeFile {
       display: none;
     }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .hero-title {
-        font-size: 36px;
-      }
-
-      .hero-stats {
-        flex-direction: column;
-        gap: 24px;
-      }
-
-      .insights-section {
-        grid-template-columns: 1fr;
-      }
-
-      .tech-badges {
-        display: none;
-      }
-
-      .upload-card {
-        padding: 24px;
-      }
-
-      .analysis-dashboard {
-        padding: 24px;
-      }
-    }
   </style>
 </head>
 <body>
-  <div class="animated-bg"></div>
-
   <!-- Header -->
   <header class="header">
     <div class="header-content">
-      <a href="/" class="logo">NeuroHire AI</a>
-      <div class="tech-badges">
-        <span class="tech-badge">LangChain</span>
-        <span class="tech-badge">RAG</span>
-        <span class="tech-badge">FastAPI</span>
-        <span class="tech-badge">Vector DB</span>
+      <a href="/" class="logo">CareerLift</a>
+      <div class="header-actions">
+        <span id="totalCount" class="results-count">Loading...</span>
       </div>
     </div>
   </header>
 
+  <!-- Tab Navigation -->
+  <div class="tab-navigation">
+    <div class="tab-nav-content">
+      <button class="tab-btn active" data-tab="jobs">
+        <i class="fas fa-briefcase"></i>
+        Jobs
+      </button>
+      <button class="tab-btn" data-tab="research">
+        <i class="fas fa-flask"></i>
+        Research Internships
+      </button>
+    </div>
+  </div>
+
   <!-- Main Container -->
   <div class="container">
-    <!-- Hero Section -->
-    <div class="hero">
-      <h1 class="hero-title">AI-Powered Career Intelligence</h1>
-      <p class="hero-subtitle">
-        Semantic job matching using RAG pipelines. Upload your resume and let AI find your perfect opportunities.
-      </p>
-      
-      <div class="hero-stats">
-        <div class="stat-item">
-          <div class="stat-number">1,200+</div>
-          <div class="stat-label">Active Users</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">4,500+</div>
-          <div class="stat-label">Jobs Matched</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">67%</div>
-          <div class="stat-label">Success Rate</div>
+    <!-- Status Messages -->
+    <div id="statusContainer"></div>
+
+    <!-- Jobs Tab Content -->
+    <div id="jobs" class="tab-content active">
+      <!-- Search Section -->
+      <div class="search-section">
+        <h2 class="search-title">Find Your Perfect Job</h2>
+        <div class="search-bar">
+          <div class="search-input-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input 
+              type="search" 
+              id="jobSearchInput" 
+              class="search-input" 
+              placeholder="Search by job title, company, or skills..."
+            >
+          </div>
+          <select id="jobLocationFilter" class="filter-select">
+            <option value="">All Locations</option>
+          </select>
+          <select id="jobTypeFilter" class="filter-select">
+            <option value="">All Job Types</option>
+          </select>
+          <select id="jobSortSelect" class="filter-select">
+            <option value="match">Best Match</option>
+            <option value="new">Latest First</option>
+          </select>
         </div>
       </div>
-    </div>
 
-    <!-- Upload Card -->
-    <div class="upload-card">
-      <h2 class="upload-title">Get AI-Powered Resume Analysis</h2>
-      <p class="upload-subtitle">Upload your resume and our AI will analyze your skills, experience, and find the best job matches</p>
-      
-      <input type="file" id="resumeFile" accept=".pdf,.txt,.doc,.docx,application/pdf" />
-      
-      <div class="upload-area" id="uploadArea">
-        <div class="upload-icon">
-          <i class="fas fa-cloud-upload-alt"></i>
-        </div>
-        <div class="upload-text">Click to upload or drag and drop</div>
-        <div class="upload-hint">PDF, DOC, DOCX, TXT (Max 5MB)</div>
-      </div>
-
-      <div id="fileNameDisplay" class="file-name-display"></div>
-
-      <div class="upload-actions">
-        <button id="analyzeBtn" class="btn btn-primary" disabled>
-          <i class="fas fa-brain"></i>
-          Analyze with AI
-        </button>
-        <button id="pasteBtn" class="btn btn-secondary">
-          <i class="fas fa-paste"></i>
-          Paste Resume Text
-        </button>
-      </div>
-    </div>
-
-    <!-- AI Analysis Dashboard -->
-    <div class="analysis-dashboard" id="analysisDashboard">
-      <div class="analysis-header">
-        <h3 class="analysis-title">
-          <i class="fas fa-brain"></i>
-          AI Resume Analysis
-          <span class="ai-badge">Powered by GPT-4</span>
-        </h3>
-        <button class="toggle-btn" id="toggleDashboard">
-          <i class="fas fa-chevron-up"></i>
-        </button>
-      </div>
-
-      <!-- Processing State -->
-      <div class="processing-state" id="processingState">
-        <div class="ai-spinner"></div>
-        <h4 style="font-size: 18px; margin-bottom: 8px;">Analyzing Your Resume...</h4>
-        <p style="color: var(--text-secondary); font-size: 14px;">This usually takes 10-15 seconds</p>
+      <!-- Resume Upload Card -->
+      <div class="resume-card">
+        <h2 class="resume-card-title">Get AI-Powered Job Matches</h2>
+        <p class="resume-card-subtitle">Upload your resume and let our AI find the perfect opportunities for you</p>
         
-        <div class="processing-steps">
-          <div class="process-step" id="step1">
-            <i class="fas fa-circle-notch"></i>
-            <span>Extracting text and parsing structure</span>
+        <input type="file" id="resumeFile" accept=".pdf,.txt,.doc,.docx,application/pdf" />
+        
+        <div class="upload-area" id="uploadArea">
+          <div class="upload-icon">
+            <i class="fas fa-cloud-upload-alt"></i>
           </div>
-          <div class="process-step" id="step2">
-            <i class="fas fa-circle-notch"></i>
-            <span>Identifying skills and experience</span>
-          </div>
-          <div class="process-step" id="step3">
-            <i class="fas fa-circle-notch"></i>
-            <span>Generating embeddings for semantic search</span>
-          </div>
-          <div class="process-step" id="step4">
-            <i class="fas fa-circle-notch"></i>
-            <span>Matching with job database</span>
-          </div>
-          <div class="process-step" id="step5">
-            <i class="fas fa-circle-notch"></i>
-            <span>Generating personalized insights</span>
-          </div>
+          <div class="upload-text">Click to upload or drag and drop</div>
+          <div class="upload-hint">PDF, DOC, TXT (Max 5MB)</div>
+        </div>
+
+        <div id="fileNameDisplay" class="file-name-display"></div>
+
+        <div class="upload-actions">
+          <button id="analyzeBtn" class="btn btn-primary" disabled>
+            <i class="fas fa-magic"></i>
+            Analyze Resume
+          </button>
+          <button id="pasteBtn" class="btn btn-secondary">
+            <i class="fas fa-paste"></i>
+            Paste Resume Text
+          </button>
         </div>
       </div>
 
-      <!-- Skills Section -->
-      <div class="skills-grid hidden" id="skillsGrid">
-        <div class="skill-category">
-          <div class="category-header">
-            <i class="fas fa-code"></i>
-            <span>Technical Skills</span>
+      <!-- Analysis Section -->
+      <div class="analysis-section" id="analysisSection">
+        <div class="analysis-header" id="analysisHeader">
+          <h3 class="analysis-title">
+            AI Analysis Results
+          </h3>
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <span id="jobMatchCount" class="match-count">0 Matches</span>
+            <button id="toggleAnalysis" class="btn-toggle">
+              <i class="fas fa-chevron-up"></i>
+            </button>
           </div>
-          <div id="technicalSkills"></div>
+        </div>
+        <div id="analysisContent" class="analysis-content">
+          Analyzing your resume...
         </div>
       </div>
 
-      <!-- Stats Cards -->
-      <div class="stats-grid hidden" id="statsGrid">
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fas fa-briefcase"></i>
-          </div>
-          <div class="stat-value" id="experienceLevel">-</div>
-          <div class="stat-description">Experience Level</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fas fa-bullseye"></i>
-          </div>
-          <div class="stat-value" id="totalMatches">-</div>
-          <div class="stat-description">Jobs Matched</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fas fa-chart-line"></i>
-          </div>
-          <div class="stat-value" id="topRole">-</div>
-          <div class="stat-description">Top Match Role</div>
-        </div>
+      <!-- Jobs Section -->
+      <div class="results-header">
+        <h2 class="results-title" id="jobsTitle">Available Jobs</h2>
+        <span id="jobsCount" class="results-count">0 Jobs</span>
       </div>
-
-      <!-- Insights -->
-      <div class="insights-section hidden" id="insightsSection">
-        <div class="insight-card">
-          <div class="insight-header strengths">
-            <i class="fas fa-trophy"></i>
-            <span>Your Strengths</span>
-          </div>
-          <ul class="insight-list" id="strengthsList"></ul>
-        </div>
-        <div class="insight-card">
-          <div class="insight-header growth">
-            <i class="fas fa-rocket"></i>
-            <span>Growth Areas</span>
-          </div>
-          <ul class="insight-list growth" id="growthList"></ul>
-        </div>
-      </div>
-
-      <!-- Full Analysis -->
-      <div class="full-analysis hidden" id="fullAnalysis">
-        <h4>Detailed AI Analysis</h4>
-        <div class="full-analysis-text" id="fullAnalysisText"></div>
+      <div id="jobsGrid" class="results-grid">
+        <!-- Jobs will be inserted here -->
       </div>
     </div>
 
+    <!-- Research Tab Content -->
+    <div id="research" class="tab-content">
+      <!-- Search Section -->
+      <div class="search-section">
+        <h2 class="search-title">Find Research Opportunities</h2>
+        <div class="search-bar">
+          <div class="search-input-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input 
+              type="search" 
+              id="profSearchInput" 
+              class="search-input" 
+              placeholder="Search by research area, professor name, or department..."
+            >
+          </div>
+          <select id="profInstitutionFilter" class="filter-select">
+            <option value="">All Institutions</option>
+          </select>
+          <select id="profDepartmentFilter" class="filter-select">
+            <option value="">All Departments</option>
+          </select>
+          <select id="profSortSelect" class="filter-select">
+            <option value="match">Best Match</option>
+            <option value="name">By Name</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Resume Upload Card (Shared) -->
+      <div class="resume-card">
+        <h2 class="resume-card-title">Get AI-Powered Research Matches</h2>
+        <p class="resume-card-subtitle">Upload your resume and let our AI match you with 1500+ IIT professors</p>
+        
+        <div class="upload-area" id="uploadAreaResearch">
+          <div class="upload-icon">
+            <i class="fas fa-cloud-upload-alt"></i>
+          </div>
+          <div class="upload-text">Click to upload or drag and drop</div>
+          <div class="upload-hint">PDF, DOC, TXT (Max 5MB)</div>
+        </div>
+
+        <div id="fileNameDisplayResearch" class="file-name-display"></div>
+
+        <div class="upload-actions">
+          <button id="analyzeBtnResearch" class="btn btn-primary" disabled>
+            <i class="fas fa-magic"></i>
+            Analyze Resume
+          </button>
+          <button id="pasteBtnResearch" class="btn btn-secondary">
+            <i class="fas fa-paste"></i>
+            Paste Resume Text
+          </button>
+        </div>
+      </div>
+
+      <!-- Analysis Section -->
+      <div class="analysis-section" id="analysisSectionResearch">
+        <div class="analysis-header" id="analysisHeaderResearch">
+          <h3 class="analysis-title">
+            AI Analysis Results
+          </h3>
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <span id="profMatchCount" class="match-count">0 Matches</span>
+            <button id="toggleAnalysisResearch" class="btn-toggle">
+              <i class="fas fa-chevron-up"></i>
+            </button>
+          </div>
+        </div>
+        <div id="analysisContentResearch" class="analysis-content">
+          Analyzing your resume...
+        </div>
+      </div>
+
+      <!-- Professors Section -->
+      <div class="results-header">
+        <h2 class="results-title" id="profsTitle">Available Research Opportunities</h2>
+        <span id="profsCount" class="results-count">0 Professors</span>
+      </div>
+      <div id="profsGrid" class="results-grid">
+        <!-- Professors will be inserted here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Paste Modal -->
+  <div class="modal" id="pasteModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Paste Your Resume</h3>
+        <button class="modal-close" id="modalClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <textarea 
+          id="pasteTextarea" 
+          class="paste-textarea" 
+          placeholder="Paste your resume text here..."></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelPaste">Cancel</button>
+        <button class="btn btn-primary" id="analyzePasted">Analyze Resume</button>
+      </div>
+    </div>
   </div>
 
   <!-- PDF.js Library -->
@@ -897,75 +1152,117 @@
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     }
 
+    // Configuration
+    const SHEET_ID = '1X412u-aXPAzkKqwRn0PgvbjcWMaivWJx-FlyHb6LARc';
+    const JOBS_GID = '0';
+    const PROFESSORS_GID = '1254290790';
+    
+    const JOBS_SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${JOBS_GID}`;
+    const PROFESSORS_SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${PROFESSORS_GID}`;
+
+    // Global state
+    let allJobs = [];
+    let allProfessors = [];
+    let matchedJobs = {};
+    let matchedProfessors = {};
+    let selectedFile = null;
+    let currentTab = 'jobs';
+
     // DOM Elements
     const elements = {
+      // Tab buttons
+      tabButtons: document.querySelectorAll('.tab-btn'),
+      
+      // Jobs tab
       resumeFile: document.getElementById('resumeFile'),
       uploadArea: document.getElementById('uploadArea'),
       fileNameDisplay: document.getElementById('fileNameDisplay'),
       analyzeBtn: document.getElementById('analyzeBtn'),
       pasteBtn: document.getElementById('pasteBtn'),
-      analysisDashboard: document.getElementById('analysisDashboard'),
-      toggleDashboard: document.getElementById('toggleDashboard'),
-      processingState: document.getElementById('processingState'),
-      skillsGrid: document.getElementById('skillsGrid'),
-      statsGrid: document.getElementById('statsGrid'),
-      insightsSection: document.getElementById('insightsSection'),
-      fullAnalysis: document.getElementById('fullAnalysis'),
+      jobSearchInput: document.getElementById('jobSearchInput'),
+      jobLocationFilter: document.getElementById('jobLocationFilter'),
+      jobTypeFilter: document.getElementById('jobTypeFilter'),
+      jobSortSelect: document.getElementById('jobSortSelect'),
+      jobsGrid: document.getElementById('jobsGrid'),
+      analysisSection: document.getElementById('analysisSection'),
+      analysisHeader: document.getElementById('analysisHeader'),
+      analysisContent: document.getElementById('analysisContent'),
+      toggleAnalysis: document.getElementById('toggleAnalysis'),
+      jobMatchCount: document.getElementById('jobMatchCount'),
+      jobsCount: document.getElementById('jobsCount'),
+      jobsTitle: document.getElementById('jobsTitle'),
+
+      // Research tab
+      uploadAreaResearch: document.getElementById('uploadAreaResearch'),
+      fileNameDisplayResearch: document.getElementById('fileNameDisplayResearch'),
+      analyzeBtnResearch: document.getElementById('analyzeBtnResearch'),
+      pasteBtnResearch: document.getElementById('pasteBtnResearch'),
+      profSearchInput: document.getElementById('profSearchInput'),
+      profInstitutionFilter: document.getElementById('profInstitutionFilter'),
+      profDepartmentFilter: document.getElementById('profDepartmentFilter'),
+      profSortSelect: document.getElementById('profSortSelect'),
+      profsGrid: document.getElementById('profsGrid'),
+      analysisSectionResearch: document.getElementById('analysisSectionResearch'),
+      analysisHeaderResearch: document.getElementById('analysisHeaderResearch'),
+      analysisContentResearch: document.getElementById('analysisContentResearch'),
+      toggleAnalysisResearch: document.getElementById('toggleAnalysisResearch'),
+      profMatchCount: document.getElementById('profMatchCount'),
+      profsCount: document.getElementById('profsCount'),
+      profsTitle: document.getElementById('profsTitle'),
+
+      // Shared
+      pasteModal: document.getElementById('pasteModal'),
+      pasteTextarea: document.getElementById('pasteTextarea'),
+      modalClose: document.getElementById('modalClose'),
+      cancelPaste: document.getElementById('cancelPaste'),
+      analyzePasted: document.getElementById('analyzePasted'),
+      statusContainer: document.getElementById('statusContainer'),
+      totalCount: document.getElementById('totalCount')
     };
 
-    let selectedFile = null;
-
-    // File upload handlers
-    elements.uploadArea.addEventListener('click', () => {
-      elements.resumeFile.click();
-    });
-
-    elements.resumeFile.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        handleFileSelect(file);
-      }
-    });
-
-    // Drag and drop
-    elements.uploadArea.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      elements.uploadArea.classList.add('dragover');
-    });
-
-    elements.uploadArea.addEventListener('dragleave', () => {
-      elements.uploadArea.classList.remove('dragover');
-    });
-
-    elements.uploadArea.addEventListener('drop', (e) => {
-      e.preventDefault();
-      elements.uploadArea.classList.remove('dragover');
-      
-      const file = e.dataTransfer.files[0];
-      if (file) {
-        handleFileSelect(file);
-      }
-    });
-
-    function handleFileSelect(file) {
-      selectedFile = file;
-      elements.fileNameDisplay.textContent = `✓ Selected: ${file.name}`;
-      elements.fileNameDisplay.style.display = 'block';
-      elements.analyzeBtn.disabled = false;
-    }
-
-    // Toggle dashboard
-    elements.toggleDashboard.addEventListener('click', () => {
-      const icon = elements.toggleDashboard.querySelector('i');
-      const sections = [elements.skillsGrid, elements.statsGrid, elements.insightsSection, elements.fullAnalysis];
-      
-      sections.forEach(section => {
-        section.classList.toggle('hidden');
+    // Tab switching
+    elements.tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetTab = btn.dataset.tab;
+        
+        // Update active tab button
+        elements.tabButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Update active tab content
+        document.querySelectorAll('.tab-content').forEach(content => {
+          content.classList.remove('active');
+        });
+        document.getElementById(targetTab).classList.add('active');
+        
+        currentTab = targetTab;
       });
-      
-      icon.classList.toggle('fa-chevron-up');
-      icon.classList.toggle('fa-chevron-down');
     });
+
+    // Toggle analysis sections
+    elements.analysisHeader.addEventListener('click', () => {
+      elements.analysisSection.classList.toggle('collapsed');
+    });
+
+    elements.analysisHeaderResearch.addEventListener('click', () => {
+      elements.analysisSectionResearch.classList.toggle('collapsed');
+    });
+
+    // Utility Functions
+    function showStatus(message, type = 'info') {
+      const alert = document.createElement('div');
+      alert.className = `status-alert ${type}`;
+      
+      const icon = type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle';
+      alert.innerHTML = `<i class="fas fa-${icon}"></i><span>${message}</span>`;
+      
+      elements.statusContainer.appendChild(alert);
+      
+      setTimeout(() => {
+        alert.style.animation = 'slideDown 0.3s ease reverse';
+        setTimeout(() => alert.remove(), 300);
+      }, 5000);
+    }
 
     // Extract text from PDF
     async function extractTextFromPDF(file) {
@@ -988,115 +1285,580 @@
       }
     }
 
-    // Animate processing steps
-    function animateProcessingSteps() {
-      const steps = ['step1', 'step2', 'step3', 'step4', 'step5'];
-      let currentStep = 0;
-      
-      const interval = setInterval(() => {
-        if (currentStep > 0) {
-          const prevStep = document.getElementById(steps[currentStep - 1]);
-          prevStep.classList.remove('active');
-          prevStep.classList.add('completed');
-          prevStep.querySelector('i').className = 'fas fa-check-circle';
-        }
+    // Fetch from Google Sheets
+    async function fetchFromSheet(url) {
+      try {
+        const response = await fetch(url);
+        const text = await response.text();
+        const jsonText = text.substring(text.indexOf('{'), text.lastIndexOf(')'));
+        const data = JSON.parse(jsonText);
         
-        if (currentStep < steps.length) {
-          const step = document.getElementById(steps[currentStep]);
-          step.classList.add('active');
-          step.querySelector('i').className = 'fas fa-spinner';
-          currentStep++;
-        } else {
-          clearInterval(interval);
-        }
-      }, 2000);
-      
-      return interval;
+        const cols = data.table.cols.map(c => (c.label || '').trim());
+        const rows = data.table.rows.map(row => 
+          row.c ? row.c.map(cell => cell ? cell.v : '') : []
+        );
+        
+        console.log('Sheet columns:', cols); // Debug: see column names
+        
+        const items = rows
+          .map(row => {
+            const obj = {};
+            cols.forEach((col, i) => {
+              obj[col || `col${i}`] = row[i] || '';
+            });
+            return obj;
+          })
+          .filter(item => {
+            const firstCol = Object.values(item)[0];
+            return firstCol && String(firstCol).trim() !== '';
+          });
+        
+        console.log('Sample item:', items[0]); // Debug: see first item structure
+        
+        return items;
+      } catch (error) {
+        console.error('Error fetching sheet:', error);
+        throw new Error('Failed to load data');
+      }
     }
 
-    // Display skills
-    function displaySkills(skills) {
-      const container = document.getElementById('technicalSkills');
-      container.innerHTML = '';
+    // Extract keywords from resume
+    function extractKeywords(text, topN = 50) {
+      if (!text) return [];
       
-      skills.forEach((skill, index) => {
-        const skillItem = document.createElement('div');
-        skillItem.className = 'skill-item';
-        skillItem.innerHTML = `
-          <div class="skill-header">
-            <span class="skill-name">${skill.name}</span>
-            <span class="skill-score">${skill.proficiency}%</span>
+      const stopWords = new Set(['which', 'that', 'with', 'this', 'from', 'your', 'about', 
+        'their', 'have', 'will', 'they', 'would', 'there', 'these', 'those', 'been', 
+        'were', 'what', 'when', 'where', 'working', 'worked', 'work', 'using', 'used',
+        'also', 'make', 'made', 'include', 'includes']);
+      
+      // Extract multi-word phrases (important for research terms like "machine learning")
+      const phrases = text.match(/\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+){1,2}\b/g) || [];
+      
+      // Extract single words
+      const words = text.toLowerCase().match(/\b[a-zA-Z0-9+#.+-]{3,}\b/g) || [];
+      
+      const freq = {};
+      
+      // Count phrases (case-insensitive)
+      phrases.forEach(phrase => {
+        const lower = phrase.toLowerCase();
+        if (!stopWords.has(lower)) {
+          freq[lower] = (freq[lower] || 0) + 3; // Phrases get higher weight
+        }
+      });
+      
+      // Count words
+      words.forEach(w => {
+        if (!stopWords.has(w)) {
+          freq[w] = (freq[w] || 0) + 1;
+        }
+      });
+      
+      return Object.entries(freq)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, topN)
+        .map(x => x[0]);
+    }
+
+    // Helper to get email field - try everything!
+    function getProfessorEmail(prof) {
+      // Try all possible column name variations
+      const possibilities = [
+        'Mail id',
+        'Mail Id',
+        'mail id',
+        'Email',
+        'email',
+        'E-mail',
+        'e-mail',
+        'Contact',
+        'contact'
+      ];
+      
+      for (let key of possibilities) {
+        if (prof[key] && String(prof[key]).includes('@')) {
+          return prof[key];
+        }
+      }
+      
+      // If none found, check if there's a column with "mail" or "email" in the name
+      const keys = Object.keys(prof);
+      for (let key of keys) {
+        const lowerKey = key.toLowerCase();
+        if ((lowerKey.includes('mail') || lowerKey.includes('email') || lowerKey.includes('contact')) 
+            && prof[key] && String(prof[key]).includes('@')) {
+          console.log(`Found email in column: "${key}"`);
+          return prof[key];
+        }
+      }
+      
+      return '';
+    }
+
+    // Helper to get research areas field - try everything!
+    function getResearchAreas(prof) {
+      // Try all possible column name variations
+      const possibilities = [
+        'Area of Interest',
+        'Area of interest', 
+        'area of interest',
+        'Research Areas',
+        'Research Area',
+        'Area',
+        'Research Interest',
+        'Research Interests',
+        'Interests'
+      ];
+      
+      for (let key of possibilities) {
+        if (prof[key]) {
+          return prof[key];
+        }
+      }
+      
+      // If none found, check if there's a column with "interest" or "area" in the name
+      const keys = Object.keys(prof);
+      for (let key of keys) {
+        const lowerKey = key.toLowerCase();
+        if ((lowerKey.includes('interest') || lowerKey.includes('area') || lowerKey.includes('research')) 
+            && !lowerKey.includes('college') && !lowerKey.includes('name') && !lowerKey.includes('department')) {
+          console.log(`Found research area in column: "${key}"`);
+          return prof[key];
+        }
+      }
+      
+      return '';
+    }
+
+    // Score item based on keywords
+    function scoreItem(item, keywords, searchFields) {
+      if (!keywords || keywords.length === 0) return 0;
+      
+      const haystack = searchFields.map(field => item[field] || '').join(' ').toLowerCase();
+      let score = 0;
+      
+      keywords.forEach(keyword => {
+        // Exact match (full keyword appears)
+        if (haystack.includes(keyword)) {
+          score += 2;
+        }
+        
+        // Partial match (keyword words appear separately)
+        const keywordParts = keyword.split(/\s+/);
+        if (keywordParts.length > 1) {
+          const allPartsFound = keywordParts.every(part => haystack.includes(part));
+          if (allPartsFound) {
+            score += 1;
+          }
+        }
+      });
+      
+      // Bonus for title/name matches
+      if (searchFields[0] && item[searchFields[0]]) {
+        const titleField = item[searchFields[0]].toLowerCase();
+        keywords.forEach(keyword => {
+          if (titleField.includes(keyword)) {
+            score += 1; // Extra weight for title matches
+          }
+        });
+      }
+      
+      return score;
+    }
+
+    // Call AI API
+    async function analyzeResume(resumeText, context = 'jobs') {
+      const response = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ resume: resumeText })
+      });
+      
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({ message: 'Analysis failed' }));
+        throw new Error(error.message || 'Failed to analyze resume');
+      }
+      
+      const data = await response.json();
+      return data.result || '';
+    }
+
+    // Render jobs
+    function renderJobs(jobs, matchScores = {}) {
+      if (!jobs || jobs.length === 0) {
+        elements.jobsGrid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon"><i class="fas fa-briefcase"></i></div>
+            <h3 class="empty-title">No jobs found</h3>
+            <p class="empty-text">Try adjusting your search or filters</p>
           </div>
-          <div class="skill-bar">
-            <div class="skill-fill" id="skill-fill-${index}" data-width="${skill.proficiency}"></div>
-          </div>
-          ${skill.evidence ? `<div class="skill-evidence">${skill.evidence}</div>` : ''}
         `;
-        container.appendChild(skillItem);
+        return;
+      }
+
+      const hasMatches = Object.keys(matchScores).length > 0;
+
+      // Sort jobs - latest first (by row number/index from sheet)
+      const sortedJobs = [...jobs].sort((a, b) => {
+        const keyA = a.Company + a.Role;
+        const keyB = b.Company + b.Role;
+        const scoreA = matchScores[keyA] || 0;
+        const scoreB = matchScores[keyB] || 0;
+
+        if (hasMatches) {
+          // If AI matching is active, sort by match score first
+          if (scoreB !== scoreA) {
+            return scoreB - scoreA;
+          }
+        }
         
-        // Animate skill bar
-        setTimeout(() => {
-          const fill = document.getElementById(`skill-fill-${index}`);
-          fill.style.width = `${skill.proficiency}%`;
-        }, 100 + (index * 100));
+        // Otherwise, keep reverse order (latest from sheet = first in list)
+        // Jobs array is already in sheet order, so reverse index = latest first
+        const indexA = jobs.indexOf(a);
+        const indexB = jobs.indexOf(b);
+        return indexB - indexA; // Higher index = newer job = comes first
       });
+
+      elements.jobsGrid.innerHTML = sortedJobs.map((job, displayIndex) => {
+        const key = job.Company + job.Role;
+        const score = matchScores[key] || 0;
+        const isMatched = score > 0;
+        
+        // Mark top 25 jobs as trending (after sorting)
+        const isTrending = displayIndex < 25;
+        
+        return `
+          <div class="job-card ${isMatched ? 'matched' : ''}">
+            <div class="job-header">
+              <div class="job-info">
+                <div class="company-name">${job.Company || 'Company'}</div>
+                <div class="role-title">${job.Role || 'Position'}</div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px; align-items: flex-end;">
+                ${isTrending ? `<div class="trending-badge">Trending</div>` : ''}
+                ${isMatched ? `<div class="match-score"><i class="fas fa-check-circle"></i> ${Math.round(score)}% Match</div>` : ''}
+              </div>
+            </div>
+            
+            <div class="job-meta">
+              ${job.Location ? `
+                <div class="job-meta-item">
+                  <i class="fas fa-map-marker-alt"></i>
+                  ${job.Location}
+                </div>
+              ` : ''}
+              ${job.Stipend ? `
+                <div class="job-meta-item">
+                  <i class="fas fa-rupee-sign"></i>
+                  ${job.Stipend}
+                </div>
+              ` : ''}
+              ${job.JobType ? `
+                <div class="job-meta-item">
+                  <i class="fas fa-briefcase"></i>
+                  ${job.JobType}
+                </div>
+              ` : ''}
+            </div>
+            
+            ${job.Description ? `
+              <div class="job-description">
+                ${job.Description.slice(0, 150)}${job.Description.length > 150 ? '...' : ''}
+              </div>
+            ` : ''}
+            
+            <div class="job-actions">
+              ${job.ApplyLink ? `
+                <a href="${job.ApplyLink}" target="_blank" class="btn-apply">
+                  <i class="fas fa-paper-plane"></i> Apply Now
+                </a>
+              ` : ''}
+              ${job.Email ? `
+                <a href="mailto:${job.Email}" class="btn-save">
+                  <i class="fas fa-envelope"></i> Email
+                </a>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      const matchedCount = Object.keys(matchScores).filter(key => matchScores[key] > 0).length;
+      
+      if (matchedCount > 0) {
+        elements.jobsTitle.innerHTML = `Your Top Matches <span style="color: var(--primary); font-weight: 800;">(${matchedCount})</span> & All Jobs`;
+      } else {
+        elements.jobsTitle.innerHTML = 'Available Jobs';
+      }
     }
 
-    // Display stats
-    function displayStats(data) {
-      document.getElementById('experienceLevel').textContent = data.experience?.level || 'N/A';
+    // Render professors
+    function renderProfessors(professors, matchScores = {}) {
+      if (!professors || professors.length === 0) {
+        elements.profsGrid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon"><i class="fas fa-flask"></i></div>
+            <h3 class="empty-title">No research opportunities found</h3>
+            <p class="empty-text">Try adjusting your search or filters</p>
+          </div>
+        `;
+        return;
+      }
+
+      const hasMatches = Object.keys(matchScores).length > 0;
+
+      const sortedProfs = [...professors].sort((a, b) => {
+        const keyA = a.Name + a['College Name'];
+        const keyB = b.Name + b['College Name'];
+        const scoreA = matchScores[keyA] || 0;
+        const scoreB = matchScores[keyB] || 0;
+
+        if (hasMatches) {
+          if (scoreB !== scoreA) {
+            return scoreB - scoreA;
+          }
+        }
+        
+        return 0;
+      });
+
+      elements.profsGrid.innerHTML = sortedProfs.map(prof => {
+        const key = prof.Name + prof['College Name'];
+        const score = matchScores[key] || 0;
+        const isMatched = score > 0;
+        
+        // Use the smart helper functions
+        const researchAreas = getResearchAreas(prof);
+        const email = getProfessorEmail(prof);
+        
+        // Debug: log the actual data for first few professors
+        if (sortedProfs.indexOf(prof) < 3) {
+          console.log('===== Professor Debug =====');
+          console.log('Name:', prof.Name);
+          console.log('All keys:', Object.keys(prof));
+          console.log('Research areas:', researchAreas ? 'YES ✓ (' + researchAreas.substring(0, 50) + '...)' : 'NO ✗');
+          console.log('Email:', email ? 'YES ✓ (' + email + ')' : 'NO ✗');
+          console.log('========================');
+        }
+        
+        return `
+          <div class="professor-card ${isMatched ? 'matched' : ''}">
+            <div class="professor-header">
+              <div class="professor-info">
+                <div class="professor-name">${prof.Name || 'Professor'}</div>
+                <div class="professor-institution">${prof['College Name'] || 'Institution'}</div>
+                <div class="professor-department">${prof.Department || 'Department'}</div>
+              </div>
+              ${isMatched ? `<div class="match-score"><i class="fas fa-check-circle"></i> ${Math.round(score)}% Match</div>` : ''}
+            </div>
+            
+            <div class="research-areas">
+              <div class="research-areas-title">Research Areas</div>
+              <div class="research-areas-content">
+                ${researchAreas || 'No research areas listed'}
+              </div>
+            </div>
+            
+            <div class="job-actions">
+              ${email ? `
+                <a href="mailto:${email}" class="btn-apply">
+                  <i class="fas fa-envelope"></i> Email Professor
+                </a>
+              ` : `
+                <button class="btn-apply" style="opacity: 0.5; cursor: not-allowed;" disabled>
+                  <i class="fas fa-envelope"></i> No Email Available
+                </button>
+              `}
+            </div>
+          </div>
+        `;
+      }).join('');
       
-      const totalMatches = Object.values(data.top_matches || {}).reduce((sum, val) => sum + val, 0);
-      document.getElementById('totalMatches').textContent = totalMatches;
+      const matchedCount = Object.keys(matchScores).filter(key => matchScores[key] > 0).length;
       
-      const topRole = Object.entries(data.top_matches || {}).sort((a, b) => b[1] - a[1])[0];
-      document.getElementById('topRole').textContent = topRole ? topRole[0].replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase()) : 'N/A';
+      if (matchedCount > 0) {
+        elements.profsTitle.innerHTML = `Your Top Matches <span style="color: var(--primary); font-weight: 800;">(${matchedCount})</span> & All Professors`;
+      } else {
+        elements.profsTitle.innerHTML = 'Available Research Opportunities';
+      }
     }
 
-    // Display insights
-    function displayInsights(data) {
-      const strengthsList = document.getElementById('strengthsList');
-      const growthList = document.getElementById('growthList');
+    // Populate filters
+    function populateFilters() {
+      // Job filters
+      const locations = new Set();
+      const types = new Set();
       
-      strengthsList.innerHTML = '';
-      growthList.innerHTML = '';
-      
-      (data.strengths || []).forEach(strength => {
-        const li = document.createElement('li');
-        li.textContent = strength;
-        strengthsList.appendChild(li);
+      allJobs.forEach(job => {
+        if (job.Location) locations.add(job.Location);
+        if (job.JobType) types.add(job.JobType);
       });
       
-      (data.growth_areas || []).forEach(area => {
-        const li = document.createElement('li');
-        li.textContent = area;
-        growthList.appendChild(li);
+      elements.jobLocationFilter.innerHTML = '<option value="">All Locations</option>' +
+        Array.from(locations).sort().map(loc => 
+          `<option value="${loc}">${loc}</option>`
+        ).join('');
+      
+      elements.jobTypeFilter.innerHTML = '<option value="">All Job Types</option>' +
+        Array.from(types).sort().map(type => 
+          `<option value="${type}">${type}</option>`
+        ).join('');
+
+      // Professor filters
+      const institutions = new Set();
+      const departments = new Set();
+      
+      allProfessors.forEach(prof => {
+        if (prof['College Name']) institutions.add(prof['College Name']);
+        if (prof.Department) departments.add(prof.Department);
       });
+      
+      elements.profInstitutionFilter.innerHTML = '<option value="">All Institutions</option>' +
+        Array.from(institutions).sort().map(inst => 
+          `<option value="${inst}">${inst}</option>`
+        ).join('');
+      
+      elements.profDepartmentFilter.innerHTML = '<option value="">All Departments</option>' +
+        Array.from(departments).sort().map(dept => 
+          `<option value="${dept}">${dept}</option>`
+        ).join('');
     }
 
-    // Analyze button click
+    // Apply filters for jobs
+    function applyJobFilters() {
+      const query = elements.jobSearchInput.value.toLowerCase();
+      const location = elements.jobLocationFilter.value;
+      const type = elements.jobTypeFilter.value;
+      
+      let filtered = allJobs.filter(job => {
+        const haystack = `${job.Company} ${job.Role} ${job.Location} ${job.Description}`.toLowerCase();
+        const matchesQuery = !query || haystack.includes(query);
+        const matchesLocation = !location || job.Location === location;
+        const matchesType = !type || job.JobType === type;
+        
+        return matchesQuery && matchesLocation && matchesType;
+      });
+      
+      renderJobs(filtered, matchedJobs);
+      elements.jobsCount.textContent = `${filtered.length} Jobs`;
+    }
+
+    // Apply filters for professors
+    function applyProfessorFilters() {
+      const query = elements.profSearchInput.value.toLowerCase();
+      const institution = elements.profInstitutionFilter.value;
+      const department = elements.profDepartmentFilter.value;
+      
+      let filtered = allProfessors.filter(prof => {
+        const researchAreas = getResearchAreas(prof);
+        const haystack = `${prof.Name} ${prof['College Name']} ${prof.Department} ${researchAreas}`.toLowerCase();
+        const matchesQuery = !query || haystack.includes(query);
+        const matchesInstitution = !institution || prof['College Name'] === institution;
+        const matchesDepartment = !department || prof.Department === department;
+        
+        return matchesQuery && matchesInstitution && matchesDepartment;
+      });
+      
+      renderProfessors(filtered, matchedProfessors);
+      elements.profsCount.textContent = `${filtered.length} Professors`;
+    }
+
+    // Handle file upload for jobs tab
+    elements.uploadArea.addEventListener('click', () => {
+      elements.resumeFile.click();
+    });
+
+    elements.resumeFile.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        selectedFile = file;
+        // Update both tabs
+        elements.fileNameDisplay.textContent = `Selected: ${file.name}`;
+        elements.fileNameDisplay.style.display = 'block';
+        elements.analyzeBtn.disabled = false;
+        
+        elements.fileNameDisplayResearch.textContent = `Selected: ${file.name}`;
+        elements.fileNameDisplayResearch.style.display = 'block';
+        elements.analyzeBtnResearch.disabled = false;
+      }
+    });
+
+    // Handle file upload for research tab
+    elements.uploadAreaResearch.addEventListener('click', () => {
+      elements.resumeFile.click();
+    });
+
+    // Drag and drop for jobs
+    elements.uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      elements.uploadArea.classList.add('dragover');
+    });
+
+    elements.uploadArea.addEventListener('dragleave', () => {
+      elements.uploadArea.classList.remove('dragover');
+    });
+
+    elements.uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      elements.uploadArea.classList.remove('dragover');
+      
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        selectedFile = file;
+        elements.resumeFile.files = e.dataTransfer.files;
+        // Update both tabs
+        elements.fileNameDisplay.textContent = `Selected: ${file.name}`;
+        elements.fileNameDisplay.style.display = 'block';
+        elements.analyzeBtn.disabled = false;
+        
+        elements.fileNameDisplayResearch.textContent = `Selected: ${file.name}`;
+        elements.fileNameDisplayResearch.style.display = 'block';
+        elements.analyzeBtnResearch.disabled = false;
+      }
+    });
+
+    // Drag and drop for research
+    elements.uploadAreaResearch.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      elements.uploadAreaResearch.classList.add('dragover');
+    });
+
+    elements.uploadAreaResearch.addEventListener('dragleave', () => {
+      elements.uploadAreaResearch.classList.remove('dragover');
+    });
+
+    elements.uploadAreaResearch.addEventListener('drop', (e) => {
+      e.preventDefault();
+      elements.uploadAreaResearch.classList.remove('dragover');
+      
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        selectedFile = file;
+        elements.resumeFile.files = e.dataTransfer.files;
+        // Update both tabs
+        elements.fileNameDisplay.textContent = `Selected: ${file.name}`;
+        elements.fileNameDisplay.style.display = 'block';
+        elements.analyzeBtn.disabled = false;
+        
+        elements.fileNameDisplayResearch.textContent = `Selected: ${file.name}`;
+        elements.fileNameDisplayResearch.style.display = 'block';
+        elements.analyzeBtnResearch.disabled = false;
+      }
+    });
+
+    // Analyze button for jobs
     elements.analyzeBtn.addEventListener('click', async () => {
       if (!selectedFile) return;
       
       const originalText = elements.analyzeBtn.innerHTML;
-      elements.analyzeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+      elements.analyzeBtn.innerHTML = '<span class="loading"></span> Analyzing...';
       elements.analyzeBtn.disabled = true;
       
       try {
-        // Show dashboard
-        elements.analysisDashboard.classList.add('active');
-        elements.processingState.classList.remove('hidden');
-        elements.skillsGrid.classList.add('hidden');
-        elements.statsGrid.classList.add('hidden');
-        elements.insightsSection.classList.add('hidden');
-        elements.fullAnalysis.classList.add('hidden');
-        
-        // Start animation
-        const animationInterval = animateProcessingSteps();
-        
-        // Extract text
         let text;
+        
         if (selectedFile.type === 'application/pdf' || selectedFile.name.toLowerCase().endsWith('.pdf')) {
+          showStatus('Extracting text from PDF...', 'info');
           text = await extractTextFromPDF(selectedFile);
         } else {
           text = await selectedFile.text();
@@ -1106,82 +1868,388 @@
           throw new Error('File appears to be empty');
         }
         
-        // Call API
-        const response = await fetch('/api/analyze', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ resume: text })
+        elements.analysisSection.classList.add('active');
+        elements.analysisContent.textContent = 'Analyzing your resume with AI...';
+        
+        const analysis = await analyzeResume(text, 'jobs');
+        elements.analysisContent.textContent = analysis;
+        
+        const combinedText = text + ' ' + analysis;
+        const keywords = extractKeywords(combinedText, 50);
+        
+        const scored = allJobs.map(job => {
+          const score = scoreItem(job, keywords, ['Company', 'Role', 'Description', 'JobType']);
+          return { job, score };
         });
         
-        if (!response.ok) {
-          throw new Error('Analysis failed');
-        }
+        scored.sort((a, b) => b.score - a.score);
+        const topMatches = scored.filter(s => s.score > 0);
         
-        const data = await response.json();
+        matchedJobs = {};
+        topMatches.forEach(item => {
+          const key = item.job.Company + item.job.Role;
+          matchedJobs[key] = Math.min(100, item.score * 8);
+        });
         
-        // Wait for animation to complete
-        clearInterval(animationInterval);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        elements.jobMatchCount.textContent = `${topMatches.length} Matches`;
+        renderJobs(allJobs, matchedJobs);
+        showStatus('Resume analyzed successfully! Scroll down to see matched jobs.', 'success');
         
-        // Parse AI response to extract structured data
-        const mockStructuredData = {
-          skills: [
-            { name: 'Python', proficiency: 92, evidence: 'Mentioned across multiple projects', category: 'Programming' },
-            { name: 'Machine Learning', proficiency: 87, evidence: '2 internships + 3 ML projects', category: 'AI/ML' },
-            { name: 'FastAPI', proficiency: 78, evidence: 'Used in ThinkSpace AI internship', category: 'Backend' },
-            { name: 'LangChain', proficiency: 85, evidence: 'Multiple production deployments', category: 'AI/ML' },
-            { name: 'RAG Pipelines', proficiency: 88, evidence: 'Built NotebookLM-style system', category: 'AI/ML' }
-          ],
-          experience: {
-            level: 'Entry-Mid',
-            total_years: 0.5,
-            domains: ['AI/ML', 'Backend', 'Data Science']
-          },
-          top_matches: {
-            'AI Engineer': 47,
-            'ML Engineer': 32,
-            'Backend Engineer': 28,
-            'Research Intern': 18
-          },
-          strengths: [
-            'Strong AI/ML foundation with production experience',
-            'Full-stack capabilities combining Backend + ML',
-            'Research background from IIT Guwahati',
-            'Experience with modern LLM frameworks'
-          ],
-          growth_areas: [
-            'System design for large-scale distributed systems',
-            'DevOps & cloud deployment (AWS/GCP)',
-            'Advanced Kubernetes orchestration',
-            'Scalable ML infrastructure'
-          ]
-        };
-        
-        // Display results
-        elements.processingState.classList.add('hidden');
-        elements.skillsGrid.classList.remove('hidden');
-        elements.statsGrid.classList.remove('hidden');
-        elements.insightsSection.classList.remove('hidden');
-        elements.fullAnalysis.classList.remove('hidden');
-        
-        displaySkills(mockStructuredData.skills);
-        displayStats(mockStructuredData);
-        displayInsights(mockStructuredData);
-        document.getElementById('fullAnalysisText').textContent = data.result || 'Analysis complete.';
-        
-        // Scroll to dashboard
         setTimeout(() => {
-          elements.analysisDashboard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 300);
+          elements.analysisSection.classList.add('collapsed');
+          setTimeout(() => {
+            const firstMatchedJob = document.querySelector('.job-card.matched');
+            if (firstMatchedJob) {
+              firstMatchedJob.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }, 400);
+        }, 2000);
         
       } catch (error) {
         console.error(error);
-        alert('Analysis failed: ' + error.message);
+        showStatus(error.message || 'Analysis failed', 'error');
+        elements.analysisContent.textContent = `Error: ${error.message}\n\nPlease try again or use the paste option.`;
       } finally {
         elements.analyzeBtn.innerHTML = originalText;
         elements.analyzeBtn.disabled = false;
       }
     });
+
+    // Analyze button for research
+    elements.analyzeBtnResearch.addEventListener('click', async () => {
+      if (!selectedFile) return;
+      
+      const originalText = elements.analyzeBtnResearch.innerHTML;
+      elements.analyzeBtnResearch.innerHTML = '<span class="loading"></span> Analyzing...';
+      elements.analyzeBtnResearch.disabled = true;
+      
+      try {
+        let text;
+        
+        if (selectedFile.type === 'application/pdf' || selectedFile.name.toLowerCase().endsWith('.pdf')) {
+          showStatus('Extracting text from PDF...', 'info');
+          text = await extractTextFromPDF(selectedFile);
+        } else {
+          text = await selectedFile.text();
+        }
+        
+        if (!text || text.trim().length < 10) {
+          throw new Error('File appears to be empty');
+        }
+        
+        elements.analysisSectionResearch.classList.add('active');
+        elements.analysisContentResearch.textContent = 'Analyzing your resume with AI...';
+        
+        const analysis = await analyzeResume(text, 'research');
+        elements.analysisContentResearch.textContent = analysis;
+        
+        const combinedText = text + ' ' + analysis;
+        const keywords = extractKeywords(combinedText, 50);
+        
+        const scored = allProfessors.map(prof => {
+          // Build searchable text with fallback for Area of Interest
+          const researchAreas = getResearchAreas(prof);
+          const searchText = `${prof.Name} ${prof.Department} ${researchAreas}`.toLowerCase();
+          
+          let score = 0;
+          keywords.forEach(keyword => {
+            if (searchText.includes(keyword)) {
+              score += 2;
+            }
+            const keywordParts = keyword.split(/\s+/);
+            if (keywordParts.length > 1) {
+              const allPartsFound = keywordParts.every(part => searchText.includes(part));
+              if (allPartsFound) {
+                score += 1;
+              }
+            }
+          });
+          
+          return { prof, score };
+        });
+        
+        scored.sort((a, b) => b.score - a.score);
+        const topMatches = scored.filter(s => s.score > 0);
+        
+        matchedProfessors = {};
+        topMatches.forEach(item => {
+          const key = item.prof.Name + item.prof['College Name'];
+          matchedProfessors[key] = Math.min(100, item.score * 8);
+        });
+        
+        elements.profMatchCount.textContent = `${topMatches.length} Matches`;
+        renderProfessors(allProfessors, matchedProfessors);
+        showStatus('Resume analyzed successfully! Scroll down to see matched professors.', 'success');
+        
+        setTimeout(() => {
+          elements.analysisSectionResearch.classList.add('collapsed');
+          setTimeout(() => {
+            const firstMatchedProf = document.querySelector('.professor-card.matched');
+            if (firstMatchedProf) {
+              firstMatchedProf.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }, 400);
+        }, 2000);
+        
+      } catch (error) {
+        console.error(error);
+        showStatus(error.message || 'Analysis failed', 'error');
+        elements.analysisContentResearch.textContent = `Error: ${error.message}\n\nPlease try again or use the paste option.`;
+      } finally {
+        elements.analyzeBtnResearch.innerHTML = originalText;
+        elements.analyzeBtnResearch.disabled = false;
+      }
+    });
+
+    // Paste modal handlers
+    elements.pasteBtn.addEventListener('click', () => {
+      elements.pasteModal.classList.add('active');
+      elements.pasteTextarea.focus();
+    });
+
+    elements.pasteBtnResearch.addEventListener('click', () => {
+      elements.pasteModal.classList.add('active');
+      elements.pasteTextarea.focus();
+    });
+
+    elements.modalClose.addEventListener('click', () => {
+      elements.pasteModal.classList.remove('active');
+    });
+
+    elements.cancelPaste.addEventListener('click', () => {
+      elements.pasteModal.classList.remove('active');
+    });
+
+    elements.analyzePasted.addEventListener('click', async () => {
+      const text = elements.pasteTextarea.value.trim();
+      if (!text) {
+        showStatus('Please paste your resume text', 'error');
+        return;
+      }
+      
+      elements.pasteModal.classList.remove('active');
+      
+      if (currentTab === 'jobs') {
+        const originalText = elements.analyzeBtn.innerHTML;
+        elements.analyzeBtn.innerHTML = '<span class="loading"></span> Analyzing...';
+        elements.analyzeBtn.disabled = true;
+        
+        try {
+          elements.analysisSection.classList.add('active');
+          elements.analysisContent.textContent = 'Analyzing your resume with AI...';
+          
+          const analysis = await analyzeResume(text, 'jobs');
+          elements.analysisContent.textContent = analysis;
+          
+          const combinedText = text + ' ' + analysis;
+          const keywords = extractKeywords(combinedText, 50);
+          
+          const scored = allJobs.map(job => {
+            const score = scoreItem(job, keywords, ['Company', 'Role', 'Description', 'JobType']);
+            return { job, score };
+          });
+          
+          scored.sort((a, b) => b.score - a.score);
+          const topMatches = scored.filter(s => s.score > 0);
+          
+          matchedJobs = {};
+          topMatches.forEach(item => {
+            const key = item.job.Company + item.job.Role;
+            matchedJobs[key] = Math.min(100, item.score * 8);
+          });
+          
+          elements.jobMatchCount.textContent = `${topMatches.length} Matches`;
+          renderJobs(allJobs, matchedJobs);
+          showStatus('Resume analyzed successfully!', 'success');
+          
+          setTimeout(() => {
+            elements.analysisSection.classList.add('collapsed');
+            setTimeout(() => {
+              const firstMatchedJob = document.querySelector('.job-card.matched');
+              if (firstMatchedJob) {
+                firstMatchedJob.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+            }, 400);
+          }, 2000);
+          
+        } catch (error) {
+          console.error(error);
+          showStatus(error.message || 'Analysis failed', 'error');
+          elements.analysisContent.textContent = `Error: ${error.message}`;
+        } finally {
+          elements.analyzeBtn.innerHTML = originalText;
+          elements.analyzeBtn.disabled = false;
+        }
+      } else {
+        const originalText = elements.analyzeBtnResearch.innerHTML;
+        elements.analyzeBtnResearch.innerHTML = '<span class="loading"></span> Analyzing...';
+        elements.analyzeBtnResearch.disabled = true;
+        
+        try {
+          elements.analysisSectionResearch.classList.add('active');
+          elements.analysisContentResearch.textContent = 'Analyzing your resume with AI...';
+          
+          const analysis = await analyzeResume(text, 'research');
+          elements.analysisContentResearch.textContent = analysis;
+          
+          const combinedText = text + ' ' + analysis;
+          const keywords = extractKeywords(combinedText, 50);
+          
+          const scored = allProfessors.map(prof => {
+            // Build searchable text with fallback for Area of Interest
+            const researchAreas = getResearchAreas(prof);
+            const searchText = `${prof.Name} ${prof.Department} ${researchAreas}`.toLowerCase();
+            
+            let score = 0;
+            keywords.forEach(keyword => {
+              if (searchText.includes(keyword)) {
+                score += 2;
+              }
+              const keywordParts = keyword.split(/\s+/);
+              if (keywordParts.length > 1) {
+                const allPartsFound = keywordParts.every(part => searchText.includes(part));
+                if (allPartsFound) {
+                  score += 1;
+                }
+              }
+            });
+            
+            return { prof, score };
+          });
+          
+          scored.sort((a, b) => b.score - a.score);
+          const topMatches = scored.filter(s => s.score > 0);
+          
+          matchedProfessors = {};
+          topMatches.forEach(item => {
+            const key = item.prof.Name + item.prof['College Name'];
+            matchedProfessors[key] = Math.min(100, item.score * 8);
+          });
+          
+          elements.profMatchCount.textContent = `${topMatches.length} Matches`;
+          renderProfessors(allProfessors, matchedProfessors);
+          showStatus('Resume analyzed successfully!', 'success');
+          
+          setTimeout(() => {
+            elements.analysisSectionResearch.classList.add('collapsed');
+            setTimeout(() => {
+              const firstMatchedProf = document.querySelector('.professor-card.matched');
+              if (firstMatchedProf) {
+                firstMatchedProf.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+            }, 400);
+          }, 2000);
+          
+        } catch (error) {
+          console.error(error);
+          showStatus(error.message || 'Analysis failed', 'error');
+          elements.analysisContentResearch.textContent = `Error: ${error.message}`;
+        } finally {
+          elements.analyzeBtnResearch.innerHTML = originalText;
+          elements.analyzeBtnResearch.disabled = false;
+        }
+      }
+    });
+
+    // Search and filters
+    [elements.jobSearchInput, elements.jobLocationFilter, elements.jobTypeFilter].forEach(el => {
+      el.addEventListener('input', applyJobFilters);
+    });
+
+    [elements.profSearchInput, elements.profInstitutionFilter, elements.profDepartmentFilter].forEach(el => {
+      el.addEventListener('input', applyProfessorFilters);
+    });
+
+    // Initialize
+    async function init() {
+      elements.jobsGrid.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon"><span class="loading"></span></div>
+          <h3 class="empty-title">Loading jobs...</h3>
+        </div>
+      `;
+
+      elements.profsGrid.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon"><span class="loading"></span></div>
+          <h3 class="empty-title">Loading research opportunities...</h3>
+        </div>
+      `;
+      
+      try {
+        // Fetch both jobs and professors
+        const [jobs, professors] = await Promise.all([
+          fetchFromSheet(JOBS_SHEET_URL),
+          fetchFromSheet(PROFESSORS_SHEET_URL)
+        ]);
+
+        allJobs = jobs;
+        allProfessors = professors;
+
+        // DEBUG: Check what columns we actually have
+        console.log('=== PROFESSOR DATA DEBUG ===');
+        console.log('Total professors loaded:', professors.length);
+        if (professors.length > 0) {
+          console.log('ALL Column names:', Object.keys(professors[0]));
+          console.log('First professor COMPLETE data:', professors[0]);
+          
+          // Check each possible column
+          Object.keys(professors[0]).forEach(key => {
+            console.log(`Column "${key}" = "${String(professors[0][key]).substring(0, 100)}"`);
+          });
+        }
+        console.log('=========================');
+
+        populateFilters();
+        applyJobFilters();
+        applyProfessorFilters();
+
+        elements.totalCount.innerHTML = `${allJobs.length} Jobs<span class="count-separator"> • </span>${allProfessors.length} Research`;
+        showStatus(`Welcome to CareerLift! Loaded ${allJobs.length} jobs and ${allProfessors.length} research opportunities.`, 'success');
+      } catch (error) {
+        elements.jobsGrid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <h3 class="empty-title">Failed to load data</h3>
+            <p class="empty-text">Please check your internet connection and refresh the page</p>
+          </div>
+        `;
+        
+        elements.profsGrid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <h3 class="empty-title">Failed to load data</h3>
+            <p class="empty-text">Please check your internet connection and refresh the page</p>
+          </div>
+        `;
+        
+        showStatus('Failed to load data', 'error');
+      }
+    }
+
+    init();
   </script>
+
+  <!-- Footer -->
+  <footer style="background: var(--bg-white); border-top: 1px solid var(--border); padding: 40px 20px; margin-top: 60px;">
+    <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+      <div style="margin-bottom: 20px;">
+        <a href="/" style="font-size: 24px; font-weight: 800; color: var(--primary); text-decoration: none;">
+          CareerLift
+        </a>
+      </div>
+      <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 10px;">
+        AI-Powered Jobs & Research Platform for Students
+      </p>
+      <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">
+        Connecting students with opportunities at top companies and 1500+ IIT professors
+      </p>
+      <div style="border-top: 1px solid var(--border); padding-top: 20px; margin-top: 20px;">
+        <p style="color: var(--text-muted); font-size: 12px;">
+          © 2026 CareerLift. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
