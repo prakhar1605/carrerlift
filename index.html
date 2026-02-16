@@ -3,48 +3,670 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NaukriChakri — Your Gateway to Dream Jobs</title>
-  <meta name="description" content="Professional student job portal with live updates from Google Sheets" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <title>NaukriChakri — AI-Powered Job Matching</title>
+  <meta name="description" content="Professional student job portal with AI-powered resume matching" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    /* (Same CSS as you already have, trimmed for brevity) */
-    :root{--primary:#0066ff;--primary-light:#338eff;--secondary:#00d4ff;--bg-main:#fafbfc;--bg-card:#fff;--text-primary:#1a1d29;--text-secondary:#4a5568;--border:#e4e7eb;--radius:20px;--radius-sm:14px;font-family:'Inter',sans-serif}
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%;background:#ffffff;color:var(--text-primary)}
-    .container{max-width:1280px;margin:0 auto;padding:24px}
-    .header{text-align:center;margin-bottom:24px}
-    .logo{font-size:36px;font-weight:900;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .tagline{color:var(--text-secondary);margin-top:6px}
-    .control-bar{display:grid;grid-template-columns:1fr auto auto auto;gap:10px;padding:12px;background:var(--bg-card);border-radius:var(--radius);border:2px solid var(--border);align-items:center;margin-bottom:20px}
-    input[type=search]{padding:12px 12px 12px 44px;border-radius:12px;border:1px solid transparent;background:#f5f7fa;width:100%}
-    select{padding:10px;border-radius:12px;border:1px solid var(--border)}
-    .job-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
-    .job-card{background:var(--bg-card);border-radius:16px;padding:18px;border:1px solid var(--border);box-shadow:0 6px 20px rgba(0,0,0,0.04)}
-    .company-name{font-weight:800;font-size:16px}
-    .role-title{font-weight:700;color:var(--text-secondary);margin-top:8px}
-    .meta-item{font-size:13px;color:var(--text-secondary);margin-top:8px}
-    .action-buttons{display:flex;gap:10px;margin-top:12px}
-    .btn{padding:10px 14px;border-radius:12px;border:none;cursor:pointer;font-weight:700}
-    .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff}
-    .btn-secondary{background:#f5f7fa;color:var(--text-primary);border:1px solid var(--border)}
-    .side-panel{margin-top:18px;padding:14px;background:#fff;border-radius:12px;border:1px solid var(--border)}
-    .analysis-result{white-space:pre-wrap;font-size:14px;color:var(--text-secondary)}
-    .matches-list{margin-top:12px;display:flex;flex-direction:column;gap:10px}
-    .match-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:10px;border:1px solid var(--border);background:#fafcff}
-    .badge{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:6px 10px;border-radius:999px;font-weight:800}
-    @media (max-width:900px){.control-bar{grid-template-columns:1fr;row-gap:8px}.job-grid{grid-template-columns:1fr}}
+    :root {
+      --primary: #ff6b35;
+      --primary-dark: #e85a28;
+      --secondary: #004e89;
+      --accent: #ffd23f;
+      --bg-main: #0a0e27;
+      --bg-card: #161b33;
+      --bg-elevated: #1f2642;
+      --text-primary: #f7f7ff;
+      --text-secondary: #a8b2d1;
+      --text-muted: #6b7a99;
+      --border: #2a3454;
+      --success: #00f5a0;
+      --warning: #ffd23f;
+      --error: #ff5757;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg-main);
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    /* Animated gradient background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(0, 78, 137, 0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 40% 20%, rgba(255, 210, 63, 0.08) 0%, transparent 50%);
+      animation: gradientShift 20s ease infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(10%, 10%) rotate(120deg); }
+      66% { transform: translate(-10%, 5%) rotate(240deg); }
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 32px 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+      animation: fadeInDown 0.8s ease;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      font-size: 56px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--primary), var(--accent), var(--secondary));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientFlow 6s ease infinite;
+      letter-spacing: -2px;
+      margin-bottom: 12px;
+    }
+
+    @keyframes gradientFlow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .tagline {
+      color: var(--text-secondary);
+      font-size: 18px;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+    }
+
+    /* Control Bar */
+    .control-bar {
+      display: grid;
+      grid-template-columns: 2fr auto auto auto;
+      gap: 12px;
+      padding: 20px;
+      background: var(--bg-card);
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      margin-bottom: 32px;
+      animation: fadeInUp 0.8s ease 0.2s backwards;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .search-wrapper {
+      position: relative;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 20px;
+    }
+
+    input[type=search] {
+      width: 100%;
+      padding: 14px 16px 14px 48px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      font-size: 15px;
+      font-family: 'Outfit', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    input[type=search]:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+    }
+
+    select {
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      font-size: 14px;
+      font-family: 'Outfit', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    select:hover {
+      border-color: var(--primary);
+    }
+
+    select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+    }
+
+    /* Resume Upload Section */
+    .resume-section {
+      background: linear-gradient(135deg, var(--bg-card), var(--bg-elevated));
+      border: 2px dashed var(--border);
+      border-radius: 24px;
+      padding: 32px;
+      margin-bottom: 32px;
+      animation: fadeInUp 0.8s ease 0.4s backwards;
+      transition: all 0.3s ease;
+    }
+
+    .resume-section:hover {
+      border-color: var(--primary);
+      box-shadow: 0 8px 32px rgba(255, 107, 53, 0.1);
+    }
+
+    .resume-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .resume-icon {
+      font-size: 48px;
+    }
+
+    .resume-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .resume-subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .resume-controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .file-input-wrapper {
+      position: relative;
+      overflow: hidden;
+    }
+
+    input[type=file] {
+      position: absolute;
+      left: -9999px;
+    }
+
+    .file-label {
+      display: inline-block;
+      padding: 14px 28px;
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .file-label:hover {
+      border-color: var(--primary);
+      background: var(--bg-card);
+    }
+
+    .file-name {
+      padding: 14px 20px;
+      background: var(--bg-elevated);
+      border-radius: 16px;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-family: 'Space Mono', monospace;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 14px 28px;
+      border-radius: 16px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 15px;
+      font-family: 'Outfit', sans-serif;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      box-shadow: 0 4px 16px rgba(255, 107, 53, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(255, 107, 53, 0.4);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-secondary {
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      background: var(--bg-card);
+    }
+
+    /* Loading Spinner */
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Paste Box */
+    .paste-box {
+      margin-top: 24px;
+      animation: fadeInUp 0.3s ease;
+    }
+
+    .paste-box textarea {
+      width: 100%;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      font-size: 14px;
+      font-family: 'Space Mono', monospace;
+      resize: vertical;
+      min-height: 200px;
+    }
+
+    .paste-box textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+    }
+
+    /* Main Layout */
+    .main-layout {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* Job Grid */
+    .job-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+      animation: fadeInUp 0.8s ease 0.6s backwards;
+    }
+
+    .job-card {
+      background: var(--bg-card);
+      border-radius: 20px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .job-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+
+    .job-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(255, 107, 53, 0.2);
+      border-color: var(--primary);
+    }
+
+    .job-card:hover::before {
+      transform: translateX(0);
+    }
+
+    .company-name {
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .role-title {
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .meta-item {
+      font-size: 13px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .job-description {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 16px 0;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .btn-apply {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+    }
+
+    /* Side Panel */
+    .side-panel {
+      background: var(--bg-card);
+      border-radius: 24px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      position: sticky;
+      top: 32px;
+      animation: fadeInUp 0.8s ease 0.8s backwards;
+    }
+
+    .panel-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .analysis-result {
+      padding: 20px;
+      background: var(--bg-elevated);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      white-space: pre-wrap;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .analysis-result::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .analysis-result::-webkit-scrollbar-track {
+      background: var(--bg-card);
+      border-radius: 4px;
+    }
+
+    .analysis-result::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    .analysis-result::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+
+    .matches-list {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .match-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      border-radius: 16px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+
+    .match-item:hover {
+      border-color: var(--primary);
+      background: var(--bg-card);
+      transform: translateX(4px);
+    }
+
+    .match-info {
+      flex: 1;
+    }
+
+    .match-company {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .match-role {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .match-score {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: var(--bg-main);
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 14px;
+      margin-right: 12px;
+    }
+
+    .badge {
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      color: white;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 15px;
+      display: inline-block;
+      box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+    }
+
+    /* Status Messages */
+    .status-message {
+      padding: 16px 20px;
+      border-radius: 16px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: fadeInUp 0.3s ease;
+    }
+
+    .status-success {
+      background: rgba(0, 245, 160, 0.1);
+      border: 1px solid var(--success);
+      color: var(--success);
+    }
+
+    .status-error {
+      background: rgba(255, 87, 87, 0.1);
+      border: 1px solid var(--error);
+      color: var(--error);
+    }
+
+    .status-info {
+      background: rgba(255, 210, 63, 0.1);
+      border: 1px solid var(--warning);
+      color: var(--warning);
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .side-panel {
+        position: relative;
+        top: 0;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .control-bar {
+        grid-template-columns: 1fr;
+      }
+
+      .job-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .logo {
+        font-size: 42px;
+      }
+    }
+
+    /* Empty State */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--text-muted);
+    }
+
+    .empty-state-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <header class="header">
       <h1 class="logo">NaukriChakri</h1>
-      <p class="tagline">Discover jobs in real-time — now with AI resume matching</p>
+      <p class="tagline">AI-Powered Job Matching for Your Dream Career 🚀</p>
     </header>
+
+    <!-- Status messages -->
+    <div id="statusContainer"></div>
 
     <!-- Controls -->
     <div class="control-bar" role="region" aria-label="Search and filters">
-      <div style="position:relative">
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
         <input id="search" type="search" placeholder="Search companies, roles, locations..." aria-label="Search jobs" />
       </div>
 
@@ -62,299 +684,502 @@
       </select>
     </div>
 
-    <!-- Resume Uploader / Analyzer -->
-    <div style="display:flex;gap:12px;align-items:center;margin-bottom:18px;flex-wrap:wrap">
-      <input id="resumeFile" type="file" accept=".txt,.md,.json,.text" />
-      <button id="uploadAnalyzeBtn" class="btn btn-primary">Upload & Analyze</button>
-      <button id="pasteOpenBtn" class="btn btn-secondary">Paste Resume</button>
-      <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
-        <div class="badge" id="matchCount">— Matches</div>
-      </div>
-    </div>
-
-    <!-- Optional paste modal (simple) -->
-    <div id="pasteBox" style="display:none;margin-bottom:16px">
-      <textarea id="resumePaste" rows="6" style="width:100%;padding:12px;border-radius:10px;border:1px solid var(--border)"></textarea>
-      <div style="display:flex;gap:10px;margin-top:8px">
-        <button id="pasteAnalyzeBtn" class="btn btn-primary">Analyze Pasted Resume</button>
-        <button id="pasteCancelBtn" class="btn btn-secondary">Cancel</button>
-      </div>
-    </div>
-
-    <!-- Two-column layout: left = jobs, right = AI + matches -->
-    <div style="display:grid;grid-template-columns:1fr 350px;gap:20px;align-items:start">
-      <!-- Left: job grid -->
-      <div>
-        <div id="grid" class="job-grid" role="list" aria-live="polite">
-          <!-- job cards injected here -->
+    <!-- Resume Upload Section -->
+    <div class="resume-section">
+      <div class="resume-header">
+        <div class="resume-icon">🎯</div>
+        <div>
+          <div class="resume-title">AI Resume Analyzer</div>
+          <div class="resume-subtitle">Upload your resume and let AI find your perfect matches</div>
         </div>
       </div>
 
-      <!-- Right: AI Analysis & Top matches -->
-      <aside class="side-panel" aria-label="AI Analysis and Matches">
-        <h3 style="margin-bottom:8px">AI Resume Analysis</h3>
-        <div id="analysis" class="analysis-result">Upload or paste your resume — click Analyze to get suggestions.</div>
+      <div class="resume-controls">
+        <div class="file-input-wrapper">
+          <input id="resumeFile" type="file" accept=".txt,.md,.json,.text,.pdf" />
+          <label for="resumeFile" class="file-label">📁 Choose File</label>
+        </div>
+        <div id="fileName" class="file-name" style="display: none;"></div>
+        <button id="uploadAnalyzeBtn" class="btn btn-primary" disabled>
+          <span>Analyze Resume</span>
+        </button>
+        <button id="pasteOpenBtn" class="btn btn-secondary">📝 Paste Resume</button>
+        <div style="margin-left: auto;">
+          <div class="badge" id="matchCount">0 Matches</div>
+        </div>
+      </div>
 
-        <h4 style="margin-top:12px">Top Matches</h4>
+      <!-- Paste Box -->
+      <div id="pasteBox" class="paste-box" style="display: none;">
+        <textarea id="resumePaste" placeholder="Paste your resume text here..." rows="8"></textarea>
+        <div style="display: flex; gap: 12px; margin-top: 12px;">
+          <button id="pasteAnalyzeBtn" class="btn btn-primary">Analyze Pasted Resume</button>
+          <button id="pasteCancelBtn" class="btn btn-secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+      <!-- Job Grid -->
+      <div>
+        <div id="grid" class="job-grid" role="list" aria-live="polite">
+          <!-- Jobs will be inserted here -->
+        </div>
+      </div>
+
+      <!-- Side Panel -->
+      <aside class="side-panel" aria-label="AI Analysis and Matches">
+        <div class="panel-title">🤖 AI Analysis</div>
+        <div id="analysis" class="analysis-result">
+          Upload or paste your resume to get AI-powered job recommendations and skill analysis.
+        </div>
+
+        <div class="panel-title" style="margin-top: 24px;">⭐ Top Matches</div>
         <div id="matches" class="matches-list">
-          <!-- top matches injected here -->
+          <div style="text-align: center; padding: 20px; color: var(--text-muted);">
+            No matches yet. Upload your resume to find perfect jobs!
+          </div>
         </div>
       </aside>
     </div>
 
-    <footer style="margin-top:28px;text-align:center;color:#718096">
-      <small>Make sure your Google Sheet is published and shared (Anyone with link - Viewer). <strong>Vercel API</strong> must be deployed.</small>
+    <footer>
+      <p>Powered by AI • Make sure your Google Sheet is published and API is deployed on Vercel</p>
+      <p style="margin-top: 8px; opacity: 0.7;">NaukriChakri © 2026</p>
     </footer>
   </div>
 
   <script>
     /***** CONFIG *****/
-    const SHEET_ID = '1X412u-aXPAzkKqwRn0PgvbjcWMaivWJx-FlyHb6LARc'; // update if needed
+    const SHEET_ID = '1X412u-aXPAzkKqwRn0PgvbjcWMaivWJx-FlyHb6LARc';
     const GID = '0';
     const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
 
-    /***** UTILITIES *****/
-    function sanitizeText(s=''){ return String(s).replace(/\s+/g,' ').trim(); }
-
-    // Simple keyword extractor: top N frequent words length>3 (excludes common stopwords)
-    function extractKeywords(text, topN=30) {
-      if (!text) return [];
-      const stop = new Set(['which','that','with','this','from','your','about','their','have','will','they','would','there','these','those','have','able','please','including','experience','role','work','workplace','skills','requirement']);
-      const words = text.toLowerCase().match(/\b[a-zA-Z0-9+#.+-]{4,}\b/g) || [];
-      const freq = {};
-      words.forEach(w => {
-        if (stop.has(w)) return;
-        freq[w] = (freq[w]||0)+1;
-      });
-      return Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,topN).map(x=>x[0]);
+    /***** UTILITY FUNCTIONS *****/
+    function sanitizeText(s = '') {
+      return String(s).replace(/\s+/g, ' ').trim();
     }
 
-    function scoreJob(job, keywords){
-      if (!keywords || keywords.length===0) return 0;
-      const hay = `${job.Company||''} ${job.Role||''} ${job.Description||''} ${job.JobType||''}`.toLowerCase();
-      let score = 0;
-      keywords.forEach(k => {
-        if (hay.includes(k)) score += 1;
+    function showStatus(message, type = 'info') {
+      const container = document.getElementById('statusContainer');
+      const statusDiv = document.createElement('div');
+      statusDiv.className = `status-message status-${type}`;
+      
+      const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+      statusDiv.innerHTML = `<span style="font-size: 20px;">${icon}</span><span>${message}</span>`;
+      
+      container.appendChild(statusDiv);
+      
+      setTimeout(() => {
+        statusDiv.style.animation = 'fadeInUp 0.3s ease reverse';
+        setTimeout(() => statusDiv.remove(), 300);
+      }, 5000);
+    }
+
+    // Extract keywords from resume text
+    function extractKeywords(text, topN = 30) {
+      if (!text) return [];
+      const stopWords = new Set(['which', 'that', 'with', 'this', 'from', 'your', 'about', 
+        'their', 'have', 'will', 'they', 'would', 'there', 'these', 'those', 'able', 
+        'please', 'including', 'experience', 'role', 'work', 'workplace', 'skills', 'requirement']);
+      
+      const words = text.toLowerCase().match(/\b[a-zA-Z0-9+#.+-]{4,}\b/g) || [];
+      const freq = {};
+      
+      words.forEach(w => {
+        if (!stopWords.has(w)) {
+          freq[w] = (freq[w] || 0) + 1;
+        }
       });
-      // small bonus if role word occurs
+      
+      return Object.entries(freq)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, topN)
+        .map(x => x[0]);
+    }
+
+    // Score job based on keywords
+    function scoreJob(job, keywords) {
+      if (!keywords || keywords.length === 0) return 0;
+      
+      const haystack = `${job.Company || ''} ${job.Role || ''} ${job.Description || ''} ${job.JobType || ''}`.toLowerCase();
+      let score = 0;
+      
+      keywords.forEach(keyword => {
+        if (haystack.includes(keyword)) {
+          score += 1;
+        }
+      });
+      
+      // Bonus for role matches
       if (job.Role) {
-        const roleWords = (job.Role||'').toLowerCase().split(/\s+/);
-        roleWords.forEach(rw => { if (keywords.includes(rw)) score += 0.5; });
+        const roleWords = job.Role.toLowerCase().split(/\s+/);
+        roleWords.forEach(word => {
+          if (keywords.includes(word)) {
+            score += 0.5;
+          }
+        });
       }
+      
       return score;
     }
 
     /***** SHEET FETCH *****/
-    async function fetchSheet(){
+    async function fetchSheet() {
       try {
-        const r = await fetch(SHEET_URL);
-        const t = await r.text();
-        const jsonText = t.substring(t.indexOf('{'), t.lastIndexOf(')'));
+        const response = await fetch(SHEET_URL);
+        const text = await response.text();
+        const jsonText = text.substring(text.indexOf('{'), text.lastIndexOf(')'));
         const parsed = JSON.parse(jsonText);
-        const cols = parsed.table.cols.map(c => (c.label||'').trim());
-        const rows = parsed.table.rows.map(row => row.c ? row.c.map(cell => cell ? cell.v : '') : []);
-        const items = rows.map(rw => {
-          const o = {};
-          cols.forEach((c,i) => { o[c||`col${i}`] = rw[i] || ''; });
-          return o;
-        }).filter(it => it['Company'] && String(it['Company']).trim() !== '');
+        
+        const cols = parsed.table.cols.map(c => (c.label || '').trim());
+        const rows = parsed.table.rows.map(row => 
+          row.c ? row.c.map(cell => cell ? cell.v : '') : []
+        );
+        
+        const items = rows
+          .map(row => {
+            const obj = {};
+            cols.forEach((col, i) => {
+              obj[col || `col${i}`] = row[i] || '';
+            });
+            return obj;
+          })
+          .filter(item => item['Company'] && String(item['Company']).trim() !== '');
+        
         return items;
-      } catch (e) {
-        console.error('sheet fetch error', e);
-        throw e;
+      } catch (error) {
+        console.error('Sheet fetch error:', error);
+        throw new Error('Failed to load jobs from Google Sheets');
       }
     }
 
-    /***** RENDERING JOBS *****/
-    function createJobCard(job){
-      const div = document.createElement('div');
-      div.className = 'job-card';
-      div.tabIndex = 0;
-      div.innerHTML = `
-        <div class="company-name">${job.Company || '—'}</div>
+    /***** JOB RENDERING *****/
+    function createJobCard(job) {
+      const card = document.createElement('div');
+      card.className = 'job-card';
+      card.tabIndex = 0;
+      
+      card.innerHTML = `
+        <div class="company-name">${job.Company || 'Company'}</div>
         <div class="role-title">${job.Role || 'Position'}</div>
-        <div class="meta-item">📍 ${job.Location || 'TBD'} &nbsp; • &nbsp; ${job.Stipend || ''}</div>
-        <div style="margin-top:10px;font-size:13px;color:#59606b">${(job.Description||'').slice(0,200)}</div>
+        <div class="meta-row">
+          <div class="meta-item">📍 ${job.Location || 'Remote'}</div>
+          ${job.Stipend ? `<div class="meta-item">💰 ${job.Stipend}</div>` : ''}
+          ${job.JobType ? `<div class="meta-item">🏷️ ${job.JobType}</div>` : ''}
+        </div>
+        <div class="job-description">${(job.Description || 'No description available').slice(0, 200)}${job.Description && job.Description.length > 200 ? '...' : ''}</div>
         <div class="action-buttons">
-          ${job.ApplyLink ? `<a class="btn btn-primary" href="${job.ApplyLink}" target="_blank" rel="noopener noreferrer">Apply</a>` : ''}
-          ${job.Email ? `<a class="btn btn-secondary" href="mailto:${job.Email}">Email</a>` : ''}
+          ${job.ApplyLink ? `<a class="btn btn-primary btn-apply" href="${job.ApplyLink}" target="_blank" rel="noopener noreferrer">Apply Now</a>` : ''}
+          ${job.Email ? `<a class="btn btn-secondary btn-apply" href="mailto:${job.Email}">Email</a>` : ''}
         </div>
       `;
-      return div;
+      
+      return card;
     }
 
-    function renderJobs(jobs){
+    function renderJobs(jobs) {
       const grid = document.getElementById('grid');
       grid.innerHTML = '';
-      if (!jobs || jobs.length===0) {
-        grid.innerHTML = '<div style="padding:60px;text-align:center;color:#9aa4b2">No jobs found</div>';
-        return;
-      }
-      jobs.forEach(j => grid.appendChild(createJobCard(j)));
-    }
-
-    /***** FILTERS + SEARCH *****/
-    function populateFilters(jobs){
-      const locSet = new Set(), typeSet = new Set();
-      jobs.forEach(j => { if (j.Location) locSet.add(j.Location); if (j.JobType) typeSet.add(j.JobType); });
-      const locSel = document.getElementById('locationFilter'); locSel.innerHTML = '<option value="">All Locations</option>';
-      Array.from(locSet).sort().forEach(l => { const o = document.createElement('option'); o.value=l; o.textContent=l; locSel.appendChild(o); });
-      const tSel = document.getElementById('typeFilter'); tSel.innerHTML = '<option value="">All Job Types</option>';
-      Array.from(typeSet).sort().forEach(t => { const o = document.createElement('option'); o.value=t; o.textContent=t; tSel.appendChild(o); });
-    }
-
-    function setupControls(allJobs){
-      const search = document.getElementById('search');
-      const locSel = document.getElementById('locationFilter');
-      const typeSel = document.getElementById('typeFilter');
-      const sortSel = document.getElementById('sortSelect');
-
-      function apply(){
-        const q = search.value.trim().toLowerCase();
-        const loc = locSel.value;
-        const typ = typeSel.value;
-        const sort = sortSel.value;
-        let filtered = allJobs.filter(job => {
-          const hay = `${job.Company} ${job.Role} ${job.Location} ${job.Stipend} ${job.Description}`.toLowerCase();
-          const okQ = !q || hay.includes(q);
-          const okLoc = !loc || (job.Location === loc);
-          const okType = !typ || (job.JobType === typ);
-          return okQ && okLoc && okType;
-        });
-        filtered.sort((a,b) => {
-          const pa = parseDate(a.PostedDate), pb = parseDate(b.PostedDate);
-          return sort === 'old' ? pa - pb : pb - pa;
-        });
-        renderJobs(filtered);
-      }
-
-      [search, locSel, typeSel, sortSel].forEach(el => el.addEventListener('input', apply));
-      apply();
-    }
-
-    /***** DATE PARSE (robust) *****/
-    function parseDate(ds){
-      if (!ds) return 0;
-      const t = Date.parse(ds);
-      if (!isNaN(t)) return t;
-      const parts = String(ds).trim().split(/[\s,/-]+/).filter(Boolean);
-      if (parts.length >=3){
-        const d = parseInt(parts[0]);
-        const m = {'jan':0,'feb':1,'mar':2,'apr':3,'may':4,'jun':5,'jul':6,'aug':7,'sep':8,'oct':9,'nov':10,'dec':11}[parts[1].substr(0,3).toLowerCase()] || 0;
-        const y = parseInt(parts[2]);
-        return new Date(y,m,d).getTime();
-      }
-      return 0;
-    }
-
-    /***** AI ANALYSIS (call Vercel API) *****/
-    async function callAnalyzeAPI(text){
-      try {
-        const res = await fetch('/api/analyze', {
-          method: 'POST',
-          headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({ resume: text })
-        });
-        if (!res.ok) {
-          const err = await res.json().catch(()=>({message:'server error'}));
-          throw new Error(err.error || err.message || 'Analysis failed');
-        }
-        const data = await res.json();
-        return data.result || '';
-      } catch (e) {
-        console.error('analyze api error', e);
-        throw e;
-      }
-    }
-
-    /***** MATCHING LOGIC: take AI text => keywords => score jobs => show top N *****/
-    function showMatches(aiText, jobs, topN=6){
-      const keywords = extractKeywords(aiText, 40);
-      const scored = jobs.map(j => ({ j, score: scoreJob(j, keywords) }));
-      scored.sort((a,b)=>b.score - a.score);
-      const top = scored.filter(s=>s.score>0).slice(0, topN);
-      const matchesEl = document.getElementById('matches');
-      matchesEl.innerHTML = '';
-      document.getElementById('matchCount').textContent = `${top.length} Matches`;
-      if (top.length === 0) {
-        matchesEl.innerHTML = '<div style="color:#9aa4b2">No strong matches found — try relaxing filters or check other jobs</div>';
-        return;
-      }
-      top.forEach(item => {
-        const el = document.createElement('div'); el.className='match-item';
-        el.innerHTML = `
-          <div>
-            <div style="font-weight:800">${item.j.Company}</div>
-            <div style="font-size:13px;color:#59606b">${item.j.Role || ''} • ${item.j.Location || ''}</div>
-          </div>
-          <div style="text-align:right">
-            <div class="badge">${item.score}</div>
-            ${item.j.ApplyLink ? `<div style="margin-top:6px"><a class="btn btn-primary" href="${item.j.ApplyLink}" target="_blank" rel="noopener noreferrer">Apply</a></div>` : ''}
+      
+      if (!jobs || jobs.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">🔍</div>
+            <h3 style="margin-bottom: 8px;">No jobs found</h3>
+            <p>Try adjusting your filters or search terms</p>
           </div>
         `;
-        matchesEl.appendChild(el);
+        return;
+      }
+      
+      jobs.forEach(job => grid.appendChild(createJobCard(job)));
+    }
+
+    /***** FILTERS & SEARCH *****/
+    function populateFilters(jobs) {
+      const locations = new Set();
+      const types = new Set();
+      
+      jobs.forEach(job => {
+        if (job.Location) locations.add(job.Location);
+        if (job.JobType) types.add(job.JobType);
+      });
+      
+      const locationSelect = document.getElementById('locationFilter');
+      locationSelect.innerHTML = '<option value="">All Locations</option>';
+      Array.from(locations).sort().forEach(loc => {
+        const option = document.createElement('option');
+        option.value = loc;
+        option.textContent = loc;
+        locationSelect.appendChild(option);
+      });
+      
+      const typeSelect = document.getElementById('typeFilter');
+      typeSelect.innerHTML = '<option value="">All Job Types</option>';
+      Array.from(types).sort().forEach(type => {
+        const option = document.createElement('option');
+        option.value = type;
+        option.textContent = type;
+        typeSelect.appendChild(option);
       });
     }
 
-    /***** UI: Analyze flow (upload or paste) *****/
-    document.getElementById('uploadAnalyzeBtn').addEventListener('click', async () => {
-      const f = document.getElementById('resumeFile').files[0];
-      if (!f) return alert('Choose a .txt file or paste your resume using "Paste Resume"');
-      // best for .txt
+    function setupControls(allJobs) {
+      const search = document.getElementById('search');
+      const locationFilter = document.getElementById('locationFilter');
+      const typeFilter = document.getElementById('typeFilter');
+      const sortSelect = document.getElementById('sortSelect');
+      
+      function applyFilters() {
+        const query = search.value.trim().toLowerCase();
+        const location = locationFilter.value;
+        const type = typeFilter.value;
+        const sort = sortSelect.value;
+        
+        let filtered = allJobs.filter(job => {
+          const haystack = `${job.Company} ${job.Role} ${job.Location} ${job.Stipend} ${job.Description}`.toLowerCase();
+          const matchesQuery = !query || haystack.includes(query);
+          const matchesLocation = !location || job.Location === location;
+          const matchesType = !type || job.JobType === type;
+          
+          return matchesQuery && matchesLocation && matchesType;
+        });
+        
+        filtered.sort((a, b) => {
+          const dateA = parseDate(a.PostedDate);
+          const dateB = parseDate(b.PostedDate);
+          return sort === 'old' ? dateA - dateB : dateB - dateA;
+        });
+        
+        renderJobs(filtered);
+      }
+      
+      [search, locationFilter, typeFilter, sortSelect].forEach(el => {
+        el.addEventListener('input', applyFilters);
+      });
+      
+      applyFilters();
+    }
+
+    /***** DATE PARSING *****/
+    function parseDate(dateStr) {
+      if (!dateStr) return 0;
+      
+      const timestamp = Date.parse(dateStr);
+      if (!isNaN(timestamp)) return timestamp;
+      
+      const parts = String(dateStr).trim().split(/[\s,/-]+/).filter(Boolean);
+      if (parts.length >= 3) {
+        const day = parseInt(parts[0]);
+        const monthMap = {
+          'jan': 0, 'feb': 1, 'mar': 2, 'apr': 3, 'may': 4, 'jun': 5,
+          'jul': 6, 'aug': 7, 'sep': 8, 'oct': 9, 'nov': 10, 'dec': 11
+        };
+        const month = monthMap[parts[1].substr(0, 3).toLowerCase()] || 0;
+        const year = parseInt(parts[2]);
+        return new Date(year, month, day).getTime();
+      }
+      
+      return 0;
+    }
+
+    /***** AI ANALYSIS *****/
+    async function callAnalyzeAPI(resumeText) {
       try {
-        const text = await f.text();
-        await analyzeAndMatch(text);
-      } catch (e) {
-        alert('Could not read file. Use plain .txt or paste the resume text.');
+        const response = await fetch('/api/analyze', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ resume: resumeText })
+        });
+        
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({ message: 'Server error' }));
+          throw new Error(errorData.error || errorData.message || 'Analysis failed');
+        }
+        
+        const data = await response.json();
+        return data.result || 'Analysis completed but no result returned';
+      } catch (error) {
+        console.error('API Error:', error);
+        throw error;
+      }
+    }
+
+    /***** MATCHING LOGIC *****/
+    function showMatches(aiText, jobs, topN = 6) {
+      const keywords = extractKeywords(aiText, 40);
+      const scored = jobs.map(job => ({
+        job,
+        score: scoreJob(job, keywords)
+      }));
+      
+      scored.sort((a, b) => b.score - a.score);
+      const topMatches = scored.filter(s => s.score > 0).slice(0, topN);
+      
+      const matchesEl = document.getElementById('matches');
+      matchesEl.innerHTML = '';
+      
+      document.getElementById('matchCount').textContent = `${topMatches.length} Matches`;
+      
+      if (topMatches.length === 0) {
+        matchesEl.innerHTML = `
+          <div style="text-align: center; padding: 20px; color: var(--text-muted);">
+            No strong matches found. Try exploring all jobs below!
+          </div>
+        `;
+        return;
+      }
+      
+      topMatches.forEach(item => {
+        const matchDiv = document.createElement('div');
+        matchDiv.className = 'match-item';
+        
+        matchDiv.innerHTML = `
+          <div class="match-info">
+            <div class="match-company">${item.job.Company}</div>
+            <div class="match-role">${item.job.Role || ''} • ${item.job.Location || ''}</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div class="match-score">${Math.round(item.score)}</div>
+            ${item.job.ApplyLink ? `<a class="btn btn-primary" style="padding: 8px 16px; font-size: 13px;" href="${item.job.ApplyLink}" target="_blank" rel="noopener noreferrer">Apply</a>` : ''}
+          </div>
+        `;
+        
+        matchesEl.appendChild(matchDiv);
+      });
+    }
+
+    /***** FILE UPLOAD HANDLING *****/
+    const fileInput = document.getElementById('resumeFile');
+    const fileNameDisplay = document.getElementById('fileName');
+    const uploadBtn = document.getElementById('uploadAnalyzeBtn');
+    
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        fileNameDisplay.textContent = `📄 ${file.name}`;
+        fileNameDisplay.style.display = 'block';
+        uploadBtn.disabled = false;
+      } else {
+        fileNameDisplay.style.display = 'none';
+        uploadBtn.disabled = true;
       }
     });
 
+    /***** ANALYZE RESUME *****/
+    async function analyzeAndMatch(resumeText) {
+      const analysisEl = document.getElementById('analysis');
+      const uploadBtn = document.getElementById('uploadAnalyzeBtn');
+      const pasteBtn = document.getElementById('pasteAnalyzeBtn');
+      
+      // Show loading state
+      const originalText = analysisEl.textContent;
+      analysisEl.innerHTML = '<div style="text-align: center;"><div class="spinner"></div>Analyzing your resume with AI...</div>';
+      uploadBtn.disabled = true;
+      pasteBtn.disabled = true;
+      
+      try {
+        const aiResult = await callAnalyzeAPI(resumeText);
+        analysisEl.textContent = aiResult;
+        
+        // Fetch jobs and show matches
+        const jobs = window._jobsCache || await fetchSheet().then(js => {
+          window._jobsCache = js;
+          return js;
+        });
+        
+        showMatches(aiResult, jobs, 6);
+        showStatus('Resume analyzed successfully! Check your top matches.', 'success');
+        
+      } catch (error) {
+        analysisEl.textContent = `❌ Analysis failed: ${error.message}\n\nPlease check:\n1. Vercel API is deployed\n2. OPENROUTER_API_KEY is set in environment variables\n3. API endpoint is accessible`;
+        showStatus('Analysis failed. Please check your API configuration.', 'error');
+      } finally {
+        uploadBtn.disabled = false;
+        pasteBtn.disabled = false;
+      }
+    }
+
+    /***** UPLOAD BUTTON *****/
+    uploadBtn.addEventListener('click', async () => {
+      const file = fileInput.files[0];
+      if (!file) {
+        showStatus('Please select a file first', 'error');
+        return;
+      }
+      
+      try {
+        const text = await file.text();
+        await analyzeAndMatch(text);
+      } catch (error) {
+        showStatus('Could not read file. Please use a plain text file.', 'error');
+      }
+    });
+
+    /***** PASTE RESUME *****/
     document.getElementById('pasteOpenBtn').addEventListener('click', () => {
-      const box = document.getElementById('pasteBox');
-      box.style.display = 'block';
+      const pasteBox = document.getElementById('pasteBox');
+      pasteBox.style.display = 'block';
       document.getElementById('resumePaste').focus();
     });
+
     document.getElementById('pasteCancelBtn').addEventListener('click', () => {
       document.getElementById('pasteBox').style.display = 'none';
       document.getElementById('resumePaste').value = '';
     });
+
     document.getElementById('pasteAnalyzeBtn').addEventListener('click', async () => {
-      const t = document.getElementById('resumePaste').value.trim();
-      if (!t) return alert('Paste your resume text first.');
-      await analyzeAndMatch(t);
+      const text = document.getElementById('resumePaste').value.trim();
+      if (!text) {
+        showStatus('Please paste your resume text first', 'error');
+        return;
+      }
+      
+      await analyzeAndMatch(text);
       document.getElementById('pasteBox').style.display = 'none';
     });
 
-    async function analyzeAndMatch(text){
-      const analysisEl = document.getElementById('analysis');
-      analysisEl.textContent = 'Analyzing — please wait...';
-      try {
-        const aiResult = await callAnalyzeAPI(text);
-        analysisEl.textContent = aiResult;
-        // fetch jobs (cached)
-        const jobs = window._jobsCache || await fetchSheet().then(js => { window._jobsCache = js; return js });
-        showMatches(aiResult, jobs, 6);
-      } catch (e) {
-        analysisEl.textContent = 'AI analysis failed: ' + (e.message || e);
-      }
-    }
-
-    /***** INIT: fetch sheet, populate UI *****/
-    async function init(){
+    /***** INITIALIZATION *****/
+    async function init() {
       const grid = document.getElementById('grid');
-      grid.innerHTML = '<div style="padding:40px;text-align:center;color:#9aa4b2">Loading jobs...</div>';
+      grid.innerHTML = `
+        <div class="empty-state">
+          <div class="spinner" style="width: 48px; height: 48px; border-width: 5px;"></div>
+          <h3 style="margin-top: 24px;">Loading jobs...</h3>
+        </div>
+      `;
+      
       try {
         const jobs = await fetchSheet();
         window._jobsCache = jobs;
+        
         populateFilters(jobs);
         setupControls(jobs);
-      } catch (e) {
-        grid.innerHTML = `<div style="padding:40px;text-align:center;color:#c04">Unable to load jobs — check sheet publish/share settings.<br/><small>${e.message || ''}</small></div>`;
-        console.error(e);
+        
+        showStatus(`Successfully loaded ${jobs.length} jobs!`, 'success');
+      } catch (error) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">❌</div>
+            <h3 style="margin-bottom: 8px;">Unable to load jobs</h3>
+            <p>Please check your Google Sheet settings:</p>
+            <ul style="text-align: left; margin-top: 12px; color: var(--text-secondary);">
+              <li>Sheet must be published to web</li>
+              <li>Sharing set to "Anyone with link"</li>
+              <li>Check the SHEET_ID in code</li>
+            </ul>
+            <p style="margin-top: 12px; font-family: 'Space Mono', monospace; font-size: 12px; color: var(--error);">${error.message}</p>
+          </div>
+        `;
+        showStatus('Failed to load jobs. Check console for details.', 'error');
       }
     }
 
-    // start
+    // Start the application
     init();
   </script>
 </body>
