@@ -1465,6 +1465,7 @@
 
       const hasMatches = Object.keys(matchScores).length > 0;
 
+      // Sort jobs - latest first (by row number/index from sheet)
       const sortedJobs = [...jobs].sort((a, b) => {
         const keyA = a.Company + a.Role;
         const keyB = b.Company + b.Role;
@@ -1472,26 +1473,26 @@
         const scoreB = matchScores[keyB] || 0;
 
         if (hasMatches) {
+          // If AI matching is active, sort by match score first
           if (scoreB !== scoreA) {
             return scoreB - scoreA;
           }
         }
         
-        return 0;
+        // Otherwise, keep reverse order (latest from sheet = first in list)
+        // Jobs array is already in sheet order, so reverse index = latest first
+        const indexA = jobs.indexOf(a);
+        const indexB = jobs.indexOf(b);
+        return indexB - indexA; // Higher index = newer job = comes first
       });
 
-      elements.jobsGrid.innerHTML = sortedJobs.map(job => {
+      elements.jobsGrid.innerHTML = sortedJobs.map((job, displayIndex) => {
         const key = job.Company + job.Role;
         const score = matchScores[key] || 0;
         const isMatched = score > 0;
         
-        // Check if job is trending (posted in last 7 days)
-        const isTrending = job.PostedDate ? (() => {
-          const postedDate = new Date(job.PostedDate);
-          const now = new Date();
-          const daysDiff = (now - postedDate) / (1000 * 60 * 60 * 24);
-          return daysDiff <= 7;
-        })() : false;
+        // Mark top 25 jobs as trending (after sorting)
+        const isTrending = displayIndex < 25;
         
         return `
           <div class="job-card ${isMatched ? 'matched' : ''}">
