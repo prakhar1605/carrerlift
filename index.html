@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NaukriChakri - Jobs & Research Internships</title>
-  <meta name="description" content="Find jobs and research internships with AI-powered resume matching" />
+  <title>CareerLift - AI-Powered Jobs & Research Platform</title>
+  <meta name="description" content="Find jobs and research internships with AI-powered resume matching. Connect with 1500+ IIT professors and top companies." />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -62,8 +62,17 @@
     .logo {
       font-size: 24px;
       font-weight: 800;
-      color: var(--primary);
+      background: linear-gradient(135deg, #0A66C2 0%, #378FE9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+      filter: brightness(1.2);
     }
 
     .header-actions {
@@ -860,7 +869,7 @@
   <!-- Header -->
   <header class="header">
     <div class="header-content">
-      <a href="/" class="logo">NaukriChakri</a>
+      <a href="/" class="logo">CareerLift</a>
       <div class="header-actions">
         <span id="totalCount" class="results-count">Loading...</span>
       </div>
@@ -916,8 +925,8 @@
 
       <!-- Resume Upload Card -->
       <div class="resume-card">
-        <h2 class="resume-card-title">Get Personalized Job Matches</h2>
-        <p class="resume-card-subtitle">Upload your resume and let AI find the best opportunities for you</p>
+        <h2 class="resume-card-title">Get AI-Powered Job Matches</h2>
+        <p class="resume-card-subtitle">Upload your resume and let our AI find the perfect opportunities for you</p>
         
         <input type="file" id="resumeFile" accept=".pdf,.txt,.doc,.docx,application/pdf" />
         
@@ -947,7 +956,7 @@
       <div class="analysis-section" id="analysisSection">
         <div class="analysis-header" id="analysisHeader">
           <h3 class="analysis-title">
-            <i class="fas fa-robot"></i> AI Analysis Results
+            AI Analysis Results
           </h3>
           <div style="display: flex; gap: 12px; align-items: center;">
             <span id="jobMatchCount" class="match-count">0 Matches</span>
@@ -1001,8 +1010,8 @@
 
       <!-- Resume Upload Card (Shared) -->
       <div class="resume-card">
-        <h2 class="resume-card-title">Get Personalized Research Matches</h2>
-        <p class="resume-card-subtitle">Upload your resume and let AI match you with the best research professors</p>
+        <h2 class="resume-card-title">Get AI-Powered Research Matches</h2>
+        <p class="resume-card-subtitle">Upload your resume and let our AI match you with 1500+ IIT professors</p>
         
         <div class="upload-area" id="uploadAreaResearch">
           <div class="upload-icon">
@@ -1030,7 +1039,7 @@
       <div class="analysis-section" id="analysisSectionResearch">
         <div class="analysis-header" id="analysisHeaderResearch">
           <h3 class="analysis-title">
-            <i class="fas fa-robot"></i> AI Analysis Results
+            AI Analysis Results
           </h3>
           <div style="display: flex; gap: 12px; align-items: center;">
             <span id="profMatchCount" class="match-count">0 Matches</span>
@@ -1508,7 +1517,7 @@
       const matchedCount = Object.keys(matchScores).filter(key => matchScores[key] > 0).length;
       
       if (matchedCount > 0) {
-        elements.jobsTitle.innerHTML = `<i class="fas fa-star" style="color: var(--primary);"></i> Your Top Matches <span style="color: var(--primary); font-weight: 800;">(${matchedCount})</span> & All Jobs`;
+        elements.jobsTitle.innerHTML = `Your Top Matches <span style="color: var(--primary); font-weight: 800;">(${matchedCount})</span> & All Jobs`;
       } else {
         elements.jobsTitle.innerHTML = 'Available Jobs';
       }
@@ -1575,7 +1584,7 @@
             </div>
             
             <div class="research-areas">
-              <div class="research-areas-title"><i class="fas fa-microscope"></i> Research Areas</div>
+              <div class="research-areas-title">Research Areas</div>
               <div class="research-areas-content">
                 ${researchAreas || 'No research areas listed'}
               </div>
@@ -1599,7 +1608,7 @@
       const matchedCount = Object.keys(matchScores).filter(key => matchScores[key] > 0).length;
       
       if (matchedCount > 0) {
-        elements.profsTitle.innerHTML = `<i class="fas fa-star" style="color: var(--primary);"></i> Your Top Matches <span style="color: var(--primary); font-weight: 800;">(${matchedCount})</span> & All Professors`;
+        elements.profsTitle.innerHTML = `Your Top Matches <span style="color: var(--primary); font-weight: 800;">(${matchedCount})</span> & All Professors`;
       } else {
         elements.profsTitle.innerHTML = 'Available Research Opportunities';
       }
@@ -2127,7 +2136,7 @@
         applyProfessorFilters();
 
         elements.totalCount.textContent = `${allJobs.length} Jobs • ${allProfessors.length} Research Opportunities`;
-        showStatus(`Successfully loaded ${allJobs.length} jobs and ${allProfessors.length} research opportunities!`, 'success');
+        showStatus(`Welcome to CareerLift! Loaded ${allJobs.length} jobs and ${allProfessors.length} research opportunities.`, 'success');
       } catch (error) {
         elements.jobsGrid.innerHTML = `
           <div class="empty-state">
@@ -2151,5 +2160,27 @@
 
     init();
   </script>
+
+  <!-- Footer -->
+  <footer style="background: var(--bg-white); border-top: 1px solid var(--border); padding: 40px 20px; margin-top: 60px;">
+    <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+      <div style="margin-bottom: 20px;">
+        <a href="/" style="font-size: 24px; font-weight: 800; color: var(--primary); text-decoration: none;">
+          CareerLift
+        </a>
+      </div>
+      <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 10px;">
+        AI-Powered Jobs & Research Platform for Students
+      </p>
+      <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">
+        Connecting students with opportunities at top companies and 1500+ IIT professors
+      </p>
+      <div style="border-top: 1px solid var(--border); padding-top: 20px; margin-top: 20px;">
+        <p style="color: var(--text-muted); font-size: 12px;">
+          © 2026 CareerLift. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
