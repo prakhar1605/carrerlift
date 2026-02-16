@@ -1613,9 +1613,14 @@
       const file = e.target.files[0];
       if (file) {
         selectedFile = file;
+        // Update both tabs
         elements.fileNameDisplay.textContent = `Selected: ${file.name}`;
         elements.fileNameDisplay.style.display = 'block';
         elements.analyzeBtn.disabled = false;
+        
+        elements.fileNameDisplayResearch.textContent = `Selected: ${file.name}`;
+        elements.fileNameDisplayResearch.style.display = 'block';
+        elements.analyzeBtnResearch.disabled = false;
       }
     });
 
@@ -1642,9 +1647,14 @@
       if (file) {
         selectedFile = file;
         elements.resumeFile.files = e.dataTransfer.files;
+        // Update both tabs
         elements.fileNameDisplay.textContent = `Selected: ${file.name}`;
         elements.fileNameDisplay.style.display = 'block';
         elements.analyzeBtn.disabled = false;
+        
+        elements.fileNameDisplayResearch.textContent = `Selected: ${file.name}`;
+        elements.fileNameDisplayResearch.style.display = 'block';
+        elements.analyzeBtnResearch.disabled = false;
       }
     });
 
@@ -1666,6 +1676,11 @@
       if (file) {
         selectedFile = file;
         elements.resumeFile.files = e.dataTransfer.files;
+        // Update both tabs
+        elements.fileNameDisplay.textContent = `Selected: ${file.name}`;
+        elements.fileNameDisplay.style.display = 'block';
+        elements.analyzeBtn.disabled = false;
+        
         elements.fileNameDisplayResearch.textContent = `Selected: ${file.name}`;
         elements.fileNameDisplayResearch.style.display = 'block';
         elements.analyzeBtnResearch.disabled = false;
