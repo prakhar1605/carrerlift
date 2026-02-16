@@ -1294,15 +1294,39 @@
         .map(x => x[0]);
     }
 
-    // Helper to get research areas field
+    // Helper to get research areas field - try everything!
     function getResearchAreas(prof) {
-      return prof['Area of Interest'] || 
-             prof['Area of interest'] || 
-             prof['area of interest'] || 
-             prof['Research Areas'] || 
-             prof['Research Area'] ||
-             prof['Area'] ||
-             '';
+      // Try all possible column name variations
+      const possibilities = [
+        'Area of Interest',
+        'Area of interest', 
+        'area of interest',
+        'Research Areas',
+        'Research Area',
+        'Area',
+        'Research Interest',
+        'Research Interests',
+        'Interests'
+      ];
+      
+      for (let key of possibilities) {
+        if (prof[key]) {
+          return prof[key];
+        }
+      }
+      
+      // If none found, check if there's a column with "interest" or "area" in the name
+      const keys = Object.keys(prof);
+      for (let key of keys) {
+        const lowerKey = key.toLowerCase();
+        if ((lowerKey.includes('interest') || lowerKey.includes('area') || lowerKey.includes('research')) 
+            && !lowerKey.includes('college') && !lowerKey.includes('name') && !lowerKey.includes('department')) {
+          console.log(`Found research area in column: "${key}"`);
+          return prof[key];
+        }
+      }
+      
+      return '';
     }
 
     // Score item based on keywords
@@ -1490,14 +1514,8 @@
         const score = matchScores[key] || 0;
         const isMatched = score > 0;
         
-        // Try ALL possible column name variations for research areas
-        const researchAreas = prof['Area of Interest'] || 
-                             prof['Area of interest'] || 
-                             prof['area of interest'] || 
-                             prof['Research Areas'] || 
-                             prof['Research Area'] ||
-                             prof['Area'] ||
-                             '';
+        // Use the smart helper function
+        const researchAreas = getResearchAreas(prof);
         
         // Debug: log the actual data for first few professors
         if (sortedProfs.indexOf(prof) < 3) {
@@ -2051,9 +2069,13 @@
         console.log('=== PROFESSOR DATA DEBUG ===');
         console.log('Total professors loaded:', professors.length);
         if (professors.length > 0) {
-          console.log('Column names:', Object.keys(professors[0]));
-          console.log('First professor full data:', professors[0]);
-          console.log('Area of Interest value:', professors[0]['Area of Interest']);
+          console.log('ALL Column names:', Object.keys(professors[0]));
+          console.log('First professor COMPLETE data:', professors[0]);
+          
+          // Check each possible column
+          Object.keys(professors[0]).forEach(key => {
+            console.log(`Column "${key}" = "${String(professors[0][key]).substring(0, 100)}"`);
+          });
         }
         console.log('=========================');
 
