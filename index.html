@@ -783,7 +783,7 @@
 
     <!-- Jobs Section -->
     <div class="jobs-header">
-      <h2 class="jobs-title">Available Jobs</h2>
+      <h2 class="jobs-title" id="jobsTitle">Available Jobs</h2>
     </div>
     <div id="jobsGrid" class="jobs-grid">
       <!-- Jobs will be inserted here -->
@@ -998,7 +998,14 @@
         return;
       }
 
-      elements.jobsGrid.innerHTML = jobs.map(job => {
+      // Sort: matched jobs first, then by match score
+      const sortedJobs = [...jobs].sort((a, b) => {
+        const scoreA = matchScores[a.Company + a.Role] || 0;
+        const scoreB = matchScores[b.Company + b.Role] || 0;
+        return scoreB - scoreA;
+      });
+
+      elements.jobsGrid.innerHTML = sortedJobs.map(job => {
         const score = matchScores[job.Company + job.Role] || 0;
         const isMatched = score > 0;
         
@@ -1009,7 +1016,7 @@
                 <div class="company-name">${job.Company || 'Company'}</div>
                 <div class="role-title">${job.Role || 'Position'}</div>
               </div>
-              ${isMatched ? `<div class="match-score">${Math.round(score)}% Match</div>` : ''}
+              ${isMatched ? `<div class="match-score"><i class="fas fa-check-circle"></i> ${Math.round(score)}% Match</div>` : ''}
             </div>
             
             <div class="job-meta">
@@ -1054,6 +1061,14 @@
           </div>
         `;
       }).join('');
+      
+      // Show count of matched jobs if any
+      const matchedCount = Object.keys(matchScores).filter(key => matchScores[key] > 0).length;
+      if (matchedCount > 0) {
+        console.log(`Displaying ${matchedCount} matched jobs at the top`);
+        const jobsTitle = document.getElementById('jobsTitle');
+        jobsTitle.innerHTML = `Your Top Matches <span style="color: var(--primary); font-weight: 800;">(${matchedCount})</span> & All Jobs`;
+      }
     }
 
     // Populate filters
@@ -1170,34 +1185,49 @@
         const analysis = await analyzeResume(text);
         elements.analysisContent.textContent = analysis;
         
-        // Calculate matches
-        const keywords = extractKeywords(analysis, 40);
-        const scored = allJobs.map(job => ({
-          job,
-          score: scoreJob(job, keywords)
-        }));
+        // Calculate matches using BOTH resume text AND AI analysis
+        const combinedText = text + ' ' + analysis;
+        const keywords = extractKeywords(combinedText, 50);
+        
+        console.log('Keywords extracted:', keywords);
+        
+        const scored = allJobs.map(job => {
+          const score = scoreJob(job, keywords);
+          return { job, score };
+        });
         
         scored.sort((a, b) => b.score - a.score);
-        const topMatches = scored.filter(s => s.score > 0).slice(0, 10);
+        
+        // Show ALL jobs but highlight top matches
+        const topMatches = scored.filter(s => s.score > 0);
+        
+        console.log('Top matches found:', topMatches.length);
         
         matchedJobs = {};
         topMatches.forEach(item => {
-          matchedJobs[item.job.Company + item.job.Role] = item.score * 10;
+          const key = item.job.Company + item.job.Role;
+          matchedJobs[key] = Math.min(100, item.score * 8); // Scale to percentage
         });
         
         elements.matchCount.textContent = `${topMatches.length} Matches`;
         
-        applyFilters();
-        showStatus('Resume analyzed successfully!', 'success');
+        // Render ALL jobs with match scores
+        renderJobs(allJobs, matchedJobs);
         
-        // Scroll to results
+        showStatus('Resume analyzed successfully! Scroll down to see matched jobs.', 'success');
+        
+        // Scroll to jobs section after short delay
         setTimeout(() => {
-          elements.analysisSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 300);
+          const firstJob = document.querySelector('.job-card');
+          if (firstJob) {
+            firstJob.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 500);
         
       } catch (error) {
         console.error(error);
         showStatus(error.message || 'Analysis failed', 'error');
+        elements.analysisContent.textContent = `Error: ${error.message}\n\nPlease try again or use the paste option.`;
       } finally {
         elements.analyzeBtn.innerHTML = originalText;
         elements.analyzeBtn.disabled = false;
@@ -1238,32 +1268,47 @@
         const analysis = await analyzeResume(text);
         elements.analysisContent.textContent = analysis;
         
-        const keywords = extractKeywords(analysis, 40);
-        const scored = allJobs.map(job => ({
-          job,
-          score: scoreJob(job, keywords)
-        }));
+        // Calculate matches using BOTH resume text AND AI analysis
+        const combinedText = text + ' ' + analysis;
+        const keywords = extractKeywords(combinedText, 50);
+        
+        console.log('Keywords extracted:', keywords);
+        
+        const scored = allJobs.map(job => {
+          const score = scoreJob(job, keywords);
+          return { job, score };
+        });
         
         scored.sort((a, b) => b.score - a.score);
-        const topMatches = scored.filter(s => s.score > 0).slice(0, 10);
+        const topMatches = scored.filter(s => s.score > 0);
+        
+        console.log('Top matches found:', topMatches.length);
         
         matchedJobs = {};
         topMatches.forEach(item => {
-          matchedJobs[item.job.Company + item.job.Role] = item.score * 10;
+          const key = item.job.Company + item.job.Role;
+          matchedJobs[key] = Math.min(100, item.score * 8);
         });
         
         elements.matchCount.textContent = `${topMatches.length} Matches`;
         
-        applyFilters();
-        showStatus('Resume analyzed successfully!', 'success');
+        // Render ALL jobs with match scores
+        renderJobs(allJobs, matchedJobs);
         
+        showStatus('Resume analyzed successfully! Scroll down to see matched jobs.', 'success');
+        
+        // Scroll to jobs
         setTimeout(() => {
-          elements.analysisSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 300);
+          const firstJob = document.querySelector('.job-card');
+          if (firstJob) {
+            firstJob.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 500);
         
       } catch (error) {
         console.error(error);
         showStatus(error.message || 'Analysis failed', 'error');
+        elements.analysisContent.textContent = `Error: ${error.message}\n\nPlease try again.`;
       } finally {
         elements.analyzeBtn.innerHTML = originalText;
         elements.analyzeBtn.disabled = false;
