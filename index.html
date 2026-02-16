@@ -282,6 +282,35 @@
       display: block;
     }
 
+    .analysis-section.collapsed .analysis-content {
+      display: none;
+    }
+
+    .btn-toggle {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-toggle:hover {
+      background: var(--bg-gray);
+    }
+
+    .btn-toggle i {
+      transition: transform 0.3s;
+    }
+
+    .analysis-section.collapsed .btn-toggle i {
+      transform: rotate(180deg);
+    }
+
     .analysis-header {
       display: flex;
       justify-content: space-between;
@@ -772,9 +801,16 @@
 
     <!-- Analysis Section -->
     <div class="analysis-section" id="analysisSection">
-      <div class="analysis-header">
-        <h3 class="analysis-title">AI Analysis Results</h3>
-        <span id="matchCount" class="match-count">0 Matches</span>
+      <div class="analysis-header" style="cursor: pointer;" id="analysisHeader">
+        <h3 class="analysis-title">
+          <i class="fas fa-robot"></i> AI Analysis Results
+        </h3>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <span id="matchCount" class="match-count">0 Matches</span>
+          <button id="toggleAnalysis" class="btn-toggle">
+            <i class="fas fa-chevron-up"></i>
+          </button>
+        </div>
       </div>
       <div id="analysisContent" class="analysis-content">
         Analyzing your resume...
@@ -849,11 +885,18 @@
       sortSelect: document.getElementById('sortSelect'),
       jobsGrid: document.getElementById('jobsGrid'),
       analysisSection: document.getElementById('analysisSection'),
+      analysisHeader: document.getElementById('analysisHeader'),
       analysisContent: document.getElementById('analysisContent'),
+      toggleAnalysis: document.getElementById('toggleAnalysis'),
       matchCount: document.getElementById('matchCount'),
       statusContainer: document.getElementById('statusContainer'),
       jobCount: document.getElementById('jobCount')
     };
+
+    // Toggle analysis section
+    elements.analysisHeader.addEventListener('click', () => {
+      elements.analysisSection.classList.toggle('collapsed');
+    });
 
     // Utility Functions
     function showStatus(message, type = 'info') {
@@ -998,15 +1041,30 @@
         return;
       }
 
-      // Sort: matched jobs first, then by match score
+      // Check if we have any match scores
+      const hasMatches = Object.keys(matchScores).length > 0;
+
+      // Sort jobs
       const sortedJobs = [...jobs].sort((a, b) => {
-        const scoreA = matchScores[a.Company + a.Role] || 0;
-        const scoreB = matchScores[b.Company + b.Role] || 0;
-        return scoreB - scoreA;
+        const keyA = a.Company + a.Role;
+        const keyB = b.Company + b.Role;
+        const scoreA = matchScores[keyA] || 0;
+        const scoreB = matchScores[keyB] || 0;
+
+        if (hasMatches) {
+          // If we have match scores, sort by score (highest first)
+          if (scoreB !== scoreA) {
+            return scoreB - scoreA;
+          }
+        }
+        
+        // For jobs with same score or no matches, maintain original order
+        return 0;
       });
 
       elements.jobsGrid.innerHTML = sortedJobs.map(job => {
-        const score = matchScores[job.Company + job.Role] || 0;
+        const key = job.Company + job.Role;
+        const score = matchScores[key] || 0;
         const isMatched = score > 0;
         
         return `
@@ -1062,12 +1120,15 @@
         `;
       }).join('');
       
-      // Show count of matched jobs if any
+      // Update jobs title based on matches
       const matchedCount = Object.keys(matchScores).filter(key => matchScores[key] > 0).length;
+      const jobsTitle = document.getElementById('jobsTitle');
+      
       if (matchedCount > 0) {
-        console.log(`Displaying ${matchedCount} matched jobs at the top`);
-        const jobsTitle = document.getElementById('jobsTitle');
-        jobsTitle.innerHTML = `Your Top Matches <span style="color: var(--primary); font-weight: 800;">(${matchedCount})</span> & All Jobs`;
+        jobsTitle.innerHTML = `<i class="fas fa-star" style="color: var(--primary);"></i> Your Top Matches <span style="color: var(--primary); font-weight: 800;">(${matchedCount})</span> & All Jobs`;
+        console.log(`Displaying ${matchedCount} matched jobs sorted by relevance`);
+      } else {
+        jobsTitle.innerHTML = 'Available Jobs';
       }
     }
 
@@ -1216,13 +1277,23 @@
         
         showStatus('Resume analyzed successfully! Scroll down to see matched jobs.', 'success');
         
-        // Scroll to jobs section after short delay
+        // Auto-collapse analysis after 2 seconds and scroll to jobs
         setTimeout(() => {
-          const firstJob = document.querySelector('.job-card');
-          if (firstJob) {
-            firstJob.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        }, 500);
+          elements.analysisSection.classList.add('collapsed');
+          
+          // Scroll to first matched job
+          setTimeout(() => {
+            const firstMatchedJob = document.querySelector('.job-card.matched');
+            if (firstMatchedJob) {
+              firstMatchedJob.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+              const firstJob = document.querySelector('.job-card');
+              if (firstJob) {
+                firstJob.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+            }
+          }, 400);
+        }, 2000);
         
       } catch (error) {
         console.error(error);
@@ -1297,13 +1368,22 @@
         
         showStatus('Resume analyzed successfully! Scroll down to see matched jobs.', 'success');
         
-        // Scroll to jobs
+        // Auto-collapse analysis after 2 seconds and scroll to jobs
         setTimeout(() => {
-          const firstJob = document.querySelector('.job-card');
-          if (firstJob) {
-            firstJob.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        }, 500);
+          elements.analysisSection.classList.add('collapsed');
+          
+          setTimeout(() => {
+            const firstMatchedJob = document.querySelector('.job-card.matched');
+            if (firstMatchedJob) {
+              firstMatchedJob.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+              const firstJob = document.querySelector('.job-card');
+              if (firstJob) {
+                firstJob.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+            }
+          }, 400);
+        }, 2000);
         
       } catch (error) {
         console.error(error);
