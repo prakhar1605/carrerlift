@@ -476,6 +476,30 @@
       white-space: nowrap;
     }
 
+    .trending-badge {
+      background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.9;
+        transform: scale(1.02);
+      }
+    }
+
     .job-meta {
       display: flex;
       flex-wrap: wrap;
@@ -1461,6 +1485,14 @@
         const score = matchScores[key] || 0;
         const isMatched = score > 0;
         
+        // Check if job is trending (posted in last 7 days)
+        const isTrending = job.PostedDate ? (() => {
+          const postedDate = new Date(job.PostedDate);
+          const now = new Date();
+          const daysDiff = (now - postedDate) / (1000 * 60 * 60 * 24);
+          return daysDiff <= 7;
+        })() : false;
+        
         return `
           <div class="job-card ${isMatched ? 'matched' : ''}">
             <div class="job-header">
@@ -1468,7 +1500,10 @@
                 <div class="company-name">${job.Company || 'Company'}</div>
                 <div class="role-title">${job.Role || 'Position'}</div>
               </div>
-              ${isMatched ? `<div class="match-score"><i class="fas fa-check-circle"></i> ${Math.round(score)}% Match</div>` : ''}
+              <div style="display: flex; flex-direction: column; gap: 8px; align-items: flex-end;">
+                ${isTrending ? `<div class="trending-badge">Trending</div>` : ''}
+                ${isMatched ? `<div class="match-score"><i class="fas fa-check-circle"></i> ${Math.round(score)}% Match</div>` : ''}
+              </div>
             </div>
             
             <div class="job-meta">
