@@ -591,6 +591,8 @@
       padding: 12px;
       border-radius: 4px;
       margin-bottom: 16px;
+      max-height: 200px;
+      overflow-y: auto;
     }
 
     .research-areas-title {
@@ -599,6 +601,10 @@
       color: var(--text-muted);
       margin-bottom: 8px;
       text-transform: uppercase;
+      position: sticky;
+      top: 0;
+      background: var(--bg-gray);
+      padding-bottom: 4px;
     }
 
     .research-areas-content {
@@ -1226,6 +1232,8 @@
           row.c ? row.c.map(cell => cell ? cell.v : '') : []
         );
         
+        console.log('Sheet columns:', cols); // Debug: see column names
+        
         const items = rows
           .map(row => {
             const obj = {};
@@ -1239,6 +1247,8 @@
             return firstCol && String(firstCol).trim() !== '';
           });
         
+        console.log('Sample item:', items[0]); // Debug: see first item structure
+        
         return items;
       } catch (error) {
         console.error('Error fetching sheet:', error);
@@ -1247,14 +1257,31 @@
     }
 
     // Extract keywords from resume
-    function extractKeywords(text, topN = 30) {
+    function extractKeywords(text, topN = 50) {
       if (!text) return [];
-      const stopWords = new Set(['which', 'that', 'with', 'this', 'from', 'your', 'about', 
-        'their', 'have', 'will', 'they', 'would', 'there', 'these', 'those']);
       
-      const words = text.toLowerCase().match(/\b[a-zA-Z0-9+#.+-]{4,}\b/g) || [];
+      const stopWords = new Set(['which', 'that', 'with', 'this', 'from', 'your', 'about', 
+        'their', 'have', 'will', 'they', 'would', 'there', 'these', 'those', 'been', 
+        'were', 'what', 'when', 'where', 'working', 'worked', 'work', 'using', 'used',
+        'also', 'make', 'made', 'include', 'includes']);
+      
+      // Extract multi-word phrases (important for research terms like "machine learning")
+      const phrases = text.match(/\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+){1,2}\b/g) || [];
+      
+      // Extract single words
+      const words = text.toLowerCase().match(/\b[a-zA-Z0-9+#.+-]{3,}\b/g) || [];
+      
       const freq = {};
       
+      // Count phrases (case-insensitive)
+      phrases.forEach(phrase => {
+        const lower = phrase.toLowerCase();
+        if (!stopWords.has(lower)) {
+          freq[lower] = (freq[lower] || 0) + 3; // Phrases get higher weight
+        }
+      });
+      
+      // Count words
       words.forEach(w => {
         if (!stopWords.has(w)) {
           freq[w] = (freq[w] || 0) + 1;
@@ -1267,6 +1294,11 @@
         .map(x => x[0]);
     }
 
+    // Helper to get research areas field (handles different column names)
+    function getResearchAreas(prof) {
+      return prof['Area of Interest'] || prof['Area of interest'] || prof['Research Areas'] || '';
+    }
+
     // Score item based on keywords
     function scoreItem(item, keywords, searchFields) {
       if (!keywords || keywords.length === 0) return 0;
@@ -1275,20 +1307,67 @@
       let score = 0;
       
       keywords.forEach(keyword => {
+        // Exact match (full keyword appears)
         if (haystack.includes(keyword)) {
-          score += 1;
+          score += 2;
+        }
+        
+        // Partial match (keyword words appear separately)
+        const keywordParts = keyword.split(/\s+/);
+        if (keywordParts.length > 1) {
+          const allPartsFound = keywordParts.every(part => haystack.includes(part));
+          if (allPartsFound) {
+            score += 1;
+          }
         }
       });
+      
+      // Bonus for title/name matches
+      if (searchFields[0] && item[searchFields[0]]) {
+        const titleField = item[searchFields[0]].toLowerCase();
+        keywords.forEach(keyword => {
+          if (titleField.includes(keyword)) {
+            score += 1; // Extra weight for title matches
+          }
+        });
+      }
       
       return score;
     }
 
-    // Call AI API
-    async function analyzeResume(resumeText) {
+    // Call AI API with context awareness
+    async function analyzeResume(resumeText, context = 'jobs') {
+      const prompt = context === 'jobs' 
+        ? `Please analyze this resume and provide:
+
+1. KEY SKILLS: List the main technical and soft skills
+2. EXPERIENCE LEVEL: Junior/Mid/Senior and domain
+3. TOP JOB ROLES: 3-5 best-fit positions based on skills
+4. KEYWORDS: Extract 20-30 important technical keywords from the resume
+
+Resume:
+${resumeText.slice(0, 3500)}
+
+Keep your response clear, structured, and under 400 words.`
+        : `Please analyze this resume for research opportunities and provide:
+
+1. KEY SKILLS: List the main technical and research skills
+2. ACADEMIC LEVEL: BTech/MTech/PhD and specialization
+3. RESEARCH INTERESTS: What research areas match this candidate's background
+4. KEYWORDS: Extract 20-30 important technical/research keywords from the resume
+
+Resume:
+${resumeText.slice(0, 3500)}
+
+Keep your response clear, structured, and under 400 words.`;
+
       const response = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ resume: resumeText })
+        body: JSON.stringify({ 
+          resume: resumeText,
+          prompt: prompt 
+        })
       });
       
       if (!response.ok) {
@@ -1432,6 +1511,9 @@
         const score = matchScores[key] || 0;
         const isMatched = score > 0;
         
+        // Get research areas - handle different possible column names
+        const researchAreas = prof['Area of Interest'] || prof['Area of interest'] || prof['Research Areas'] || '';
+        
         return `
           <div class="professor-card ${isMatched ? 'matched' : ''}">
             <div class="professor-header">
@@ -1443,18 +1525,18 @@
               ${isMatched ? `<div class="match-score"><i class="fas fa-check-circle"></i> ${Math.round(score)}% Match</div>` : ''}
             </div>
             
-            ${prof['Area of Interest'] ? `
+            ${researchAreas ? `
               <div class="research-areas">
                 <div class="research-areas-title">Research Areas</div>
                 <div class="research-areas-content">
-                  ${prof['Area of Interest'].slice(0, 200)}${prof['Area of Interest'].length > 200 ? '...' : ''}
+                  ${researchAreas}
                 </div>
               </div>
             ` : ''}
             
             <div class="job-actions">
-              ${prof['Mail id'] ? `
-                <a href="mailto:${prof['Mail id']}" class="btn-apply">
+              ${prof['Mail id'] || prof['Email'] ? `
+                <a href="mailto:${prof['Mail id'] || prof['Email']}" class="btn-apply">
                   <i class="fas fa-envelope"></i> Email Professor
                 </a>
               ` : ''}
@@ -1539,7 +1621,8 @@
       const department = elements.profDepartmentFilter.value;
       
       let filtered = allProfessors.filter(prof => {
-        const haystack = `${prof.Name} ${prof['College Name']} ${prof.Department} ${prof['Area of Interest']}`.toLowerCase();
+        const researchAreas = prof['Area of Interest'] || prof['Area of interest'] || prof['Research Areas'] || '';
+        const haystack = `${prof.Name} ${prof['College Name']} ${prof.Department} ${researchAreas}`.toLowerCase();
         const matchesQuery = !query || haystack.includes(query);
         const matchesInstitution = !institution || prof['College Name'] === institution;
         const matchesDepartment = !department || prof.Department === department;
@@ -1644,7 +1727,7 @@
         elements.analysisSection.classList.add('active');
         elements.analysisContent.textContent = 'Analyzing your resume with AI...';
         
-        const analysis = await analyzeResume(text);
+        const analysis = await analyzeResume(text, 'jobs');
         elements.analysisContent.textContent = analysis;
         
         const combinedText = text + ' ' + analysis;
@@ -1713,14 +1796,31 @@
         elements.analysisSectionResearch.classList.add('active');
         elements.analysisContentResearch.textContent = 'Analyzing your resume with AI...';
         
-        const analysis = await analyzeResume(text);
+        const analysis = await analyzeResume(text, 'research');
         elements.analysisContentResearch.textContent = analysis;
         
         const combinedText = text + ' ' + analysis;
         const keywords = extractKeywords(combinedText, 50);
         
         const scored = allProfessors.map(prof => {
-          const score = scoreItem(prof, keywords, ['Name', 'Department', 'Area of Interest']);
+          // Build searchable text with fallback for Area of Interest
+          const researchAreas = getResearchAreas(prof);
+          const searchText = `${prof.Name} ${prof.Department} ${researchAreas}`.toLowerCase();
+          
+          let score = 0;
+          keywords.forEach(keyword => {
+            if (searchText.includes(keyword)) {
+              score += 2;
+            }
+            const keywordParts = keyword.split(/\s+/);
+            if (keywordParts.length > 1) {
+              const allPartsFound = keywordParts.every(part => searchText.includes(part));
+              if (allPartsFound) {
+                score += 1;
+              }
+            }
+          });
+          
           return { prof, score };
         });
         
@@ -1794,7 +1894,7 @@
           elements.analysisSection.classList.add('active');
           elements.analysisContent.textContent = 'Analyzing your resume with AI...';
           
-          const analysis = await analyzeResume(text);
+          const analysis = await analyzeResume(text, 'jobs');
           elements.analysisContent.textContent = analysis;
           
           const combinedText = text + ' ' + analysis;
@@ -1845,14 +1945,31 @@
           elements.analysisSectionResearch.classList.add('active');
           elements.analysisContentResearch.textContent = 'Analyzing your resume with AI...';
           
-          const analysis = await analyzeResume(text);
+          const analysis = await analyzeResume(text, 'research');
           elements.analysisContentResearch.textContent = analysis;
           
           const combinedText = text + ' ' + analysis;
           const keywords = extractKeywords(combinedText, 50);
           
           const scored = allProfessors.map(prof => {
-            const score = scoreItem(prof, keywords, ['Name', 'Department', 'Area of Interest']);
+            // Build searchable text with fallback for Area of Interest
+            const researchAreas = getResearchAreas(prof);
+            const searchText = `${prof.Name} ${prof.Department} ${researchAreas}`.toLowerCase();
+            
+            let score = 0;
+            keywords.forEach(keyword => {
+              if (searchText.includes(keyword)) {
+                score += 2;
+              }
+              const keywordParts = keyword.split(/\s+/);
+              if (keywordParts.length > 1) {
+                const allPartsFound = keywordParts.every(part => searchText.includes(part));
+                if (allPartsFound) {
+                  score += 1;
+                }
+              }
+            });
+            
             return { prof, score };
           });
           
