@@ -1193,6 +1193,76 @@
     </div>
   </div>
 
+  <!-- Job AI Email Modal -->
+  <div class="email-modal" id="jobEmailModal">
+    <div class="email-modal-content">
+      <div class="email-modal-header">
+        <div>
+          <div class="email-modal-title">AI Job Application Email</div>
+          <div class="email-modal-subtitle">Generate a cold email to HR/Recruiter for this role</div>
+        </div>
+        <button class="email-modal-close" id="jobEmailModalClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="email-modal-body">
+
+        <!-- Job Info Banner -->
+        <div class="prof-info-banner" style="background: rgba(0,212,255,0.08); border-color: rgba(0,212,255,0.2);">
+          <i class="fas fa-briefcase" style="color: var(--neon);"></i>
+          <div class="prof-info-details">
+            <div class="name" id="jobEmailRole">Role</div>
+            <div class="dept" style="color: var(--neon);" id="jobEmailCompany">Company</div>
+            <div class="inst" id="jobEmailLocation"></div>
+          </div>
+        </div>
+
+        <!-- Student Inputs -->
+        <label class="email-form-label">Your Name</label>
+        <input type="text" id="jobStudentName" class="email-form-input" placeholder="e.g. Prakhar Pandey" />
+
+        <label class="email-form-label">Your Course & College</label>
+        <input type="text" id="jobStudentCourse" class="email-form-input" placeholder="e.g. B.Tech DS&AI, IIT Guwahati, 2nd Year" />
+
+        <label class="email-form-label">Why you're a great fit (your relevant experience)</label>
+        <textarea id="jobStudentProject" class="email-form-textarea" placeholder="e.g. I built a RAG-based AI system at ThinkSpace AI (Singapore). I have experience in FastAPI, LangChain, and production ML systems..."></textarea>
+
+        <label class="email-form-label">Tone</label>
+        <select id="jobEmailTone" class="email-form-input" style="cursor:pointer;">
+          <option value="professional">Professional & Confident</option>
+          <option value="enthusiastic">Enthusiastic & Energetic</option>
+          <option value="concise">Short & Direct</option>
+        </select>
+
+        <!-- Generate Button -->
+        <button class="generate-btn" id="generateJobEmailBtn" style="background: linear-gradient(135deg, var(--neon), #0099cc); box-shadow: 0 4px 15px rgba(0,212,255,0.3);">
+          <i class="fas fa-magic"></i>
+          Generate Application Email
+        </button>
+
+        <!-- Generated Email Output -->
+        <div class="generated-email-box" id="generatedJobEmailBox">
+          <div class="generated-email-toolbar">
+            <span class="generated-email-label">Generated Email</span>
+            <button class="copy-btn" id="copyJobEmailBtn" style="background: var(--neon); color: #080B14;">
+              <i class="fas fa-copy"></i> Copy
+            </button>
+          </div>
+          <div class="generated-email-text" id="generatedJobEmailText"></div>
+          <div class="email-actions-row">
+            <a href="#" class="btn-send-email" id="sendJobEmailBtn" target="_blank">
+              <i class="fas fa-paper-plane"></i> Open in Gmail
+            </a>
+            <button class="btn-regenerate" id="regenerateJobBtn">
+              <i class="fas fa-redo"></i> Regenerate
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <!-- Cold Email Generator Modal -->
   <div class="email-modal" id="emailModal">
     <div class="email-modal-content">
@@ -1699,6 +1769,15 @@
                 description: job.Description || ''
               }).replace(/"/g, '&quot;')})">
                 <i class="fas fa-chart-bar"></i> Analyze Fit
+              </button>
+              <button class="btn-generate-email" onclick="openJobEmailModal(${JSON.stringify({
+                company: job.Company || '',
+                role: job.Role || '',
+                description: job.Description || '',
+                email: job.Email || '',
+                location: job.Location || ''
+              }).replace(/"/g, '&quot;')})">
+                <i class="fas fa-magic"></i> AI Email
               </button>
             </div>
           </div>
@@ -2363,6 +2442,188 @@
         showStatus('Failed to load data', 'error');
       }
     }
+
+    // ============================================
+    // JOB AI EMAIL GENERATOR
+    // ============================================
+
+    let currentJobEmailData = null;
+
+    function openJobEmailModal(jobData) {
+      currentJobEmailData = jobData;
+
+      document.getElementById('jobEmailRole').textContent = jobData.role || 'Role';
+      document.getElementById('jobEmailCompany').textContent = jobData.company || 'Company';
+      document.getElementById('jobEmailLocation').textContent = jobData.location || '';
+
+      // Reset modal
+      document.getElementById('generatedJobEmailBox').classList.remove('active');
+      document.getElementById('generateJobEmailBtn').innerHTML = '<i class="fas fa-magic"></i> Generate Application Email';
+      document.getElementById('generateJobEmailBtn').disabled = false;
+
+      // Pre-fill from resume if available
+      if (document.getElementById('studentName').value) {
+        document.getElementById('jobStudentName').value = document.getElementById('studentName').value;
+      }
+      if (document.getElementById('studentCourse').value) {
+        document.getElementById('jobStudentCourse').value = document.getElementById('studentCourse').value;
+      }
+
+      document.getElementById('jobEmailModal').classList.add('active');
+    }
+
+    document.getElementById('jobEmailModalClose').addEventListener('click', () => {
+      document.getElementById('jobEmailModal').classList.remove('active');
+    });
+
+    document.getElementById('jobEmailModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('jobEmailModal')) {
+        document.getElementById('jobEmailModal').classList.remove('active');
+      }
+    });
+
+    async function generateJobEmail() {
+      const studentName   = document.getElementById('jobStudentName').value.trim();
+      const studentCourse = document.getElementById('jobStudentCourse').value.trim();
+      const studentExp    = document.getElementById('jobStudentProject').value.trim();
+      const tone          = document.getElementById('jobEmailTone').value;
+
+      if (!studentName || !studentCourse) {
+        showStatus('Please enter your name and course details', 'error');
+        return;
+      }
+      if (!studentExp) {
+        showStatus('Please describe your relevant experience', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('generateJobEmailBtn');
+      btn.innerHTML = '<span class="loading"></span> Generating...';
+      btn.disabled = true;
+
+      const toneMap = {
+        professional: 'professional, confident, and formal',
+        enthusiastic: 'enthusiastic, energetic, and passionate',
+        concise: 'short, direct, and to-the-point (max 150 words body)'
+      };
+
+      const prompt = `You are an expert job application email writer. Generate a highly personalized cold email from a student to HR/Recruiter for a job opening.
+
+JOB DETAILS:
+- Role: ${currentJobEmailData.role}
+- Company: ${currentJobEmailData.company}
+- Location: ${currentJobEmailData.location || 'Not specified'}
+- Description: ${(currentJobEmailData.description || '').slice(0, 600)}
+
+STUDENT DETAILS:
+- Name: ${studentName}
+- Course: ${studentCourse}
+- Experience/Background: ${studentExp}
+
+TONE: ${toneMap[tone] || 'professional'}
+
+REQUIREMENTS:
+1. Start with: Subject: Application for [Role] - [Student Name] | [College short name]
+2. Then blank line
+3. Email body starting with "Dear Hiring Team," or "Dear [Company] Recruiter,"
+4. Mention specific aspects of the company/role
+5. Connect student's experience directly to job requirements
+6. Keep body under 200 words
+7. Strong, specific call-to-action at end
+8. Sign off professionally with name and course
+
+Write ONLY the email. No explanations. Just the email text.`;
+
+      try {
+        const response = await fetch('/api/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ resume: prompt })
+        });
+
+        let emailText = '';
+
+        if (response.ok) {
+          const data = await response.json();
+          emailText = data.result || '';
+        }
+
+        if (!emailText) throw new Error('Empty response');
+
+        document.getElementById('generatedJobEmailText').textContent = emailText;
+        document.getElementById('generatedJobEmailBox').classList.add('active');
+
+        // Setup Gmail link
+        const hrEmail = currentJobEmailData.email;
+        const lines = emailText.split('\n');
+        const subjectLine = lines[0].replace('Subject: ', '').trim();
+        const body = lines.slice(2).join('\n');
+
+        if (hrEmail) {
+          document.getElementById('sendJobEmailBtn').href =
+            `mailto:${hrEmail}?subject=${encodeURIComponent(subjectLine)}&body=${encodeURIComponent(body)}`;
+          document.getElementById('sendJobEmailBtn').style.display = 'flex';
+        } else {
+          document.getElementById('sendJobEmailBtn').style.display = 'none';
+        }
+
+        showStatus('Email generated!', 'success');
+
+      } catch (error) {
+        // Fallback template
+        const emailText = `Subject: Application for ${currentJobEmailData.role} - ${studentName} | IIT Guwahati
+
+Dear Hiring Team at ${currentJobEmailData.company},
+
+I hope this email finds you well. I am ${studentName}, a ${studentCourse}, writing to express my strong interest in the ${currentJobEmailData.role} position at ${currentJobEmailData.company}.
+
+${studentExp}
+
+I am confident that my background aligns well with the requirements for this role. I would love the opportunity to contribute to ${currentJobEmailData.company}'s growth and learn from your team.
+
+I have attached my resume for your consideration. I would be grateful for a brief call to discuss how I can add value to your team.
+
+Thank you for your time and consideration.
+
+Best regards,
+${studentName}
+${studentCourse}`;
+
+        document.getElementById('generatedJobEmailText').textContent = emailText;
+        document.getElementById('generatedJobEmailBox').classList.add('active');
+
+        if (currentJobEmailData.email) {
+          const sub = `Application for ${currentJobEmailData.role} - ${studentName}`;
+          document.getElementById('sendJobEmailBtn').href =
+            `mailto:${currentJobEmailData.email}?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(emailText)}`;
+        }
+
+        showStatus('Email template generated!', 'success');
+      } finally {
+        btn.innerHTML = '<i class="fas fa-magic"></i> Generate Application Email';
+        btn.disabled = false;
+      }
+    }
+
+    document.getElementById('generateJobEmailBtn').addEventListener('click', generateJobEmail);
+    document.getElementById('regenerateJobBtn').addEventListener('click', generateJobEmail);
+
+    document.getElementById('copyJobEmailBtn').addEventListener('click', () => {
+      const text = document.getElementById('generatedJobEmailText').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copyJobEmailBtn');
+        btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    });
+
+    // ============================================
+    // END JOB AI EMAIL GENERATOR
+    // ============================================
 
     // ============================================
     // JOB ALERT SUBSCRIPTION
