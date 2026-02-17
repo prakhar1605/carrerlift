@@ -3,8 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CareerLift - AI-Powered Job Matching Platform</title>
-  <meta name="description" content="AI-powered job matching with semantic resume analysis. Built with LangChain, RAG, and FastAPI by IIT Guwahati." />
+  <title>CareerLift - AI-Powered Jobs & Research Platform</title>
+  <meta name="description" content="Find jobs and research internships with AI-powered resume matching. Connect with 1500+ IIT professors and top companies." />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🚀</text></svg>">
+  
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="CareerLift - AI-Powered Jobs & Research" />
+  <meta property="og:description" content="Find jobs and research internships with AI matching. Connect with 1500+ IIT professors." />
+  <meta property="og:site_name" content="CareerLift" />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CareerLift - AI Jobs & Research" />
+  <meta name="twitter:description" content="AI-powered job and research internship platform for students" />
   
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FRMVZ6H187"></script>
@@ -49,6 +63,7 @@
       line-height: 1.6;
     }
 
+    /* Header */
     .header {
       background: var(--bg-white);
       border-bottom: 1px solid var(--border);
@@ -96,6 +111,7 @@
       align-items: center;
     }
 
+    /* Tab Navigation */
     .tab-navigation {
       background: var(--bg-white);
       border-bottom: 2px solid var(--border);
@@ -138,12 +154,14 @@
       border-bottom-color: var(--primary);
     }
 
+    /* Main Container */
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 24px 20px;
     }
 
+    /* Tab Content */
     .tab-content {
       display: none;
     }
@@ -152,6 +170,7 @@
       display: block;
     }
 
+    /* Search Section */
     .search-section {
       background: var(--bg-white);
       border-radius: 8px;
@@ -219,6 +238,7 @@
       border-color: var(--primary);
     }
 
+    /* Resume Upload Card */
     .resume-card {
       background: linear-gradient(135deg, #0A66C2 0%, #378FE9 100%);
       border-radius: 8px;
@@ -293,6 +313,7 @@
       flex-wrap: wrap;
     }
 
+    /* Buttons */
     .btn {
       padding: 12px 24px;
       border-radius: 4px;
@@ -339,29 +360,14 @@
       margin-bottom: 24px;
       box-shadow: var(--shadow-md);
       display: none;
-      animation: slideUp 0.4s ease-out;
     }
 
     .analysis-section.active {
       display: block;
     }
 
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .analysis-section.collapsed .analysis-content,
-    .analysis-section.collapsed .processing-state,
-    .analysis-section.collapsed .skills-section,
-    .analysis-section.collapsed .stats-grid {
-      display: none !important;
+    .analysis-section.collapsed .analysis-content {
+      display: none;
     }
 
     .btn-toggle {
@@ -421,174 +427,6 @@
       white-space: pre-wrap;
     }
 
-    .processing-state {
-      text-align: center;
-      padding: 32px;
-      display: none;
-    }
-
-    .processing-state.active {
-      display: block;
-    }
-
-    .ai-spinner {
-      width: 60px;
-      height: 60px;
-      margin: 0 auto 20px;
-      border: 3px solid rgba(10, 102, 194, 0.1);
-      border-top-color: var(--primary);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .processing-steps {
-      margin-top: 24px;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .process-step {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 16px;
-      margin-bottom: 8px;
-      border-radius: 6px;
-      background: var(--bg-gray);
-      font-size: 14px;
-      opacity: 0.4;
-      transition: all 0.3s ease;
-    }
-
-    .process-step.active {
-      opacity: 1;
-      background: rgba(10, 102, 194, 0.1);
-      border-left: 3px solid var(--primary);
-    }
-
-    .process-step.completed {
-      opacity: 0.7;
-    }
-
-    .process-step i {
-      width: 18px;
-      text-align: center;
-      font-size: 14px;
-    }
-
-    .process-step .fa-check-circle {
-      color: var(--success);
-    }
-
-    .process-step .fa-spinner {
-      color: var(--primary);
-    }
-
-    .skills-section {
-      margin-top: 24px;
-      display: none;
-    }
-
-    .skills-section.active {
-      display: block;
-    }
-
-    .skills-grid {
-      display: grid;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .skill-item {
-      background: var(--bg-gray);
-      padding: 14px 16px;
-      border-radius: 6px;
-      border-left: 3px solid var(--primary);
-    }
-
-    .skill-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-
-    .skill-name {
-      font-weight: 600;
-      font-size: 14px;
-      color: var(--text-primary);
-    }
-
-    .skill-score {
-      font-weight: 700;
-      font-size: 14px;
-      color: var(--primary);
-    }
-
-    .skill-bar {
-      height: 6px;
-      background: rgba(10, 102, 194, 0.1);
-      border-radius: 3px;
-      overflow: hidden;
-    }
-
-    .skill-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      border-radius: 3px;
-      transition: width 1s ease-out;
-      width: 0%;
-    }
-
-    .skill-evidence {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      margin: 20px 0;
-      display: none;
-    }
-
-    .stats-grid.active {
-      display: grid;
-    }
-
-    .stat-card {
-      background: var(--bg-gray);
-      padding: 20px;
-      border-radius: 8px;
-      text-align: center;
-      border: 1px solid var(--border);
-    }
-
-    .stat-icon {
-      font-size: 28px;
-      color: var(--primary);
-      margin-bottom: 8px;
-    }
-
-    .stat-value {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 4px;
-    }
-
-    .stat-label {
-      font-size: 13px;
-      color: var(--text-secondary);
-    }
-
     /* Results Section */
     .results-header {
       display: flex;
@@ -630,7 +468,7 @@
       gap: 16px;
     }
 
-    /* ENHANCED Job Card */
+    /* Job Card */
     .job-card {
       background: var(--bg-white);
       border: 1px solid var(--border);
@@ -734,99 +572,6 @@
       color: var(--text-secondary);
       line-height: 1.6;
       margin-bottom: 16px;
-    }
-
-    /* NEW: Match Explanation Section */
-    .match-explanation {
-      background: #f8f9fa;
-      border: 1px solid #e0e0e0;
-      border-radius: 6px;
-      padding: 16px;
-      margin-bottom: 16px;
-      display: none;
-    }
-
-    .match-explanation.active {
-      display: block;
-    }
-
-    .match-section {
-      margin-bottom: 16px;
-    }
-
-    .match-section:last-child {
-      margin-bottom: 0;
-    }
-
-    .match-section-title {
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .match-section-title.why-match {
-      color: var(--success);
-    }
-
-    .match-section-title.skill-gaps {
-      color: var(--warning);
-    }
-
-    .match-section-title.quick-learn {
-      color: var(--primary);
-    }
-
-    .match-list {
-      list-style: none;
-      padding: 0;
-    }
-
-    .match-list li {
-      padding: 6px 0;
-      font-size: 13px;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-    }
-
-    .match-list li i {
-      margin-top: 2px;
-      font-size: 12px;
-    }
-
-    .match-list.success li i {
-      color: var(--success);
-    }
-
-    .match-list.warning li i {
-      color: var(--warning);
-    }
-
-    .learning-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .learning-link {
-      padding: 4px 12px;
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      font-size: 12px;
-      color: var(--primary);
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-
-    .learning-link:hover {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
     }
 
     .job-actions {
@@ -948,6 +693,7 @@
       white-space: pre-wrap;
     }
 
+    /* Empty State */
     .empty-state {
       background: var(--bg-white);
       border-radius: 8px;
@@ -973,6 +719,7 @@
       color: var(--text-secondary);
     }
 
+    /* Status Alert */
     .status-alert {
       padding: 12px 16px;
       border-radius: 4px;
@@ -1013,6 +760,7 @@
       border: 1px solid var(--warning);
     }
 
+    /* Loading State */
     .loading {
       display: inline-block;
       width: 16px;
@@ -1023,6 +771,11 @@
       animation: spin 0.6s linear infinite;
     }
 
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Paste Modal */
     .modal {
       display: none;
       position: fixed;
@@ -1111,6 +864,7 @@
       justify-content: flex-end;
     }
 
+    /* Responsive */
     @media (max-width: 768px) {
       .header-content {
         padding: 0 16px;
@@ -1176,21 +930,353 @@
       }
     }
 
+    /* Hide file input */
     #resumeFile {
       display: none;
+    }
+
+    /* Cold Email Generator */
+    .email-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    .email-modal.active {
+      display: flex;
+    }
+
+    .email-modal-content {
+      background: white;
+      border-radius: 16px;
+      max-width: 680px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+      animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes modalSlideIn {
+      from { opacity: 0; transform: translateY(30px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .email-modal-header {
+      padding: 24px 28px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .email-modal-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .email-modal-subtitle {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .email-modal-close {
+      background: var(--bg-gray);
+      border: none;
+      border-radius: 50%;
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .email-modal-close:hover {
+      background: var(--border);
+      color: var(--text-primary);
+    }
+
+    .email-modal-body {
+      padding: 24px 28px;
+    }
+
+    .prof-info-banner {
+      background: linear-gradient(135deg, rgba(10,102,194,0.08), rgba(55,143,233,0.08));
+      border: 1px solid rgba(10,102,194,0.2);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .prof-info-banner i {
+      font-size: 32px;
+      color: var(--primary);
+      opacity: 0.7;
+    }
+
+    .prof-info-details .name {
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text-primary);
+    }
+
+    .prof-info-details .dept {
+      font-size: 13px;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .prof-info-details .inst {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .email-form-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .email-form-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      margin-bottom: 16px;
+      transition: all 0.2s;
+      color: var(--text-primary);
+    }
+
+    .email-form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(10,102,194,0.1);
+    }
+
+    .email-form-textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      margin-bottom: 16px;
+      resize: vertical;
+      min-height: 90px;
+      transition: all 0.2s;
+    }
+
+    .email-form-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(10,102,194,0.1);
+    }
+
+    .generate-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: inherit;
+      margin-bottom: 20px;
+    }
+
+    .generate-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(10,102,194,0.35);
+    }
+
+    .generate-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .generated-email-box {
+      display: none;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .generated-email-box.active {
+      display: block;
+    }
+
+    .generated-email-toolbar {
+      background: var(--bg-gray);
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .generated-email-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .copy-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .copy-btn:hover {
+      background: var(--primary-hover);
+    }
+
+    .copy-btn.copied {
+      background: var(--success);
+    }
+
+    .generated-email-text {
+      padding: 20px;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--text-primary);
+      white-space: pre-wrap;
+      min-height: 200px;
+      font-family: inherit;
+    }
+
+    .email-actions-row {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+      background: var(--bg-gray);
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-send-email {
+      flex: 1;
+      padding: 11px 20px;
+      background: var(--success);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-send-email:hover {
+      background: #046030;
+      transform: translateY(-1px);
+    }
+
+    .btn-regenerate {
+      padding: 11px 20px;
+      background: white;
+      color: var(--primary);
+      border: 1.5px solid var(--primary);
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-regenerate:hover {
+      background: rgba(10,102,194,0.05);
+    }
+
+    .btn-generate-email {
+      background: white;
+      color: var(--primary);
+      border: 1.5px solid var(--primary);
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-generate-email:hover {
+      background: rgba(10,102,194,0.05);
+      transform: translateY(-1px);
     }
   </style>
 </head>
 <body>
+  <!-- Header -->
   <header class="header">
     <div class="header-content">
       <a href="/" class="logo">CareerLift</a>
       <div class="header-actions">
+        <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-right: 12px; display: inline-flex; align-items: center; gap: 6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5"></path>
+            <path d="M2 12l10 5 10-5"></path>
+          </svg>
+          AI-Powered
+        </span>
         <span id="totalCount" class="results-count">Loading...</span>
       </div>
     </div>
   </header>
 
+  <!-- Tab Navigation -->
   <div class="tab-navigation">
     <div class="tab-nav-content">
       <button class="tab-btn active" data-tab="jobs">
@@ -1204,10 +1290,14 @@
     </div>
   </div>
 
+  <!-- Main Container -->
   <div class="container">
+    <!-- Status Messages -->
     <div id="statusContainer"></div>
 
+    <!-- Jobs Tab Content -->
     <div id="jobs" class="tab-content active">
+      <!-- Search Section -->
       <div class="search-section">
         <h2 class="search-title">Find Your Perfect Job</h2>
         <div class="search-bar">
@@ -1233,6 +1323,7 @@
         </div>
       </div>
 
+      <!-- Resume Upload Card -->
       <div class="resume-card">
         <h2 class="resume-card-title">Get AI-Powered Job Matches</h2>
         <p class="resume-card-subtitle">Upload your resume and let our AI find the perfect opportunities for you</p>
@@ -1261,10 +1352,11 @@
         </div>
       </div>
 
+      <!-- Analysis Section -->
       <div class="analysis-section" id="analysisSection">
         <div class="analysis-header" id="analysisHeader">
           <h3 class="analysis-title">
-            🧠 AI Analysis Results
+            AI Analysis Results
           </h3>
           <div style="display: flex; gap: 12px; align-items: center;">
             <span id="jobMatchCount" class="match-count">0 Matches</span>
@@ -1273,66 +1365,12 @@
             </button>
           </div>
         </div>
-
-        <div class="processing-state" id="processingState">
-          <div class="ai-spinner"></div>
-          <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Analyzing Your Resume...</h4>
-          <p style="color: var(--text-secondary); font-size: 13px;">This usually takes 10-15 seconds</p>
-          
-          <div class="processing-steps">
-            <div class="process-step" id="step1">
-              <i class="fas fa-circle-notch"></i>
-              <span>Extracting text and parsing structure</span>
-            </div>
-            <div class="process-step" id="step2">
-              <i class="fas fa-circle-notch"></i>
-              <span>Identifying skills and experience</span>
-            </div>
-            <div class="process-step" id="step3">
-              <i class="fas fa-circle-notch"></i>
-              <span>Generating semantic embeddings</span>
-            </div>
-            <div class="process-step" id="step4">
-              <i class="fas fa-circle-notch"></i>
-              <span>Matching with job database</span>
-            </div>
-            <div class="process-step" id="step5">
-              <i class="fas fa-circle-notch"></i>
-              <span>Creating personalized insights</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="skills-section" id="skillsSection">
-          <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 12px; color: var(--primary);">
-            <i class="fas fa-code"></i> DETECTED SKILLS
-          </h4>
-          <div class="skills-grid" id="skillsGrid"></div>
-        </div>
-
-        <div class="stats-grid" id="statsGrid">
-          <div class="stat-card">
-            <div class="stat-icon"><i class="fas fa-briefcase"></i></div>
-            <div class="stat-value" id="experienceLevel">-</div>
-            <div class="stat-label">Experience Level</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon"><i class="fas fa-bullseye"></i></div>
-            <div class="stat-value" id="totalMatches">-</div>
-            <div class="stat-label">Jobs Matched</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
-            <div class="stat-value" id="topRole">-</div>
-            <div class="stat-label">Top Match Role</div>
-          </div>
-        </div>
-
-        <div id="analysisContent" class="analysis-content" style="margin-top: 20px;">
+        <div id="analysisContent" class="analysis-content">
           Analyzing your resume...
         </div>
       </div>
 
+      <!-- Jobs Section -->
       <div class="results-header">
         <h2 class="results-title" id="jobsTitle">Available Jobs</h2>
         <span id="jobsCount" class="results-count">0 Jobs</span>
@@ -1342,7 +1380,9 @@
       </div>
     </div>
 
+    <!-- Research Tab Content -->
     <div id="research" class="tab-content">
+      <!-- Search Section -->
       <div class="search-section">
         <h2 class="search-title">Find Research Opportunities</h2>
         <div class="search-bar">
@@ -1368,6 +1408,7 @@
         </div>
       </div>
 
+      <!-- Resume Upload Card (Shared) -->
       <div class="resume-card">
         <h2 class="resume-card-title">Get AI-Powered Research Matches</h2>
         <p class="resume-card-subtitle">Upload your resume and let our AI match you with 1500+ IIT professors</p>
@@ -1394,6 +1435,7 @@
         </div>
       </div>
 
+      <!-- Analysis Section -->
       <div class="analysis-section" id="analysisSectionResearch">
         <div class="analysis-header" id="analysisHeaderResearch">
           <h3 class="analysis-title">
@@ -1411,6 +1453,7 @@
         </div>
       </div>
 
+      <!-- Professors Section -->
       <div class="results-header">
         <h2 class="results-title" id="profsTitle">Available Research Opportunities</h2>
         <span id="profsCount" class="results-count">0 Professors</span>
@@ -1421,6 +1464,7 @@
     </div>
   </div>
 
+  <!-- Paste Modal -->
   <div class="modal" id="pasteModal">
     <div class="modal-content">
       <div class="modal-header">
@@ -1442,13 +1486,81 @@
     </div>
   </div>
 
+  <!-- Cold Email Generator Modal -->
+  <div class="email-modal" id="emailModal">
+    <div class="email-modal-content">
+      <div class="email-modal-header">
+        <div>
+          <div class="email-modal-title">AI Cold Email Generator</div>
+          <div class="email-modal-subtitle">Generate a personalized email for this professor in seconds</div>
+        </div>
+        <button class="email-modal-close" id="emailModalClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="email-modal-body">
+        <!-- Professor Info Banner -->
+        <div class="prof-info-banner">
+          <i class="fas fa-user-tie"></i>
+          <div class="prof-info-details">
+            <div class="name" id="emailProfName">Professor Name</div>
+            <div class="dept" id="emailProfDept">Department</div>
+            <div class="inst" id="emailProfInst">Institution</div>
+          </div>
+        </div>
+
+        <!-- Student Inputs -->
+        <label class="email-form-label">Your Name</label>
+        <input type="text" id="studentName" class="email-form-input" placeholder="e.g. Prakhar Pandey" />
+
+        <label class="email-form-label">Your Course & Year</label>
+        <input type="text" id="studentCourse" class="email-form-input" placeholder="e.g. B.Tech CSE, 2nd Year, IIT Guwahati" />
+
+        <label class="email-form-label">Your Relevant Project / Research</label>
+        <textarea id="studentProject" class="email-form-textarea" placeholder="e.g. I built a RAG-based document analysis system using LangChain and FAISS. It achieved 95% accuracy on benchmark datasets..."></textarea>
+
+        <label class="email-form-label">Why This Professor? (optional)</label>
+        <input type="text" id="studentReason" class="email-form-input" placeholder="e.g. I read about your work on Graph Neural Networks..." />
+
+        <!-- Generate Button -->
+        <button class="generate-btn" id="generateEmailBtn">
+          <i class="fas fa-magic"></i>
+          Generate Personalized Email
+        </button>
+
+        <!-- Generated Email Output -->
+        <div class="generated-email-box" id="generatedEmailBox">
+          <div class="generated-email-toolbar">
+            <span class="generated-email-label">Generated Email</span>
+            <button class="copy-btn" id="copyEmailBtn">
+              <i class="fas fa-copy"></i> Copy
+            </button>
+          </div>
+          <div class="generated-email-text" id="generatedEmailText"></div>
+          <div class="email-actions-row">
+            <a href="#" class="btn-send-email" id="sendEmailBtn" target="_blank">
+              <i class="fas fa-paper-plane"></i> Open in Gmail
+            </a>
+            <button class="btn-regenerate" id="regenerateBtn">
+              <i class="fas fa-redo"></i> Regenerate
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PDF.js Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
   <script>
+    // Configure PDF.js
     if (typeof pdfjsLib !== 'undefined') {
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     }
 
+    // Configuration
     const SHEET_ID = '1X412u-aXPAzkKqwRn0PgvbjcWMaivWJx-FlyHb6LARc';
     const JOBS_GID = '0';
     const PROFESSORS_GID = '1254290790';
@@ -1456,16 +1568,20 @@
     const JOBS_SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${JOBS_GID}`;
     const PROFESSORS_SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${PROFESSORS_GID}`;
 
+    // Global state
     let allJobs = [];
     let allProfessors = [];
     let matchedJobs = {};
     let matchedProfessors = {};
     let selectedFile = null;
     let currentTab = 'jobs';
-    let resumeSkills = []; // Store extracted skills globally
 
+    // DOM Elements
     const elements = {
+      // Tab buttons
       tabButtons: document.querySelectorAll('.tab-btn'),
+      
+      // Jobs tab
       resumeFile: document.getElementById('resumeFile'),
       uploadArea: document.getElementById('uploadArea'),
       fileNameDisplay: document.getElementById('fileNameDisplay'),
@@ -1483,6 +1599,8 @@
       jobMatchCount: document.getElementById('jobMatchCount'),
       jobsCount: document.getElementById('jobsCount'),
       jobsTitle: document.getElementById('jobsTitle'),
+
+      // Research tab
       uploadAreaResearch: document.getElementById('uploadAreaResearch'),
       fileNameDisplayResearch: document.getElementById('fileNameDisplayResearch'),
       analyzeBtnResearch: document.getElementById('analyzeBtnResearch'),
@@ -1499,32 +1617,37 @@
       profMatchCount: document.getElementById('profMatchCount'),
       profsCount: document.getElementById('profsCount'),
       profsTitle: document.getElementById('profsTitle'),
+
+      // Shared
       pasteModal: document.getElementById('pasteModal'),
       pasteTextarea: document.getElementById('pasteTextarea'),
       modalClose: document.getElementById('modalClose'),
       cancelPaste: document.getElementById('cancelPaste'),
       analyzePasted: document.getElementById('analyzePasted'),
       statusContainer: document.getElementById('statusContainer'),
-      totalCount: document.getElementById('totalCount'),
-      processingState: document.getElementById('processingState'),
-      skillsSection: document.getElementById('skillsSection'),
-      skillsGrid: document.getElementById('skillsGrid'),
-      statsGrid: document.getElementById('statsGrid'),
+      totalCount: document.getElementById('totalCount')
     };
 
+    // Tab switching
     elements.tabButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         const targetTab = btn.dataset.tab;
+        
+        // Update active tab button
         elements.tabButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        
+        // Update active tab content
         document.querySelectorAll('.tab-content').forEach(content => {
           content.classList.remove('active');
         });
         document.getElementById(targetTab).classList.add('active');
+        
         currentTab = targetTab;
       });
     });
 
+    // Toggle analysis sections
     elements.analysisHeader.addEventListener('click', () => {
       elements.analysisSection.classList.toggle('collapsed');
     });
@@ -1533,29 +1656,36 @@
       elements.analysisSectionResearch.classList.toggle('collapsed');
     });
 
+    // Utility Functions
     function showStatus(message, type = 'info') {
       const alert = document.createElement('div');
       alert.className = `status-alert ${type}`;
+      
       const icon = type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle';
       alert.innerHTML = `<i class="fas fa-${icon}"></i><span>${message}</span>`;
+      
       elements.statusContainer.appendChild(alert);
+      
       setTimeout(() => {
         alert.style.animation = 'slideDown 0.3s ease reverse';
         setTimeout(() => alert.remove(), 300);
       }, 5000);
     }
 
+    // Extract text from PDF
     async function extractTextFromPDF(file) {
       try {
         const arrayBuffer = await file.arrayBuffer();
         const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
         let fullText = '';
+        
         for (let i = 1; i <= pdf.numPages; i++) {
           const page = await pdf.getPage(i);
           const textContent = await page.getTextContent();
           const pageText = textContent.items.map(item => item.str).join(' ');
           fullText += pageText + ' ';
         }
+        
         return fullText.trim();
       } catch (error) {
         console.error('PDF extraction error:', error);
@@ -1563,128 +1693,21 @@
       }
     }
 
-    function animateProcessingSteps() {
-      const steps = ['step1', 'step2', 'step3', 'step4', 'step5'];
-      let currentStep = 0;
-      
-      const interval = setInterval(() => {
-        if (currentStep > 0) {
-          const prevStep = document.getElementById(steps[currentStep - 1]);
-          prevStep.classList.remove('active');
-          prevStep.classList.add('completed');
-          prevStep.querySelector('i').className = 'fas fa-check-circle';
-        }
-        
-        if (currentStep < steps.length) {
-          const step = document.getElementById(steps[currentStep]);
-          step.classList.add('active');
-          step.querySelector('i').className = 'fas fa-spinner fa-spin';
-          currentStep++;
-        } else {
-          clearInterval(interval);
-        }
-      }, 2000);
-      
-      return interval;
-    }
-
-    function displaySkills(skills) {
-      elements.skillsGrid.innerHTML = '';
-      skills.forEach((skill, index) => {
-        const skillItem = document.createElement('div');
-        skillItem.className = 'skill-item';
-        skillItem.innerHTML = `
-          <div class="skill-header">
-            <span class="skill-name">${skill.name}</span>
-            <span class="skill-score">${skill.proficiency}%</span>
-          </div>
-          <div class="skill-bar">
-            <div class="skill-fill" id="skill-fill-${index}" data-width="${skill.proficiency}"></div>
-          </div>
-          ${skill.evidence ? `<div class="skill-evidence">${skill.evidence}</div>` : ''}
-        `;
-        elements.skillsGrid.appendChild(skillItem);
-        
-        setTimeout(() => {
-          const fill = document.getElementById(`skill-fill-${index}`);
-          fill.style.width = `${skill.proficiency}%`;
-        }, 100 + (index * 100));
-      });
-    }
-
-    function displayStats(experienceLevel, totalMatches, topRole) {
-      document.getElementById('experienceLevel').textContent = experienceLevel;
-      document.getElementById('totalMatches').textContent = totalMatches;
-      document.getElementById('topRole').textContent = topRole;
-    }
-
-    // NEW: Extract skills from resume text (basic version)
-    function extractSkillsFromText(text) {
-      const commonSkills = {
-        'python': 90, 'java': 85, 'javascript': 85, 'typescript': 85,
-        'react': 80, 'angular': 80, 'vue': 80, 'node': 80, 'nodejs': 80,
-        'fastapi': 85, 'django': 85, 'flask': 85, 'express': 80,
-        'machine learning': 90, 'deep learning': 90, 'ai': 85,
-        'langchain': 90, 'rag': 90, 'gpt': 85, 'llm': 90,
-        'sql': 80, 'postgresql': 85, 'mongodb': 85, 'redis': 80,
-        'docker': 80, 'kubernetes': 85, 'aws': 85, 'gcp': 85, 'azure': 85,
-        'git': 75, 'ci/cd': 80, 'devops': 80,
-        'pandas': 85, 'numpy': 85, 'scikit-learn': 85, 'pytorch': 90, 'tensorflow': 90
-      };
-      
-      const lowerText = text.toLowerCase();
-      const foundSkills = [];
-      
-      Object.entries(commonSkills).forEach(([skill, baseProf]) => {
-        if (lowerText.includes(skill)) {
-          const frequency = (lowerText.match(new RegExp(skill, 'gi')) || []).length;
-          const proficiency = Math.min(95, baseProf + (frequency * 2));
-          foundSkills.push({
-            name: skill.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
-            proficiency: proficiency,
-            evidence: frequency > 2 ? 'Mentioned multiple times' : 'Mentioned in resume'
-          });
-        }
-      });
-      
-      return foundSkills.sort((a, b) => b.proficiency - a.proficiency).slice(0, 6);
-    }
-
-    // NEW: Generate match explanation for a job
-    function generateMatchExplanation(job, userSkills) {
-      const jobText = `${job.Role} ${job.Description || ''}`.toLowerCase();
-      
-      const matchedSkills = [];
-      const missingSkills = [];
-      
-      // Check which skills match
-      userSkills.forEach(skill => {
-        if (jobText.includes(skill.name.toLowerCase())) {
-          matchedSkills.push(skill);
-        }
-      });
-      
-      // Identify common missing skills
-      const commonRequirements = ['kubernetes', 'aws', 'docker', 'system design', 'microservices', 'graphql'];
-      commonRequirements.forEach(req => {
-        if (jobText.includes(req) && !userSkills.find(s => s.name.toLowerCase().includes(req))) {
-          missingSkills.push(req);
-        }
-      });
-      
-      return { matchedSkills, missingSkills };
-    }
-
+    // Fetch from Google Sheets
     async function fetchFromSheet(url) {
       try {
         const response = await fetch(url);
         const text = await response.text();
         const jsonText = text.substring(text.indexOf('{'), text.lastIndexOf(')'));
         const data = JSON.parse(jsonText);
+        
         const cols = data.table.cols.map(c => (c.label || '').trim());
         const rows = data.table.rows.map(row => 
           row.c ? row.c.map(cell => cell ? cell.v : '') : []
         );
+        
+        console.log('Sheet columns:', cols); // Debug: see column names
+        
         const items = rows
           .map(row => {
             const obj = {};
@@ -1697,6 +1720,9 @@
             const firstCol = Object.values(item)[0];
             return firstCol && String(firstCol).trim() !== '';
           });
+        
+        console.log('Sample item:', items[0]); // Debug: see first item structure
+        
         return items;
       } catch (error) {
         console.error('Error fetching sheet:', error);
@@ -1704,100 +1730,168 @@
       }
     }
 
+    // Extract keywords from resume
     function extractKeywords(text, topN = 50) {
       if (!text) return [];
+      
       const stopWords = new Set(['which', 'that', 'with', 'this', 'from', 'your', 'about', 
         'their', 'have', 'will', 'they', 'would', 'there', 'these', 'those', 'been', 
         'were', 'what', 'when', 'where', 'working', 'worked', 'work', 'using', 'used',
         'also', 'make', 'made', 'include', 'includes']);
+      
+      // Extract multi-word phrases (important for research terms like "machine learning")
       const phrases = text.match(/\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+){1,2}\b/g) || [];
+      
+      // Extract single words
       const words = text.toLowerCase().match(/\b[a-zA-Z0-9+#.+-]{3,}\b/g) || [];
+      
       const freq = {};
+      
+      // Count phrases (case-insensitive)
       phrases.forEach(phrase => {
         const lower = phrase.toLowerCase();
         if (!stopWords.has(lower)) {
-          freq[lower] = (freq[lower] || 0) + 3;
+          freq[lower] = (freq[lower] || 0) + 3; // Phrases get higher weight
         }
       });
+      
+      // Count words
       words.forEach(w => {
         if (!stopWords.has(w)) {
           freq[w] = (freq[w] || 0) + 1;
         }
       });
+      
       return Object.entries(freq)
         .sort((a, b) => b[1] - a[1])
         .slice(0, topN)
         .map(x => x[0]);
     }
 
+    // Helper to get email field - try everything!
     function getProfessorEmail(prof) {
-      const possibilities = ['Mail id', 'Mail Id', 'mail id', 'Email', 'email', 'E-mail', 'e-mail', 'Contact', 'contact'];
+      // Try all possible column name variations
+      const possibilities = [
+        'Mail id',
+        'Mail Id',
+        'mail id',
+        'Email',
+        'email',
+        'E-mail',
+        'e-mail',
+        'Contact',
+        'contact'
+      ];
+      
       for (let key of possibilities) {
-        if (prof[key] && String(prof[key]).includes('@')) return prof[key];
+        if (prof[key] && String(prof[key]).includes('@')) {
+          return prof[key];
+        }
       }
+      
+      // If none found, check if there's a column with "mail" or "email" in the name
       const keys = Object.keys(prof);
       for (let key of keys) {
         const lowerKey = key.toLowerCase();
         if ((lowerKey.includes('mail') || lowerKey.includes('email') || lowerKey.includes('contact')) 
             && prof[key] && String(prof[key]).includes('@')) {
+          console.log(`Found email in column: "${key}"`);
           return prof[key];
         }
       }
+      
       return '';
     }
 
+    // Helper to get research areas field - try everything!
     function getResearchAreas(prof) {
-      const possibilities = ['Area of Interest', 'Area of interest', 'area of interest', 'Research Areas', 'Research Area', 'Area', 'Research Interest', 'Research Interests', 'Interests'];
+      // Try all possible column name variations
+      const possibilities = [
+        'Area of Interest',
+        'Area of interest', 
+        'area of interest',
+        'Research Areas',
+        'Research Area',
+        'Area',
+        'Research Interest',
+        'Research Interests',
+        'Interests'
+      ];
+      
       for (let key of possibilities) {
-        if (prof[key]) return prof[key];
+        if (prof[key]) {
+          return prof[key];
+        }
       }
+      
+      // If none found, check if there's a column with "interest" or "area" in the name
       const keys = Object.keys(prof);
       for (let key of keys) {
         const lowerKey = key.toLowerCase();
         if ((lowerKey.includes('interest') || lowerKey.includes('area') || lowerKey.includes('research')) 
             && !lowerKey.includes('college') && !lowerKey.includes('name') && !lowerKey.includes('department')) {
+          console.log(`Found research area in column: "${key}"`);
           return prof[key];
         }
       }
+      
       return '';
     }
 
+    // Score item based on keywords
     function scoreItem(item, keywords, searchFields) {
       if (!keywords || keywords.length === 0) return 0;
+      
       const haystack = searchFields.map(field => item[field] || '').join(' ').toLowerCase();
       let score = 0;
+      
       keywords.forEach(keyword => {
-        if (haystack.includes(keyword)) score += 2;
+        // Exact match (full keyword appears)
+        if (haystack.includes(keyword)) {
+          score += 2;
+        }
+        
+        // Partial match (keyword words appear separately)
         const keywordParts = keyword.split(/\s+/);
         if (keywordParts.length > 1) {
           const allPartsFound = keywordParts.every(part => haystack.includes(part));
-          if (allPartsFound) score += 1;
+          if (allPartsFound) {
+            score += 1;
+          }
         }
       });
+      
+      // Bonus for title/name matches
       if (searchFields[0] && item[searchFields[0]]) {
         const titleField = item[searchFields[0]].toLowerCase();
         keywords.forEach(keyword => {
-          if (titleField.includes(keyword)) score += 1;
+          if (titleField.includes(keyword)) {
+            score += 1; // Extra weight for title matches
+          }
         });
       }
+      
       return score;
     }
 
+    // Call AI API
     async function analyzeResume(resumeText, context = 'jobs') {
       const response = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ resume: resumeText })
       });
+      
       if (!response.ok) {
         const error = await response.json().catch(() => ({ message: 'Analysis failed' }));
         throw new Error(error.message || 'Failed to analyze resume');
       }
+      
       const data = await response.json();
       return data.result || '';
     }
 
-    // ENHANCED: Render jobs with match explanation
+    // Render jobs
     function renderJobs(jobs, matchScores = {}) {
       if (!jobs || jobs.length === 0) {
         elements.jobsGrid.innerHTML = `
@@ -1809,85 +1903,37 @@
         `;
         return;
       }
+
       const hasMatches = Object.keys(matchScores).length > 0;
+
+      // Sort jobs - latest first (by row number/index from sheet)
       const sortedJobs = [...jobs].sort((a, b) => {
         const keyA = a.Company + a.Role;
         const keyB = b.Company + b.Role;
         const scoreA = matchScores[keyA] || 0;
         const scoreB = matchScores[keyB] || 0;
+
         if (hasMatches) {
-          if (scoreB !== scoreA) return scoreB - scoreA;
+          // If AI matching is active, sort by match score first
+          if (scoreB !== scoreA) {
+            return scoreB - scoreA;
+          }
         }
+        
+        // Otherwise, keep reverse order (latest from sheet = first in list)
+        // Jobs array is already in sheet order, so reverse index = latest first
         const indexA = jobs.indexOf(a);
         const indexB = jobs.indexOf(b);
-        return indexB - indexA;
+        return indexB - indexA; // Higher index = newer job = comes first
       });
-      
+
       elements.jobsGrid.innerHTML = sortedJobs.map((job, displayIndex) => {
         const key = job.Company + job.Role;
         const score = matchScores[key] || 0;
         const isMatched = score > 0;
-        const isTrending = displayIndex < 25;
         
-        // Generate match explanation if skills available
-        let explanationHTML = '';
-        if (isMatched && resumeSkills.length > 0) {
-          const explanation = generateMatchExplanation(job, resumeSkills);
-          
-          explanationHTML = `
-            <div class="match-explanation active">
-              ${explanation.matchedSkills.length > 0 ? `
-                <div class="match-section">
-                  <div class="match-section-title why-match">
-                    <i class="fas fa-check-circle"></i>
-                    <span>WHY YOU MATCH</span>
-                  </div>
-                  <ul class="match-list success">
-                    ${explanation.matchedSkills.slice(0, 3).map(skill => `
-                      <li>
-                        <i class="fas fa-check"></i>
-                        <span>${skill.name} (Your ${skill.proficiency}% proficiency)</span>
-                      </li>
-                    `).join('')}
-                  </ul>
-                </div>
-              ` : ''}
-              
-              ${explanation.missingSkills.length > 0 ? `
-                <div class="match-section">
-                  <div class="match-section-title skill-gaps">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <span>SKILL GAPS</span>
-                  </div>
-                  <ul class="match-list warning">
-                    ${explanation.missingSkills.slice(0, 3).map(skill => `
-                      <li>
-                        <i class="fas fa-arrow-right"></i>
-                        <span>${skill.charAt(0).toUpperCase() + skill.slice(1)} (mentioned in job description)</span>
-                      </li>
-                    `).join('')}
-                  </ul>
-                </div>
-              ` : ''}
-              
-              ${explanation.missingSkills.length > 0 ? `
-                <div class="match-section">
-                  <div class="match-section-title quick-learn">
-                    <i class="fas fa-graduation-cap"></i>
-                    <span>QUICK LEARN</span>
-                  </div>
-                  <div class="learning-links">
-                    ${explanation.missingSkills.slice(0, 2).map(skill => `
-                      <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(skill + ' tutorial')}" target="_blank" class="learning-link">
-                        ${skill.charAt(0).toUpperCase() + skill.slice(1)} Basics
-                      </a>
-                    `).join('')}
-                  </div>
-                </div>
-              ` : ''}
-            </div>
-          `;
-        }
+        // Mark top 25 jobs as trending (after sorting)
+        const isTrending = displayIndex < 25;
         
         return `
           <div class="job-card ${isMatched ? 'matched' : ''}">
@@ -1901,22 +1947,52 @@
                 ${isMatched ? `<div class="match-score"><i class="fas fa-check-circle"></i> ${Math.round(score)}% Match</div>` : ''}
               </div>
             </div>
+            
             <div class="job-meta">
-              ${job.Location ? `<div class="job-meta-item"><i class="fas fa-map-marker-alt"></i>${job.Location}</div>` : ''}
-              ${job.Stipend ? `<div class="job-meta-item"><i class="fas fa-rupee-sign"></i>${job.Stipend}</div>` : ''}
-              ${job.JobType ? `<div class="job-meta-item"><i class="fas fa-briefcase"></i>${job.JobType}</div>` : ''}
+              ${job.Location ? `
+                <div class="job-meta-item">
+                  <i class="fas fa-map-marker-alt"></i>
+                  ${job.Location}
+                </div>
+              ` : ''}
+              ${job.Stipend ? `
+                <div class="job-meta-item">
+                  <i class="fas fa-rupee-sign"></i>
+                  ${job.Stipend}
+                </div>
+              ` : ''}
+              ${job.JobType ? `
+                <div class="job-meta-item">
+                  <i class="fas fa-briefcase"></i>
+                  ${job.JobType}
+                </div>
+              ` : ''}
             </div>
-            ${job.Description ? `<div class="job-description">${job.Description.slice(0, 150)}${job.Description.length > 150 ? '...' : ''}</div>` : ''}
-            ${explanationHTML}
+            
+            ${job.Description ? `
+              <div class="job-description">
+                ${job.Description.slice(0, 150)}${job.Description.length > 150 ? '...' : ''}
+              </div>
+            ` : ''}
+            
             <div class="job-actions">
-              ${job.ApplyLink ? `<a href="${job.ApplyLink}" target="_blank" class="btn-apply"><i class="fas fa-paper-plane"></i> Apply Now</a>` : ''}
-              ${job.Email ? `<a href="mailto:${job.Email}" class="btn-save"><i class="fas fa-envelope"></i> Email</a>` : ''}
+              ${job.ApplyLink ? `
+                <a href="${job.ApplyLink}" target="_blank" class="btn-apply">
+                  <i class="fas fa-paper-plane"></i> Apply Now
+                </a>
+              ` : ''}
+              ${job.Email ? `
+                <a href="mailto:${job.Email}" class="btn-save">
+                  <i class="fas fa-envelope"></i> Email
+                </a>
+              ` : ''}
             </div>
           </div>
         `;
       }).join('');
       
       const matchedCount = Object.keys(matchScores).filter(key => matchScores[key] > 0).length;
+      
       if (matchedCount > 0) {
         elements.jobsTitle.innerHTML = `Your Top Matches <span style="color: var(--primary); font-weight: 800;">(${matchedCount})</span> & All Jobs`;
       } else {
@@ -1924,6 +2000,7 @@
       }
     }
 
+    // Render professors
     function renderProfessors(professors, matchScores = {}) {
       if (!professors || professors.length === 0) {
         elements.profsGrid.innerHTML = `
@@ -1935,23 +2012,43 @@
         `;
         return;
       }
+
       const hasMatches = Object.keys(matchScores).length > 0;
+
       const sortedProfs = [...professors].sort((a, b) => {
         const keyA = a.Name + a['College Name'];
         const keyB = b.Name + b['College Name'];
         const scoreA = matchScores[keyA] || 0;
         const scoreB = matchScores[keyB] || 0;
+
         if (hasMatches) {
-          if (scoreB !== scoreA) return scoreB - scoreA;
+          if (scoreB !== scoreA) {
+            return scoreB - scoreA;
+          }
         }
+        
         return 0;
       });
+
       elements.profsGrid.innerHTML = sortedProfs.map(prof => {
         const key = prof.Name + prof['College Name'];
         const score = matchScores[key] || 0;
         const isMatched = score > 0;
+        
+        // Use the smart helper functions
         const researchAreas = getResearchAreas(prof);
         const email = getProfessorEmail(prof);
+        
+        // Debug: log the actual data for first few professors
+        if (sortedProfs.indexOf(prof) < 3) {
+          console.log('===== Professor Debug =====');
+          console.log('Name:', prof.Name);
+          console.log('All keys:', Object.keys(prof));
+          console.log('Research areas:', researchAreas ? 'YES ✓ (' + researchAreas.substring(0, 50) + '...)' : 'NO ✗');
+          console.log('Email:', email ? 'YES ✓ (' + email + ')' : 'NO ✗');
+          console.log('========================');
+        }
+        
         return `
           <div class="professor-card ${isMatched ? 'matched' : ''}">
             <div class="professor-header">
@@ -1962,17 +2059,40 @@
               </div>
               ${isMatched ? `<div class="match-score"><i class="fas fa-check-circle"></i> ${Math.round(score)}% Match</div>` : ''}
             </div>
+            
             <div class="research-areas">
               <div class="research-areas-title">Research Areas</div>
-              <div class="research-areas-content">${researchAreas || 'No research areas listed'}</div>
+              <div class="research-areas-content">
+                ${researchAreas || 'No research areas listed'}
+              </div>
             </div>
+            
             <div class="job-actions">
-              ${email ? `<a href="mailto:${email}" class="btn-apply"><i class="fas fa-envelope"></i> Email Professor</a>` : `<button class="btn-apply" style="opacity: 0.5; cursor: not-allowed;" disabled><i class="fas fa-envelope"></i> No Email Available</button>`}
+              ${email ? `
+                <a href="mailto:${email}" class="btn-apply">
+                  <i class="fas fa-envelope"></i> Email Professor
+                </a>
+              ` : `
+                <button class="btn-apply" style="opacity: 0.5; cursor: not-allowed;" disabled>
+                  <i class="fas fa-envelope"></i> No Email Available
+                </button>
+              `}
+              <button class="btn-generate-email" onclick="openEmailModal(${JSON.stringify({
+                name: prof.Name || '',
+                dept: prof.Department || '',
+                inst: prof['College Name'] || '',
+                research: researchAreas || '',
+                email: email || ''
+              }).replace(/"/g, '&quot;')})">
+                <i class="fas fa-magic"></i> AI Email
+              </button>
             </div>
           </div>
         `;
       }).join('');
+      
       const matchedCount = Object.keys(matchScores).filter(key => matchScores[key] > 0).length;
+      
       if (matchedCount > 0) {
         elements.profsTitle.innerHTML = `Your Top Matches <span style="color: var(--primary); font-weight: 800;">(${matchedCount})</span> & All Professors`;
       } else {
@@ -1980,60 +2100,87 @@
       }
     }
 
+    // Populate filters
     function populateFilters() {
+      // Job filters
       const locations = new Set();
       const types = new Set();
+      
       allJobs.forEach(job => {
         if (job.Location) locations.add(job.Location);
         if (job.JobType) types.add(job.JobType);
       });
+      
       elements.jobLocationFilter.innerHTML = '<option value="">All Locations</option>' +
-        Array.from(locations).sort().map(loc => `<option value="${loc}">${loc}</option>`).join('');
+        Array.from(locations).sort().map(loc => 
+          `<option value="${loc}">${loc}</option>`
+        ).join('');
+      
       elements.jobTypeFilter.innerHTML = '<option value="">All Job Types</option>' +
-        Array.from(types).sort().map(type => `<option value="${type}">${type}</option>`).join('');
+        Array.from(types).sort().map(type => 
+          `<option value="${type}">${type}</option>`
+        ).join('');
+
+      // Professor filters
       const institutions = new Set();
       const departments = new Set();
+      
       allProfessors.forEach(prof => {
         if (prof['College Name']) institutions.add(prof['College Name']);
         if (prof.Department) departments.add(prof.Department);
       });
+      
       elements.profInstitutionFilter.innerHTML = '<option value="">All Institutions</option>' +
-        Array.from(institutions).sort().map(inst => `<option value="${inst}">${inst}</option>`).join('');
+        Array.from(institutions).sort().map(inst => 
+          `<option value="${inst}">${inst}</option>`
+        ).join('');
+      
       elements.profDepartmentFilter.innerHTML = '<option value="">All Departments</option>' +
-        Array.from(departments).sort().map(dept => `<option value="${dept}">${dept}</option>`).join('');
+        Array.from(departments).sort().map(dept => 
+          `<option value="${dept}">${dept}</option>`
+        ).join('');
     }
 
+    // Apply filters for jobs
     function applyJobFilters() {
       const query = elements.jobSearchInput.value.toLowerCase();
       const location = elements.jobLocationFilter.value;
       const type = elements.jobTypeFilter.value;
+      
       let filtered = allJobs.filter(job => {
         const haystack = `${job.Company} ${job.Role} ${job.Location} ${job.Description}`.toLowerCase();
         const matchesQuery = !query || haystack.includes(query);
         const matchesLocation = !location || job.Location === location;
         const matchesType = !type || job.JobType === type;
+        
         return matchesQuery && matchesLocation && matchesType;
       });
+      
       renderJobs(filtered, matchedJobs);
       elements.jobsCount.textContent = `${filtered.length} Jobs`;
     }
 
+    // Apply filters for professors
     function applyProfessorFilters() {
       const query = elements.profSearchInput.value.toLowerCase();
       const institution = elements.profInstitutionFilter.value;
       const department = elements.profDepartmentFilter.value;
+      
       let filtered = allProfessors.filter(prof => {
         const researchAreas = getResearchAreas(prof);
         const haystack = `${prof.Name} ${prof['College Name']} ${prof.Department} ${researchAreas}`.toLowerCase();
         const matchesQuery = !query || haystack.includes(query);
         const matchesInstitution = !institution || prof['College Name'] === institution;
         const matchesDepartment = !department || prof.Department === department;
+        
         return matchesQuery && matchesInstitution && matchesDepartment;
       });
+      
       renderProfessors(filtered, matchedProfessors);
       elements.profsCount.textContent = `${filtered.length} Professors`;
     }
 
+    // Handle file upload for jobs tab
     elements.uploadArea.addEventListener('click', () => {
       elements.resumeFile.click();
     });
@@ -2042,83 +2189,116 @@
       const file = e.target.files[0];
       if (file) {
         selectedFile = file;
+        // Update both tabs
         elements.fileNameDisplay.textContent = `Selected: ${file.name}`;
         elements.fileNameDisplay.style.display = 'block';
         elements.analyzeBtn.disabled = false;
+        
         elements.fileNameDisplayResearch.textContent = `Selected: ${file.name}`;
         elements.fileNameDisplayResearch.style.display = 'block';
         elements.analyzeBtnResearch.disabled = false;
       }
     });
 
+    // Handle file upload for research tab
     elements.uploadAreaResearch.addEventListener('click', () => {
       elements.resumeFile.click();
     });
 
-    ['uploadArea', 'uploadAreaResearch'].forEach(areaId => {
-      const area = document.getElementById(areaId);
-      area.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        area.classList.add('dragover');
-      });
-      area.addEventListener('dragleave', () => {
-        area.classList.remove('dragover');
-      });
-      area.addEventListener('drop', (e) => {
-        e.preventDefault();
-        area.classList.remove('dragover');
-        const file = e.dataTransfer.files[0];
-        if (file) {
-          selectedFile = file;
-          elements.resumeFile.files = e.dataTransfer.files;
-          elements.fileNameDisplay.textContent = `Selected: ${file.name}`;
-          elements.fileNameDisplay.style.display = 'block';
-          elements.analyzeBtn.disabled = false;
-          elements.fileNameDisplayResearch.textContent = `Selected: ${file.name}`;
-          elements.fileNameDisplayResearch.style.display = 'block';
-          elements.analyzeBtnResearch.disabled = false;
-        }
-      });
+    // Drag and drop for jobs
+    elements.uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      elements.uploadArea.classList.add('dragover');
     });
 
-    // ENHANCED Analyze button
+    elements.uploadArea.addEventListener('dragleave', () => {
+      elements.uploadArea.classList.remove('dragover');
+    });
+
+    elements.uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      elements.uploadArea.classList.remove('dragover');
+      
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        selectedFile = file;
+        elements.resumeFile.files = e.dataTransfer.files;
+        // Update both tabs
+        elements.fileNameDisplay.textContent = `Selected: ${file.name}`;
+        elements.fileNameDisplay.style.display = 'block';
+        elements.analyzeBtn.disabled = false;
+        
+        elements.fileNameDisplayResearch.textContent = `Selected: ${file.name}`;
+        elements.fileNameDisplayResearch.style.display = 'block';
+        elements.analyzeBtnResearch.disabled = false;
+      }
+    });
+
+    // Drag and drop for research
+    elements.uploadAreaResearch.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      elements.uploadAreaResearch.classList.add('dragover');
+    });
+
+    elements.uploadAreaResearch.addEventListener('dragleave', () => {
+      elements.uploadAreaResearch.classList.remove('dragover');
+    });
+
+    elements.uploadAreaResearch.addEventListener('drop', (e) => {
+      e.preventDefault();
+      elements.uploadAreaResearch.classList.remove('dragover');
+      
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        selectedFile = file;
+        elements.resumeFile.files = e.dataTransfer.files;
+        // Update both tabs
+        elements.fileNameDisplay.textContent = `Selected: ${file.name}`;
+        elements.fileNameDisplay.style.display = 'block';
+        elements.analyzeBtn.disabled = false;
+        
+        elements.fileNameDisplayResearch.textContent = `Selected: ${file.name}`;
+        elements.fileNameDisplayResearch.style.display = 'block';
+        elements.analyzeBtnResearch.disabled = false;
+      }
+    });
+
+    // Analyze button for jobs
     elements.analyzeBtn.addEventListener('click', async () => {
       if (!selectedFile) return;
+      
       const originalText = elements.analyzeBtn.innerHTML;
       elements.analyzeBtn.innerHTML = '<span class="loading"></span> Analyzing...';
       elements.analyzeBtn.disabled = true;
       
       try {
         let text;
+        
         if (selectedFile.type === 'application/pdf' || selectedFile.name.toLowerCase().endsWith('.pdf')) {
           showStatus('Extracting text from PDF...', 'info');
           text = await extractTextFromPDF(selectedFile);
         } else {
           text = await selectedFile.text();
         }
+        
         if (!text || text.trim().length < 10) {
           throw new Error('File appears to be empty');
         }
         
         elements.analysisSection.classList.add('active');
-        elements.processingState.classList.add('active');
-        elements.skillsSection.classList.remove('active');
-        elements.statsGrid.classList.remove('active');
-        elements.analysisContent.style.display = 'none';
-        
-        const animationInterval = animateProcessingSteps();
+        elements.analysisContent.textContent = 'Analyzing your resume with AI...';
         
         const analysis = await analyzeResume(text, 'jobs');
+        elements.analysisContent.textContent = analysis;
+        
         const combinedText = text + ' ' + analysis;
         const keywords = extractKeywords(combinedText, 50);
-        
-        // Extract skills from resume
-        resumeSkills = extractSkillsFromText(text);
         
         const scored = allJobs.map(job => {
           const score = scoreItem(job, keywords, ['Company', 'Role', 'Description', 'JobType']);
           return { job, score };
         });
+        
         scored.sort((a, b) => b.score - a.score);
         const topMatches = scored.filter(s => s.score > 0);
         
@@ -2128,18 +2308,6 @@
           matchedJobs[key] = Math.min(100, item.score * 8);
         });
         
-        clearInterval(animationInterval);
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        elements.processingState.classList.remove('active');
-        elements.skillsSection.classList.add('active');
-        elements.statsGrid.classList.add('active');
-        elements.analysisContent.style.display = 'block';
-        
-        displaySkills(resumeSkills);
-        displayStats('Entry-Mid', topMatches.length, 'AI Engineer');
-        
-        elements.analysisContent.textContent = analysis;
         elements.jobMatchCount.textContent = `${topMatches.length} Matches`;
         renderJobs(allJobs, matchedJobs);
         showStatus('Resume analyzed successfully! Scroll down to see matched jobs.', 'success');
@@ -2158,68 +2326,545 @@
         console.error(error);
         showStatus(error.message || 'Analysis failed', 'error');
         elements.analysisContent.textContent = `Error: ${error.message}\n\nPlease try again or use the paste option.`;
-        elements.analysisContent.style.display = 'block';
-        elements.processingState.classList.remove('active');
       } finally {
         elements.analyzeBtn.innerHTML = originalText;
         elements.analyzeBtn.disabled = false;
       }
     });
 
-    // Paste modal
+    // Analyze button for research
+    elements.analyzeBtnResearch.addEventListener('click', async () => {
+      if (!selectedFile) return;
+      
+      const originalText = elements.analyzeBtnResearch.innerHTML;
+      elements.analyzeBtnResearch.innerHTML = '<span class="loading"></span> Analyzing...';
+      elements.analyzeBtnResearch.disabled = true;
+      
+      try {
+        let text;
+        
+        if (selectedFile.type === 'application/pdf' || selectedFile.name.toLowerCase().endsWith('.pdf')) {
+          showStatus('Extracting text from PDF...', 'info');
+          text = await extractTextFromPDF(selectedFile);
+        } else {
+          text = await selectedFile.text();
+        }
+        
+        if (!text || text.trim().length < 10) {
+          throw new Error('File appears to be empty');
+        }
+        
+        elements.analysisSectionResearch.classList.add('active');
+        elements.analysisContentResearch.textContent = 'Analyzing your resume with AI...';
+        
+        const analysis = await analyzeResume(text, 'research');
+        elements.analysisContentResearch.textContent = analysis;
+        
+        const combinedText = text + ' ' + analysis;
+        const keywords = extractKeywords(combinedText, 50);
+        
+        const scored = allProfessors.map(prof => {
+          // Build searchable text with fallback for Area of Interest
+          const researchAreas = getResearchAreas(prof);
+          const searchText = `${prof.Name} ${prof.Department} ${researchAreas}`.toLowerCase();
+          
+          let score = 0;
+          keywords.forEach(keyword => {
+            if (searchText.includes(keyword)) {
+              score += 2;
+            }
+            const keywordParts = keyword.split(/\s+/);
+            if (keywordParts.length > 1) {
+              const allPartsFound = keywordParts.every(part => searchText.includes(part));
+              if (allPartsFound) {
+                score += 1;
+              }
+            }
+          });
+          
+          return { prof, score };
+        });
+        
+        scored.sort((a, b) => b.score - a.score);
+        const topMatches = scored.filter(s => s.score > 0);
+        
+        matchedProfessors = {};
+        topMatches.forEach(item => {
+          const key = item.prof.Name + item.prof['College Name'];
+          matchedProfessors[key] = Math.min(100, item.score * 8);
+        });
+        
+        elements.profMatchCount.textContent = `${topMatches.length} Matches`;
+        renderProfessors(allProfessors, matchedProfessors);
+        showStatus('Resume analyzed successfully! Scroll down to see matched professors.', 'success');
+        
+        setTimeout(() => {
+          elements.analysisSectionResearch.classList.add('collapsed');
+          setTimeout(() => {
+            const firstMatchedProf = document.querySelector('.professor-card.matched');
+            if (firstMatchedProf) {
+              firstMatchedProf.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }, 400);
+        }, 2000);
+        
+      } catch (error) {
+        console.error(error);
+        showStatus(error.message || 'Analysis failed', 'error');
+        elements.analysisContentResearch.textContent = `Error: ${error.message}\n\nPlease try again or use the paste option.`;
+      } finally {
+        elements.analyzeBtnResearch.innerHTML = originalText;
+        elements.analyzeBtnResearch.disabled = false;
+      }
+    });
+
+    // Paste modal handlers
     elements.pasteBtn.addEventListener('click', () => {
       elements.pasteModal.classList.add('active');
       elements.pasteTextarea.focus();
     });
+
     elements.pasteBtnResearch.addEventListener('click', () => {
       elements.pasteModal.classList.add('active');
       elements.pasteTextarea.focus();
     });
+
     elements.modalClose.addEventListener('click', () => {
       elements.pasteModal.classList.remove('active');
     });
+
     elements.cancelPaste.addEventListener('click', () => {
       elements.pasteModal.classList.remove('active');
     });
 
+    elements.analyzePasted.addEventListener('click', async () => {
+      const text = elements.pasteTextarea.value.trim();
+      if (!text) {
+        showStatus('Please paste your resume text', 'error');
+        return;
+      }
+      
+      elements.pasteModal.classList.remove('active');
+      
+      if (currentTab === 'jobs') {
+        const originalText = elements.analyzeBtn.innerHTML;
+        elements.analyzeBtn.innerHTML = '<span class="loading"></span> Analyzing...';
+        elements.analyzeBtn.disabled = true;
+        
+        try {
+          elements.analysisSection.classList.add('active');
+          elements.analysisContent.textContent = 'Analyzing your resume with AI...';
+          
+          const analysis = await analyzeResume(text, 'jobs');
+          elements.analysisContent.textContent = analysis;
+          
+          const combinedText = text + ' ' + analysis;
+          const keywords = extractKeywords(combinedText, 50);
+          
+          const scored = allJobs.map(job => {
+            const score = scoreItem(job, keywords, ['Company', 'Role', 'Description', 'JobType']);
+            return { job, score };
+          });
+          
+          scored.sort((a, b) => b.score - a.score);
+          const topMatches = scored.filter(s => s.score > 0);
+          
+          matchedJobs = {};
+          topMatches.forEach(item => {
+            const key = item.job.Company + item.job.Role;
+            matchedJobs[key] = Math.min(100, item.score * 8);
+          });
+          
+          elements.jobMatchCount.textContent = `${topMatches.length} Matches`;
+          renderJobs(allJobs, matchedJobs);
+          showStatus('Resume analyzed successfully!', 'success');
+          
+          setTimeout(() => {
+            elements.analysisSection.classList.add('collapsed');
+            setTimeout(() => {
+              const firstMatchedJob = document.querySelector('.job-card.matched');
+              if (firstMatchedJob) {
+                firstMatchedJob.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+            }, 400);
+          }, 2000);
+          
+        } catch (error) {
+          console.error(error);
+          showStatus(error.message || 'Analysis failed', 'error');
+          elements.analysisContent.textContent = `Error: ${error.message}`;
+        } finally {
+          elements.analyzeBtn.innerHTML = originalText;
+          elements.analyzeBtn.disabled = false;
+        }
+      } else {
+        const originalText = elements.analyzeBtnResearch.innerHTML;
+        elements.analyzeBtnResearch.innerHTML = '<span class="loading"></span> Analyzing...';
+        elements.analyzeBtnResearch.disabled = true;
+        
+        try {
+          elements.analysisSectionResearch.classList.add('active');
+          elements.analysisContentResearch.textContent = 'Analyzing your resume with AI...';
+          
+          const analysis = await analyzeResume(text, 'research');
+          elements.analysisContentResearch.textContent = analysis;
+          
+          const combinedText = text + ' ' + analysis;
+          const keywords = extractKeywords(combinedText, 50);
+          
+          const scored = allProfessors.map(prof => {
+            // Build searchable text with fallback for Area of Interest
+            const researchAreas = getResearchAreas(prof);
+            const searchText = `${prof.Name} ${prof.Department} ${researchAreas}`.toLowerCase();
+            
+            let score = 0;
+            keywords.forEach(keyword => {
+              if (searchText.includes(keyword)) {
+                score += 2;
+              }
+              const keywordParts = keyword.split(/\s+/);
+              if (keywordParts.length > 1) {
+                const allPartsFound = keywordParts.every(part => searchText.includes(part));
+                if (allPartsFound) {
+                  score += 1;
+                }
+              }
+            });
+            
+            return { prof, score };
+          });
+          
+          scored.sort((a, b) => b.score - a.score);
+          const topMatches = scored.filter(s => s.score > 0);
+          
+          matchedProfessors = {};
+          topMatches.forEach(item => {
+            const key = item.prof.Name + item.prof['College Name'];
+            matchedProfessors[key] = Math.min(100, item.score * 8);
+          });
+          
+          elements.profMatchCount.textContent = `${topMatches.length} Matches`;
+          renderProfessors(allProfessors, matchedProfessors);
+          showStatus('Resume analyzed successfully!', 'success');
+          
+          setTimeout(() => {
+            elements.analysisSectionResearch.classList.add('collapsed');
+            setTimeout(() => {
+              const firstMatchedProf = document.querySelector('.professor-card.matched');
+              if (firstMatchedProf) {
+                firstMatchedProf.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+            }, 400);
+          }, 2000);
+          
+        } catch (error) {
+          console.error(error);
+          showStatus(error.message || 'Analysis failed', 'error');
+          elements.analysisContentResearch.textContent = `Error: ${error.message}`;
+        } finally {
+          elements.analyzeBtnResearch.innerHTML = originalText;
+          elements.analyzeBtnResearch.disabled = false;
+        }
+      }
+    });
+
+    // Search and filters
     [elements.jobSearchInput, elements.jobLocationFilter, elements.jobTypeFilter].forEach(el => {
       el.addEventListener('input', applyJobFilters);
     });
+
     [elements.profSearchInput, elements.profInstitutionFilter, elements.profDepartmentFilter].forEach(el => {
       el.addEventListener('input', applyProfessorFilters);
     });
 
+    // Initialize
     async function init() {
-      elements.jobsGrid.innerHTML = `<div class="empty-state"><div class="empty-icon"><span class="loading"></span></div><h3 class="empty-title">Loading jobs...</h3></div>`;
-      elements.profsGrid.innerHTML = `<div class="empty-state"><div class="empty-icon"><span class="loading"></span></div><h3 class="empty-title">Loading research opportunities...</h3></div>`;
+      elements.jobsGrid.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon"><span class="loading"></span></div>
+          <h3 class="empty-title">Loading jobs...</h3>
+        </div>
+      `;
+
+      elements.profsGrid.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon"><span class="loading"></span></div>
+          <h3 class="empty-title">Loading research opportunities...</h3>
+        </div>
+      `;
+      
       try {
+        // Fetch both jobs and professors
         const [jobs, professors] = await Promise.all([
           fetchFromSheet(JOBS_SHEET_URL),
           fetchFromSheet(PROFESSORS_SHEET_URL)
         ]);
+
         allJobs = jobs;
         allProfessors = professors;
+
+        // DEBUG: Check what columns we actually have
+        console.log('=== PROFESSOR DATA DEBUG ===');
+        console.log('Total professors loaded:', professors.length);
+        if (professors.length > 0) {
+          console.log('ALL Column names:', Object.keys(professors[0]));
+          console.log('First professor COMPLETE data:', professors[0]);
+          
+          // Check each possible column
+          Object.keys(professors[0]).forEach(key => {
+            console.log(`Column "${key}" = "${String(professors[0][key]).substring(0, 100)}"`);
+          });
+        }
+        console.log('=========================');
+
         populateFilters();
         applyJobFilters();
         applyProfessorFilters();
+
         elements.totalCount.innerHTML = `${allJobs.length} Jobs<span class="count-separator"> • </span>${allProfessors.length} Research`;
         showStatus(`Welcome to CareerLift! Loaded ${allJobs.length} jobs and ${allProfessors.length} research opportunities.`, 'success');
       } catch (error) {
-        elements.jobsGrid.innerHTML = `<div class="empty-state"><div class="empty-icon"><i class="fas fa-exclamation-triangle"></i></div><h3 class="empty-title">Failed to load data</h3><p class="empty-text">Please check your internet connection and refresh the page</p></div>`;
-        elements.profsGrid.innerHTML = `<div class="empty-state"><div class="empty-icon"><i class="fas fa-exclamation-triangle"></i></div><h3 class="empty-title">Failed to load data</h3><p class="empty-text">Please check your internet connection and refresh the page</p></div>`;
+        elements.jobsGrid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <h3 class="empty-title">Failed to load data</h3>
+            <p class="empty-text">Please check your internet connection and refresh the page</p>
+          </div>
+        `;
+        
+        elements.profsGrid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <h3 class="empty-title">Failed to load data</h3>
+            <p class="empty-text">Please check your internet connection and refresh the page</p>
+          </div>
+        `;
+        
         showStatus('Failed to load data', 'error');
       }
     }
+
+    // ============================================
+    // COLD EMAIL GENERATOR
+    // ============================================
+    
+    let currentProfData = null;
+
+    function openEmailModal(profData) {
+      currentProfData = profData;
+      
+      // Fill professor info in modal
+      document.getElementById('emailProfName').textContent = profData.name || 'Professor';
+      document.getElementById('emailProfDept').textContent = profData.dept || 'Department';
+      document.getElementById('emailProfInst').textContent = profData.inst || 'Institution';
+      
+      // Reset modal state
+      document.getElementById('generatedEmailBox').classList.remove('active');
+      document.getElementById('generateEmailBtn').innerHTML = '<i class="fas fa-magic"></i> Generate Personalized Email';
+      document.getElementById('generateEmailBtn').disabled = false;
+      
+      // Show modal
+      document.getElementById('emailModal').classList.add('active');
+    }
+
+    document.getElementById('emailModalClose').addEventListener('click', () => {
+      document.getElementById('emailModal').classList.remove('active');
+    });
+
+    document.getElementById('emailModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('emailModal')) {
+        document.getElementById('emailModal').classList.remove('active');
+      }
+    });
+
+    async function generateColdEmail() {
+      const studentName = document.getElementById('studentName').value.trim();
+      const studentCourse = document.getElementById('studentCourse').value.trim();
+      const studentProject = document.getElementById('studentProject').value.trim();
+      const studentReason = document.getElementById('studentReason').value.trim();
+
+      if (!studentName || !studentCourse) {
+        showStatus('Please enter your name and course details', 'error');
+        return;
+      }
+      if (!studentProject) {
+        showStatus('Please describe your project or research', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('generateEmailBtn');
+      btn.innerHTML = '<span class="loading"></span> Generating...';
+      btn.disabled = true;
+
+      try {
+        const prompt = `You are an expert academic email writer. Generate a highly personalized, professional cold email from a student to a professor requesting a research internship.
+
+PROFESSOR DETAILS:
+- Name: ${currentProfData.name}
+- Department: ${currentProfData.dept}
+- Institution: ${currentProfData.inst}
+- Research Areas: ${currentProfData.research}
+
+STUDENT DETAILS:
+- Name: ${studentName}
+- Course: ${studentCourse}
+- Their Project/Research: ${studentProject}
+- Why this professor: ${studentReason || 'Based on the professor research areas'}
+
+REQUIREMENTS:
+1. Start with "Subject: Research Internship Inquiry - [specific research area]"
+2. Then blank line
+3. Then the email body starting with "Dear Prof. [Last Name],"
+4. Reference SPECIFIC research areas from the professor's work
+5. Connect student's project to professor's research naturally
+6. Mention 1-2 specific skills relevant to their research
+7. Keep it concise (200-250 words max)
+8. Professional but warm tone
+9. End with clear call-to-action
+10. Sign off with student's full name and course
+
+Write ONLY the email. No explanations, no notes, just the email.`;
+
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            model: 'claude-sonnet-4-5-20250929',
+            max_tokens: 1000,
+            messages: [{ role: 'user', content: prompt }]
+          })
+        });
+
+        // If direct API fails, use the existing /api/analyze endpoint
+        let emailText = '';
+        
+        if (response.ok) {
+          const data = await response.json();
+          emailText = data.content[0]?.text || '';
+        } else {
+          // Fallback to existing API
+          const fallbackResponse = await fetch('/api/analyze', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ resume: prompt })
+          });
+          
+          if (fallbackResponse.ok) {
+            const data = await fallbackResponse.json();
+            emailText = data.result || '';
+          } else {
+            throw new Error('Failed to generate email');
+          }
+        }
+
+        if (!emailText) throw new Error('Empty response from AI');
+
+        // Display generated email
+        document.getElementById('generatedEmailText').textContent = emailText;
+        document.getElementById('generatedEmailBox').classList.add('active');
+        
+        // Setup send button with mailto
+        const profEmail = currentProfData.email;
+        const subjectLine = emailText.split('\n')[0].replace('Subject: ', '');
+        const emailBody = emailText.split('\n').slice(2).join('\n');
+        
+        if (profEmail) {
+          const mailtoLink = `mailto:${profEmail}?subject=${encodeURIComponent(subjectLine)}&body=${encodeURIComponent(emailBody)}`;
+          document.getElementById('sendEmailBtn').href = mailtoLink;
+          document.getElementById('sendEmailBtn').style.display = 'flex';
+        } else {
+          document.getElementById('sendEmailBtn').style.display = 'none';
+        }
+
+        showStatus('Email generated successfully!', 'success');
+
+      } catch (error) {
+        console.error('Email generation error:', error);
+        
+        // Fallback: Generate a template-based email
+        const profLastName = currentProfData.name.split(' ').pop();
+        const researchAreas = currentProfData.research.split(',').slice(0, 2).join(' and ');
+        
+        const fallbackEmail = `Subject: Research Internship Inquiry - ${researchAreas || currentProfData.dept}
+
+Dear Prof. ${profLastName},
+
+I hope this email finds you well. I am ${studentName}, a ${studentCourse}, writing to express my strong interest in pursuing a research internship under your guidance.
+
+I came across your research on ${researchAreas || 'your research areas'} and found it deeply fascinating. ${studentReason ? studentReason + '.' : ''}
+
+${studentProject ? `In my recent work, ${studentProject} This experience has given me hands-on expertise that I believe aligns well with your research focus.` : ''}
+
+I am eager to contribute to your research group and learn from your expertise. I would be grateful for the opportunity to discuss how my background could support your ongoing work.
+
+I have attached my CV for your consideration. Please let me know if you would be open to a brief meeting or call at your convenience.
+
+Thank you for your time and consideration.
+
+Warm regards,
+${studentName}
+${studentCourse}`;
+
+        document.getElementById('generatedEmailText').textContent = fallbackEmail;
+        document.getElementById('generatedEmailBox').classList.add('active');
+        
+        const profEmail = currentProfData.email;
+        if (profEmail) {
+          const mailtoLink = `mailto:${profEmail}?subject=${encodeURIComponent(`Research Internship Inquiry - ${researchAreas || currentProfData.dept}`)}&body=${encodeURIComponent(fallbackEmail)}`;
+          document.getElementById('sendEmailBtn').href = mailtoLink;
+        }
+        
+        showStatus('Email template generated!', 'success');
+      } finally {
+        btn.innerHTML = '<i class="fas fa-magic"></i> Generate Personalized Email';
+        btn.disabled = false;
+      }
+    }
+
+    document.getElementById('generateEmailBtn').addEventListener('click', generateColdEmail);
+    document.getElementById('regenerateBtn').addEventListener('click', generateColdEmail);
+
+    // Copy email to clipboard
+    document.getElementById('copyEmailBtn').addEventListener('click', () => {
+      const emailText = document.getElementById('generatedEmailText').textContent;
+      navigator.clipboard.writeText(emailText).then(() => {
+        const btn = document.getElementById('copyEmailBtn');
+        btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    });
+
+    // ============================================
+    // END COLD EMAIL GENERATOR
+    // ============================================
+
     init();
   </script>
 
+  <!-- Footer -->
   <footer style="background: var(--bg-white); border-top: 1px solid var(--border); padding: 40px 20px; margin-top: 60px;">
     <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
-      <div style="margin-bottom: 20px;"><a href="/" style="font-size: 24px; font-weight: 800; color: var(--primary); text-decoration: none;">CareerLift</a></div>
-      <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 10px;">AI-Powered Jobs & Research Platform for Students</p>
-      <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">Connecting students with opportunities at top companies and 1500+ IIT professors</p>
+      <div style="margin-bottom: 20px;">
+        <a href="/" style="font-size: 24px; font-weight: 800; color: var(--primary); text-decoration: none;">
+          CareerLift
+        </a>
+      </div>
+      <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 10px;">
+        AI-Powered Jobs & Research Platform for Students
+      </p>
+      <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">
+        Connecting students with opportunities at top companies and 1500+ IIT professors
+      </p>
       <div style="border-top: 1px solid var(--border); padding-top: 20px; margin-top: 20px;">
-        <p style="color: var(--text-muted); font-size: 12px;">© 2026 CareerLift. All rights reserved.</p>
+        <p style="color: var(--text-muted); font-size: 12px;">
+          © 2026 CareerLift. All rights reserved.
+        </p>
       </div>
     </div>
   </footer>
