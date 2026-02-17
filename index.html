@@ -1255,6 +1255,557 @@
       background: rgba(10,102,194,0.05);
       transform: translateY(-1px);
     }
+
+    /* ============================================
+       SKILL GAP ANALYZER
+       ============================================ */
+    .skill-gap-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.65);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    .skill-gap-modal.active { display: flex; }
+
+    .skill-gap-content {
+      background: white;
+      border-radius: 16px;
+      max-width: 720px;
+      width: 100%;
+      max-height: 92vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+      animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .skill-gap-header {
+      padding: 24px 28px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      background: linear-gradient(135deg, #f8faff, #f0f5ff);
+      border-radius: 16px 16px 0 0;
+    }
+
+    .skill-gap-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .skill-gap-subtitle {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .skill-gap-close {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .skill-gap-close:hover { background: var(--bg-gray); }
+
+    .skill-gap-body { padding: 24px 28px; }
+
+    /* Job banner in modal */
+    .job-banner-modal {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .job-banner-modal i { font-size: 28px; opacity: 0.8; }
+    .job-banner-modal .company { font-size: 13px; opacity: 0.9; }
+    .job-banner-modal .role { font-size: 17px; font-weight: 800; }
+
+    /* Resume required warning */
+    .resume-warning {
+      background: #FFF4E5;
+      border: 1px solid #F5A623;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      font-size: 14px;
+      color: #854d0e;
+    }
+
+    .resume-warning i { font-size: 20px; color: #F5A623; flex-shrink: 0; }
+
+    .analyze-gap-btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: inherit;
+      margin-bottom: 24px;
+    }
+
+    .analyze-gap-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(10,102,194,0.35);
+    }
+
+    .analyze-gap-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* Results section */
+    .gap-results { display: none; }
+    .gap-results.active { display: block; }
+
+    /* Overall score */
+    .overall-score-card {
+      background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+      border: 1px solid #bae6fd;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .score-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-weight: 800;
+      position: relative;
+    }
+
+    .score-circle .score-num {
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .score-circle .score-label {
+      font-size: 11px;
+      opacity: 0.8;
+    }
+
+    .score-high { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+    .score-mid  { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
+    .score-low  { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
+
+    .score-details .verdict {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .score-details .time-to-ready {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .score-details .quick-tip {
+      font-size: 13px;
+      color: #0369a1;
+      background: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border-left: 3px solid var(--primary);
+      line-height: 1.5;
+    }
+
+    /* Section headers */
+    .gap-section-title {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .gap-section-title.green { color: var(--success); }
+    .gap-section-title.red   { color: var(--danger); }
+    .gap-section-title.blue  { color: var(--primary); }
+
+    /* Matched skills */
+    .matched-skills-grid {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .matched-skill-item {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    .matched-skill-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .matched-skill-name {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    .matched-skill-pct {
+      font-weight: 800;
+      font-size: 13px;
+      color: var(--success);
+    }
+
+    .skill-progress-bar {
+      height: 5px;
+      background: #dcfce7;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 5px;
+    }
+
+    .skill-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--success), #34d399);
+      border-radius: 3px;
+      transition: width 0.8s ease-out;
+      width: 0%;
+    }
+
+    .matched-skill-evidence {
+      font-size: 11px;
+      color: #15803d;
+    }
+
+    /* Missing skills */
+    .missing-skills-grid {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .missing-skill-item {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 8px;
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .missing-skill-left { flex: 1; }
+    .missing-skill-name {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text-primary);
+      margin-bottom: 3px;
+    }
+
+    .missing-skill-reason { font-size: 12px; color: #92400e; }
+
+    .importance-badge {
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .importance-high   { background: #fee2e2; color: #991b1b; }
+    .importance-medium { background: #fef3c7; color: #92400e; }
+    .importance-low    { background: #f1f5f9; color: #475569; }
+
+    /* Roadmap */
+    .roadmap-container { margin-bottom: 20px; }
+
+    .roadmap-month {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .roadmap-month-header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .roadmap-month-title { font-weight: 800; font-size: 14px; }
+    .roadmap-month-focus { font-size: 13px; opacity: 0.9; }
+
+    .roadmap-month-body { padding: 16px; }
+
+    .roadmap-tasks {
+      margin-bottom: 12px;
+    }
+
+    .roadmap-task {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 5px 0;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .roadmap-task i { color: var(--primary); margin-top: 2px; font-size: 11px; flex-shrink: 0; }
+
+    .roadmap-resources {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .resource-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .resource-youtube  { background: #fee2e2; color: #991b1b; }
+    .resource-youtube:hover  { background: #fecaca; }
+    .resource-coursera { background: #dbeafe; color: #1e40af; }
+    .resource-coursera:hover { background: #bfdbfe; }
+    .resource-course   { background: #f0fdf4; color: #166534; }
+    .resource-course:hover   { background: #dcfce7; }
+    .resource-default  { background: var(--bg-gray); color: var(--primary); }
+    .resource-default:hover  { background: var(--border); }
+
+    /* Analyze Fit button on job card */
+    .btn-analyze-fit {
+      background: white;
+      color: var(--success);
+      border: 1.5px solid var(--success);
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-analyze-fit:hover {
+      background: rgba(5, 118, 66, 0.05);
+      transform: translateY(-1px);
+    }
+
+    /* ============================================
+       JOB ALERT SUBSCRIBE SECTION
+       ============================================ */
+    .alert-subscribe-section {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+      border-radius: 16px;
+      padding: 40px 36px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+      color: white;
+    }
+
+    .alert-subscribe-section::before {
+      content: '';
+      position: absolute;
+      top: -60%;
+      right: -10%;
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(55,143,233,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .alert-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(239,68,68,0.2);
+      border: 1px solid rgba(239,68,68,0.4);
+      color: #fca5a5;
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+    }
+
+    .alert-badge i { font-size: 10px; animation: pulse 1.5s infinite; }
+
+    .alert-title {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .alert-subtitle {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 1;
+      line-height: 1.6;
+    }
+
+    .alert-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .alert-input {
+      padding: 13px 18px;
+      border-radius: 10px;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.1);
+      color: white;
+      font-size: 14px;
+      font-family: inherit;
+      font-weight: 500;
+      transition: all 0.2s;
+      backdrop-filter: blur(4px);
+    }
+
+    .alert-input::placeholder { color: rgba(255,255,255,0.5); }
+
+    .alert-input:focus {
+      outline: none;
+      border-color: rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.15);
+    }
+
+    .alert-input.full-width { grid-column: 1 / -1; }
+
+    .alert-submit-btn {
+      grid-column: 1 / -1;
+      padding: 14px;
+      background: linear-gradient(135deg, #0A66C2, #378FE9);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: inherit;
+      box-shadow: 0 4px 15px rgba(10,102,194,0.4);
+    }
+
+    .alert-submit-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(10,102,194,0.5);
+    }
+
+    .alert-submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+    .alert-success {
+      background: rgba(16,185,129,0.15);
+      border: 1px solid rgba(16,185,129,0.4);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: none;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: #6ee7b7;
+      margin-top: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .alert-success.active { display: flex; }
+    .alert-success i { font-size: 20px; flex-shrink: 0; }
+
+    .alert-stats {
+      display: flex;
+      gap: 24px;
+      margin-top: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .alert-stat {
+      font-size: 13px;
+      opacity: 0.7;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .alert-stat i { color: #378FE9; }
+
+    @media (max-width: 768px) {
+      .alert-form { grid-template-columns: 1fr; }
+      .alert-input.full-width { grid-column: 1; }
+      .alert-submit-btn { grid-column: 1; }
+      .alert-subscribe-section { padding: 28px 20px; }
+      .alert-title { font-size: 22px; }
+    }
   </style>
 </head>
 <body>
@@ -1370,6 +1921,40 @@
         </div>
       </div>
 
+      <!-- Job Alert Subscribe Section -->
+      <div class="alert-subscribe-section">
+        <div class="alert-badge">
+          <i class="fas fa-circle"></i> Live Alerts
+        </div>
+        <h2 class="alert-title">Never Miss Your Dream Job</h2>
+        <p class="alert-subtitle">Get daily email alerts at 9 AM with new jobs matching your skills. Free forever.</p>
+
+        <div class="alert-form" id="alertForm">
+          <input type="text" class="alert-input" id="alertName" placeholder="Your Name" />
+          <input type="email" class="alert-input" id="alertEmail" placeholder="your@email.com" required />
+          <input type="text" class="alert-input full-width" id="alertSkills" 
+            placeholder="Your skills (e.g. Python, Machine Learning, React, FastAPI)" />
+          <button class="alert-submit-btn" id="alertSubmitBtn" onclick="subscribeToAlerts()">
+            <i class="fas fa-bell"></i>
+            Get Free Job Alerts
+          </button>
+        </div>
+
+        <div class="alert-success" id="alertSuccess">
+          <i class="fas fa-check-circle"></i>
+          <div>
+            <strong>You're subscribed!</strong> Check your email for confirmation. 
+            First alert arrives tomorrow at 9 AM.
+          </div>
+        </div>
+
+        <div class="alert-stats">
+          <div class="alert-stat"><i class="fas fa-clock"></i> Daily at 9 AM</div>
+          <div class="alert-stat"><i class="fas fa-bolt"></i> Instant confirmation</div>
+          <div class="alert-stat"><i class="fas fa-lock"></i> No spam, ever</div>
+        </div>
+      </div>
+
       <!-- Jobs Section -->
       <div class="results-header">
         <h2 class="results-title" id="jobsTitle">Available Jobs</h2>
@@ -1482,6 +2067,81 @@
       <div class="modal-footer">
         <button class="btn btn-secondary" id="cancelPaste">Cancel</button>
         <button class="btn btn-primary" id="analyzePasted">Analyze Resume</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skill Gap Analyzer Modal -->
+  <div class="skill-gap-modal" id="skillGapModal">
+    <div class="skill-gap-content">
+      <div class="skill-gap-header">
+        <div>
+          <div class="skill-gap-title">Skill Gap Analyzer</div>
+          <div class="skill-gap-subtitle">See exactly what you have, what's missing, and how to get there</div>
+        </div>
+        <button class="skill-gap-close" id="skillGapClose"><i class="fas fa-times"></i></button>
+      </div>
+
+      <div class="skill-gap-body">
+        <!-- Job info banner -->
+        <div class="job-banner-modal">
+          <i class="fas fa-briefcase"></i>
+          <div>
+            <div class="company" id="sgJobCompany">Company</div>
+            <div class="role" id="sgJobRole">Job Role</div>
+          </div>
+        </div>
+
+        <!-- Resume warning if not uploaded -->
+        <div class="resume-warning" id="sgResumeWarning" style="display:none;">
+          <i class="fas fa-exclamation-triangle"></i>
+          <div>
+            <strong>Resume not uploaded yet!</strong><br>
+            Please upload or paste your resume first, then come back to analyze your fit.
+          </div>
+        </div>
+
+        <!-- Analyze button -->
+        <button class="analyze-gap-btn" id="analyzeGapBtn">
+          <i class="fas fa-chart-bar"></i>
+          Analyze My Skill Gap
+        </button>
+
+        <!-- Results (shown after analysis) -->
+        <div class="gap-results" id="gapResults">
+
+          <!-- Overall Score -->
+          <div class="overall-score-card">
+            <div class="score-circle" id="scoreCircle">
+              <span class="score-num" id="scoreNum">0%</span>
+              <span class="score-label">Match</span>
+            </div>
+            <div class="score-details">
+              <div class="verdict" id="sgVerdict">Analyzing...</div>
+              <div class="time-to-ready" id="sgTimeReady"></div>
+              <div class="quick-tip" id="sgQuickTip"></div>
+            </div>
+          </div>
+
+          <!-- Matched Skills -->
+          <div class="gap-section-title green">
+            <i class="fas fa-check-circle"></i> Skills You Already Have
+          </div>
+          <div class="matched-skills-grid" id="matchedSkillsGrid"></div>
+
+          <!-- Missing Skills -->
+          <div class="gap-section-title red">
+            <i class="fas fa-times-circle"></i> Skills You Need
+          </div>
+          <div class="missing-skills-grid" id="missingSkillsGrid"></div>
+
+          <!-- Roadmap -->
+          <div class="gap-section-title blue">
+            <i class="fas fa-map-marked-alt"></i> Your Learning Roadmap
+          </div>
+          <div class="roadmap-container" id="roadmapContainer"></div>
+
+        </div>
       </div>
     </div>
   </div>
@@ -1986,6 +2646,13 @@
                   <i class="fas fa-envelope"></i> Email
                 </a>
               ` : ''}
+              <button class="btn-analyze-fit" onclick="openSkillGap(${JSON.stringify({
+                company: job.Company || '',
+                role: job.Role || '',
+                description: job.Description || ''
+              }).replace(/"/g, '&quot;')})">
+                <i class="fas fa-chart-bar"></i> Analyze Fit
+              </button>
             </div>
           </div>
         `;
@@ -2285,6 +2952,9 @@
           throw new Error('File appears to be empty');
         }
         
+        // Store globally for Skill Gap Analyzer
+        resumeTextGlobal = text;
+        
         elements.analysisSection.classList.add('active');
         elements.analysisContent.textContent = 'Analyzing your resume with AI...';
         
@@ -2443,6 +3113,9 @@
         showStatus('Please paste your resume text', 'error');
         return;
       }
+      
+      // Store globally for Skill Gap Analyzer
+      resumeTextGlobal = text;
       
       elements.pasteModal.classList.remove('active');
       
@@ -2643,6 +3316,256 @@
         showStatus('Failed to load data', 'error');
       }
     }
+
+    // ============================================
+    // JOB ALERT SUBSCRIPTION
+    // ============================================
+
+    async function subscribeToAlerts() {
+      const name = document.getElementById('alertName').value.trim();
+      const email = document.getElementById('alertEmail').value.trim();
+      const skills = document.getElementById('alertSkills').value.trim();
+
+      if (!email || !email.includes('@')) {
+        showStatus('Please enter a valid email address!', 'error');
+        document.getElementById('alertEmail').focus();
+        return;
+      }
+
+      const btn = document.getElementById('alertSubmitBtn');
+      btn.innerHTML = '<span class="loading"></span> Subscribing...';
+      btn.disabled = true;
+
+      try {
+        const response = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, name, skills })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          // Show success state
+          document.getElementById('alertForm').style.display = 'none';
+          document.getElementById('alertSuccess').classList.add('active');
+          showStatus('Subscribed! Check your email for confirmation.', 'success');
+          
+          // Track in Google Analytics
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'subscribe', {
+              'event_category': 'job_alerts',
+              'event_label': email
+            });
+          }
+        } else {
+          throw new Error(data.message || data.error || 'Subscription failed');
+        }
+
+      } catch (error) {
+        console.error('Subscribe error:', error);
+        showStatus(error.message || 'Failed to subscribe. Please try again.', 'error');
+        btn.innerHTML = '<i class="fas fa-bell"></i> Get Free Job Alerts';
+        btn.disabled = false;
+      }
+    }
+
+    // Allow Enter key to submit
+    document.getElementById('alertEmail').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') subscribeToAlerts();
+    });
+
+    // ============================================
+    // END JOB ALERT SUBSCRIPTION
+    // ============================================
+
+    // ============================================
+    // SKILL GAP ANALYZER
+    // ============================================
+
+    let currentJobData = null;
+    let resumeTextGlobal = '';  // Store resume text globally
+
+    function openSkillGap(jobData) {
+      currentJobData = jobData;
+      document.getElementById('sgJobCompany').textContent = jobData.company || 'Company';
+      document.getElementById('sgJobRole').textContent = jobData.role || 'Role';
+
+      // Reset results
+      document.getElementById('gapResults').classList.remove('active');
+      document.getElementById('analyzeGapBtn').innerHTML = '<i class="fas fa-chart-bar"></i> Analyze My Skill Gap';
+      document.getElementById('analyzeGapBtn').disabled = false;
+
+      // Show warning if no resume
+      if (!resumeTextGlobal) {
+        document.getElementById('sgResumeWarning').style.display = 'flex';
+        document.getElementById('analyzeGapBtn').disabled = true;
+      } else {
+        document.getElementById('sgResumeWarning').style.display = 'none';
+        document.getElementById('analyzeGapBtn').disabled = false;
+      }
+
+      document.getElementById('skillGapModal').classList.add('active');
+    }
+
+    document.getElementById('skillGapClose').addEventListener('click', () => {
+      document.getElementById('skillGapModal').classList.remove('active');
+    });
+
+    document.getElementById('skillGapModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('skillGapModal')) {
+        document.getElementById('skillGapModal').classList.remove('active');
+      }
+    });
+
+    async function runSkillGapAnalysis() {
+      if (!resumeTextGlobal) {
+        showStatus('Please upload your resume first!', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('analyzeGapBtn');
+      btn.innerHTML = '<span class="loading"></span> Analyzing your fit...';
+      btn.disabled = true;
+
+      try {
+        const response = await fetch('/api/skillgap', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            resume: resumeTextGlobal,
+            jobTitle: currentJobData.role,
+            jobDescription: currentJobData.description,
+            jobCompany: currentJobData.company
+          })
+        });
+
+        if (!response.ok) throw new Error('API request failed');
+
+        const data = await response.json();
+        if (!data.success || !data.analysis) throw new Error('Invalid response');
+
+        displaySkillGapResults(data.analysis);
+
+      } catch (error) {
+        console.error('Skill gap error:', error);
+        showStatus('Analysis failed. Please try again.', 'error');
+        btn.innerHTML = '<i class="fas fa-chart-bar"></i> Retry Analysis';
+        btn.disabled = false;
+      }
+    }
+
+    function displaySkillGapResults(analysis) {
+      // Overall score
+      const score = analysis.overallScore || 0;
+      const scoreCircle = document.getElementById('scoreCircle');
+      document.getElementById('scoreNum').textContent = score + '%';
+
+      scoreCircle.className = 'score-circle';
+      if (score >= 70) scoreCircle.classList.add('score-high');
+      else if (score >= 40) scoreCircle.classList.add('score-mid');
+      else scoreCircle.classList.add('score-low');
+
+      document.getElementById('sgVerdict').textContent = analysis.verdict || 'Good Fit';
+      document.getElementById('sgTimeReady').textContent = analysis.timeToReady ? `Ready in: ${analysis.timeToReady}` : '';
+      document.getElementById('sgQuickTip').textContent = analysis.quickTip || '';
+
+      // Matched skills
+      const matchedGrid = document.getElementById('matchedSkillsGrid');
+      if (analysis.matchedSkills && analysis.matchedSkills.length > 0) {
+        matchedGrid.innerHTML = analysis.matchedSkills.map((skill, i) => `
+          <div class="matched-skill-item">
+            <div class="matched-skill-top">
+              <span class="matched-skill-name">${skill.skill}</span>
+              <span class="matched-skill-pct">${skill.proficiency}%</span>
+            </div>
+            <div class="skill-progress-bar">
+              <div class="skill-progress-fill" id="sgFill${i}" data-width="${skill.proficiency}"></div>
+            </div>
+            <div class="matched-skill-evidence">${skill.evidence || ''}</div>
+          </div>
+        `).join('');
+
+        // Animate bars
+        setTimeout(() => {
+          analysis.matchedSkills.forEach((skill, i) => {
+            const fill = document.getElementById(`sgFill${i}`);
+            if (fill) fill.style.width = skill.proficiency + '%';
+          });
+        }, 100);
+      } else {
+        matchedGrid.innerHTML = '<div style="color: var(--text-muted); font-size: 14px; padding: 8px 0;">No direct skill matches found. Consider upskilling!</div>';
+      }
+
+      // Missing skills
+      const missingGrid = document.getElementById('missingSkillsGrid');
+      if (analysis.missingSkills && analysis.missingSkills.length > 0) {
+        missingGrid.innerHTML = analysis.missingSkills.map(skill => {
+          const importanceClass = skill.importance === 'High' ? 'importance-high' :
+                                   skill.importance === 'Medium' ? 'importance-medium' : 'importance-low';
+          return `
+            <div class="missing-skill-item">
+              <div class="missing-skill-left">
+                <div class="missing-skill-name">${skill.skill}</div>
+                <div class="missing-skill-reason">${skill.reason || ''}</div>
+              </div>
+              <span class="importance-badge ${importanceClass}">${skill.importance}</span>
+            </div>
+          `;
+        }).join('');
+      } else {
+        missingGrid.innerHTML = '<div style="color: var(--success); font-size: 14px; padding: 8px 0;">Great! No major skill gaps found.</div>';
+      }
+
+      // Roadmap
+      const roadmapContainer = document.getElementById('roadmapContainer');
+      if (analysis.roadmap && analysis.roadmap.length > 0) {
+        roadmapContainer.innerHTML = analysis.roadmap.map(month => {
+          const resourcesHTML = (month.resources || []).map(res => {
+            const typeClass = res.type === 'YouTube' ? 'resource-youtube' :
+                              res.type === 'Coursera' ? 'resource-coursera' :
+                              res.type === 'Course' ? 'resource-course' : 'resource-default';
+            const icon = res.type === 'YouTube' ? 'fab fa-youtube' :
+                         res.type === 'Coursera' ? 'fas fa-graduation-cap' : 'fas fa-book';
+            return `<a href="${res.url}" target="_blank" class="resource-link ${typeClass}">
+              <i class="${icon}"></i> ${res.title}
+            </a>`;
+          }).join('');
+
+          const tasksHTML = (month.tasks || []).map(task => `
+            <div class="roadmap-task">
+              <i class="fas fa-arrow-right"></i>
+              <span>${task}</span>
+            </div>
+          `).join('');
+
+          return `
+            <div class="roadmap-month">
+              <div class="roadmap-month-header">
+                <span class="roadmap-month-title">${month.month}</span>
+                <span class="roadmap-month-focus">${month.focus}</span>
+              </div>
+              <div class="roadmap-month-body">
+                <div class="roadmap-tasks">${tasksHTML}</div>
+                <div class="roadmap-resources">${resourcesHTML}</div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } else {
+        roadmapContainer.innerHTML = '<div style="color: var(--text-muted); font-size: 14px;">You\'re ready to apply now! No additional learning needed.</div>';
+      }
+
+      document.getElementById('gapResults').classList.add('active');
+      document.getElementById('analyzeGapBtn').innerHTML = '<i class="fas fa-redo"></i> Re-Analyze';
+      document.getElementById('analyzeGapBtn').disabled = false;
+    }
+
+    document.getElementById('analyzeGapBtn').addEventListener('click', runSkillGapAnalysis);
+
+    // ============================================
+    // END SKILL GAP ANALYZER
+    // ============================================
 
     // ============================================
     // COLD EMAIL GENERATOR
