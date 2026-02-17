@@ -827,15 +827,7 @@
     <div class="header-content">
       <a href="/" class="logo">CareerLift</a>
       <div class="header-actions">
-        <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-            <path d="M2 17l10 5 10-5"></path>
-            <path d="M2 12l10 5 10-5"></path>
-          </svg>
-          AI-Powered
-        </span>
-        <span id="totalCount" class="results-count">Loading...</span>
+        <span id="totalCount" class="results-count" style="display:none;"></span>
       </div>
     </div>
   </header>
@@ -1429,9 +1421,6 @@
               ${job.Email ? `<a href="mailto:${job.Email}" class="btn-save"><i class="fas fa-envelope"></i> Email</a>` : ''}
               <button class="btn-analyze-fit" onclick="openSkillGap(${JSON.stringify({company:job.Company||'',role:job.Role||'',description:job.Description||''}).replace(/"/g,'&quot;')})">
                 <i class="fas fa-chart-bar"></i> Analyze Fit
-              </button>
-              <button class="btn-generate-email" onclick="openJobEmailModal(${JSON.stringify({company:job.Company||'',role:job.Role||'',description:job.Description||'',email:job.Email||'',location:job.Location||''}).replace(/"/g,'&quot;')})">
-                <i class="fas fa-magic"></i> AI Email
               </button>
             </div>
           </div>`;
