@@ -6,11 +6,12 @@
   <title>CareerLift - AI-Powered Jobs & Research Platform</title>
   <meta name="description" content="Find jobs and research internships with AI-powered resume matching. Connect with 1500+ IIT professors and top companies." />
   
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🚀</text></svg>">
+  <link rel="icon" type="image/png" href="logo.png">
   
   <meta property="og:type" content="website" />
   <meta property="og:title" content="CareerLift - AI-Powered Jobs & Research" />
   <meta property="og:description" content="Find jobs and research internships with AI matching. Connect with 1500+ IIT professors." />
+  <meta property="og:image" content="logo.png" />
   <meta property="og:site_name" content="CareerLift" />
   
   <meta name="twitter:card" content="summary_large_image" />
@@ -96,21 +97,35 @@
 
     .header-content {
       max-width: 1440px; margin: 0 auto;
-      padding: 18px 40px;
+      padding: 14px 40px;
       display: flex; justify-content: space-between; align-items: center;
     }
 
-    .logo {
-      font-family: 'Sora', sans-serif;
-      font-size: 26px; font-weight: 800;
-      letter-spacing: -0.03em;
+    /* ── LOGO ── */
+    .logo-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       text-decoration: none;
+    }
+
+    .logo-img {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .logo-text {
+      font-family: 'Sora', sans-serif;
+      font-size: 22px; font-weight: 800;
+      letter-spacing: -0.03em;
       background: linear-gradient(135deg, #00D4FF 0%, #7C3AED 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
       transition: filter 0.3s;
     }
-    .logo:hover { filter: brightness(1.2); }
+    .logo-link:hover .logo-text { filter: brightness(1.2); }
 
     .header-actions {
       display: flex; align-items: center; gap: 14px;
@@ -126,7 +141,7 @@
 
     /* ── TABS ── */
     .tab-navigation {
-      position: sticky; top: 63px; z-index: 199;
+      position: sticky; top: 67px; z-index: 199;
       background: rgba(8,11,20,0.92);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
@@ -787,7 +802,6 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-
     /* ── AI THINKING ANIMATION ── */
     .thinking-box {
       background: rgba(0,212,255,0.03);
@@ -885,14 +899,15 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 1023px) {
       .container { padding: 24px 20px; }
-      .header-content { padding: 16px 20px; }
+      .header-content { padding: 12px 20px; }
       .tab-nav-content { padding: 0 20px; }
     }
 
     @media (max-width: 768px) {
-      .logo { font-size: 20px; }
+      .logo-img { height: 30px; }
+      .logo-text { font-size: 18px; }
       .container { padding: 16px; }
-      .header-content { padding: 14px 16px; }
+      .header-content { padding: 10px 16px; }
       .tab-nav-content { padding: 0 16px; }
       .search-section { padding: 18px 16px; }
       .resume-card, .alert-subscribe-section { padding: 24px 18px; }
@@ -918,7 +933,10 @@
   <!-- Header -->
   <header class="header">
     <div class="header-content">
-      <a href="/" class="logo">CareerLift</a>
+      <a href="/" class="logo-link">
+        <img src="logo.png" alt="CareerLift" class="logo-img" onerror="this.style.display='none'" />
+        <span class="logo-text">CareerLift</span>
+      </a>
       <div class="header-actions">
         <span id="totalCount" class="results-count" style="display:none;"></span>
       </div>
@@ -1691,7 +1709,6 @@
       for (let i = 0; i < steps.length; i++) {
         const el = document.getElementById(prefix + (i+1));
         if (!el) continue;
-        // Mark previous as done
         if (i > 0) {
           const prev = document.getElementById(prefix + i);
           if (prev) { prev.classList.remove('active'); prev.classList.add('done'); prev.querySelector('.step-icon').textContent = '✓'; }
@@ -1704,41 +1721,31 @@
     async function runJobAnalysis(text) {
       resumeTextGlobal = text;
       elements.analysisSection.classList.add('active');
-
-      // Hide old content, show thinking box
       elements.analysisContent.style.display = 'none';
       const thinkBox = document.getElementById('thinkingBox');
       const thinkStream = document.getElementById('thinkingStream');
       thinkBox.style.display = 'block';
       thinkStream.textContent = '';
 
-      // Reset steps
       ['step1','step2','step3','step4','step5'].forEach(id => {
         const el = document.getElementById(id);
         if (el) { el.classList.remove('active','done'); el.querySelector('.step-icon').textContent = ['📄','🔍','🧠','⚡','✅'][parseInt(id.slice(-1))-1]; }
       });
 
-      // Start step animation in parallel with API call
       const stepsPromise = animateThinkingSteps('step', [1,2,3,4,5], 700);
-
-      // Fire API
       const analysis = await analyzeResume(text, 'jobs');
       await stepsPromise;
 
-      // Mark last step done
       const last = document.getElementById('step5');
       if (last) { last.classList.remove('active'); last.classList.add('done'); last.querySelector('.step-icon').textContent = '✓'; }
 
-      // Update header
       document.querySelector('#thinkingBox .thinking-label').textContent = 'Analysis Complete';
       document.querySelector('#thinkingBox .thinking-orb').style.animation = 'none';
       document.querySelector('#thinkingBox .thinking-orb').style.background = 'var(--green)';
       document.querySelector('#thinkingBox .thinking-orb').style.boxShadow = '0 0 8px rgba(16,185,129,0.8)';
 
-      // Typewriter the result
       await typewriterEffect(thinkStream, analysis, 6);
 
-      // Matching
       const keywords = extractKeywords(text + ' ' + analysis, 50);
       const scored = allJobs.map(job => ({ job, score: scoreItem(job, keywords, ['Company','Role','Description','JobType']) }));
       scored.sort((a, b) => b.score - a.score);
@@ -1757,15 +1764,12 @@
 
     async function runResearchAnalysis(text) {
       elements.analysisSectionResearch.classList.add('active');
-
-      // Hide old content, show thinking box
       elements.analysisContentResearch.style.display = 'none';
       const thinkBoxR = document.getElementById('thinkingBoxResearch');
       const thinkStreamR = document.getElementById('thinkingStreamResearch');
       thinkBoxR.style.display = 'block';
       thinkStreamR.textContent = '';
 
-      // Reset steps
       ['stepR1','stepR2','stepR3','stepR4','stepR5'].forEach((id,i) => {
         const el = document.getElementById(id);
         if (el) { el.classList.remove('active','done'); el.querySelector('.step-icon').textContent = ['📄','🔍','🧪','🏛️','✅'][i]; }
@@ -2153,6 +2157,7 @@
         populateFilters();
         applyJobFilters();
         applyProfessorFilters();
+        elements.totalCount.style.display = 'block';
         elements.totalCount.innerHTML = `${allJobs.length} Jobs<span style="color:var(--text3);margin:0 6px;">•</span>${allProfessors.length} Research`;
         showStatus(`Welcome! Loaded ${allJobs.length} jobs and ${allProfessors.length} research opportunities.`, 'success');
       } catch (error) {
@@ -2169,8 +2174,9 @@
   <!-- Footer -->
   <footer style="background:var(--bg2);border-top:1px solid var(--border);padding:40px 20px;margin-top:60px;">
     <div style="max-width:1200px;margin:0 auto;text-align:center;">
-      <div style="margin-bottom:16px;">
-        <a href="/" style="font-size:24px;font-weight:800;background:linear-gradient(135deg,#00D4FF,#7C3AED);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;">CareerLift</a>
+      <div style="margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:10px;">
+        <img src="logo.png" alt="CareerLift" style="height:28px;width:auto;object-fit:contain;border-radius:6px;" onerror="this.style.display='none'" />
+        <a href="/" style="font-size:22px;font-weight:800;background:linear-gradient(135deg,#00D4FF,#7C3AED);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;">CareerLift</a>
       </div>
       <p style="color:var(--text2);font-size:14px;margin-bottom:8px;">AI-Powered Jobs & Research Platform for Students</p>
       <p style="color:var(--text3);font-size:13px;margin-bottom:20px;">Connecting students with opportunities at top companies and 1500+ IIT professors</p>
