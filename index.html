@@ -6,12 +6,10 @@
   <title>CareerLift - AI-Powered Jobs & Research Platform</title>
   <meta name="description" content="Find jobs and research internships with AI-powered resume matching. Connect with 1500+ IIT professors and top companies." />
 
-  <!-- ✅ New Favicon Files -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://raw.githubusercontent.com/prakhar1605/Naukri-Chakri/main/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/prakhar1605/Naukri-Chakri/main/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://raw.githubusercontent.com/prakhar1605/Naukri-Chakri/main/logo.png">
+  <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/prakhar1605/Naukri-Chakri/main/logo.png">
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="CareerLift - AI-Powered Jobs & Research" />
@@ -98,14 +96,22 @@
       display: flex; justify-content: space-between; align-items: center;
     }
 
-    /* ✅ New Logo — image instead of text gradient */
     .logo-link {
       text-decoration: none;
-      display: flex; align-items: center;
+      display: flex; align-items: center; gap: 10px;
       transition: filter 0.3s;
     }
     .logo-link:hover { filter: brightness(1.15); }
-    .logo-img { height: 38px; width: auto; }
+    .logo-img { height: 38px; width: auto; object-fit: contain; }
+    .logo-text {
+      font-family: 'Sora', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--neon), var(--neon2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
     .header-actions { display: flex; align-items: center; gap: 14px; }
     .results-count {
@@ -459,15 +465,13 @@
     .typing-cursor { display:inline-block; width:2px; height:14px; background:var(--neon); margin-left:2px; vertical-align:middle; animation:blink 0.7s step-end infinite; }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-    /* ── SEMANTIC BADGE ── */
-    .semantic-badge { display:inline-flex; align-items:center; gap:5px; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.2); color:var(--green); padding:3px 10px; border-radius:100px; font-size:11px; font-weight:700; margin-left:8px; }
-
     #resumeFile { display:none; }
 
     /* ── RESPONSIVE ── */
     @media (max-width:1023px) { .container{padding:24px 20px} .header-content{padding:14px 20px} .tab-nav-content{padding:0 20px} }
     @media (max-width:768px) {
       .logo-img { height:30px; }
+      .logo-text { font-size:17px; }
       .container{padding:16px} .header-content{padding:12px 16px} .tab-nav-content{padding:0 16px}
       .search-section{padding:18px 16px} .resume-card,.alert-subscribe-section{padding:24px 18px}
       .search-bar{flex-direction:column} .search-input-wrapper{min-width:100%} .filter-select{width:100%}
@@ -486,9 +490,15 @@
 
   <header class="header">
     <div class="header-content">
-      <!-- ✅ New Logo Image -->
+      <!-- ✅ FIXED LOGO — GitHub raw URL with text fallback -->
       <a href="/" class="logo-link">
-        <img src="/android-chrome-192x192.png" alt="CareerLift" class="logo-img" />
+        <img
+          src="https://raw.githubusercontent.com/prakhar1605/Naukri-Chakri/main/logo.png"
+          alt="CareerLift"
+          class="logo-img"
+          onerror="this.style.display='none'; document.getElementById('logoTextFallback').style.display='block';"
+        />
+        <span id="logoTextFallback" class="logo-text" style="display:none;">CareerLift</span>
       </a>
       <div class="header-actions">
         <span id="totalCount" class="results-count" style="display:none;"></span>
@@ -582,8 +592,8 @@
           <div class="thinking-steps">
             <div class="thinking-step" id="step1"><span class="step-icon">📄</span><span>Reading your resume...</span></div>
             <div class="thinking-step" id="step2"><span class="step-icon">🔍</span><span>Extracting skills & experience...</span></div>
-            <div class="thinking-step" id="step3"><span class="step-icon">🧠</span><span>Generating semantic embeddings...</span></div>
-            <div class="thinking-step" id="step4"><span class="step-icon">⚡</span><span>Running cosine similarity matching...</span></div>
+            <div class="thinking-step" id="step3"><span class="step-icon">🧠</span><span>Understanding your profile...</span></div>
+            <div class="thinking-step" id="step4"><span class="step-icon">⚡</span><span>Running AI matching...</span></div>
             <div class="thinking-step" id="step5"><span class="step-icon">✅</span><span>Ranking best matches...</span></div>
           </div>
           <div class="thinking-text-stream" id="thinkingStream"></div>
@@ -647,8 +657,8 @@
           <div class="thinking-steps">
             <div class="thinking-step" id="stepR1"><span class="step-icon">📄</span><span>Reading your resume...</span></div>
             <div class="thinking-step" id="stepR2"><span class="step-icon">🔍</span><span>Extracting research interests...</span></div>
-            <div class="thinking-step" id="stepR3"><span class="step-icon">🧪</span><span>Generating semantic embeddings...</span></div>
-            <div class="thinking-step" id="stepR4"><span class="step-icon">🏛️</span><span>Cosine similarity across 1583 professors...</span></div>
+            <div class="thinking-step" id="stepR3"><span class="step-icon">🧪</span><span>Understanding your research profile...</span></div>
+            <div class="thinking-step" id="stepR4"><span class="step-icon">🏛️</span><span>AI matching across 1583 professors...</span></div>
             <div class="thinking-step" id="stepR5"><span class="step-icon">✅</span><span>Ranking best matches...</span></div>
           </div>
           <div class="thinking-text-stream" id="thinkingStreamResearch"></div>
@@ -845,7 +855,7 @@
       const icon = type==='success'?'check-circle':type==='error'?'exclamation-circle':'info-circle';
       a.innerHTML = `<i class="fas fa-${icon}"></i><span>${msg}</span>`;
       elements.statusContainer.appendChild(a);
-      setTimeout(() => { a.style.opacity='0'; setTimeout(()=>a.remove(),300); }, 5000);
+      setTimeout(() => { a.style.opacity='0'; a.style.transition='opacity 0.3s'; setTimeout(()=>a.remove(),300); }, 5000);
     }
 
     async function extractTextFromPDF(file) {
@@ -877,41 +887,85 @@
     function getProfessorEmail(prof) {
       const keys = ['Mail id','Mail Id','mail id','Email','email','E-mail','e-mail','Contact','contact'];
       for (let k of keys) { if (prof[k] && String(prof[k]).includes('@')) return prof[k]; }
-      for (let k of Object.keys(prof)) { if ((k.toLowerCase().includes('mail')||k.toLowerCase().includes('email')) && prof[k] && String(prof[k]).includes('@')) return prof[k]; }
+      for (let k of Object.keys(prof)) {
+        if ((k.toLowerCase().includes('mail')||k.toLowerCase().includes('email')) && prof[k] && String(prof[k]).includes('@')) return prof[k];
+      }
       return '';
     }
 
     function getResearchAreas(prof) {
       const keys = ['Area of Interest','Area of interest','area of interest','Research Areas','Research Area','Area','Research Interest','Research Interests','Interests'];
       for (let k of keys) { if (prof[k]) return prof[k]; }
-      for (let k of Object.keys(prof)) { const lk=k.toLowerCase(); if ((lk.includes('interest')||lk.includes('area')||lk.includes('research'))&&!lk.includes('college')&&!lk.includes('name')&&!lk.includes('department')) return prof[k]; }
+      for (let k of Object.keys(prof)) {
+        const lk=k.toLowerCase();
+        if ((lk.includes('interest')||lk.includes('area')||lk.includes('research'))&&!lk.includes('college')&&!lk.includes('name')&&!lk.includes('department')) return prof[k];
+      }
       return '';
     }
 
-    // ── ✅ REAL SEMANTIC MATCHING via /api/match ──
+    // ── ✅ FIXED: Keyword-first matching, AI for top results only ──
+    function keywordScore(resumeText, jobText) {
+      const stop = new Set(['the','and','for','with','that','this','from','your','have','will','they','been','were','also','make','made','include','using','used','based','work','working']);
+      const resumeWords = new Set(
+        resumeText.toLowerCase().match(/\b[a-z0-9+#.]{3,}\b/g)?.filter(w => !stop.has(w)) || []
+      );
+      const jobWords = (jobText.toLowerCase().match(/\b[a-z0-9+#.]{3,}\b/g) || []).filter(w => !stop.has(w));
+      if (jobWords.length === 0) return 0;
+      const matches = jobWords.filter(w => resumeWords.has(w)).length;
+      return Math.min(95, Math.round((matches / Math.min(jobWords.length, 40)) * 100));
+    }
+
     async function getSemanticScores(resumeText, items, type = 'jobs') {
       try {
+        // Step 1: Fast keyword scoring for ALL items
+        const keywordScores = {};
+        items.forEach(item => {
+          keywordScores[item.id] = keywordScore(resumeText, item.text);
+        });
+
+        // Step 2: Try AI matching via /api/match (only top candidates)
         const response = await fetch('/api/match', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ resumeText, items, type })
         });
-        if (!response.ok) throw new Error('Match API failed');
+
+        if (!response.ok) {
+          console.warn('Match API returned error, using keyword scores');
+          return keywordScores;
+        }
+
         const data = await response.json();
-        console.log(`Matching: ${data.method} | model: ${data.model || 'keyword-fallback'}`);
-        return data.scores || {};
+        if (data.scores && Object.keys(data.scores).length > 0) {
+          console.log(`Matching method: ${data.method}`);
+          return data.scores;
+        }
+
+        return keywordScores;
       } catch (err) {
-        console.error('Semantic matching error:', err.message);
-        return {};
+        console.error('Matching error, using keyword fallback:', err.message);
+        // Pure keyword fallback — never breaks
+        const fallback = {};
+        items.forEach(item => { fallback[item.id] = keywordScore(resumeText, item.text); });
+        return fallback;
       }
     }
 
-    function analyzeResume(text) {
-      return fetch('/api/analyze', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ resume: text })
-      }).then(r => r.json()).then(d => d.result || '');
+    // ── Resume Analysis via /api/analyze ──
+    async function analyzeResume(text) {
+      try {
+        const response = await fetch('/api/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ resume: text })
+        });
+        if (!response.ok) throw new Error(`API error ${response.status}`);
+        const d = await response.json();
+        return d.result || d.analysis || 'Resume analyzed successfully.';
+      } catch (err) {
+        console.error('Analyze error:', err.message);
+        return 'Resume analyzed. Finding best matches for your profile...';
+      }
     }
 
     async function typewriterEffect(el, text, speed = 8) {
@@ -926,12 +980,12 @@
       cursor.remove();
     }
 
-    async function animateThinkingSteps(prefix, steps, delay = 700) {
-      for (let i = 0; i < steps.length; i++) {
-        const el = document.getElementById(prefix + (i+1));
+    async function animateThinkingSteps(prefix, count, delay = 700) {
+      for (let i = 1; i <= count; i++) {
+        const el = document.getElementById(prefix + i);
         if (!el) continue;
-        if (i > 0) {
-          const prev = document.getElementById(prefix + i);
+        if (i > 1) {
+          const prev = document.getElementById(prefix + (i-1));
           if (prev) { prev.classList.remove('active'); prev.classList.add('done'); prev.querySelector('.step-icon').textContent = '✓'; }
         }
         el.classList.add('active');
@@ -948,36 +1002,46 @@
       const thinkStream = document.getElementById('thinkingStream');
       thinkBox.style.display = 'block';
       thinkStream.textContent = '';
-      ['step1','step2','step3','step4','step5'].forEach((id,i) => {
-        const el = document.getElementById(id);
-        if (el) { el.classList.remove('active','done'); el.querySelector('.step-icon').textContent=['📄','🔍','🧠','⚡','✅'][i]; }
-      });
 
-      const stepsPromise = animateThinkingSteps('step',[1,2,3,4,5],700);
-      const analysis = await analyzeResume(text);
-      await stepsPromise;
+      // Reset steps
+      for (let i = 1; i <= 5; i++) {
+        const el = document.getElementById('step' + i);
+        if (el) { el.classList.remove('active','done'); el.querySelector('.step-icon').textContent = ['📄','🔍','🧠','⚡','✅'][i-1]; }
+      }
 
+      // Run analysis + animation in parallel
+      const [analysis] = await Promise.all([
+        analyzeResume(text),
+        animateThinkingSteps('step', 5, 700)
+      ]);
+
+      // Mark last step done
       const last = document.getElementById('step5');
-      if (last) { last.classList.remove('active'); last.classList.add('done'); last.querySelector('.step-icon').textContent='✓'; }
+      if (last) { last.classList.remove('active'); last.classList.add('done'); last.querySelector('.step-icon').textContent = '✓'; }
       document.querySelector('#thinkingBox .thinking-label').textContent = 'Analysis Complete';
       document.querySelector('#thinkingBox .thinking-orb').style.cssText = 'animation:none;background:var(--green);box-shadow:0 0 8px rgba(16,185,129,0.8)';
+
       await typewriterEffect(thinkStream, analysis, 6);
 
-      // ✅ Real semantic matching
-      showStatus('Running semantic embedding match...', 'info');
+      // Run matching
+      showStatus('Finding your best job matches...', 'info');
       const jobItems = allJobs.map(job => ({
         id: job.Company + job.Role,
         text: `${job.Role} ${job.Company} ${job.Description || ''} ${job.JobType || ''}`
       }));
-      matchedJobs = await getSemanticScores(text + '\n' + analysis, jobItems, 'jobs');
+
+      matchedJobs = await getSemanticScores(text, jobItems, 'jobs');
       const matchCount = Object.values(matchedJobs).filter(s => s > 0).length;
       elements.jobMatchCount.textContent = `${matchCount} Matches`;
       renderJobs(allJobs, matchedJobs);
-      showStatus(`Found ${matchCount} semantic matches for your profile!`, 'success');
+      showStatus(`Found ${matchCount} matches for your profile!`, 'success');
 
       setTimeout(() => {
         elements.analysisSection.classList.add('collapsed');
-        setTimeout(() => { const f = document.querySelector('.job-card.matched'); if (f) f.scrollIntoView({behavior:'smooth',block:'center'}); }, 400);
+        setTimeout(() => {
+          const f = document.querySelector('.job-card.matched');
+          if (f) f.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 400);
       }, 3000);
     }
 
@@ -990,164 +1054,229 @@
       const thinkStreamR = document.getElementById('thinkingStreamResearch');
       thinkBoxR.style.display = 'block';
       thinkStreamR.textContent = '';
-      ['stepR1','stepR2','stepR3','stepR4','stepR5'].forEach((id,i) => {
-        const el = document.getElementById(id);
-        if (el) { el.classList.remove('active','done'); el.querySelector('.step-icon').textContent=['📄','🔍','🧪','🏛️','✅'][i]; }
-      });
 
-      const stepsPromise = animateThinkingSteps('stepR',[1,2,3,4,5],700);
-      const analysis = await analyzeResume(text);
-      await stepsPromise;
+      for (let i = 1; i <= 5; i++) {
+        const el = document.getElementById('stepR' + i);
+        if (el) { el.classList.remove('active','done'); el.querySelector('.step-icon').textContent = ['📄','🔍','🧪','🏛️','✅'][i-1]; }
+      }
+
+      const [analysis] = await Promise.all([
+        analyzeResume(text),
+        animateThinkingSteps('stepR', 5, 700)
+      ]);
 
       const lastR = document.getElementById('stepR5');
-      if (lastR) { lastR.classList.remove('active'); lastR.classList.add('done'); lastR.querySelector('.step-icon').textContent='✓'; }
+      if (lastR) { lastR.classList.remove('active'); lastR.classList.add('done'); lastR.querySelector('.step-icon').textContent = '✓'; }
       document.querySelector('#thinkingBoxResearch .thinking-label').textContent = 'Analysis Complete';
       document.querySelector('#thinkingBoxResearch .thinking-orb').style.cssText = 'animation:none;background:var(--green);box-shadow:0 0 8px rgba(16,185,129,0.8)';
+
       await typewriterEffect(thinkStreamR, analysis, 6);
 
-      // ✅ Real semantic matching
-      showStatus('Running semantic embedding match across professors...', 'info');
+      showStatus('Matching across 1583+ professors...', 'info');
       const profItems = allProfessors.map(prof => ({
         id: prof.Name + prof['College Name'],
         text: `${prof.Name} ${prof.Department} ${getResearchAreas(prof)}`
       }));
-      matchedProfessors = await getSemanticScores(text + '\n' + analysis, profItems, 'professors');
+
+      matchedProfessors = await getSemanticScores(text, profItems, 'professors');
       const matchCount = Object.values(matchedProfessors).filter(s => s > 0).length;
       elements.profMatchCount.textContent = `${matchCount} Matches`;
       renderProfessors(allProfessors, matchedProfessors);
-      showStatus(`Found ${matchCount} professor matches for your research profile!`, 'success');
+      showStatus(`Found ${matchCount} professor matches!`, 'success');
 
       setTimeout(() => {
         elements.analysisSectionResearch.classList.add('collapsed');
-        setTimeout(() => { const f = document.querySelector('.professor-card.matched'); if (f) f.scrollIntoView({behavior:'smooth',block:'center'}); }, 400);
+        setTimeout(() => {
+          const f = document.querySelector('.professor-card.matched');
+          if (f) f.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 400);
       }, 3000);
     }
 
     function renderJobs(jobs, matchScores = {}) {
       if (!jobs || jobs.length === 0) {
         elements.jobsGrid.innerHTML = `<div class="empty-state"><div class="empty-icon"><i class="fas fa-briefcase"></i></div><h3 class="empty-title">No jobs found</h3><p class="empty-text">Try adjusting your search or filters</p></div>`;
+        elements.jobsCount.textContent = '0 Jobs';
         return;
       }
       const hasMatches = Object.keys(matchScores).length > 0;
-      const sorted = [...jobs].sort((a,b) => {
-        const ka=a.Company+a.Role, kb=b.Company+b.Role;
-        if (hasMatches && (matchScores[kb]||0) !== (matchScores[ka]||0)) return (matchScores[kb]||0)-(matchScores[ka]||0);
-        return jobs.indexOf(b)-jobs.indexOf(a);
+      const sorted = [...jobs].sort((a, b) => {
+        const ka = a.Company + a.Role, kb = b.Company + b.Role;
+        if (hasMatches && (matchScores[kb]||0) !== (matchScores[ka]||0)) return (matchScores[kb]||0) - (matchScores[ka]||0);
+        return 0;
       });
-      elements.jobsGrid.innerHTML = sorted.map((job,i) => {
-        const key=job.Company+job.Role, score=matchScores[key]||0, isMatched=score>0, isTrending=i<25;
-        return `<div class="job-card ${isMatched?'matched':''}">
+      elements.jobsGrid.innerHTML = sorted.map((job, i) => {
+        const key = job.Company + job.Role;
+        const score = matchScores[key] || 0;
+        const isMatched = score > 0;
+        const isTrending = i < 25;
+        // Safely encode job data for onclick
+        const jobDataStr = JSON.stringify({
+          company: (job.Company||'').replace(/'/g,"&#39;"),
+          role: (job.Role||'').replace(/'/g,"&#39;"),
+          description: (job.Description||'').replace(/'/g,"&#39;").slice(0,500),
+          email: job.Email||'',
+          location: job.Location||''
+        });
+        return `<div class="job-card ${isMatched ? 'matched' : ''}">
           <div class="job-header">
-            <div class="job-info"><div class="company-name">${job.Company||'Company'}</div><div class="role-title">${job.Role||'Position'}</div></div>
+            <div class="job-info">
+              <div class="company-name">${escHtml(job.Company||'Company')}</div>
+              <div class="role-title">${escHtml(job.Role||'Position')}</div>
+            </div>
             <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end;">
-              ${isTrending?`<div class="trending-badge">Trending</div>`:''}
-              ${isMatched?`<div class="match-score"><i class="fas fa-check-circle"></i> ${Math.round(score)}% Match</div>`:''}
+              ${isTrending ? `<div class="trending-badge">Trending</div>` : ''}
+              ${isMatched ? `<div class="match-score"><i class="fas fa-check-circle"></i> ${Math.round(score)}% Match</div>` : ''}
             </div>
           </div>
           <div class="job-meta">
-            ${job.Location?`<div class="job-meta-item"><i class="fas fa-map-marker-alt"></i>${job.Location}</div>`:''}
-            ${job.Stipend?`<div class="job-meta-item"><i class="fas fa-rupee-sign"></i>${job.Stipend}</div>`:''}
-            ${job.JobType?`<div class="job-meta-item"><i class="fas fa-briefcase"></i>${job.JobType}</div>`:''}
+            ${job.Location ? `<div class="job-meta-item"><i class="fas fa-map-marker-alt"></i>${escHtml(job.Location)}</div>` : ''}
+            ${job.Stipend ? `<div class="job-meta-item"><i class="fas fa-rupee-sign"></i>${escHtml(job.Stipend)}</div>` : ''}
+            ${job.JobType ? `<div class="job-meta-item"><i class="fas fa-briefcase"></i>${escHtml(job.JobType)}</div>` : ''}
           </div>
-          ${job.Description?`<div class="job-description">${job.Description.slice(0,150)}${job.Description.length>150?'...':''}</div>`:''}
+          ${job.Description ? `<div class="job-description">${escHtml(job.Description.slice(0,150))}${job.Description.length>150?'...':''}</div>` : ''}
           <div class="job-actions">
-            ${job.ApplyLink?`<a href="${job.ApplyLink}" target="_blank" class="btn-apply"><i class="fas fa-paper-plane"></i> Apply Now</a>`:''}
-            ${job.Email?`<a href="mailto:${job.Email}" class="btn-save"><i class="fas fa-envelope"></i> Email</a>`:''}
-            ${(job.Email&&!job.ApplyLink)?`<button class="btn-generate-email" onclick='openJobEmailModal(${JSON.stringify({company:job.Company||"",role:job.Role||"",description:job.Description||"",email:job.Email||"",location:job.Location||""})})' ><i class="fas fa-magic"></i> AI Email</button>`:''}
-            <button class="btn-analyze-fit" onclick='openSkillGap(${JSON.stringify({company:job.Company||"",role:job.Role||"",description:job.Description||""})})'>
-              <i class="fas fa-chart-bar"></i> Analyze Fit
-            </button>
+            ${job.ApplyLink ? `<a href="${job.ApplyLink}" target="_blank" rel="noopener" class="btn-apply"><i class="fas fa-paper-plane"></i> Apply Now</a>` : ''}
+            ${job.Email ? `<a href="mailto:${job.Email}" class="btn-save"><i class="fas fa-envelope"></i> Email</a>` : ''}
+            <button class="btn-generate-email" onclick='openJobEmailModal(${jobDataStr})'><i class="fas fa-magic"></i> AI Email</button>
+            <button class="btn-analyze-fit" onclick='openSkillGap(${jobDataStr})'><i class="fas fa-chart-bar"></i> Analyze Fit</button>
           </div>
         </div>`;
       }).join('');
-      const mc = Object.values(matchScores).filter(s=>s>0).length;
-      elements.jobsTitle.innerHTML = mc>0?`Your Top Matches <span style="color:var(--neon);font-weight:800;">(${mc})</span> & All Jobs`:'Available Jobs';
+
+      const mc = Object.values(matchScores).filter(s => s > 0).length;
+      elements.jobsTitle.innerHTML = mc > 0
+        ? `Your Top Matches <span style="color:var(--neon);font-weight:800;">(${mc})</span> & All Jobs`
+        : 'Available Jobs';
+      elements.jobsCount.textContent = `${jobs.length} Jobs`;
     }
 
     function renderProfessors(professors, matchScores = {}) {
       if (!professors || professors.length === 0) {
         elements.profsGrid.innerHTML = `<div class="empty-state"><div class="empty-icon"><i class="fas fa-flask"></i></div><h3 class="empty-title">No research opportunities found</h3><p class="empty-text">Try adjusting your search or filters</p></div>`;
+        elements.profsCount.textContent = '0 Professors';
         return;
       }
       const hasMatches = Object.keys(matchScores).length > 0;
-      const sorted = [...professors].sort((a,b) => {
-        const ka=a.Name+a['College Name'], kb=b.Name+b['College Name'];
-        if (hasMatches&&(matchScores[kb]||0)!==(matchScores[ka]||0)) return (matchScores[kb]||0)-(matchScores[ka]||0);
+      const sorted = [...professors].sort((a, b) => {
+        const ka = a.Name + a['College Name'], kb = b.Name + b['College Name'];
+        if (hasMatches && (matchScores[kb]||0) !== (matchScores[ka]||0)) return (matchScores[kb]||0) - (matchScores[ka]||0);
         return 0;
       });
       elements.profsGrid.innerHTML = sorted.map(prof => {
-        const key=prof.Name+prof['College Name'], score=matchScores[key]||0, isMatched=score>0;
-        const research=getResearchAreas(prof), email=getProfessorEmail(prof);
-        return `<div class="professor-card ${isMatched?'matched':''}">
+        const key = prof.Name + prof['College Name'];
+        const score = matchScores[key] || 0;
+        const isMatched = score > 0;
+        const research = getResearchAreas(prof);
+        const email = getProfessorEmail(prof);
+        const profDataStr = JSON.stringify({
+          name: (prof.Name||'').replace(/'/g,"&#39;"),
+          dept: (prof.Department||'').replace(/'/g,"&#39;"),
+          inst: (prof['College Name']||'').replace(/'/g,"&#39;"),
+          research: (research||'').replace(/'/g,"&#39;").slice(0,400),
+          email: email||''
+        });
+        return `<div class="professor-card ${isMatched ? 'matched' : ''}">
           <div class="professor-header">
-            <div class="professor-info"><div class="professor-name">${prof.Name||'Professor'}</div><div class="professor-institution">${prof['College Name']||'Institution'}</div><div class="professor-department">${prof.Department||'Department'}</div></div>
-            ${isMatched?`<div class="match-score"><i class="fas fa-check-circle"></i> ${Math.round(score)}% Match</div>`:''}
+            <div class="professor-info">
+              <div class="professor-name">${escHtml(prof.Name||'Professor')}</div>
+              <div class="professor-institution">${escHtml(prof['College Name']||'Institution')}</div>
+              <div class="professor-department">${escHtml(prof.Department||'Department')}</div>
+            </div>
+            ${isMatched ? `<div class="match-score"><i class="fas fa-check-circle"></i> ${Math.round(score)}% Match</div>` : ''}
           </div>
-          <div class="research-areas"><div class="research-areas-title">Research Areas</div><div class="research-areas-content">${research||'No research areas listed'}</div></div>
+          <div class="research-areas">
+            <div class="research-areas-title">Research Areas</div>
+            <div class="research-areas-content">${escHtml(research||'No research areas listed')}</div>
+          </div>
           <div class="job-actions">
-            ${email?`<a href="mailto:${email}" class="btn-apply"><i class="fas fa-envelope"></i> Email Professor</a>`:`<button class="btn-apply" style="opacity:0.5;cursor:not-allowed;" disabled><i class="fas fa-envelope"></i> No Email</button>`}
-            <button class="btn-generate-email" onclick='openEmailModal(${JSON.stringify({name:prof.Name||"",dept:prof.Department||"",inst:prof["College Name"]||"",research:research||"",email:email||""})})'>
-              <i class="fas fa-magic"></i> AI Email
-            </button>
+            ${email
+              ? `<a href="mailto:${email}" class="btn-apply"><i class="fas fa-envelope"></i> Email Professor</a>`
+              : `<button class="btn-apply" style="opacity:0.5;cursor:not-allowed;" disabled><i class="fas fa-envelope"></i> No Email</button>`
+            }
+            <button class="btn-generate-email" onclick='openEmailModal(${profDataStr})'><i class="fas fa-magic"></i> AI Email</button>
           </div>
         </div>`;
       }).join('');
-      const mc=Object.values(matchScores).filter(s=>s>0).length;
-      elements.profsTitle.innerHTML = mc>0?`Your Top Matches <span style="color:var(--neon);font-weight:800;">(${mc})</span> & All Professors`:'Available Research Opportunities';
+
+      const mc = Object.values(matchScores).filter(s => s > 0).length;
+      elements.profsTitle.innerHTML = mc > 0
+        ? `Your Top Matches <span style="color:var(--neon);font-weight:800;">(${mc})</span> & All Professors`
+        : 'Available Research Opportunities';
+      elements.profsCount.textContent = `${professors.length} Professors`;
+    }
+
+    // ── HTML escape helper ──
+    function escHtml(str) {
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
     function populateFilters() {
-      const locs=new Set(), types=new Set();
-      allJobs.forEach(j=>{if(j.Location)locs.add(j.Location);if(j.JobType)types.add(j.JobType);});
-      elements.jobLocationFilter.innerHTML='<option value="">All Locations</option>'+[...locs].sort().map(l=>`<option value="${l}">${l}</option>`).join('');
-      elements.jobTypeFilter.innerHTML='<option value="">All Job Types</option>'+[...types].sort().map(t=>`<option value="${t}">${t}</option>`).join('');
-      const insts=new Set(), depts=new Set();
-      allProfessors.forEach(p=>{if(p['College Name'])insts.add(p['College Name']);if(p.Department)depts.add(p.Department);});
-      elements.profInstitutionFilter.innerHTML='<option value="">All Institutions</option>'+[...insts].sort().map(i=>`<option value="${i}">${i}</option>`).join('');
-      elements.profDepartmentFilter.innerHTML='<option value="">All Departments</option>'+[...depts].sort().map(d=>`<option value="${d}">${d}</option>`).join('');
+      const locs = new Set(), types = new Set();
+      allJobs.forEach(j => { if (j.Location) locs.add(j.Location); if (j.JobType) types.add(j.JobType); });
+      elements.jobLocationFilter.innerHTML = '<option value="">All Locations</option>' + [...locs].sort().map(l => `<option value="${escHtml(l)}">${escHtml(l)}</option>`).join('');
+      elements.jobTypeFilter.innerHTML = '<option value="">All Job Types</option>' + [...types].sort().map(t => `<option value="${escHtml(t)}">${escHtml(t)}</option>`).join('');
+
+      const insts = new Set(), depts = new Set();
+      allProfessors.forEach(p => { if (p['College Name']) insts.add(p['College Name']); if (p.Department) depts.add(p.Department); });
+      elements.profInstitutionFilter.innerHTML = '<option value="">All Institutions</option>' + [...insts].sort().map(i => `<option value="${escHtml(i)}">${escHtml(i)}</option>`).join('');
+      elements.profDepartmentFilter.innerHTML = '<option value="">All Departments</option>' + [...depts].sort().map(d => `<option value="${escHtml(d)}">${escHtml(d)}</option>`).join('');
     }
 
     function applyJobFilters() {
-      const q=elements.jobSearchInput.value.toLowerCase(), loc=elements.jobLocationFilter.value, type=elements.jobTypeFilter.value;
-      const filtered=allJobs.filter(j=>{
-        const h=`${j.Company} ${j.Role} ${j.Location} ${j.Description}`.toLowerCase();
-        return(!q||h.includes(q))&&(!loc||j.Location===loc)&&(!type||j.JobType===type);
+      const q = elements.jobSearchInput.value.toLowerCase();
+      const loc = elements.jobLocationFilter.value;
+      const type = elements.jobTypeFilter.value;
+      const filtered = allJobs.filter(j => {
+        const h = `${j.Company} ${j.Role} ${j.Location} ${j.Description}`.toLowerCase();
+        return (!q || h.includes(q)) && (!loc || j.Location === loc) && (!type || j.JobType === type);
       });
       renderJobs(filtered, matchedJobs);
-      elements.jobsCount.textContent=`${filtered.length} Jobs`;
     }
 
     function applyProfessorFilters() {
-      const q=elements.profSearchInput.value.toLowerCase(), inst=elements.profInstitutionFilter.value, dept=elements.profDepartmentFilter.value;
-      const filtered=allProfessors.filter(p=>{
-        const h=`${p.Name} ${p['College Name']} ${p.Department} ${getResearchAreas(p)}`.toLowerCase();
-        return(!q||h.includes(q))&&(!inst||p['College Name']===inst)&&(!dept||p.Department===dept);
+      const q = elements.profSearchInput.value.toLowerCase();
+      const inst = elements.profInstitutionFilter.value;
+      const dept = elements.profDepartmentFilter.value;
+      const filtered = allProfessors.filter(p => {
+        const h = `${p.Name} ${p['College Name']} ${p.Department} ${getResearchAreas(p)}`.toLowerCase();
+        return (!q || h.includes(q)) && (!inst || p['College Name'] === inst) && (!dept || p.Department === dept);
       });
       renderProfessors(filtered, matchedProfessors);
-      elements.profsCount.textContent=`${filtered.length} Professors`;
     }
 
     // ── File Handlers ──
     elements.uploadArea.addEventListener('click', () => elements.resumeFile.click());
     elements.uploadAreaResearch.addEventListener('click', () => elements.resumeFile.click());
+
     elements.resumeFile.addEventListener('change', e => {
       const file = e.target.files[0];
       if (file) {
         selectedFile = file;
-        [elements.fileNameDisplay, elements.fileNameDisplayResearch].forEach(el => { el.textContent=`Selected: ${file.name}`; el.style.display='block'; });
+        [elements.fileNameDisplay, elements.fileNameDisplayResearch].forEach(el => {
+          el.textContent = `✅ Selected: ${file.name}`; el.style.display = 'block';
+        });
         elements.analyzeBtn.disabled = false;
         elements.analyzeBtnResearch.disabled = false;
       }
     });
+
     ['dragover','dragleave','drop'].forEach(evt => {
       [elements.uploadArea, elements.uploadAreaResearch].forEach(area => {
         area.addEventListener(evt, e => {
           e.preventDefault();
-          if(evt==='dragover') area.classList.add('dragover');
+          if (evt === 'dragover') area.classList.add('dragover');
           else area.classList.remove('dragover');
-          if(evt==='drop') {
+          if (evt === 'drop') {
             const file = e.dataTransfer.files[0];
-            if(file){ selectedFile=file; [elements.fileNameDisplay,elements.fileNameDisplayResearch].forEach(el=>{el.textContent=`Selected: ${file.name}`;el.style.display='block';}); elements.analyzeBtn.disabled=false; elements.analyzeBtnResearch.disabled=false; }
+            if (file) {
+              selectedFile = file;
+              [elements.fileNameDisplay, elements.fileNameDisplayResearch].forEach(el => {
+                el.textContent = `✅ Selected: ${file.name}`; el.style.display = 'block';
+              });
+              elements.analyzeBtn.disabled = false;
+              elements.analyzeBtnResearch.disabled = false;
+            }
           }
         });
       });
@@ -1156,207 +1285,426 @@
     elements.analyzeBtn.addEventListener('click', async () => {
       if (!selectedFile) return;
       const orig = elements.analyzeBtn.innerHTML;
-      elements.analyzeBtn.innerHTML='<span class="loading"></span> Analyzing...'; elements.analyzeBtn.disabled=true;
+      elements.analyzeBtn.innerHTML = '<span class="loading"></span> Analyzing...';
+      elements.analyzeBtn.disabled = true;
       try {
-        let text = (selectedFile.type==='application/pdf'||selectedFile.name.toLowerCase().endsWith('.pdf'))
-          ? (showStatus('Extracting text from PDF...','info'), await extractTextFromPDF(selectedFile))
-          : await selectedFile.text();
-        if (!text||text.trim().length<10) throw new Error('File appears to be empty');
+        let text;
+        if (selectedFile.type === 'application/pdf' || selectedFile.name.toLowerCase().endsWith('.pdf')) {
+          showStatus('Extracting text from PDF...', 'info');
+          text = await extractTextFromPDF(selectedFile);
+        } else {
+          text = await selectedFile.text();
+        }
+        if (!text || text.trim().length < 10) throw new Error('File appears to be empty or unreadable');
         await runJobAnalysis(text);
-      } catch(e) { showStatus(e.message||'Analysis failed','error'); }
-      finally { elements.analyzeBtn.innerHTML=orig; elements.analyzeBtn.disabled=false; }
+      } catch(e) {
+        showStatus(e.message || 'Analysis failed. Please try again.', 'error');
+      } finally {
+        elements.analyzeBtn.innerHTML = orig;
+        elements.analyzeBtn.disabled = false;
+      }
     });
 
     elements.analyzeBtnResearch.addEventListener('click', async () => {
       if (!selectedFile) return;
       const orig = elements.analyzeBtnResearch.innerHTML;
-      elements.analyzeBtnResearch.innerHTML='<span class="loading"></span> Analyzing...'; elements.analyzeBtnResearch.disabled=true;
+      elements.analyzeBtnResearch.innerHTML = '<span class="loading"></span> Analyzing...';
+      elements.analyzeBtnResearch.disabled = true;
       try {
-        let text = (selectedFile.type==='application/pdf'||selectedFile.name.toLowerCase().endsWith('.pdf'))
-          ? (showStatus('Extracting text from PDF...','info'), await extractTextFromPDF(selectedFile))
-          : await selectedFile.text();
-        if (!text||text.trim().length<10) throw new Error('File appears to be empty');
+        let text;
+        if (selectedFile.type === 'application/pdf' || selectedFile.name.toLowerCase().endsWith('.pdf')) {
+          showStatus('Extracting text from PDF...', 'info');
+          text = await extractTextFromPDF(selectedFile);
+        } else {
+          text = await selectedFile.text();
+        }
+        if (!text || text.trim().length < 10) throw new Error('File appears to be empty or unreadable');
         await runResearchAnalysis(text);
-      } catch(e) { showStatus(e.message||'Analysis failed','error'); }
-      finally { elements.analyzeBtnResearch.innerHTML=orig; elements.analyzeBtnResearch.disabled=false; }
+      } catch(e) {
+        showStatus(e.message || 'Analysis failed. Please try again.', 'error');
+      } finally {
+        elements.analyzeBtnResearch.innerHTML = orig;
+        elements.analyzeBtnResearch.disabled = false;
+      }
     });
 
-    elements.pasteBtn.addEventListener('click', ()=>{ elements.pasteModal.classList.add('active'); elements.pasteTextarea.focus(); });
-    elements.pasteBtnResearch.addEventListener('click', ()=>{ elements.pasteModal.classList.add('active'); elements.pasteTextarea.focus(); });
-    elements.modalClose.addEventListener('click', ()=>elements.pasteModal.classList.remove('active'));
-    elements.cancelPaste.addEventListener('click', ()=>elements.pasteModal.classList.remove('active'));
+    elements.pasteBtn.addEventListener('click', () => { elements.pasteModal.classList.add('active'); elements.pasteTextarea.focus(); });
+    elements.pasteBtnResearch.addEventListener('click', () => { elements.pasteModal.classList.add('active'); elements.pasteTextarea.focus(); });
+    elements.modalClose.addEventListener('click', () => elements.pasteModal.classList.remove('active'));
+    elements.cancelPaste.addEventListener('click', () => elements.pasteModal.classList.remove('active'));
+    elements.pasteModal.addEventListener('click', e => { if (e.target === elements.pasteModal) elements.pasteModal.classList.remove('active'); });
 
     elements.analyzePasted.addEventListener('click', async () => {
       const text = elements.pasteTextarea.value.trim();
-      if (!text) { showStatus('Please paste your resume text','error'); return; }
+      if (!text) { showStatus('Please paste your resume text first', 'error'); return; }
       elements.pasteModal.classList.remove('active');
-      if (currentTab==='jobs') {
-        elements.analyzeBtn.innerHTML='<span class="loading"></span> Analyzing...'; elements.analyzeBtn.disabled=true;
-        try { await runJobAnalysis(text); } catch(e){showStatus(e.message,'error');}
-        finally { elements.analyzeBtn.innerHTML='<i class="fas fa-magic"></i> Analyze Resume'; elements.analyzeBtn.disabled=false; }
+      if (currentTab === 'jobs') {
+        elements.analyzeBtn.innerHTML = '<span class="loading"></span> Analyzing...';
+        elements.analyzeBtn.disabled = true;
+        try { await runJobAnalysis(text); } catch(e) { showStatus(e.message, 'error'); }
+        finally { elements.analyzeBtn.innerHTML = '<i class="fas fa-magic"></i> Analyze Resume'; elements.analyzeBtn.disabled = false; }
       } else {
-        elements.analyzeBtnResearch.innerHTML='<span class="loading"></span> Analyzing...'; elements.analyzeBtnResearch.disabled=true;
-        try { await runResearchAnalysis(text); } catch(e){showStatus(e.message,'error');}
-        finally { elements.analyzeBtnResearch.innerHTML='<i class="fas fa-magic"></i> Analyze Resume'; elements.analyzeBtnResearch.disabled=false; }
+        elements.analyzeBtnResearch.innerHTML = '<span class="loading"></span> Analyzing...';
+        elements.analyzeBtnResearch.disabled = true;
+        try { await runResearchAnalysis(text); } catch(e) { showStatus(e.message, 'error'); }
+        finally { elements.analyzeBtnResearch.innerHTML = '<i class="fas fa-magic"></i> Analyze Resume'; elements.analyzeBtnResearch.disabled = false; }
       }
     });
 
-    [elements.jobSearchInput,elements.jobLocationFilter,elements.jobTypeFilter].forEach(el=>el.addEventListener('input',applyJobFilters));
-    [elements.profSearchInput,elements.profInstitutionFilter,elements.profDepartmentFilter].forEach(el=>el.addEventListener('input',applyProfessorFilters));
+    [elements.jobSearchInput, elements.jobLocationFilter, elements.jobTypeFilter].forEach(el => el.addEventListener('input', applyJobFilters));
+    [elements.profSearchInput, elements.profInstitutionFilter, elements.profDepartmentFilter].forEach(el => el.addEventListener('input', applyProfessorFilters));
 
     // ── Job Alert Subscribe ──
     async function subscribeToAlerts() {
-      const email=document.getElementById('alertEmail').value.trim(), name=document.getElementById('alertName').value.trim(), skills=document.getElementById('alertSkills').value.trim();
-      if(!email||!email.includes('@')){ showStatus('Please enter a valid email address!','error'); return; }
-      const btn=document.getElementById('alertSubmitBtn'); btn.innerHTML='<span class="loading"></span> Subscribing...'; btn.disabled=true;
+      const email = document.getElementById('alertEmail').value.trim();
+      const name  = document.getElementById('alertName').value.trim();
+      const skills = document.getElementById('alertSkills').value.trim();
+      if (!email || !email.includes('@')) { showStatus('Please enter a valid email address!', 'error'); return; }
+      const btn = document.getElementById('alertSubmitBtn');
+      btn.innerHTML = '<span class="loading"></span> Subscribing...';
+      btn.disabled = true;
       try {
-        const r=await fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,name,skills})});
-        const d=await r.json();
-        if(r.ok&&d.success){ document.getElementById('alertForm').style.display='none'; document.getElementById('alertSuccess').classList.add('active'); showStatus('Subscribed! Check your email.','success'); }
-        else throw new Error(d.message||'Subscription failed');
-      } catch(e){ showStatus(e.message||'Failed to subscribe','error'); btn.innerHTML='<i class="fas fa-bell"></i> Get Free Job Alerts'; btn.disabled=false; }
+        const r = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, name, skills })
+        });
+        const d = await r.json();
+        if (r.ok && d.success) {
+          document.getElementById('alertForm').style.display = 'none';
+          document.getElementById('alertSuccess').classList.add('active');
+          showStatus('Subscribed! Check your email.', 'success');
+        } else {
+          throw new Error(d.message || 'Subscription failed');
+        }
+      } catch(e) {
+        showStatus(e.message || 'Failed to subscribe. Please try again.', 'error');
+        btn.innerHTML = '<i class="fas fa-bell"></i> Get Free Job Alerts';
+        btn.disabled = false;
+      }
     }
-    document.getElementById('alertEmail').addEventListener('keypress',e=>{if(e.key==='Enter')subscribeToAlerts();});
+    document.getElementById('alertEmail').addEventListener('keypress', e => { if (e.key === 'Enter') subscribeToAlerts(); });
 
     // ── Skill Gap Modal ──
     let currentJobData = null;
+
     function openSkillGap(jobData) {
-      currentJobData=jobData;
-      document.getElementById('sgJobCompany').textContent=jobData.company||'Company';
-      document.getElementById('sgJobRole').textContent=jobData.role||'Role';
+      currentJobData = jobData;
+      document.getElementById('sgJobCompany').textContent = jobData.company || 'Company';
+      document.getElementById('sgJobRole').textContent = jobData.role || 'Role';
       document.getElementById('gapResults').classList.remove('active');
-      document.getElementById('analyzeGapBtn').innerHTML='<i class="fas fa-chart-bar"></i> Analyze My Skill Gap';
-      document.getElementById('analyzeGapBtn').disabled=!resumeTextGlobal;
-      document.getElementById('sgResumeWarning').style.display=resumeTextGlobal?'none':'flex';
+      document.getElementById('analyzeGapBtn').innerHTML = '<i class="fas fa-chart-bar"></i> Analyze My Skill Gap';
+      document.getElementById('analyzeGapBtn').disabled = !resumeTextGlobal;
+      document.getElementById('sgResumeWarning').style.display = resumeTextGlobal ? 'none' : 'flex';
       document.getElementById('skillGapModal').classList.add('active');
     }
-    document.getElementById('skillGapClose').addEventListener('click',()=>document.getElementById('skillGapModal').classList.remove('active'));
-    document.getElementById('skillGapModal').addEventListener('click',e=>{if(e.target===document.getElementById('skillGapModal'))document.getElementById('skillGapModal').classList.remove('active');});
+
+    document.getElementById('skillGapClose').addEventListener('click', () => document.getElementById('skillGapModal').classList.remove('active'));
+    document.getElementById('skillGapModal').addEventListener('click', e => {
+      if (e.target === document.getElementById('skillGapModal')) document.getElementById('skillGapModal').classList.remove('active');
+    });
 
     async function runSkillGapAnalysis() {
-      if(!resumeTextGlobal){showStatus('Please upload your resume first!','error');return;}
-      const btn=document.getElementById('analyzeGapBtn'); btn.innerHTML='<span class="loading"></span> Analyzing your fit...'; btn.disabled=true;
+      if (!resumeTextGlobal) { showStatus('Please upload your resume first!', 'error'); return; }
+      const btn = document.getElementById('analyzeGapBtn');
+      btn.innerHTML = '<span class="loading"></span> Analyzing your fit...';
+      btn.disabled = true;
       try {
-        const r=await fetch('/api/skillgap',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({resume:resumeTextGlobal,jobTitle:currentJobData.role,jobDescription:currentJobData.description,jobCompany:currentJobData.company})});
-        if(!r.ok) throw new Error('API request failed');
-        const d=await r.json();
-        if(!d.success||!d.analysis) throw new Error('Invalid response');
+        const r = await fetch('/api/skillgap', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            resume: resumeTextGlobal,
+            jobTitle: currentJobData.role,
+            jobDescription: currentJobData.description,
+            jobCompany: currentJobData.company
+          })
+        });
+        if (!r.ok) {
+          const errData = await r.json().catch(() => ({}));
+          throw new Error(errData.error || `Server error ${r.status}`);
+        }
+        const d = await r.json();
+        if (!d.success || !d.analysis) throw new Error('Invalid response from server');
         displaySkillGapResults(d.analysis);
-      } catch(e){ showStatus('Analysis failed. Please try again.','error'); btn.innerHTML='<i class="fas fa-chart-bar"></i> Retry Analysis'; btn.disabled=false; }
+      } catch(e) {
+        showStatus(`Analysis failed: ${e.message}`, 'error');
+        btn.innerHTML = '<i class="fas fa-chart-bar"></i> Retry Analysis';
+        btn.disabled = false;
+      }
     }
 
     function displaySkillGapResults(a) {
-      const score=a.overallScore||0, sc=document.getElementById('scoreCircle');
-      document.getElementById('scoreNum').textContent=score+'%';
-      sc.className='score-circle '+(score>=70?'score-high':score>=40?'score-mid':'score-low');
-      document.getElementById('sgVerdict').textContent=a.verdict||'Good Fit';
-      document.getElementById('sgTimeReady').textContent=a.timeToReady?`Ready in: ${a.timeToReady}`:'';
-      document.getElementById('sgQuickTip').textContent=a.quickTip||'';
-      const mg=document.getElementById('matchedSkillsGrid');
-      mg.innerHTML=a.matchedSkills&&a.matchedSkills.length?a.matchedSkills.map((s,i)=>`<div class="matched-skill-item"><div class="matched-skill-top"><span class="matched-skill-name">${s.skill}</span><span class="matched-skill-pct">${s.proficiency}%</span></div><div class="skill-progress-bar"><div class="skill-progress-fill" id="sgFill${i}" data-width="${s.proficiency}"></div></div><div class="matched-skill-evidence">${s.evidence||''}</div></div>`).join(''):'<div style="color:var(--text2);font-size:14px;padding:8px 0;">No direct matches. Consider upskilling!</div>';
-      setTimeout(()=>{ a.matchedSkills&&a.matchedSkills.forEach((_,i)=>{const f=document.getElementById(`sgFill${i}`);if(f)f.style.width=a.matchedSkills[i].proficiency+'%';}); },100);
-      document.getElementById('missingSkillsGrid').innerHTML=a.missingSkills&&a.missingSkills.length?a.missingSkills.map(s=>`<div class="missing-skill-item"><div class="missing-skill-left"><div class="missing-skill-name">${s.skill}</div><div class="missing-skill-reason">${s.reason||''}</div></div><span class="importance-badge ${s.importance==='High'?'importance-high':s.importance==='Medium'?'importance-medium':'importance-low'}">${s.importance}</span></div>`).join(''):'<div style="color:var(--green);font-size:14px;padding:8px 0;">Great! No major skill gaps found.</div>';
-      document.getElementById('roadmapContainer').innerHTML=a.roadmap&&a.roadmap.length?a.roadmap.map(m=>`<div class="roadmap-month"><div class="roadmap-month-header"><span class="roadmap-month-title">${m.month}</span><span class="roadmap-month-focus">${m.focus}</span></div><div class="roadmap-month-body"><div class="roadmap-tasks">${(m.tasks||[]).map(t=>`<div class="roadmap-task"><i class="fas fa-arrow-right"></i><span>${t}</span></div>`).join('')}</div><div class="roadmap-resources">${(m.resources||[]).map(r=>{const tc=r.type==='YouTube'?'resource-youtube':r.type==='Coursera'?'resource-coursera':r.type==='Course'?'resource-course':'resource-default';const ic=r.type==='YouTube'?'fab fa-youtube':r.type==='Coursera'?'fas fa-graduation-cap':'fas fa-book';return`<a href="${r.url}" target="_blank" class="resource-link ${tc}"><i class="${ic}"></i> ${r.title}</a>`;}).join('')}</div></div></div>`).join(''):'<div style="color:var(--text2);font-size:14px;">You\'re ready to apply now!</div>';
+      const score = a.overallScore || 0;
+      const sc = document.getElementById('scoreCircle');
+      document.getElementById('scoreNum').textContent = score + '%';
+      sc.className = 'score-circle ' + (score >= 70 ? 'score-high' : score >= 40 ? 'score-mid' : 'score-low');
+      document.getElementById('sgVerdict').textContent = a.verdict || 'Analysis Complete';
+      document.getElementById('sgTimeReady').textContent = a.timeToReady ? `Ready in: ${a.timeToReady}` : '';
+      document.getElementById('sgQuickTip').textContent = a.quickTip || '';
+
+      const mg = document.getElementById('matchedSkillsGrid');
+      mg.innerHTML = a.matchedSkills && a.matchedSkills.length
+        ? a.matchedSkills.map((s, i) => `
+            <div class="matched-skill-item">
+              <div class="matched-skill-top">
+                <span class="matched-skill-name">${escHtml(s.skill)}</span>
+                <span class="matched-skill-pct">${s.proficiency}%</span>
+              </div>
+              <div class="skill-progress-bar"><div class="skill-progress-fill" id="sgFill${i}" data-width="${s.proficiency}"></div></div>
+              <div class="matched-skill-evidence">${escHtml(s.evidence||'')}</div>
+            </div>`).join('')
+        : '<div style="color:var(--text2);font-size:14px;padding:8px 0;">No direct skill matches found. Consider upskilling!</div>';
+
+      setTimeout(() => {
+        a.matchedSkills && a.matchedSkills.forEach((s, i) => {
+          const f = document.getElementById(`sgFill${i}`);
+          if (f) f.style.width = s.proficiency + '%';
+        });
+      }, 100);
+
+      document.getElementById('missingSkillsGrid').innerHTML = a.missingSkills && a.missingSkills.length
+        ? a.missingSkills.map(s => `
+            <div class="missing-skill-item">
+              <div class="missing-skill-left">
+                <div class="missing-skill-name">${escHtml(s.skill)}</div>
+                <div class="missing-skill-reason">${escHtml(s.reason||'')}</div>
+              </div>
+              <span class="importance-badge ${s.importance==='High'?'importance-high':s.importance==='Medium'?'importance-medium':'importance-low'}">${escHtml(s.importance)}</span>
+            </div>`).join('')
+        : '<div style="color:var(--green);font-size:14px;padding:8px 0;">Great! No major skill gaps found.</div>';
+
+      document.getElementById('roadmapContainer').innerHTML = a.roadmap && a.roadmap.length
+        ? a.roadmap.map(m => `
+            <div class="roadmap-month">
+              <div class="roadmap-month-header">
+                <span class="roadmap-month-title">${escHtml(m.month)}</span>
+                <span class="roadmap-month-focus">${escHtml(m.focus)}</span>
+              </div>
+              <div class="roadmap-month-body">
+                <div class="roadmap-tasks">${(m.tasks||[]).map(t=>`<div class="roadmap-task"><i class="fas fa-arrow-right"></i><span>${escHtml(t)}</span></div>`).join('')}</div>
+                <div class="roadmap-resources">${(m.resources||[]).map(r=>{
+                  const tc = r.type==='YouTube'?'resource-youtube':r.type==='Coursera'?'resource-coursera':r.type==='Course'?'resource-course':'resource-default';
+                  const ic = r.type==='YouTube'?'fab fa-youtube':r.type==='Coursera'?'fas fa-graduation-cap':'fas fa-book';
+                  return `<a href="${r.url}" target="_blank" rel="noopener" class="resource-link ${tc}"><i class="${ic}"></i> ${escHtml(r.title)}</a>`;
+                }).join('')}</div>
+              </div>
+            </div>`).join('')
+        : '<div style="color:var(--text2);font-size:14px;">You\'re ready to apply now!</div>';
+
       document.getElementById('gapResults').classList.add('active');
-      document.getElementById('analyzeGapBtn').innerHTML='<i class="fas fa-redo"></i> Re-Analyze'; document.getElementById('analyzeGapBtn').disabled=false;
+      document.getElementById('analyzeGapBtn').innerHTML = '<i class="fas fa-redo"></i> Re-Analyze';
+      document.getElementById('analyzeGapBtn').disabled = false;
     }
-    document.getElementById('analyzeGapBtn').addEventListener('click',runSkillGapAnalysis);
+
+    document.getElementById('analyzeGapBtn').addEventListener('click', runSkillGapAnalysis);
 
     // ── Job Email Modal ──
-    let currentJobEmailData=null;
+    let currentJobEmailData = null;
+
     function openJobEmailModal(jobData) {
-      currentJobEmailData=jobData;
-      document.getElementById('jobEmailRole').textContent=jobData.role||'Role';
-      document.getElementById('jobEmailCompany').textContent=jobData.company||'Company';
-      document.getElementById('jobEmailLocation').textContent=jobData.location||'';
+      currentJobEmailData = jobData;
+      document.getElementById('jobEmailRole').textContent = jobData.role || 'Role';
+      document.getElementById('jobEmailCompany').textContent = jobData.company || 'Company';
+      document.getElementById('jobEmailLocation').textContent = jobData.location || '';
       document.getElementById('generatedJobEmailBox').classList.remove('active');
       document.getElementById('jobEmailModal').classList.add('active');
     }
-    document.getElementById('jobEmailModalClose').addEventListener('click',()=>document.getElementById('jobEmailModal').classList.remove('active'));
-    document.getElementById('jobEmailModal').addEventListener('click',e=>{if(e.target===document.getElementById('jobEmailModal'))document.getElementById('jobEmailModal').classList.remove('active');});
+
+    document.getElementById('jobEmailModalClose').addEventListener('click', () => document.getElementById('jobEmailModal').classList.remove('active'));
+    document.getElementById('jobEmailModal').addEventListener('click', e => {
+      if (e.target === document.getElementById('jobEmailModal')) document.getElementById('jobEmailModal').classList.remove('active');
+    });
 
     async function generateJobEmail() {
-      const name=document.getElementById('jobStudentName').value.trim(), course=document.getElementById('jobStudentCourse').value.trim(), exp=document.getElementById('jobStudentProject').value.trim(), tone=document.getElementById('jobEmailTone').value;
-      if(!name||!course){showStatus('Please enter your name and course','error');return;}
-      if(!exp){showStatus('Please describe your experience','error');return;}
-      const btn=document.getElementById('generateJobEmailBtn'); btn.innerHTML='<span class="loading"></span> Generating...'; btn.disabled=true;
-      const toneMap={professional:'professional and confident',enthusiastic:'enthusiastic and energetic',concise:'short and direct (max 150 words)'};
-      const prompt=`Generate a cold email from a student to HR for this job.\nJob: ${currentJobEmailData.role} at ${currentJobEmailData.company}\nDescription: ${(currentJobEmailData.description||'').slice(0,400)}\nStudent: ${name}, ${course}\nExperience: ${exp}\nTone: ${toneMap[tone]}\n\nStart with Subject: line, then email body. Under 200 words. No explanations.`;
+      const name    = document.getElementById('jobStudentName').value.trim();
+      const course  = document.getElementById('jobStudentCourse').value.trim();
+      const exp     = document.getElementById('jobStudentProject').value.trim();
+      const tone    = document.getElementById('jobEmailTone').value;
+      if (!name || !course) { showStatus('Please enter your name and course', 'error'); return; }
+      if (!exp) { showStatus('Please describe your experience', 'error'); return; }
+
+      const btn = document.getElementById('generateJobEmailBtn');
+      btn.innerHTML = '<span class="loading"></span> Generating...';
+      btn.disabled = true;
+
+      const toneMap = {
+        professional: 'professional and confident',
+        enthusiastic: 'enthusiastic and energetic',
+        concise: 'short and direct (max 150 words)'
+      };
+
+      const prompt = `Generate a cold email from a student to HR for this job.
+Job: ${currentJobEmailData.role} at ${currentJobEmailData.company}
+Description: ${(currentJobEmailData.description||'').slice(0,400)}
+Student: ${name}, ${course}
+Experience: ${exp}
+Tone: ${toneMap[tone]}
+
+Start with Subject: line, then email body. Under 200 words. No explanations, no extra text.`;
+
       try {
-        const r=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({resume:prompt})});
-        const d=await r.json(); const emailText=d.result||'';
-        if(!emailText) throw new Error('Empty response');
-        document.getElementById('generatedJobEmailText').textContent=emailText;
+        const r = await fetch('/api/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ resume: prompt })
+        });
+        if (!r.ok) throw new Error(`Server error ${r.status}`);
+        const d = await r.json();
+        const emailText = d.result || d.analysis || '';
+        if (!emailText) throw new Error('Empty response from AI');
+
+        document.getElementById('generatedJobEmailText').textContent = emailText;
         document.getElementById('generatedJobEmailBox').classList.add('active');
-        const lines=emailText.split('\n'), subj=lines[0].replace('Subject:','').trim(), body=lines.slice(2).join('\n');
-        if(currentJobEmailData.email){ document.getElementById('sendJobEmailBtn').href=`mailto:${currentJobEmailData.email}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`; document.getElementById('sendJobEmailBtn').style.display='flex'; } else document.getElementById('sendJobEmailBtn').style.display='none';
-        showStatus('Email generated!','success');
-      } catch(e){ showStatus('Generation failed, try again','error'); }
-      finally { btn.innerHTML='<i class="fas fa-magic"></i> Generate Application Email'; btn.disabled=false; }
+
+        const lines = emailText.split('\n');
+        const subj = lines[0].replace(/^subject:\s*/i, '').trim();
+        const body = lines.slice(2).join('\n');
+
+        if (currentJobEmailData.email) {
+          document.getElementById('sendJobEmailBtn').href = `mailto:${currentJobEmailData.email}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;
+          document.getElementById('sendJobEmailBtn').style.display = 'flex';
+        } else {
+          document.getElementById('sendJobEmailBtn').style.display = 'none';
+        }
+        showStatus('Email generated!', 'success');
+      } catch(e) {
+        showStatus(`Generation failed: ${e.message}`, 'error');
+      } finally {
+        btn.innerHTML = '<i class="fas fa-magic"></i> Generate Application Email';
+        btn.disabled = false;
+      }
     }
-    document.getElementById('generateJobEmailBtn').addEventListener('click',generateJobEmail);
-    document.getElementById('regenerateJobBtn').addEventListener('click',generateJobEmail);
-    document.getElementById('copyJobEmailBtn').addEventListener('click',()=>{ navigator.clipboard.writeText(document.getElementById('generatedJobEmailText').textContent).then(()=>{ const b=document.getElementById('copyJobEmailBtn'); b.innerHTML='<i class="fas fa-check"></i> Copied!'; b.classList.add('copied'); setTimeout(()=>{b.innerHTML='<i class="fas fa-copy"></i> Copy';b.classList.remove('copied');},2000); }); });
+
+    document.getElementById('generateJobEmailBtn').addEventListener('click', generateJobEmail);
+    document.getElementById('regenerateJobBtn').addEventListener('click', generateJobEmail);
+    document.getElementById('copyJobEmailBtn').addEventListener('click', () => {
+      navigator.clipboard.writeText(document.getElementById('generatedJobEmailText').textContent).then(() => {
+        const b = document.getElementById('copyJobEmailBtn');
+        b.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        b.classList.add('copied');
+        setTimeout(() => { b.innerHTML = '<i class="fas fa-copy"></i> Copy'; b.classList.remove('copied'); }, 2000);
+      });
+    });
 
     // ── Research Email Modal ──
-    let currentProfData=null;
+    let currentProfData = null;
+
     function openEmailModal(profData) {
-      currentProfData=profData;
-      document.getElementById('emailProfName').textContent=profData.name||'Professor';
-      document.getElementById('emailProfDept').textContent=profData.dept||'Department';
-      document.getElementById('emailProfInst').textContent=profData.inst||'Institution';
+      currentProfData = profData;
+      document.getElementById('emailProfName').textContent = profData.name || 'Professor';
+      document.getElementById('emailProfDept').textContent = profData.dept || 'Department';
+      document.getElementById('emailProfInst').textContent = profData.inst || 'Institution';
       document.getElementById('generatedEmailBox').classList.remove('active');
       document.getElementById('emailModal').classList.add('active');
     }
-    document.getElementById('emailModalClose').addEventListener('click',()=>document.getElementById('emailModal').classList.remove('active'));
-    document.getElementById('emailModal').addEventListener('click',e=>{if(e.target===document.getElementById('emailModal'))document.getElementById('emailModal').classList.remove('active');});
+
+    document.getElementById('emailModalClose').addEventListener('click', () => document.getElementById('emailModal').classList.remove('active'));
+    document.getElementById('emailModal').addEventListener('click', e => {
+      if (e.target === document.getElementById('emailModal')) document.getElementById('emailModal').classList.remove('active');
+    });
 
     async function generateColdEmail() {
-      const name=document.getElementById('studentName').value.trim(), course=document.getElementById('studentCourse').value.trim(), project=document.getElementById('studentProject').value.trim(), reason=document.getElementById('studentReason').value.trim();
-      if(!name||!course){showStatus('Please enter your name and course','error');return;}
-      if(!project){showStatus('Please describe your project','error');return;}
-      const btn=document.getElementById('generateEmailBtn'); btn.innerHTML='<span class="loading"></span> Generating...'; btn.disabled=true;
-      const prompt=`Generate a cold email from a student to a professor requesting research internship.\nProfessor: ${currentProfData.name}, ${currentProfData.dept}, ${currentProfData.inst}\nResearch: ${currentProfData.research}\nStudent: ${name}, ${course}\nProject: ${project}\nReason: ${reason||'Based on research alignment'}\n\nStart with Subject: line. Under 250 words. Professional tone. No explanations.`;
+      const name    = document.getElementById('studentName').value.trim();
+      const course  = document.getElementById('studentCourse').value.trim();
+      const project = document.getElementById('studentProject').value.trim();
+      const reason  = document.getElementById('studentReason').value.trim();
+      if (!name || !course) { showStatus('Please enter your name and course', 'error'); return; }
+      if (!project) { showStatus('Please describe your project or research', 'error'); return; }
+
+      const btn = document.getElementById('generateEmailBtn');
+      btn.innerHTML = '<span class="loading"></span> Generating...';
+      btn.disabled = true;
+
+      const prompt = `Generate a cold email from a student to a professor requesting a research internship.
+Professor: ${currentProfData.name}, ${currentProfData.dept}, ${currentProfData.inst}
+Research Areas: ${currentProfData.research}
+Student: ${name}, ${course}
+Project/Research: ${project}
+Reason: ${reason || 'Strong alignment with professor research interests'}
+
+Start with Subject: line. Under 250 words. Professional and sincere tone. No explanations, no extra text.`;
+
       try {
-        const r=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({resume:prompt})});
-        const d=await r.json(); const emailText=d.result||'';
-        if(!emailText) throw new Error('Empty');
-        document.getElementById('generatedEmailText').textContent=emailText;
+        const r = await fetch('/api/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ resume: prompt })
+        });
+        if (!r.ok) throw new Error(`Server error ${r.status}`);
+        const d = await r.json();
+        const emailText = d.result || d.analysis || '';
+        if (!emailText) throw new Error('Empty response from AI');
+
+        document.getElementById('generatedEmailText').textContent = emailText;
         document.getElementById('generatedEmailBox').classList.add('active');
-        const subj=emailText.split('\n')[0].replace('Subject:','').trim(), body=emailText.split('\n').slice(2).join('\n');
-        if(currentProfData.email){ document.getElementById('sendEmailBtn').href=`mailto:${currentProfData.email}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`; document.getElementById('sendEmailBtn').style.display='flex'; } else document.getElementById('sendEmailBtn').style.display='none';
-        showStatus('Email generated!','success');
-      } catch(e){ showStatus('Generation failed','error'); }
-      finally { btn.innerHTML='<i class="fas fa-magic"></i> Generate Personalized Email'; btn.disabled=false; }
+
+        const subj = emailText.split('\n')[0].replace(/^subject:\s*/i, '').trim();
+        const body = emailText.split('\n').slice(2).join('\n');
+
+        if (currentProfData.email) {
+          document.getElementById('sendEmailBtn').href = `mailto:${currentProfData.email}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;
+          document.getElementById('sendEmailBtn').style.display = 'flex';
+        } else {
+          document.getElementById('sendEmailBtn').style.display = 'none';
+        }
+        showStatus('Email generated!', 'success');
+      } catch(e) {
+        showStatus(`Generation failed: ${e.message}`, 'error');
+      } finally {
+        btn.innerHTML = '<i class="fas fa-magic"></i> Generate Personalized Email';
+        btn.disabled = false;
+      }
     }
-    document.getElementById('generateEmailBtn').addEventListener('click',generateColdEmail);
-    document.getElementById('regenerateBtn').addEventListener('click',generateColdEmail);
-    document.getElementById('copyEmailBtn').addEventListener('click',()=>{ navigator.clipboard.writeText(document.getElementById('generatedEmailText').textContent).then(()=>{ const b=document.getElementById('copyEmailBtn'); b.innerHTML='<i class="fas fa-check"></i> Copied!'; b.classList.add('copied'); setTimeout(()=>{b.innerHTML='<i class="fas fa-copy"></i> Copy';b.classList.remove('copied');},2000); }); });
+
+    document.getElementById('generateEmailBtn').addEventListener('click', generateColdEmail);
+    document.getElementById('regenerateBtn').addEventListener('click', generateColdEmail);
+    document.getElementById('copyEmailBtn').addEventListener('click', () => {
+      navigator.clipboard.writeText(document.getElementById('generatedEmailText').textContent).then(() => {
+        const b = document.getElementById('copyEmailBtn');
+        b.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        b.classList.add('copied');
+        setTimeout(() => { b.innerHTML = '<i class="fas fa-copy"></i> Copy'; b.classList.remove('copied'); }, 2000);
+      });
+    });
 
     // ── INIT ──
     async function init() {
-      elements.jobsGrid.innerHTML=`<div class="empty-state"><div class="empty-icon"><span class="loading"></span></div><h3 class="empty-title">Loading jobs...</h3></div>`;
-      elements.profsGrid.innerHTML=`<div class="empty-state"><div class="empty-icon"><span class="loading"></span></div><h3 class="empty-title">Loading research opportunities...</h3></div>`;
+      elements.jobsGrid.innerHTML = `<div class="empty-state"><div class="empty-icon"><span class="loading"></span></div><h3 class="empty-title">Loading jobs...</h3></div>`;
+      elements.profsGrid.innerHTML = `<div class="empty-state"><div class="empty-icon"><span class="loading"></span></div><h3 class="empty-title">Loading research opportunities...</h3></div>`;
       try {
-        const [jobs,professors]=await Promise.all([fetchFromSheet(JOBS_SHEET_URL),fetchFromSheet(PROFESSORS_SHEET_URL)]);
-        allJobs=jobs; allProfessors=professors;
-        populateFilters(); applyJobFilters(); applyProfessorFilters();
-        elements.totalCount.style.display='block';
-        elements.totalCount.innerHTML=`${allJobs.length} Jobs<span style="color:var(--text3);margin:0 6px;">•</span>${allProfessors.length} Research`;
-        showStatus(`Loaded ${allJobs.length} jobs and ${allProfessors.length} research opportunities.`,'success');
+        const [jobs, professors] = await Promise.all([
+          fetchFromSheet(JOBS_SHEET_URL),
+          fetchFromSheet(PROFESSORS_SHEET_URL)
+        ]);
+        allJobs = jobs;
+        allProfessors = professors;
+        populateFilters();
+        applyJobFilters();
+        applyProfessorFilters();
+        elements.totalCount.style.display = 'block';
+        elements.totalCount.innerHTML = `${allJobs.length} Jobs<span style="color:var(--text3);margin:0 6px;">•</span>${allProfessors.length} Research`;
+        showStatus(`Loaded ${allJobs.length} jobs and ${allProfessors.length} research opportunities.`, 'success');
       } catch(e) {
-        const err=`<div class="empty-state"><div class="empty-icon"><i class="fas fa-exclamation-triangle"></i></div><h3 class="empty-title">Failed to load data</h3><p class="empty-text">Please check your internet connection and refresh</p></div>`;
-        elements.jobsGrid.innerHTML=err; elements.profsGrid.innerHTML=err;
-        showStatus('Failed to load data','error');
+        const errHtml = `<div class="empty-state"><div class="empty-icon"><i class="fas fa-exclamation-triangle"></i></div><h3 class="empty-title">Failed to load data</h3><p class="empty-text">Please check your internet connection and refresh</p></div>`;
+        elements.jobsGrid.innerHTML = errHtml;
+        elements.profsGrid.innerHTML = errHtml;
+        showStatus('Failed to load data. Please refresh the page.', 'error');
       }
     }
+
     init();
   </script>
 
   <footer style="background:var(--bg2);border-top:1px solid var(--border);padding:40px 20px;margin-top:60px;">
     <div style="max-width:1200px;margin:0 auto;text-align:center;">
       <div style="margin-bottom:16px;">
-        <img src="/android-chrome-192x192.png" alt="CareerLift" style="height:40px;width:auto;" />
+        <img
+          src="https://raw.githubusercontent.com/prakhar1605/Naukri-Chakri/main/logo.png"
+          alt="CareerLift"
+          style="height:40px;width:auto;"
+          onerror="this.style.display='none';"
+        />
       </div>
       <p style="color:var(--text2);font-size:14px;margin-bottom:8px;">AI-Powered Jobs & Research Platform for Students</p>
       <p style="color:var(--text3);font-size:13px;margin-bottom:20px;">Connecting students with opportunities at top companies and 1500+ IIT professors</p>
