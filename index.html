@@ -18,6 +18,23 @@
   <meta name="twitter:title" content="CareerLift - AI Jobs & Research" />
   <meta name="twitter:description" content="AI-powered job and research internship platform for students" />
   
+  <!-- SEO: Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "CareerLift",
+    "url": "https://carrerlift.in",
+    "description": "AI-powered jobs and research internship platform for students in India. Find 275+ jobs and 1500+ IIT professor research opportunities.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://carrerlift.in/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  <meta name="robots" content="index, follow" />
+  
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FRMVZ6H187"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -245,21 +262,6 @@
     .filter-select:focus {
       outline: none; border-color: var(--neon);
       box-shadow: 0 0 0 3px rgba(0,212,255,0.12);
-    }
-
-    /* ── DESKTOP SIDE-BY-SIDE LAYOUT ── */
-    @media (min-width: 1024px) {
-      .desktop-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 24px;
-        align-items: start;
-        margin-bottom: 28px;
-      }
-      .desktop-row .resume-card,
-      .desktop-row .alert-subscribe-section {
-        margin-bottom: 0;
-      }
     }
 
     /* ── RESUME UPLOAD CARD ── */
@@ -981,58 +983,28 @@
         </div>
       </div>
 
-      <!-- Resume + Alert side-by-side on desktop -->
-      <div class="desktop-row">
-        <!-- Resume Upload Card -->
-        <div class="resume-card">
-          <h2 class="resume-card-title">Get AI-Powered Job Matches</h2>
-          <p class="resume-card-subtitle">Upload your resume and let our AI find the perfect opportunities for you</p>
-          
-          <input type="file" id="resumeFile" accept=".pdf,.txt,.doc,.docx,application/pdf" />
-          
-          <div class="upload-area" id="uploadArea">
-            <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-            <div class="upload-text">Click to upload or drag and drop</div>
-            <div class="upload-hint">PDF, DOC, TXT (Max 5MB)</div>
-          </div>
-
-          <div id="fileNameDisplay" class="file-name-display"></div>
-
-          <div class="upload-actions">
-            <button id="analyzeBtn" class="btn btn-primary" disabled>
-              <i class="fas fa-magic"></i> Analyze Resume
-            </button>
-            <button id="pasteBtn" class="btn btn-secondary">
-              <i class="fas fa-paste"></i> Paste Resume Text
-            </button>
-          </div>
+      <!-- Resume Upload Card -->
+      <div class="resume-card">
+        <h2 class="resume-card-title">Get AI-Powered Job Matches</h2>
+        <p class="resume-card-subtitle">Upload your resume and let our AI find the perfect opportunities for you</p>
+        
+        <input type="file" id="resumeFile" accept=".pdf,.txt,.doc,.docx,application/pdf" />
+        
+        <div class="upload-area" id="uploadArea">
+          <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+          <div class="upload-text">Click to upload or drag and drop</div>
+          <div class="upload-hint">PDF, DOC, TXT (Max 5MB)</div>
         </div>
 
-        <!-- Job Alert Subscribe -->
-        <div class="alert-subscribe-section">
-          <div class="alert-badge"><i class="fas fa-circle"></i> Live Alerts</div>
-          <h2 class="alert-title">Never Miss Your Dream Job</h2>
-          <p class="alert-subtitle">Get daily email alerts at 9 AM with new jobs matching your skills. Free forever.</p>
+        <div id="fileNameDisplay" class="file-name-display"></div>
 
-          <div class="alert-form" id="alertForm">
-            <input type="text" class="alert-input" id="alertName" placeholder="Your Name" />
-            <input type="email" class="alert-input" id="alertEmail" placeholder="your@email.com" required />
-            <input type="text" class="alert-input full-width" id="alertSkills" placeholder="Your skills (e.g. Python, Machine Learning, React)" />
-            <button class="alert-submit-btn" id="alertSubmitBtn" onclick="subscribeToAlerts()">
-              <i class="fas fa-bell"></i> Get Free Job Alerts
-            </button>
-          </div>
-
-          <div class="alert-success" id="alertSuccess">
-            <i class="fas fa-check-circle"></i>
-            <div><strong>You're subscribed!</strong> Check your email for confirmation. First alert arrives tomorrow at 9 AM.</div>
-          </div>
-
-          <div class="alert-stats">
-            <div class="alert-stat"><i class="fas fa-clock"></i> Daily at 9 AM</div>
-            <div class="alert-stat"><i class="fas fa-bolt"></i> Instant confirmation</div>
-            <div class="alert-stat"><i class="fas fa-lock"></i> No spam, ever</div>
-          </div>
+        <div class="upload-actions">
+          <button id="analyzeBtn" class="btn btn-primary" disabled>
+            <i class="fas fa-magic"></i> Analyze Resume
+          </button>
+          <button id="pasteBtn" class="btn btn-secondary">
+            <i class="fas fa-paste"></i> Paste Resume Text
+          </button>
         </div>
       </div>
 
@@ -1232,42 +1204,30 @@
             <div class="inst" id="jobEmailLocation"></div>
           </div>
         </div>
-
         <label class="email-form-label">Your Name</label>
         <input type="text" id="jobStudentName" class="email-form-input" placeholder="Your full name" />
-
         <label class="email-form-label">Your Course & College</label>
         <input type="text" id="jobStudentCourse" class="email-form-input" placeholder="e.g. B.Tech CSE, 3rd Year, IIT Delhi" />
-
         <label class="email-form-label">Why you're a great fit (your relevant experience)</label>
-        <textarea id="jobStudentProject" class="email-form-textarea" placeholder="e.g. I have experience in React and Node.js, built multiple full-stack projects, and worked on REST API development..."></textarea>
-
+        <textarea id="jobStudentProject" class="email-form-textarea" placeholder="e.g. I have experience in React and Node.js, built multiple full-stack projects..."></textarea>
         <label class="email-form-label">Tone</label>
         <select id="jobEmailTone" class="email-form-input" style="cursor:pointer;">
           <option value="professional">Professional & Confident</option>
           <option value="enthusiastic">Enthusiastic & Energetic</option>
           <option value="concise">Short & Direct</option>
         </select>
-
         <button class="generate-btn" id="generateJobEmailBtn" style="background: linear-gradient(135deg, var(--neon), #0099cc); box-shadow: 0 4px 15px rgba(0,212,255,0.3);">
           <i class="fas fa-magic"></i> Generate Application Email
         </button>
-
         <div class="generated-email-box" id="generatedJobEmailBox">
           <div class="generated-email-toolbar">
             <span class="generated-email-label">Generated Email</span>
-            <button class="copy-btn" id="copyJobEmailBtn" style="background: var(--neon); color: #080B14;">
-              <i class="fas fa-copy"></i> Copy
-            </button>
+            <button class="copy-btn" id="copyJobEmailBtn" style="background: var(--neon); color: #080B14;"><i class="fas fa-copy"></i> Copy</button>
           </div>
           <div class="generated-email-text" id="generatedJobEmailText"></div>
           <div class="email-actions-row">
-            <a href="#" class="btn-send-email" id="sendJobEmailBtn" target="_blank">
-              <i class="fas fa-paper-plane"></i> Open in Gmail
-            </a>
-            <button class="btn-regenerate" id="regenerateJobBtn">
-              <i class="fas fa-redo"></i> Regenerate
-            </button>
+            <a href="#" class="btn-send-email" id="sendJobEmailBtn" target="_blank"><i class="fas fa-paper-plane"></i> Open in Gmail</a>
+            <button class="btn-regenerate" id="regenerateJobBtn"><i class="fas fa-redo"></i> Regenerate</button>
           </div>
         </div>
       </div>
@@ -1293,23 +1253,15 @@
             <div class="inst" id="emailProfInst">Institution</div>
           </div>
         </div>
-
         <label class="email-form-label">Your Name</label>
         <input type="text" id="studentName" class="email-form-input" placeholder="Your full name" />
-
         <label class="email-form-label">Your Course & Year</label>
         <input type="text" id="studentCourse" class="email-form-input" placeholder="e.g. B.Tech CSE, 2nd Year, IIT Bombay" />
-
         <label class="email-form-label">Your Relevant Project / Research</label>
-        <textarea id="studentProject" class="email-form-textarea" placeholder="e.g. I built a deep learning model for image classification using PyTorch, achieving 92% accuracy on benchmark datasets..."></textarea>
-
+        <textarea id="studentProject" class="email-form-textarea" placeholder="e.g. I built a deep learning model for image classification using PyTorch..."></textarea>
         <label class="email-form-label">Why This Professor? (optional)</label>
         <input type="text" id="studentReason" class="email-form-input" placeholder="e.g. I came across your recent paper and it aligns with my research interests..." />
-
-        <button class="generate-btn" id="generateEmailBtn">
-          <i class="fas fa-magic"></i> Generate Personalized Email
-        </button>
-
+        <button class="generate-btn" id="generateEmailBtn"><i class="fas fa-magic"></i> Generate Personalized Email</button>
         <div class="generated-email-box" id="generatedEmailBox">
           <div class="generated-email-toolbar">
             <span class="generated-email-label">Generated Email</span>
@@ -1317,9 +1269,7 @@
           </div>
           <div class="generated-email-text" id="generatedEmailText"></div>
           <div class="email-actions-row">
-            <a href="#" class="btn-send-email" id="sendEmailBtn" target="_blank">
-              <i class="fas fa-paper-plane"></i> Open in Gmail
-            </a>
+            <a href="#" class="btn-send-email" id="sendEmailBtn" target="_blank"><i class="fas fa-paper-plane"></i> Open in Gmail</a>
             <button class="btn-regenerate" id="regenerateBtn"><i class="fas fa-redo"></i> Regenerate</button>
           </div>
         </div>
@@ -1392,7 +1342,6 @@
       totalCount: document.getElementById('totalCount')
     };
 
-    // Tab switching
     elements.tabButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         const targetTab = btn.dataset.tab;
@@ -1531,7 +1480,6 @@
         if (hasMatches && scoreB !== scoreA) return scoreB - scoreA;
         return jobs.indexOf(b) - jobs.indexOf(a);
       });
-
       elements.jobsGrid.innerHTML = sortedJobs.map((job, displayIndex) => {
         const key = job.Company + job.Role;
         const score = matchScores[key] || 0;
@@ -1565,7 +1513,6 @@
             </div>
           </div>`;
       }).join('');
-
       const matchedCount = Object.keys(matchScores).filter(key => matchScores[key] > 0).length;
       elements.jobsTitle.innerHTML = matchedCount > 0 ? `Your Top Matches <span style="color:var(--neon);font-weight:800;">(${matchedCount})</span> & All Jobs` : 'Available Jobs';
     }
@@ -1582,7 +1529,6 @@
         if (hasMatches && scoreB !== scoreA) return scoreB - scoreA;
         return 0;
       });
-
       elements.profsGrid.innerHTML = sortedProfs.map(prof => {
         const key = prof.Name + prof['College Name'];
         const score = matchScores[key] || 0;
@@ -1611,7 +1557,6 @@
             </div>
           </div>`;
       }).join('');
-
       const matchedCount = Object.keys(matchScores).filter(key => matchScores[key] > 0).length;
       elements.profsTitle.innerHTML = matchedCount > 0 ? `Your Top Matches <span style="color:var(--neon);font-weight:800;">(${matchedCount})</span> & All Professors` : 'Available Research Opportunities';
     }
@@ -1652,7 +1597,6 @@
       elements.profsCount.textContent = `${filtered.length} Professors`;
     }
 
-    // File upload handlers
     elements.uploadArea.addEventListener('click', () => elements.resumeFile.click());
     elements.uploadAreaResearch.addEventListener('click', () => elements.resumeFile.click());
 
@@ -1691,7 +1635,6 @@
       });
     });
 
-    // Typewriter effect helper
     async function typewriterEffect(el, text, speed = 8) {
       el.innerHTML = '';
       const cursor = document.createElement('span');
@@ -1704,7 +1647,6 @@
       cursor.remove();
     }
 
-    // Thinking steps animator
     async function animateThinkingSteps(prefix, steps, delayEach = 600) {
       for (let i = 0; i < steps.length; i++) {
         const el = document.getElementById(prefix + (i+1));
@@ -1726,26 +1668,20 @@
       const thinkStream = document.getElementById('thinkingStream');
       thinkBox.style.display = 'block';
       thinkStream.textContent = '';
-
       ['step1','step2','step3','step4','step5'].forEach(id => {
         const el = document.getElementById(id);
         if (el) { el.classList.remove('active','done'); el.querySelector('.step-icon').textContent = ['📄','🔍','🧠','⚡','✅'][parseInt(id.slice(-1))-1]; }
       });
-
       const stepsPromise = animateThinkingSteps('step', [1,2,3,4,5], 700);
       const analysis = await analyzeResume(text, 'jobs');
       await stepsPromise;
-
       const last = document.getElementById('step5');
       if (last) { last.classList.remove('active'); last.classList.add('done'); last.querySelector('.step-icon').textContent = '✓'; }
-
       document.querySelector('#thinkingBox .thinking-label').textContent = 'Analysis Complete';
       document.querySelector('#thinkingBox .thinking-orb').style.animation = 'none';
       document.querySelector('#thinkingBox .thinking-orb').style.background = 'var(--green)';
       document.querySelector('#thinkingBox .thinking-orb').style.boxShadow = '0 0 8px rgba(16,185,129,0.8)';
-
       await typewriterEffect(thinkStream, analysis, 6);
-
       const keywords = extractKeywords(text + ' ' + analysis, 50);
       const scored = allJobs.map(job => ({ job, score: scoreItem(job, keywords, ['Company','Role','Description','JobType']) }));
       scored.sort((a, b) => b.score - a.score);
@@ -1755,7 +1691,6 @@
       elements.jobMatchCount.textContent = `${topMatches.length} Matches`;
       renderJobs(allJobs, matchedJobs);
       showStatus('Resume analyzed! Scroll down to see matched jobs.', 'success');
-
       setTimeout(() => {
         elements.analysisSection.classList.add('collapsed');
         setTimeout(() => { const f = document.querySelector('.job-card.matched'); if (f) f.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 400);
@@ -1769,26 +1704,20 @@
       const thinkStreamR = document.getElementById('thinkingStreamResearch');
       thinkBoxR.style.display = 'block';
       thinkStreamR.textContent = '';
-
       ['stepR1','stepR2','stepR3','stepR4','stepR5'].forEach((id,i) => {
         const el = document.getElementById(id);
         if (el) { el.classList.remove('active','done'); el.querySelector('.step-icon').textContent = ['📄','🔍','🧪','🏛️','✅'][i]; }
       });
-
       const stepsPromise = animateThinkingSteps('stepR', [1,2,3,4,5], 700);
       const analysis = await analyzeResume(text, 'research');
       await stepsPromise;
-
       const lastR = document.getElementById('stepR5');
       if (lastR) { lastR.classList.remove('active'); lastR.classList.add('done'); lastR.querySelector('.step-icon').textContent = '✓'; }
-
       document.querySelector('#thinkingBoxResearch .thinking-label').textContent = 'Analysis Complete';
       document.querySelector('#thinkingBoxResearch .thinking-orb').style.animation = 'none';
       document.querySelector('#thinkingBoxResearch .thinking-orb').style.background = 'var(--green)';
       document.querySelector('#thinkingBoxResearch .thinking-orb').style.boxShadow = '0 0 8px rgba(16,185,129,0.8)';
-
       await typewriterEffect(thinkStreamR, analysis, 6);
-
       const keywords = extractKeywords(text + ' ' + analysis, 50);
       const scored = allProfessors.map(prof => {
         const researchAreas = getResearchAreas(prof);
@@ -1808,7 +1737,6 @@
       elements.profMatchCount.textContent = `${topMatches.length} Matches`;
       renderProfessors(allProfessors, matchedProfessors);
       showStatus('Resume analyzed! Scroll down to see matched professors.', 'success');
-
       setTimeout(() => {
         elements.analysisSectionResearch.classList.add('collapsed');
         setTimeout(() => { const f = document.querySelector('.professor-card.matched'); if (f) f.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 400);
@@ -1930,7 +1858,7 @@
         } else { document.getElementById('sendJobEmailBtn').style.display = 'none'; }
         showStatus('Email generated!', 'success');
       } catch (error) {
-        const emailText = `Subject: Application for ${currentJobEmailData.role} - ${studentName}\n\nDear Hiring Team at ${currentJobEmailData.company},\n\nI hope this email finds you well. I am ${studentName}, a ${studentCourse}, writing to express my strong interest in the ${currentJobEmailData.role} position at ${currentJobEmailData.company}.\n\n${studentExp}\n\nI am confident that my background aligns well with the requirements for this role. I would love the opportunity to contribute to ${currentJobEmailData.company}'s growth and learn from your team.\n\nI have attached my resume for your consideration. I would be grateful for a brief call to discuss how I can add value to your team.\n\nThank you for your time and consideration.\n\nBest regards,\n${studentName}\n${studentCourse}`;
+        const emailText = `Subject: Application for ${currentJobEmailData.role} - ${studentName}\n\nDear Hiring Team at ${currentJobEmailData.company},\n\nI hope this email finds you well. I am ${studentName}, a ${studentCourse}, writing to express my strong interest in the ${currentJobEmailData.role} position at ${currentJobEmailData.company}.\n\n${studentExp}\n\nI am confident that my background aligns well with the requirements for this role. I would love the opportunity to contribute to ${currentJobEmailData.company}'s growth and learn from your team.\n\nThank you for your time and consideration.\n\nBest regards,\n${studentName}\n${studentCourse}`;
         document.getElementById('generatedJobEmailText').textContent = emailText;
         document.getElementById('generatedJobEmailBox').classList.add('active');
         if (currentJobEmailData.email) {
@@ -2171,6 +2099,32 @@
     init();
   </script>
 
+  <!-- Job Alert Section -->
+  <div class="container" style="padding-top:0;">
+    <div class="alert-subscribe-section" style="max-width:700px;margin:0 auto 32px auto;">
+      <div class="alert-badge"><i class="fas fa-circle"></i> Live Alerts</div>
+      <h2 class="alert-title">Never Miss Your Dream Job</h2>
+      <p class="alert-subtitle">Get daily email alerts at 9 AM with new jobs matching your skills. Free forever.</p>
+      <div class="alert-form" id="alertForm">
+        <input type="text" class="alert-input" id="alertName" placeholder="Your Name" />
+        <input type="email" class="alert-input" id="alertEmail" placeholder="your@email.com" required />
+        <input type="text" class="alert-input full-width" id="alertSkills" placeholder="Your skills (e.g. Python, Machine Learning, React)" />
+        <button class="alert-submit-btn" id="alertSubmitBtn" onclick="subscribeToAlerts()">
+          <i class="fas fa-bell"></i> Get Free Job Alerts
+        </button>
+      </div>
+      <div class="alert-success" id="alertSuccess">
+        <i class="fas fa-check-circle"></i>
+        <div><strong>You're subscribed!</strong> Check your email for confirmation. First alert arrives tomorrow at 9 AM.</div>
+      </div>
+      <div class="alert-stats">
+        <div class="alert-stat"><i class="fas fa-clock"></i> Daily at 9 AM</div>
+        <div class="alert-stat"><i class="fas fa-bolt"></i> Instant confirmation</div>
+        <div class="alert-stat"><i class="fas fa-lock"></i> No spam, ever</div>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer style="background:var(--bg2);border-top:1px solid var(--border);padding:40px 20px;margin-top:60px;">
     <div style="max-width:1200px;margin:0 auto;text-align:center;">
@@ -2187,3 +2141,4 @@
   </footer>
 </body>
 </html>
+
