@@ -18,6 +18,23 @@
   <meta name="twitter:title" content="CareerLift - AI Jobs & Research" />
   <meta name="twitter:description" content="AI-powered job and research internship platform for students" />
   
+  <!-- SEO: Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "CareerLift",
+    "url": "https://carrerlift.in",
+    "description": "AI-powered jobs and research internship platform for students in India. Find 275+ jobs and 1500+ IIT professor research opportunities.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://carrerlift.in/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  <meta name="robots" content="index, follow" />
+  
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FRMVZ6H187"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -250,15 +267,8 @@
     /* ── DESKTOP SIDE-BY-SIDE LAYOUT ── */
     @media (min-width: 1024px) {
       .desktop-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 24px;
-        align-items: start;
+        display: block;
         margin-bottom: 28px;
-      }
-      .desktop-row .resume-card,
-      .desktop-row .alert-subscribe-section {
-        margin-bottom: 0;
       }
     }
 
@@ -1008,32 +1018,6 @@
           </div>
         </div>
 
-        <!-- Job Alert Subscribe -->
-        <div class="alert-subscribe-section">
-          <div class="alert-badge"><i class="fas fa-circle"></i> Live Alerts</div>
-          <h2 class="alert-title">Never Miss Your Dream Job</h2>
-          <p class="alert-subtitle">Get daily email alerts at 9 AM with new jobs matching your skills. Free forever.</p>
-
-          <div class="alert-form" id="alertForm">
-            <input type="text" class="alert-input" id="alertName" placeholder="Your Name" />
-            <input type="email" class="alert-input" id="alertEmail" placeholder="your@email.com" required />
-            <input type="text" class="alert-input full-width" id="alertSkills" placeholder="Your skills (e.g. Python, Machine Learning, React)" />
-            <button class="alert-submit-btn" id="alertSubmitBtn" onclick="subscribeToAlerts()">
-              <i class="fas fa-bell"></i> Get Free Job Alerts
-            </button>
-          </div>
-
-          <div class="alert-success" id="alertSuccess">
-            <i class="fas fa-check-circle"></i>
-            <div><strong>You're subscribed!</strong> Check your email for confirmation. First alert arrives tomorrow at 9 AM.</div>
-          </div>
-
-          <div class="alert-stats">
-            <div class="alert-stat"><i class="fas fa-clock"></i> Daily at 9 AM</div>
-            <div class="alert-stat"><i class="fas fa-bolt"></i> Instant confirmation</div>
-            <div class="alert-stat"><i class="fas fa-lock"></i> No spam, ever</div>
-          </div>
-        </div>
       </div>
 
       <!-- Analysis Section -->
@@ -2170,6 +2154,35 @@
 
     init();
   </script>
+
+  <!-- Job Alert Section - Moved below jobs -->
+  <div class="container" style="padding-top:0;">
+    <div class="alert-subscribe-section" style="max-width:700px;margin:0 auto 32px auto;">
+      <div class="alert-badge"><i class="fas fa-circle"></i> Live Alerts</div>
+      <h2 class="alert-title">Never Miss Your Dream Job</h2>
+      <p class="alert-subtitle">Get daily email alerts at 9 AM with new jobs matching your skills. Free forever.</p>
+
+      <div class="alert-form" id="alertForm">
+        <input type="text" class="alert-input" id="alertName" placeholder="Your Name" />
+        <input type="email" class="alert-input" id="alertEmail" placeholder="your@email.com" required />
+        <input type="text" class="alert-input full-width" id="alertSkills" placeholder="Your skills (e.g. Python, Machine Learning, React)" />
+        <button class="alert-submit-btn" id="alertSubmitBtn" onclick="subscribeToAlerts()">
+          <i class="fas fa-bell"></i> Get Free Job Alerts
+        </button>
+      </div>
+
+      <div class="alert-success" id="alertSuccess">
+        <i class="fas fa-check-circle"></i>
+        <div><strong>You're subscribed!</strong> Check your email for confirmation. First alert arrives tomorrow at 9 AM.</div>
+      </div>
+
+      <div class="alert-stats">
+        <div class="alert-stat"><i class="fas fa-clock"></i> Daily at 9 AM</div>
+        <div class="alert-stat"><i class="fas fa-bolt"></i> Instant confirmation</div>
+        <div class="alert-stat"><i class="fas fa-lock"></i> No spam, ever</div>
+      </div>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer style="background:var(--bg2);border-top:1px solid var(--border);padding:40px 20px;margin-top:60px;">
