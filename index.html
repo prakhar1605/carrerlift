@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>CareerLift - AI-Powered Jobs & Research Platform</title>
-  <meta name="description" content="Find jobs and research internships with AI-powered resume matching. Connect with 1500+ IIT professors and top companies."/>
+  <meta name="description" content="Find jobs and research internships with AI-powered resume matching. Connect with 1500+ IIT professors and top companies." />
   
   <link rel="icon" type="image/png" href="logo.png">
   
@@ -894,21 +894,6 @@
     }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-    .btn-share-wa {
-      background: rgba(37,211,102,0.1); color: #25D366;
-      border: 1px solid rgba(37,211,102,0.25); padding: 10px 12px;
-      border-radius: 10px; cursor: pointer; transition: all 0.2s;
-      display: flex; align-items: center;
-    }
-    .btn-share-wa:hover { background: rgba(37,211,102,0.2); transform: translateY(-1px); }
-    .btn-share-copy {
-      background: var(--glass2); color: var(--text2);
-      border: 1px solid var(--border2); padding: 10px 12px;
-      border-radius: 10px; cursor: pointer; transition: all 0.2s;
-      display: flex; align-items: center;
-    }
-    .btn-share-copy:hover { border-color: var(--neon); color: var(--neon); }
-
     #resumeFile { display: none; }
 
     /* ── RESPONSIVE ── */
@@ -1024,7 +1009,7 @@
         </div>
 
         <!-- Job Alert Subscribe -->
-        <div class="alert-subscribe-section" style="display:none;">
+        <div class="alert-subscribe-section">
           <div class="alert-badge"><i class="fas fa-circle"></i> Live Alerts</div>
           <h2 class="alert-title">Never Miss Your Dream Job</h2>
           <p class="alert-subtitle">Get daily email alerts at 9 AM with new jobs matching your skills. Free forever.</p>
@@ -1577,13 +1562,6 @@
               <button class="btn-analyze-fit" onclick="openSkillGap(${JSON.stringify({company:job.Company||'',role:job.Role||'',description:job.Description||''}).replace(/"/g,'&quot;')})">
                 <i class="fas fa-chart-bar"></i> Analyze Fit
               </button>
-              <button class="btn-share-wa" title="Share on WhatsApp" onclick="shareJobWA('${(job.Role||'').replace(/'/g,\"\\'\")
-}','${(job.Company||'').replace(/'/g,\"\\'\")
-}','${(job.Location||'').replace(/'/g,\"\\'\")
-}')"><i class="fab fa-whatsapp"></i></button>
-              <button class="btn-share-copy" title="Copy Link" onclick="copyJobLink('${(job.Role||'').replace(/'/g,\"\\'\")
-}','${(job.Company||'').replace(/'/g,\"\\'\")
-}')"><i class="fas fa-link"></i></button>
             </div>
           </div>`;
       }).join('');
@@ -1630,8 +1608,6 @@
               <button class="btn-generate-email" onclick="openEmailModal(${JSON.stringify({name:prof.Name||'',dept:prof.Department||'',inst:prof['College Name']||'',research:researchAreas||'',email:email||''}).replace(/"/g,'&quot;')})">
                 <i class="fas fa-magic"></i> AI Email
               </button>
-              <button class="btn-share-wa" title="Share on WhatsApp" onclick="shareProfWA('${(prof.Name||'').replace(/'/g,&quot;\\'&quot;)}','${(prof.Department||'').replace(/'/g,&quot;\\'&quot;)}','${(prof['College Name']||'').replace(/'/g,&quot;\\'&quot;)}')"><i class="fab fa-whatsapp"></i></button>
-              <button class="btn-share-copy" title="Copy Link" onclick="copyProfLink('${(prof.Name||'').replace(/'/g,&quot;\\'&quot;)}','${(prof['College Name']||'').replace(/'/g,&quot;\\'&quot;)}')"><i class="fas fa-link"></i></button>
             </div>
           </div>`;
       }).join('');
@@ -2163,26 +2139,6 @@
         setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Copy'; btn.classList.remove('copied'); }, 2000);
       });
     });
-
-    // ============================================
-    // SHARE FUNCTIONS
-    // ============================================
-    function shareJobWA(role, company, location) {
-      const msg = `🚀 *${role} - ${company}*\n📍 ${location || 'India'}\n🔗 https://www.carrerlift.in`;
-      window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
-    }
-    function copyJobLink(role, company) {
-      navigator.clipboard.writeText(`${role} at ${company} — https://www.carrerlift.in`);
-      showStatus('Link copied!', 'success');
-    }
-    function shareProfWA(name, dept, inst) {
-      const msg = `🔬 *${name} - ${inst}*\n🏛️ ${dept}\n🔗 https://www.carrerlift.in`;
-      window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
-    }
-    function copyProfLink(name, inst) {
-      navigator.clipboard.writeText(`${name} - ${inst} — https://www.carrerlift.in`);
-      showStatus('Link copied!', 'success');
-    }
 
     // ============================================
     // INIT
