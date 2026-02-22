@@ -529,6 +529,36 @@
     }
     .btn-analyze-fit:hover { background: rgba(16,185,129,0.18); transform: translateY(-1px); }
 
+    .btn-share {
+      background: rgba(37,211,102,0.1); color: #25D366;
+      border: 1px solid rgba(37,211,102,0.25); padding: 10px 14px;
+      border-radius: 10px; font-family: 'DM Sans', sans-serif;
+      font-size: 13px; font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; gap: 6px; transition: all 0.2s;
+      position: relative;
+    }
+    .btn-share:hover { background: rgba(37,211,102,0.18); transform: translateY(-1px); }
+    .share-popup {
+      position: absolute; bottom: calc(100% + 8px); right: 0;
+      background: var(--bg2); border: 1px solid var(--border2);
+      border-radius: 12px; padding: 8px;
+      display: none; flex-direction: column; gap: 4px;
+      min-width: 170px; z-index: 100;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    }
+    .share-popup.open { display: flex; }
+    .share-option {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 12px; border-radius: 8px; cursor: pointer;
+      font-size: 13px; font-weight: 600; color: var(--text1);
+      transition: background 0.15s; background: transparent; border: none;
+      font-family: 'DM Sans', sans-serif; width: 100%; text-align: left;
+    }
+    .share-option:hover { background: var(--glass2); }
+    .share-option.wa  { color: #25D366; }
+    .share-option.copy { color: var(--neon); }
+    .share-option.ln  { color: #0A66C2; }
+
     /* ── PROFESSOR CARD ── */
     .professor-card {
       background: var(--glass); border: 1px solid var(--border);
@@ -918,7 +948,7 @@
       .upload-actions .btn { width: 100%; justify-content: center; }
       .job-header, .professor-header { flex-direction: column; }
       .job-actions { flex-direction: column; }
-      .btn-apply, .btn-save, .btn-analyze-fit, .btn-generate-email { width: 100%; justify-content: center; }
+      .btn-apply, .btn-save, .btn-analyze-fit, .btn-generate-email, .btn-share { width: 100%; justify-content: center; }
       .tab-btn { padding: 12px 14px; font-size: 13px; }
       .alert-form { grid-template-columns: 1fr; }
       .alert-input.full-width { grid-column: 1; }
@@ -1562,6 +1592,14 @@
               <button class="btn-analyze-fit" onclick="openSkillGap(${JSON.stringify({company:job.Company||'',role:job.Role||'',description:job.Description||''}).replace(/"/g,'&quot;')})">
                 <i class="fas fa-chart-bar"></i> Analyze Fit
               </button>
+              <button class="btn-share" onclick="toggleSharePopup(event,this,${JSON.stringify({company:job.Company||'',role:job.Role||'',location:job.Location||'',stipend:job.Stipend||'',applyLink:job.ApplyLink||''}).replace(/"/g,'&quot;')})">
+                <i class="fas fa-share-alt"></i> Share
+                <div class="share-popup">
+                  <button class="share-option wa"   onclick="shareWA(event,this)"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+                  <button class="share-option copy" onclick="shareCopy(event,this)"><i class="fas fa-link"></i> Copy Link</button>
+                  <button class="share-option ln"   onclick="shareLN(event,this)"><i class="fab fa-linkedin"></i> LinkedIn</button>
+                </div>
+              </button>
             </div>
           </div>`;
       }).join('');
@@ -2138,6 +2176,50 @@
         btn.classList.add('copied');
         setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Copy'; btn.classList.remove('copied'); }, 2000);
       });
+    });
+
+    // ============================================
+    // SHARE FUNCTIONALITY
+    // ============================================
+    function buildShareText(d) {
+      let t = `🚀 Job Opportunity!\n\n🏢 *${d.company}*\n💼 *${d.role}*`;
+      if (d.location) t += `\n📍 ${d.location}`;
+      if (d.stipend)  t += `\n💰 ${d.stipend}`;
+      t += d.applyLink ? `\n\n🔗 Apply: ${d.applyLink}` : `\n\n🔗 ${window.location.href}`;
+      t += `\n\nvia CareerLift`;
+      return t;
+    }
+    function toggleSharePopup(e, btn, jobData) {
+      e.stopPropagation();
+      const popup = btn.querySelector('.share-popup');
+      document.querySelectorAll('.share-popup.open').forEach(p => { if (p !== popup) p.classList.remove('open'); });
+      popup.classList.toggle('open');
+      btn.dataset.jobdata = JSON.stringify(jobData);
+    }
+    function shareWA(e, btn) {
+      e.stopPropagation();
+      const d = JSON.parse(btn.closest('.btn-share').dataset.jobdata);
+      window.open(`https://wa.me/?text=${encodeURIComponent(buildShareText(d))}`, '_blank');
+      btn.closest('.share-popup').classList.remove('open');
+    }
+    function shareCopy(e, btn) {
+      e.stopPropagation();
+      const d = JSON.parse(btn.closest('.btn-share').dataset.jobdata);
+      navigator.clipboard.writeText(buildShareText(d)).then(() => {
+        const orig = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        btn.style.color = 'var(--green)';
+        setTimeout(() => { btn.innerHTML = orig; btn.style.color = ''; }, 2000);
+      });
+    }
+    function shareLN(e, btn) {
+      e.stopPropagation();
+      const d = JSON.parse(btn.closest('.btn-share').dataset.jobdata);
+      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(d.applyLink || window.location.href)}`, '_blank');
+      btn.closest('.share-popup').classList.remove('open');
+    }
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.share-popup.open').forEach(p => p.classList.remove('open'));
     });
 
     // ============================================
