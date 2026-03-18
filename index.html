@@ -21,7 +21,6 @@
     gtag('js', new Date());
     gtag('config', 'G-FRMVZ6H187');
   </script>
-  <!-- Supabase JS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,24 +43,22 @@
     @keyframes orb1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(60px,40px)} }
     @keyframes orb2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-40px,-60px)} }
 
-    /* ── HEADER ── */
     .header { position: sticky; top: 0; z-index: 200; background: rgba(8,11,20,0.88); backdrop-filter: blur(24px) saturate(180%); border-bottom: 1px solid var(--border); }
     .header-content { max-width: 1440px; margin: 0 auto; padding: 14px 40px; display: flex; justify-content: space-between; align-items: center; }
     .logo-link { display: flex; align-items: center; gap: 10px; text-decoration: none; }
     .logo-img { height: 38px; width: auto; object-fit: contain; border-radius: 8px; }
-    .logo-text { font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.03em; background: linear-gradient(135deg, #00D4FF 0%, #7C3AED 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; transition: filter 0.3s; }
-    .logo-link:hover .logo-text { filter: brightness(1.2); }
+    .logo-text { font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.03em; background: linear-gradient(135deg, #00D4FF 0%, #7C3AED 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .header-actions { display: flex; align-items: center; gap: 12px; }
 
-    /* ── TRUST BADGES ── */
-    .trust-badges { display: flex; align-items: center; gap: 0; background: var(--glass2); border: 1px solid var(--border); border-radius: 100px; padding: 6px 16px; }
+    /* Trust Badges */
+    .trust-badges { display: flex; align-items: center; background: var(--glass2); border: 1px solid var(--border); border-radius: 100px; padding: 6px 16px; gap: 0; }
     .trust-badge-item { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--text2); white-space: nowrap; }
     .trust-badge-item .badge-num { color: var(--neon); font-weight: 800; }
     .trust-badge-item.green .badge-num { color: var(--green); }
     .trust-badge-item.purple .badge-num { color: #A78BFA; }
     .trust-sep { width: 1px; height: 14px; background: var(--border2); margin: 0 10px; }
 
-    /* ── AUTH BUTTON ── */
+    /* Auth */
     .btn-auth { display: flex; align-items: center; gap: 7px; padding: 8px 18px; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; border: none; transition: all 0.2s; background: linear-gradient(135deg, var(--neon2), #9333EA); color: white; box-shadow: 0 4px 14px rgba(124,58,237,0.3); }
     .btn-auth:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(124,58,237,0.45); }
     .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--neon), var(--neon2)); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #080B14; cursor: pointer; border: 2px solid rgba(0,212,255,0.3); transition: all 0.2s; overflow: hidden; }
@@ -77,7 +74,6 @@
     .user-menu-item.danger:hover { background: rgba(239,68,68,0.1); }
     .user-menu-wrapper { position: relative; }
 
-    /* ── TABS ── */
     .tab-navigation { position: sticky; top: 67px; z-index: 199; background: rgba(8,11,20,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
     .tab-nav-content { max-width: 1440px; margin: 0 auto; padding: 0 40px; display: flex; gap: 4px; }
     .tab-btn { padding: 15px 24px; background: transparent; border: none; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; color: var(--text3); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px; position: relative; }
@@ -86,13 +82,11 @@
     .tab-btn.active { color: var(--neon); }
     .tab-btn.active::after { transform: scaleX(1); }
 
-    /* ── CONTAINER ── */
     .container { max-width: 1440px; margin: 0 auto; padding: 32px 40px; position: relative; z-index: 1; }
     .tab-content { display: none; animation: fadeUp 0.4s ease; }
     .tab-content.active { display: block; }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* ── SEARCH CARD ── */
     .search-section { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 28px 36px; margin-bottom: 24px; backdrop-filter: blur(10px); }
     .search-title { font-family: 'Sora', sans-serif; font-size: 19px; font-weight: 700; margin-bottom: 18px; color: var(--text1); }
     .search-bar { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -104,7 +98,7 @@
     .filter-select { padding: 13px 16px; background: var(--glass2); border: 1px solid var(--border); border-radius: 10px; color: var(--text2); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; min-width: 150px; transition: all 0.2s; -webkit-appearance: none; }
     .filter-select:focus { outline: none; border-color: var(--neon); box-shadow: 0 0 0 3px rgba(0,212,255,0.12); }
 
-    /* ── COMPACT RESUME BANNER ── */
+    /* Resume Banner */
     .resume-banner { position: relative; overflow: hidden; border-radius: 16px; margin-bottom: 20px; padding: 16px 24px; background: linear-gradient(135deg, #0D1B3E 0%, #0A0F1E 60%, #1A0B2E 100%); border: 1px solid rgba(0,212,255,0.2); box-shadow: 0 0 40px rgba(0,212,255,0.05); display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
     .resume-banner::before { content: ''; position: absolute; top: -60%; right: -5%; width: 260px; height: 260px; background: radial-gradient(circle, rgba(0,212,255,0.1) 0%, transparent 70%); pointer-events: none; }
     .resume-banner-icon { font-size: 22px; color: var(--neon); opacity: 0.85; flex-shrink: 0; position: relative; z-index: 1; }
@@ -120,7 +114,6 @@
     .file-name-pill.active { display: flex; }
     .file-name-pill i { font-size: 11px; flex-shrink: 0; }
 
-    /* ── BUTTONS ── */
     .btn { padding: 12px 24px; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; border: none; cursor: pointer; transition: all 0.2s cubic-bezier(0.4,0,0.2,1); display: inline-flex; align-items: center; gap: 8px; }
     .btn:disabled { opacity: 0.45; cursor: not-allowed; }
     .btn-primary { background: linear-gradient(135deg, var(--neon), #0099cc); color: #080B14; box-shadow: 0 4px 20px rgba(0,212,255,0.3); }
@@ -129,7 +122,6 @@
     .btn-secondary:hover:not(:disabled) { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.25); }
     .btn-sm { padding: 8px 16px; font-size: 13px; }
 
-    /* ── ANALYSIS SECTION ── */
     .analysis-section { background: var(--glass); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 20px; display: none; animation: fadeUp 0.4s ease; }
     .analysis-section.active { display: block; }
     .analysis-section.collapsed .analysis-content, .analysis-section.collapsed .thinking-box { display: none !important; }
@@ -142,7 +134,6 @@
     .analysis-section.collapsed .btn-toggle i { transform: rotate(180deg); }
     .analysis-content { font-size: 14px; line-height: 1.8; color: var(--text2); white-space: pre-wrap; }
 
-    /* ── RESULTS HEADER ── */
     .results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 0 2px; }
     .results-title { font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 700; color: var(--text1); }
     .results-count { font-size: 13px; font-weight: 600; color: var(--text2); background: var(--glass2); border: 1px solid var(--border); padding: 7px 16px; border-radius: 100px; }
@@ -150,7 +141,6 @@
     @media (min-width: 900px) { .results-grid { grid-template-columns: repeat(2, 1fr); } }
     .results-grid .empty-state { grid-column: 1 / -1; }
 
-    /* ── JOB CARD ── */
     .job-card { background: var(--glass); border: 1px solid var(--border); border-radius: 18px; padding: 26px 28px; transition: all 0.25s cubic-bezier(0.4,0,0.2,1); cursor: pointer; position: relative; overflow: hidden; display: flex; flex-direction: column; }
     .job-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(0,212,255,0.3), transparent); opacity: 0; transition: opacity 0.3s; }
     .job-card:hover { border-color: rgba(0,212,255,0.3); background: var(--glass2); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 30px rgba(0,212,255,0.06); }
@@ -170,7 +160,7 @@
     .job-actions { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 16px; border-top: 1px solid var(--border); margin-top: auto; }
     .btn-apply { flex: 1; min-width: 100px; background: linear-gradient(135deg, var(--neon), #0099cc); color: #080B14; padding: 10px 16px; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; text-align: center; text-decoration: none; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 15px rgba(0,212,255,0.25); display: flex; align-items: center; justify-content: center; gap: 6px; }
     .btn-apply:hover { transform: translateY(-1px); box-shadow: 0 8px 25px rgba(0,212,255,0.4); }
-    .btn-save-job { background: var(--glass2); color: var(--text2); border: 1px solid var(--border2); padding: 10px 14px; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
+    .btn-save-job { background: var(--glass2); color: var(--text2); border: 1px solid var(--border2); padding: 10px 14px; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
     .btn-save-job:hover { border-color: #FF6B6B; color: #FF6B6B; }
     .btn-save-job.saved { background: rgba(255,107,107,0.1); border-color: #FF6B6B; color: #FF6B6B; }
     .btn-email-job { background: var(--glass2); color: var(--text1); border: 1px solid var(--border2); padding: 10px 14px; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
@@ -180,7 +170,6 @@
     .btn-share { background: rgba(37,211,102,0.1); color: #25D366; border: 1px solid rgba(37,211,102,0.25); padding: 10px 14px; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s; }
     .btn-share:hover { background: rgba(37,211,102,0.18); transform: translateY(-1px); }
 
-    /* ── PROFESSOR CARD ── */
     .professor-card { background: var(--glass); border: 1px solid var(--border); border-radius: 18px; padding: 26px 28px; transition: all 0.25s; cursor: pointer; position: relative; display: flex; flex-direction: column; }
     .professor-card:hover { border-color: rgba(124,58,237,0.4); background: var(--glass2); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 30px rgba(124,58,237,0.08); }
     .professor-card.matched { border-left: 2px solid var(--neon2); }
@@ -195,7 +184,7 @@
     .btn-generate-email { background: rgba(124,58,237,0.1); color: var(--neon2); border: 1px solid rgba(124,58,237,0.25); padding: 10px 14px; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s; }
     .btn-generate-email:hover { background: rgba(124,58,237,0.18); transform: translateY(-1px); }
 
-    /* ── JOB ALERT SECTION ── */
+    /* Alert Section */
     .alert-subscribe-section { position: relative; overflow: hidden; border-radius: 16px; margin-bottom: 20px; padding: 20px 24px; background: linear-gradient(135deg, #0A0F1E 0%, #0D0B1E 50%, #0F0A1A 100%); border: 1px solid rgba(124,58,237,0.25); display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
     .alert-subscribe-section::before { content: ''; position: absolute; top: -50%; right: -20%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(124,58,237,0.1) 0%, transparent 70%); pointer-events: none; }
     .alert-subscribe-left { flex: 1; min-width: 200px; position: relative; z-index: 1; }
@@ -204,31 +193,29 @@
     .alert-title { font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 2px; }
     .alert-subtitle { font-size: 12px; color: var(--text2); }
     .alert-form-inline { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; position: relative; z-index: 1; flex-shrink: 0; }
-    .alert-input-inline { padding: 9px 14px; border-radius: 8px; border: 1px solid var(--border2); background: rgba(255,255,255,0.06); color: var(--text1); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; transition: all 0.2s; width: 200px; }
+    .alert-input-inline { padding: 9px 14px; border-radius: 8px; border: 1px solid var(--border2); background: rgba(255,255,255,0.06); color: var(--text1); font-family: 'DM Sans', sans-serif; font-size: 13px; transition: all 0.2s; width: 200px; }
     .alert-input-inline::placeholder { color: var(--text3); }
-    .alert-input-inline:focus { outline: none; border-color: var(--neon2); background: rgba(124,58,237,0.08); }
+    .alert-input-inline:focus { outline: none; border-color: var(--neon2); }
     .alert-submit-btn-inline { padding: 9px 18px; background: linear-gradient(135deg, var(--neon2), #9333EA); color: white; border: none; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; white-space: nowrap; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(124,58,237,0.3); }
-    .alert-submit-btn-inline:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(124,58,237,0.45); }
+    .alert-submit-btn-inline:hover:not(:disabled) { transform: translateY(-1px); }
     .alert-submit-btn-inline:disabled { opacity: 0.6; cursor: not-allowed; }
     .alert-success-inline { display: none; align-items: center; gap: 8px; font-size: 13px; color: #6EE7B7; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.25); border-radius: 8px; padding: 9px 16px; position: relative; z-index: 1; }
     .alert-success-inline.active { display: flex; }
 
-    /* ── EMPTY STATE ── */
     .empty-state { background: var(--glass); border: 1px solid var(--border); border-radius: 16px; padding: 60px 20px; text-align: center; }
     .empty-icon { font-size: 56px; color: var(--text3); margin-bottom: 14px; }
     .empty-title { font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 700; color: var(--text1); margin-bottom: 6px; }
     .empty-text { font-size: 13px; color: var(--text2); }
 
-    /* ── STATUS ALERTS ── */
     .status-alert { padding: 12px 16px; border-radius: 10px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; font-size: 14px; animation: fadeUp 0.3s ease; font-weight: 500; }
     .status-alert.success { background: rgba(16,185,129,0.12); color: #6EE7B7; border: 1px solid rgba(16,185,129,0.25); }
     .status-alert.error { background: rgba(239,68,68,0.1); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.25); }
     .status-alert.info { background: rgba(245,158,11,0.1); color: #FCD34D; border: 1px solid rgba(245,158,11,0.25); }
 
-    /* ── AUTH MODAL ── */
+    /* Auth Modal */
     .auth-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000; align-items: center; justify-content: center; padding: 20px; background: rgba(0,0,0,0.8); backdrop-filter: blur(12px); }
     .auth-modal.active { display: flex; }
-    .auth-modal-content { background: var(--bg2); border: 1px solid var(--border2); border-radius: 24px; max-width: 420px; width: 100%; box-shadow: 0 30px 80px rgba(0,0,0,0.7); animation: modalSlideIn 0.3s cubic-bezier(0.4,0,0.2,1); overflow: hidden; }
+    .auth-modal-content { background: var(--bg2); border: 1px solid var(--border2); border-radius: 24px; max-width: 420px; width: 100%; box-shadow: 0 30px 80px rgba(0,0,0,0.7); animation: modalSlideIn 0.3s cubic-bezier(0.4,0,0.2,1); overflow: hidden; position: relative; }
     @keyframes modalSlideIn { from{opacity:0;transform:translateY(24px) scale(0.96)} to{opacity:1;transform:translateY(0) scale(1)} }
     .auth-modal-header { padding: 28px 28px 0; text-align: center; }
     .auth-modal-logo { font-family: 'Sora', sans-serif; font-size: 26px; font-weight: 800; background: linear-gradient(135deg, #00D4FF, #7C3AED); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
@@ -236,34 +223,33 @@
     .auth-modal-sub { font-size: 14px; color: var(--text2); line-height: 1.5; }
     .auth-modal-body { padding: 24px 28px 28px; }
     .btn-google { width: 100%; padding: 14px; background: white; color: #1a1a1a; border: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s; box-shadow: 0 4px 16px rgba(0,0,0,0.3); margin-bottom: 14px; }
-    .btn-google:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); background: #f8f8f8; }
+    .btn-google:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
     .btn-google img { width: 20px; height: 20px; }
     .auth-divider { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
     .auth-divider-line { flex: 1; height: 1px; background: var(--border); }
     .auth-divider-text { font-size: 12px; color: var(--text3); }
     .btn-guest { width: 100%; padding: 13px; background: var(--glass2); color: var(--text2); border: 1px solid var(--border2); border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-bottom: 20px; }
-    .btn-guest:hover { background: rgba(255,255,255,0.08); color: var(--text1); border-color: rgba(255,255,255,0.2); }
+    .btn-guest:hover { background: rgba(255,255,255,0.08); color: var(--text1); }
     .auth-trust-row { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
     .auth-trust-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text3); }
     .auth-trust-item i { color: var(--green); font-size: 10px; }
     .auth-modal-close-btn { position: absolute; top: 16px; right: 16px; background: var(--glass2); border: 1px solid var(--border); border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text2); font-size: 12px; transition: all 0.2s; }
     .auth-modal-close-btn:hover { background: var(--border); color: var(--text1); }
 
-    /* ── GUEST TIMER BANNER ── */
+    /* Guest Timer */
     .guest-timer-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000; background: linear-gradient(135deg, #0A0F1E, #150D2E); border-top: 1px solid rgba(124,58,237,0.3); padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); box-shadow: 0 -8px 40px rgba(0,0,0,0.5); flex-wrap: wrap; }
     .guest-timer-bar.visible { transform: translateY(0); }
     .guest-timer-left { display: flex; align-items: center; gap: 12px; }
-    .guest-timer-icon { font-size: 20px; }
     .guest-timer-text { font-size: 14px; color: var(--text1); font-weight: 600; }
     .guest-timer-text span { color: var(--neon3); font-weight: 800; }
     .guest-timer-sub { font-size: 12px; color: var(--text2); }
     .guest-timer-actions { display: flex; align-items: center; gap: 10px; }
     .btn-timer-signin { padding: 10px 22px; background: linear-gradient(135deg, var(--neon2), #9333EA); color: white; border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px rgba(124,58,237,0.35); }
-    .btn-timer-signin:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(124,58,237,0.5); }
+    .btn-timer-signin:hover { transform: translateY(-1px); }
     .btn-timer-dismiss { padding: 10px 16px; background: transparent; color: var(--text3); border: 1px solid var(--border); border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
     .btn-timer-dismiss:hover { border-color: var(--border2); color: var(--text2); }
 
-    /* ── MODAL (Paste, Skill Gap, Email) ── */
+    /* Modals */
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000; align-items: center; justify-content: center; padding: 20px; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); }
     .modal.active { display: flex; }
     .modal-content { background: var(--bg2); border: 1px solid var(--border2); border-radius: 16px; max-width: 580px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 60px rgba(0,0,0,0.6); animation: modalSlideIn 0.3s cubic-bezier(0.4,0,0.2,1); }
@@ -297,7 +283,7 @@
     .email-form-textarea { width: 100%; padding: 11px 14px; background: var(--glass); border: 1px solid var(--border); border-radius: 8px; color: var(--text1); font-family: 'DM Sans', sans-serif; font-size: 13px; margin-bottom: 14px; resize: vertical; min-height: 80px; transition: all 0.2s; }
     .email-form-textarea:focus { outline: none; border-color: var(--neon2); box-shadow: 0 0 0 3px rgba(124,58,237,0.12); }
     .generate-btn { width: 100%; padding: 13px; background: linear-gradient(135deg, var(--neon2), #9333EA); color: white; border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 18px; box-shadow: 0 4px 15px rgba(124,58,237,0.3); }
-    .generate-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(124,58,237,0.45); }
+    .generate-btn:hover:not(:disabled) { transform: translateY(-2px); }
     .generate-btn:disabled { opacity: 0.6; cursor: not-allowed; }
     .generated-email-box { display: none; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
     .generated-email-box.active { display: block; }
@@ -328,7 +314,7 @@
     .resume-warning { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2); border-radius: 10px; padding: 14px 18px; margin-bottom: 18px; display: flex; gap: 12px; align-items: center; font-size: 13px; color: #FCD34D; }
     .resume-warning i { font-size: 18px; color: var(--neon3); flex-shrink: 0; }
     .analyze-gap-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--neon), var(--neon2)); color: #080B14; border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,212,255,0.25); }
-    .analyze-gap-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,212,255,0.4); }
+    .analyze-gap-btn:hover:not(:disabled) { transform: translateY(-2px); }
     .analyze-gap-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .gap-results { display: none; }
     .gap-results.active { display: block; }
@@ -375,34 +361,27 @@
     .roadmap-resources { display: flex; flex-wrap: wrap; gap: 6px; }
     .resource-link { display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
     .resource-youtube { background: rgba(239,68,68,0.1); color: #FCA5A5; }
-    .resource-youtube:hover { background: rgba(239,68,68,0.2); }
     .resource-coursera { background: rgba(0,212,255,0.1); color: var(--neon); }
-    .resource-coursera:hover { background: rgba(0,212,255,0.18); }
     .resource-course { background: rgba(16,185,129,0.1); color: var(--green); }
-    .resource-course:hover { background: rgba(16,185,129,0.18); }
     .resource-default { background: var(--glass2); color: var(--text2); }
-    .resource-default:hover { background: var(--border); }
 
-    /* ── LOADING & THINKING ── */
     .loading { display: inline-block; width: 15px; height: 15px; border: 2px solid rgba(0,212,255,0.2); border-top-color: var(--neon); border-radius: 50%; animation: spin 0.7s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .thinking-box { background: rgba(0,212,255,0.03); border: 1px solid rgba(0,212,255,0.12); border-radius: 12px; padding: 18px 20px; font-size: 13px; line-height: 1.9; color: var(--text2); }
+    .thinking-box { background: rgba(0,212,255,0.03); border: 1px solid rgba(0,212,255,0.12); border-radius: 12px; padding: 18px 20px; }
     .thinking-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid rgba(0,212,255,0.1); }
     .thinking-orb { width: 8px; height: 8px; background: var(--neon); border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 8px rgba(0,212,255,0.8); animation: thinkPulse 1.2s ease-in-out infinite; }
     @keyframes thinkPulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.7); } }
     .thinking-label { font-size: 12px; font-weight: 700; color: var(--neon); text-transform: uppercase; letter-spacing: 0.8px; }
     .thinking-steps { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
-    .thinking-step { display: flex; align-items: flex-start; gap: 10px; padding: 7px 12px; border-radius: 8px; font-size: 13px; color: var(--text3); transition: all 0.4s ease; background: transparent; }
+    .thinking-step { display: flex; align-items: flex-start; gap: 10px; padding: 7px 12px; border-radius: 8px; font-size: 13px; color: var(--text3); transition: all 0.4s ease; }
     .thinking-step.active { color: var(--text1); background: rgba(0,212,255,0.06); border-left: 2px solid var(--neon); }
     .thinking-step.done { color: var(--green); opacity: 0.75; }
     .thinking-step .step-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; }
     .thinking-text-stream { font-size: 13px; line-height: 1.9; color: var(--text2); white-space: pre-wrap; min-height: 60px; }
     .typing-cursor { display: inline-block; width: 2px; height: 14px; background: var(--neon); margin-left: 2px; vertical-align: middle; animation: blink 0.7s step-end infinite; }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-
     #resumeFile { display: none; }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 1023px) { .container { padding: 24px 20px; } .header-content { padding: 12px 20px; } .tab-nav-content { padding: 0 20px; } }
     @media (max-width: 768px) {
       .logo-img { height: 30px; } .logo-text { font-size: 18px; }
@@ -420,14 +399,16 @@
       .btn-apply, .btn-save-job, .btn-analyze-fit, .btn-generate-email, .btn-share, .btn-email-job { width: 100%; justify-content: center; }
       .results-grid { grid-template-columns: 1fr; }
       .guest-timer-bar { flex-direction: column; align-items: flex-start; gap: 12px; }
-      .guest-timer-actions { width: 100%; } .btn-timer-signin, .btn-timer-dismiss { flex: 1; text-align: center; justify-content: center; }
+      .guest-timer-actions { width: 100%; }
+      .btn-timer-signin, .btn-timer-dismiss { flex: 1; text-align: center; justify-content: center; }
     }
   </style>
 </head>
 <body>
-  <!-- ── AUTH MODAL ── -->
+
+  <!-- Auth Modal -->
   <div class="auth-modal" id="authModal">
-    <div class="auth-modal-content" style="position:relative;">
+    <div class="auth-modal-content">
       <button class="auth-modal-close-btn" id="authModalClose"><i class="fas fa-times"></i></button>
       <div class="auth-modal-header">
         <div class="auth-modal-logo">CareerLift</div>
@@ -439,14 +420,8 @@
           <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
           Continue with Google
         </button>
-        <div class="auth-divider">
-          <div class="auth-divider-line"></div>
-          <span class="auth-divider-text">or</span>
-          <div class="auth-divider-line"></div>
-        </div>
-        <button class="btn-guest" id="btnContinueGuest">
-          <i class="fas fa-user-secret" style="margin-right:6px;"></i> Continue as Guest (5 min free)
-        </button>
+        <div class="auth-divider"><div class="auth-divider-line"></div><span class="auth-divider-text">or</span><div class="auth-divider-line"></div></div>
+        <button class="btn-guest" id="btnContinueGuest"><i class="fas fa-user-secret" style="margin-right:6px;"></i> Continue as Guest (5 min free)</button>
         <div class="auth-trust-row">
           <div class="auth-trust-item"><i class="fas fa-check-circle"></i> Free forever</div>
           <div class="auth-trust-item"><i class="fas fa-check-circle"></i> No spam</div>
@@ -456,10 +431,10 @@
     </div>
   </div>
 
-  <!-- ── GUEST TIMER BAR ── -->
+  <!-- Guest Timer Bar -->
   <div class="guest-timer-bar" id="guestTimerBar">
     <div class="guest-timer-left">
-      <div class="guest-timer-icon">⏱️</div>
+      <div style="font-size:20px;">⏱️</div>
       <div>
         <div class="guest-timer-text">Guest access expires in <span id="timerCountdown">5:00</span></div>
         <div class="guest-timer-sub">Sign in to save jobs & get unlimited access</div>
@@ -479,27 +454,13 @@
         <span class="logo-text">CareerLift</span>
       </a>
       <div class="header-actions">
-        <!-- Trust Badges -->
-        <div class="trust-badges" id="trustBadges">
-          <div class="trust-badge-item">
-            <i class="fas fa-briefcase" style="font-size:10px;color:var(--neon);"></i>
-            <span id="badgeJobs" class="badge-num">—</span>
-            <span>Jobs</span>
-          </div>
+        <div class="trust-badges">
+          <div class="trust-badge-item"><i class="fas fa-briefcase" style="font-size:10px;color:var(--neon);"></i><span id="badgeJobs" class="badge-num">—</span><span>Jobs</span></div>
           <div class="trust-sep"></div>
-          <div class="trust-badge-item purple">
-            <i class="fas fa-flask" style="font-size:10px;color:#A78BFA;"></i>
-            <span id="badgeProfs" class="badge-num">—</span>
-            <span>Professors</span>
-          </div>
+          <div class="trust-badge-item purple"><i class="fas fa-flask" style="font-size:10px;color:#A78BFA;"></i><span id="badgeProfs" class="badge-num">—</span><span>Professors</span></div>
           <div class="trust-sep"></div>
-          <div class="trust-badge-item green">
-            <i class="fas fa-users" style="font-size:10px;color:var(--green);"></i>
-            <span class="badge-num">1,000+</span>
-            <span>Students Helped</span>
-          </div>
+          <div class="trust-badge-item green"><i class="fas fa-users" style="font-size:10px;color:var(--green);"></i><span class="badge-num">1,000+</span><span>Students Helped</span></div>
         </div>
-        <!-- Auth Button / User Avatar -->
         <div id="authArea"></div>
       </div>
     </div>
@@ -513,33 +474,24 @@
     </div>
   </div>
 
-  <!-- Main Container -->
   <div class="container">
     <div id="statusContainer"></div>
 
-    <!-- ══════════════ JOBS TAB ══════════════ -->
+    <!-- JOBS TAB -->
     <div id="jobs" class="tab-content active">
       <div class="search-section">
         <h2 class="search-title">Find Your Perfect Job</h2>
         <div class="search-bar">
-          <div class="search-input-wrapper">
-            <i class="fas fa-search search-icon"></i>
-            <input type="search" id="jobSearchInput" class="search-input" placeholder="Search by job title, company, or skills...">
-          </div>
+          <div class="search-input-wrapper"><i class="fas fa-search search-icon"></i><input type="search" id="jobSearchInput" class="search-input" placeholder="Search by job title, company, or skills..."></div>
           <select id="jobLocationFilter" class="filter-select"><option value="">All Locations</option></select>
           <select id="jobTypeFilter" class="filter-select"><option value="">All Job Types</option></select>
           <select id="jobSortSelect" class="filter-select"><option value="match">Best Match</option><option value="new">Latest First</option></select>
         </div>
       </div>
-
       <input type="file" id="resumeFile" accept=".pdf,.txt,.doc,.docx,application/pdf" />
-
-      <div class="resume-banner" id="resumeBanner">
+      <div class="resume-banner">
         <div class="resume-banner-icon"><i class="fas fa-magic"></i></div>
-        <div class="resume-banner-text">
-          <div class="resume-banner-title">AI-Powered Match — Upload your resume</div>
-          <div class="resume-banner-sub">We'll rank all jobs by fit for you instantly</div>
-        </div>
+        <div class="resume-banner-text"><div class="resume-banner-title">AI-Powered Match — Upload your resume</div><div class="resume-banner-sub">We'll rank all jobs by fit for you instantly</div></div>
         <div class="file-name-pill" id="fileNameDisplay"><i class="fas fa-file-alt"></i><span id="fileNameText">file.pdf</span></div>
         <div class="resume-drop-zone" id="uploadArea"><i class="fas fa-cloud-upload-alt"></i> Drop resume here or click</div>
         <div class="resume-banner-actions">
@@ -547,13 +499,8 @@
           <button id="pasteBtn" class="btn btn-secondary btn-sm"><i class="fas fa-paste"></i> Paste</button>
         </div>
       </div>
-
       <div class="alert-subscribe-section" id="alertSection" style="display:none;">
-        <div class="alert-subscribe-left">
-          <div class="alert-badge"><i class="fas fa-circle"></i> Live Alerts</div>
-          <div class="alert-title">Get daily job alerts at 9 AM</div>
-          <div class="alert-subtitle">Free forever. No spam.</div>
-        </div>
+        <div class="alert-subscribe-left"><div class="alert-badge"><i class="fas fa-circle"></i> Live Alerts</div><div class="alert-title">Get daily job alerts at 9 AM</div><div class="alert-subtitle">Free forever. No spam.</div></div>
         <div class="alert-form-inline" id="alertForm">
           <input type="email" class="alert-input-inline" id="alertEmail" placeholder="your@email.com" />
           <input type="text" class="alert-input-inline" id="alertName" placeholder="Your name" style="width:140px;" />
@@ -561,15 +508,8 @@
         </div>
         <div class="alert-success-inline" id="alertSuccess"><i class="fas fa-check-circle"></i><span><strong>Subscribed!</strong> First alert arrives tomorrow at 9 AM.</span></div>
       </div>
-
       <div class="analysis-section" id="analysisSection">
-        <div class="analysis-header" id="analysisHeader">
-          <h3 class="analysis-title">AI Analysis Results</h3>
-          <div style="display:flex;gap:12px;align-items:center;">
-            <span id="jobMatchCount" class="match-count">0 Matches</span>
-            <button id="toggleAnalysis" class="btn-toggle"><i class="fas fa-chevron-up"></i></button>
-          </div>
-        </div>
+        <div class="analysis-header" id="analysisHeader"><h3 class="analysis-title">AI Analysis Results</h3><div style="display:flex;gap:12px;align-items:center;"><span id="jobMatchCount" class="match-count">0 Matches</span><button id="toggleAnalysis" class="btn-toggle"><i class="fas fa-chevron-up"></i></button></div></div>
         <div id="analysisContent" class="analysis-content" style="display:none;"></div>
         <div id="thinkingBox" class="thinking-box" style="display:none;">
           <div class="thinking-header"><div class="thinking-orb"></div><span class="thinking-label">AI is thinking...</span></div>
@@ -583,35 +523,24 @@
           <div class="thinking-text-stream" id="thinkingStream"></div>
         </div>
       </div>
-
-      <div class="results-header">
-        <h2 class="results-title" id="jobsTitle">Available Jobs</h2>
-        <span id="jobsCount" class="results-count">0 Jobs</span>
-      </div>
+      <div class="results-header"><h2 class="results-title" id="jobsTitle">Available Jobs</h2><span id="jobsCount" class="results-count">0 Jobs</span></div>
       <div id="jobsGrid" class="results-grid"></div>
     </div>
 
-    <!-- ══════════════ RESEARCH TAB ══════════════ -->
+    <!-- RESEARCH TAB -->
     <div id="research" class="tab-content">
       <div class="search-section">
         <h2 class="search-title">Find Research Opportunities</h2>
         <div class="search-bar">
-          <div class="search-input-wrapper">
-            <i class="fas fa-search search-icon"></i>
-            <input type="search" id="profSearchInput" class="search-input" placeholder="Search by research area, professor name, or department...">
-          </div>
+          <div class="search-input-wrapper"><i class="fas fa-search search-icon"></i><input type="search" id="profSearchInput" class="search-input" placeholder="Search by research area, professor name, or department..."></div>
           <select id="profInstitutionFilter" class="filter-select"><option value="">All Institutions</option></select>
           <select id="profDepartmentFilter" class="filter-select"><option value="">All Departments</option></select>
           <select id="profSortSelect" class="filter-select"><option value="match">Best Match</option><option value="name">By Name</option></select>
         </div>
       </div>
-
       <div class="resume-banner" id="resumeBannerResearch">
         <div class="resume-banner-icon"><i class="fas fa-flask"></i></div>
-        <div class="resume-banner-text">
-          <div class="resume-banner-title">Match with 1583 IIT Professors</div>
-          <div class="resume-banner-sub">Upload your resume for AI-powered research matches</div>
-        </div>
+        <div class="resume-banner-text"><div class="resume-banner-title">Match with 1583 IIT Professors</div><div class="resume-banner-sub">Upload your resume for AI-powered research matches</div></div>
         <div class="file-name-pill" id="fileNameDisplayResearch"><i class="fas fa-file-alt"></i><span id="fileNameTextResearch">file.pdf</span></div>
         <div class="resume-drop-zone" id="uploadAreaResearch"><i class="fas fa-cloud-upload-alt"></i> Drop resume here or click</div>
         <div class="resume-banner-actions">
@@ -619,15 +548,8 @@
           <button id="pasteBtnResearch" class="btn btn-secondary btn-sm"><i class="fas fa-paste"></i> Paste</button>
         </div>
       </div>
-
       <div class="analysis-section" id="analysisSectionResearch">
-        <div class="analysis-header" id="analysisHeaderResearch">
-          <h3 class="analysis-title">AI Analysis Results</h3>
-          <div style="display:flex;gap:12px;align-items:center;">
-            <span id="profMatchCount" class="match-count">0 Matches</span>
-            <button id="toggleAnalysisResearch" class="btn-toggle"><i class="fas fa-chevron-up"></i></button>
-          </div>
-        </div>
+        <div class="analysis-header" id="analysisHeaderResearch"><h3 class="analysis-title">AI Analysis Results</h3><div style="display:flex;gap:12px;align-items:center;"><span id="profMatchCount" class="match-count">0 Matches</span><button id="toggleAnalysisResearch" class="btn-toggle"><i class="fas fa-chevron-up"></i></button></div></div>
         <div id="analysisContentResearch" class="analysis-content" style="display:none;"></div>
         <div id="thinkingBoxResearch" class="thinking-box" style="display:none;">
           <div class="thinking-header"><div class="thinking-orb"></div><span class="thinking-label">AI is thinking...</span></div>
@@ -641,11 +563,7 @@
           <div class="thinking-text-stream" id="thinkingStreamResearch"></div>
         </div>
       </div>
-
-      <div class="results-header">
-        <h2 class="results-title" id="profsTitle">Available Research Opportunities</h2>
-        <span id="profsCount" class="results-count">0 Professors</span>
-      </div>
+      <div class="results-header"><h2 class="results-title" id="profsTitle">Available Research Opportunities</h2><span id="profsCount" class="results-count">0 Professors</span></div>
       <div id="profsGrid" class="results-grid"></div>
     </div>
   </div>
@@ -662,47 +580,33 @@
   <!-- Skill Gap Modal -->
   <div class="skill-gap-modal" id="skillGapModal">
     <div class="skill-gap-content">
-      <div class="skill-gap-header">
-        <div><div class="skill-gap-title">Skill Gap Analyzer</div><div class="skill-gap-subtitle">See exactly what you have, what's missing, and how to get there</div></div>
-        <button class="skill-gap-close" id="skillGapClose"><i class="fas fa-times"></i></button>
-      </div>
+      <div class="skill-gap-header"><div><div class="skill-gap-title">Skill Gap Analyzer</div><div class="skill-gap-subtitle">See exactly what you have, what's missing, and how to get there</div></div><button class="skill-gap-close" id="skillGapClose"><i class="fas fa-times"></i></button></div>
       <div class="skill-gap-body">
         <div class="job-banner-modal"><i class="fas fa-briefcase"></i><div><div class="company" id="sgJobCompany">Company</div><div class="role" id="sgJobRole">Job Role</div></div></div>
-        <div class="resume-warning" id="sgResumeWarning" style="display:none;"><i class="fas fa-exclamation-triangle"></i><div><strong>Resume not uploaded yet!</strong><br>Please upload or paste your resume first, then come back to analyze your fit.</div></div>
+        <div class="resume-warning" id="sgResumeWarning" style="display:none;"><i class="fas fa-exclamation-triangle"></i><div><strong>Resume not uploaded yet!</strong><br>Please upload or paste your resume first.</div></div>
         <button class="analyze-gap-btn" id="analyzeGapBtn"><i class="fas fa-chart-bar"></i> Analyze My Skill Gap</button>
         <div class="gap-results" id="gapResults">
           <div class="overall-score-card"><div class="score-circle" id="scoreCircle"><span class="score-num" id="scoreNum">0%</span><span class="score-label">Match</span></div><div class="score-details"><div class="verdict" id="sgVerdict">Analyzing...</div><div class="time-to-ready" id="sgTimeReady"></div><div class="quick-tip" id="sgQuickTip"></div></div></div>
-          <div class="gap-section-title green"><i class="fas fa-check-circle"></i> Skills You Already Have</div>
-          <div class="matched-skills-grid" id="matchedSkillsGrid"></div>
-          <div class="gap-section-title red"><i class="fas fa-times-circle"></i> Skills You Need</div>
-          <div class="missing-skills-grid" id="missingSkillsGrid"></div>
-          <div class="gap-section-title blue"><i class="fas fa-map-marked-alt"></i> Your Learning Roadmap</div>
-          <div class="roadmap-container" id="roadmapContainer"></div>
+          <div class="gap-section-title green"><i class="fas fa-check-circle"></i> Skills You Already Have</div><div class="matched-skills-grid" id="matchedSkillsGrid"></div>
+          <div class="gap-section-title red"><i class="fas fa-times-circle"></i> Skills You Need</div><div class="missing-skills-grid" id="missingSkillsGrid"></div>
+          <div class="gap-section-title blue"><i class="fas fa-map-marked-alt"></i> Your Learning Roadmap</div><div class="roadmap-container" id="roadmapContainer"></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Job AI Email Modal -->
+  <!-- Job Email Modal -->
   <div class="email-modal" id="jobEmailModal">
     <div class="email-modal-content">
       <div class="email-modal-header"><div><div class="email-modal-title">AI Job Application Email</div><div class="email-modal-subtitle">Generate a cold email to HR/Recruiter for this role</div></div><button class="email-modal-close" id="jobEmailModalClose"><i class="fas fa-times"></i></button></div>
       <div class="email-modal-body">
-        <div class="prof-info-banner" style="background:rgba(0,212,255,0.08);border-color:rgba(0,212,255,0.2);">
-          <i class="fas fa-briefcase" style="color:var(--neon);"></i>
-          <div class="prof-info-details"><div class="name" id="jobEmailRole">Role</div><div class="dept" style="color:var(--neon);" id="jobEmailCompany">Company</div><div class="inst" id="jobEmailLocation"></div></div>
-        </div>
+        <div class="prof-info-banner" style="background:rgba(0,212,255,0.08);border-color:rgba(0,212,255,0.2);"><i class="fas fa-briefcase" style="color:var(--neon);"></i><div class="prof-info-details"><div class="name" id="jobEmailRole">Role</div><div class="dept" style="color:var(--neon);" id="jobEmailCompany">Company</div><div class="inst" id="jobEmailLocation"></div></div></div>
         <label class="email-form-label">Your Name</label><input type="text" id="jobStudentName" class="email-form-input" placeholder="Your full name" />
         <label class="email-form-label">Your Course & College</label><input type="text" id="jobStudentCourse" class="email-form-input" placeholder="e.g. B.Tech CSE, 3rd Year, IIT Delhi" />
         <label class="email-form-label">Why you're a great fit</label><textarea id="jobStudentProject" class="email-form-textarea" placeholder="e.g. I have experience in React and Node.js..."></textarea>
-        <label class="email-form-label">Tone</label>
-        <select id="jobEmailTone" class="email-form-input" style="cursor:pointer;"><option value="professional">Professional & Confident</option><option value="enthusiastic">Enthusiastic & Energetic</option><option value="concise">Short & Direct</option></select>
-        <button class="generate-btn" id="generateJobEmailBtn" style="background:linear-gradient(135deg,var(--neon),#0099cc);box-shadow:0 4px 15px rgba(0,212,255,0.3);"><i class="fas fa-magic"></i> Generate Application Email</button>
-        <div class="generated-email-box" id="generatedJobEmailBox">
-          <div class="generated-email-toolbar"><span class="generated-email-label">Generated Email</span><button class="copy-btn" id="copyJobEmailBtn" style="background:var(--neon);color:#080B14;"><i class="fas fa-copy"></i> Copy</button></div>
-          <div class="generated-email-text" id="generatedJobEmailText"></div>
-          <div class="email-actions-row"><a href="#" class="btn-send-email" id="sendJobEmailBtn" target="_blank"><i class="fas fa-paper-plane"></i> Open in Gmail</a><button class="btn-regenerate" id="regenerateJobBtn"><i class="fas fa-redo"></i> Regenerate</button></div>
-        </div>
+        <label class="email-form-label">Tone</label><select id="jobEmailTone" class="email-form-input" style="cursor:pointer;"><option value="professional">Professional & Confident</option><option value="enthusiastic">Enthusiastic & Energetic</option><option value="concise">Short & Direct</option></select>
+        <button class="generate-btn" id="generateJobEmailBtn" style="background:linear-gradient(135deg,var(--neon),#0099cc);"><i class="fas fa-magic"></i> Generate Application Email</button>
+        <div class="generated-email-box" id="generatedJobEmailBox"><div class="generated-email-toolbar"><span class="generated-email-label">Generated Email</span><button class="copy-btn" id="copyJobEmailBtn" style="background:var(--neon);color:#080B14;"><i class="fas fa-copy"></i> Copy</button></div><div class="generated-email-text" id="generatedJobEmailText"></div><div class="email-actions-row"><a href="#" class="btn-send-email" id="sendJobEmailBtn" target="_blank"><i class="fas fa-paper-plane"></i> Open in Gmail</a><button class="btn-regenerate" id="regenerateJobBtn"><i class="fas fa-redo"></i> Regenerate</button></div></div>
       </div>
     </div>
   </div>
@@ -718,11 +622,7 @@
         <label class="email-form-label">Your Relevant Project / Research</label><textarea id="studentProject" class="email-form-textarea" placeholder="e.g. I built a deep learning model..."></textarea>
         <label class="email-form-label">Why This Professor? (optional)</label><input type="text" id="studentReason" class="email-form-input" placeholder="e.g. I came across your recent paper..." />
         <button class="generate-btn" id="generateEmailBtn"><i class="fas fa-magic"></i> Generate Personalized Email</button>
-        <div class="generated-email-box" id="generatedEmailBox">
-          <div class="generated-email-toolbar"><span class="generated-email-label">Generated Email</span><button class="copy-btn" id="copyEmailBtn"><i class="fas fa-copy"></i> Copy</button></div>
-          <div class="generated-email-text" id="generatedEmailText"></div>
-          <div class="email-actions-row"><a href="#" class="btn-send-email" id="sendEmailBtn" target="_blank"><i class="fas fa-paper-plane"></i> Open in Gmail</a><button class="btn-regenerate" id="regenerateBtn"><i class="fas fa-redo"></i> Regenerate</button></div>
-        </div>
+        <div class="generated-email-box" id="generatedEmailBox"><div class="generated-email-toolbar"><span class="generated-email-label">Generated Email</span><button class="copy-btn" id="copyEmailBtn"><i class="fas fa-copy"></i> Copy</button></div><div class="generated-email-text" id="generatedEmailText"></div><div class="email-actions-row"><a href="#" class="btn-send-email" id="sendEmailBtn" target="_blank"><i class="fas fa-paper-plane"></i> Open in Gmail</a><button class="btn-regenerate" id="regenerateBtn"><i class="fas fa-redo"></i> Regenerate</button></div></div>
       </div>
     </div>
   </div>
@@ -731,44 +631,34 @@
   <script>
     if (typeof pdfjsLib !== 'undefined') pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-    // ── SUPABASE INIT ──
+    // ── SUPABASE ──
     const SUPABASE_URL = 'https://gltchtysafspzujvcnde.supabase.co';
     const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdsdGNodHlzYWZzcHp1anZjbmRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMjI2OTIsImV4cCI6MjA4Njg5ODY5Mn0.IDffJeq4SlrelUrynBS7y3nz7wwMHIXY2Ft0K4oic5A';
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
     // ── STATE ──
-    let currentUser = null;
-    let savedJobIds = new Set();
-    let guestTimerInterval = null;
-    let guestSecondsLeft = 300; // 5 minutes
-    let guestTimerStarted = false;
-    let guestDismissed = false;
-
     const SHEET_ID = '1X412u-aXPAzkKqwRn0PgvbjcWMaivWJx-FlyHb6LARc';
     const JOBS_SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`;
     const PROFESSORS_SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=1254290790`;
 
     let allJobs = [], allProfessors = [], matchedJobs = {}, matchedProfessors = {};
     let selectedFile = null, currentTab = 'jobs', resumeTextGlobal = '';
+    let currentUser = null, savedJobIds = new Set();
+    let guestTimerInterval = null, guestSecondsLeft = 300, guestTimerStarted = false, guestDismissed = false;
 
-    // ── AUTH FUNCTIONS ──
+    // ── AUTH ──
     function openAuthModal() { document.getElementById('authModal').classList.add('active'); }
     function closeAuthModal() { document.getElementById('authModal').classList.remove('active'); }
 
     async function signInWithGoogle() {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: { redirectTo: window.location.href }
-      });
-      if (error) showStatus('Login failed: ' + error.message, 'error');
+      await supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin } });
     }
 
     async function signOut() {
       await supabase.auth.signOut();
-      currentUser = null;
-      savedJobIds.clear();
-      renderAuthArea();
-      showStatus('Signed out successfully', 'info');
+      currentUser = null; savedJobIds.clear();
+      renderAuthArea(); renderJobs(allJobs, matchedJobs);
+      showStatus('Signed out', 'info');
     }
 
     function renderAuthArea() {
@@ -776,23 +666,9 @@
       if (currentUser) {
         const name = currentUser.user_metadata?.full_name || currentUser.email?.split('@')[0] || 'User';
         const avatar = currentUser.user_metadata?.avatar_url;
-        area.innerHTML = `
-          <div class="user-menu-wrapper">
-            <div class="user-avatar" id="userAvatarBtn" title="${name}">
-              ${avatar ? `<img src="${avatar}" alt="${name}" />` : name.charAt(0).toUpperCase()}
-            </div>
-            <div class="user-menu" id="userMenu">
-              <div class="user-menu-name">${name}<div class="user-menu-email">${currentUser.email}</div></div>
-              <button class="user-menu-item" onclick="showSavedJobs()"><i class="fas fa-bookmark"></i> Saved Jobs (${savedJobIds.size})</button>
-              <button class="user-menu-item danger" onclick="signOut()"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
-            </div>
-          </div>`;
-        document.getElementById('userAvatarBtn').addEventListener('click', (e) => {
-          e.stopPropagation();
-          document.getElementById('userMenu').classList.toggle('open');
-        });
+        area.innerHTML = `<div class="user-menu-wrapper"><div class="user-avatar" id="userAvatarBtn">${avatar ? `<img src="${avatar}" />` : name.charAt(0).toUpperCase()}</div><div class="user-menu" id="userMenu"><div class="user-menu-name">${name}<div class="user-menu-email">${currentUser.email}</div></div><button class="user-menu-item" onclick="showSavedJobs()"><i class="fas fa-bookmark"></i> Saved Jobs (${savedJobIds.size})</button><button class="user-menu-item danger" onclick="signOut()"><i class="fas fa-sign-out-alt"></i> Sign Out</button></div></div>`;
+        document.getElementById('userAvatarBtn').addEventListener('click', e => { e.stopPropagation(); document.getElementById('userMenu').classList.toggle('open'); });
         document.addEventListener('click', () => document.getElementById('userMenu')?.classList.remove('open'));
-        // Stop guest timer if running
         if (guestTimerInterval) { clearInterval(guestTimerInterval); document.getElementById('guestTimerBar').classList.remove('visible'); }
       } else {
         area.innerHTML = `<button class="btn-auth" onclick="openAuthModal()"><i class="fas fa-user"></i> Sign In</button>`;
@@ -801,15 +677,12 @@
 
     async function loadSavedJobs() {
       if (!currentUser) return;
-      try {
-        const { data } = await supabase.from('saved_jobs').select('job_key').eq('user_id', currentUser.id);
-        savedJobIds = new Set((data || []).map(r => r.job_key));
-      } catch (e) { console.log('Could not load saved jobs'); }
+      try { const { data } = await supabase.from('saved_jobs').select('job_key').eq('user_id', currentUser.id); savedJobIds = new Set((data || []).map(r => r.job_key)); } catch(e) {}
     }
 
     async function toggleSaveJob(jobKey, jobData) {
       if (!currentUser) { openAuthModal(); return; }
-      const btn = document.querySelector(`[data-job-key="${CSS.escape(jobKey)}"]`);
+      const btn = document.querySelector(`[data-save-key="${jobKey}"]`);
       if (savedJobIds.has(jobKey)) {
         await supabase.from('saved_jobs').delete().eq('user_id', currentUser.id).eq('job_key', jobKey);
         savedJobIds.delete(jobKey);
@@ -819,49 +692,37 @@
         savedJobIds.add(jobKey);
         if (btn) { btn.classList.add('saved'); btn.innerHTML = '<i class="fas fa-heart"></i> Saved'; }
       }
-      // Update menu counter
-      const menuItem = document.querySelector('.user-menu-item');
-      if (menuItem && menuItem.textContent.includes('Saved')) menuItem.innerHTML = `<i class="fas fa-bookmark"></i> Saved Jobs (${savedJobIds.size})`;
+      const mi = document.querySelector('.user-menu-item');
+      if (mi && mi.textContent.includes('Saved')) mi.innerHTML = `<i class="fas fa-bookmark"></i> Saved Jobs (${savedJobIds.size})`;
     }
 
     function showSavedJobs() {
       document.getElementById('userMenu')?.classList.remove('open');
-      if (savedJobIds.size === 0) { showStatus('No saved jobs yet! Click the heart icon on any job.', 'info'); return; }
       const saved = allJobs.filter(j => savedJobIds.has(j.Company + j.Role));
-      if (saved.length === 0) { showStatus('Saved jobs not found in current listing.', 'info'); return; }
+      if (saved.length === 0) { showStatus('No saved jobs yet! Click the heart icon on any job.', 'info'); return; }
       renderJobs(saved, matchedJobs);
       document.getElementById('jobsTitle').innerHTML = `<i class="fas fa-heart" style="color:#FF6B6B;margin-right:8px;"></i> Your Saved Jobs`;
       document.querySelector('[data-tab="jobs"]').click();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ── GUEST TIMER ──
     function startGuestTimer() {
       if (guestTimerStarted || currentUser || guestDismissed) return;
       guestTimerStarted = true;
       const bar = document.getElementById('guestTimerBar');
-      const countdown = document.getElementById('timerCountdown');
       setTimeout(() => { if (!currentUser && !guestDismissed) bar.classList.add('visible'); }, 1000);
       guestTimerInterval = setInterval(() => {
         if (currentUser || guestDismissed) { clearInterval(guestTimerInterval); bar.classList.remove('visible'); return; }
         guestSecondsLeft--;
-        const m = Math.floor(guestSecondsLeft / 60);
-        const s = guestSecondsLeft % 60;
-        countdown.textContent = `${m}:${s.toString().padStart(2, '0')}`;
-        if (guestSecondsLeft <= 0) {
-          clearInterval(guestTimerInterval);
-          bar.classList.remove('visible');
-          openAuthModal();
-        }
+        const m = Math.floor(guestSecondsLeft / 60), s = guestSecondsLeft % 60;
+        document.getElementById('timerCountdown').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+        if (guestSecondsLeft <= 0) { clearInterval(guestTimerInterval); bar.classList.remove('visible'); openAuthModal(); }
       }, 1000);
     }
 
-    document.getElementById('timerDismiss').addEventListener('click', () => {
-      guestDismissed = true;
-      document.getElementById('guestTimerBar').classList.remove('visible');
-    });
+    document.getElementById('timerDismiss').addEventListener('click', () => { guestDismissed = true; document.getElementById('guestTimerBar').classList.remove('visible'); });
     document.getElementById('authModalClose').addEventListener('click', closeAuthModal);
-    document.getElementById('authModal').addEventListener('click', (e) => { if (e.target === document.getElementById('authModal')) closeAuthModal(); });
+    document.getElementById('authModal').addEventListener('click', e => { if (e.target === document.getElementById('authModal')) closeAuthModal(); });
     document.getElementById('btnGoogleSignIn').addEventListener('click', signInWithGoogle);
     document.getElementById('btnContinueGuest').addEventListener('click', () => { closeAuthModal(); startGuestTimer(); });
 
@@ -875,520 +736,387 @@
         currentTab = btn.dataset.tab;
       });
     });
-
     document.getElementById('analysisHeader').addEventListener('click', () => document.getElementById('analysisSection').classList.toggle('collapsed'));
     document.getElementById('analysisHeaderResearch').addEventListener('click', () => document.getElementById('analysisSectionResearch').classList.toggle('collapsed'));
 
-    function showStatus(message, type = 'info') {
-      const alert = document.createElement('div');
-      alert.className = `status-alert ${type}`;
+    function showStatus(msg, type = 'info') {
+      const a = document.createElement('div'); a.className = `status-alert ${type}`;
       const icon = type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle';
-      alert.innerHTML = `<i class="fas fa-${icon}"></i><span>${message}</span>`;
-      document.getElementById('statusContainer').appendChild(alert);
-      setTimeout(() => { alert.style.opacity = '0'; setTimeout(() => alert.remove(), 300); }, 5000);
+      a.innerHTML = `<i class="fas fa-${icon}"></i><span>${msg}</span>`;
+      document.getElementById('statusContainer').appendChild(a);
+      setTimeout(() => { a.style.opacity = '0'; setTimeout(() => a.remove(), 300); }, 5000);
     }
 
     async function extractTextFromPDF(file) {
-      const arrayBuffer = await file.arrayBuffer();
-      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-      let fullText = '';
-      for (let i = 1; i <= pdf.numPages; i++) {
-        const page = await pdf.getPage(i);
-        const textContent = await page.getTextContent();
-        fullText += textContent.items.map(item => item.str).join(' ') + ' ';
-      }
-      return fullText.trim();
+      const ab = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({ data: ab }).promise;
+      let text = '';
+      for (let i = 1; i <= pdf.numPages; i++) { const p = await pdf.getPage(i); const tc = await p.getTextContent(); text += tc.items.map(x => x.str).join(' ') + ' '; }
+      return text.trim();
     }
 
     async function fetchFromSheet(url) {
-      const response = await fetch(url);
-      const text = await response.text();
-      const jsonText = text.substring(text.indexOf('{'), text.lastIndexOf(')'));
-      const data = JSON.parse(jsonText);
-      const cols = data.table.cols.map(c => (c.label || '').trim());
-      const rows = data.table.rows.map(row => row.c ? row.c.map(cell => cell ? cell.v : '') : []);
-      return rows.map(row => {
-        const obj = {};
-        cols.forEach((col, i) => { obj[col || `col${i}`] = row[i] || ''; });
-        return obj;
-      }).filter(item => Object.values(item)[0] && String(Object.values(item)[0]).trim() !== '');
+      const res = await fetch(url); const text = await res.text();
+      const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf(')')));
+      const cols = json.table.cols.map(c => (c.label||'').trim());
+      return json.table.rows.map(row => { const o = {}; cols.forEach((c,i) => { o[c||`col${i}`] = row.c?.[i]?.v || ''; }); return o; }).filter(x => Object.values(x)[0] && String(Object.values(x)[0]).trim());
     }
 
     function extractKeywords(text, topN = 50) {
       if (!text) return [];
-      const stopWords = new Set(['which','that','with','this','from','your','about','their','have','will','they','would','there','these','those','been','were','what','when','where','working','worked','work','using','used','also','make','made']);
+      const stop = new Set(['which','that','with','this','from','your','about','their','have','will','they','would','there','these','those','been','were','what','when','where','working','worked','using','used','also','make','made']);
       const phrases = text.match(/\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+){1,2}\b/g) || [];
       const words = text.toLowerCase().match(/\b[a-zA-Z0-9+#.+-]{3,}\b/g) || [];
       const freq = {};
-      phrases.forEach(p => { const l = p.toLowerCase(); if (!stopWords.has(l)) freq[l] = (freq[l] || 0) + 3; });
-      words.forEach(w => { if (!stopWords.has(w)) freq[w] = (freq[w] || 0) + 1; });
-      return Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, topN).map(x => x[0]);
+      phrases.forEach(p => { const l = p.toLowerCase(); if (!stop.has(l)) freq[l] = (freq[l]||0) + 3; });
+      words.forEach(w => { if (!stop.has(w)) freq[w] = (freq[w]||0) + 1; });
+      return Object.entries(freq).sort((a,b) => b[1]-a[1]).slice(0,topN).map(x => x[0]);
     }
 
     function getProfessorEmail(prof) {
-      for (let key of ['Mail id','Mail Id','mail id','Email','email','E-mail','e-mail','Contact','contact']) { if (prof[key] && String(prof[key]).includes('@')) return prof[key]; }
-      for (let key of Object.keys(prof)) { if ((key.toLowerCase().includes('mail') || key.toLowerCase().includes('email')) && prof[key] && String(prof[key]).includes('@')) return prof[key]; }
+      for (let k of ['Mail id','Mail Id','mail id','Email','email','E-mail','e-mail','Contact','contact']) { if (prof[k] && String(prof[k]).includes('@')) return prof[k]; }
+      for (let k of Object.keys(prof)) { if ((k.toLowerCase().includes('mail')||k.toLowerCase().includes('email')) && prof[k] && String(prof[k]).includes('@')) return prof[k]; }
       return '';
     }
 
     function getResearchAreas(prof) {
-      for (let key of ['Area of Interest','Area of interest','area of interest','Research Areas','Research Area','Area','Research Interest','Research Interests','Interests']) { if (prof[key]) return prof[key]; }
-      for (let key of Object.keys(prof)) { if ((key.toLowerCase().includes('interest') || key.toLowerCase().includes('area') || key.toLowerCase().includes('research')) && !key.toLowerCase().includes('college') && !key.toLowerCase().includes('name') && !key.toLowerCase().includes('department')) return prof[key]; }
+      for (let k of ['Area of Interest','Area of interest','area of interest','Research Areas','Research Area','Area','Research Interest','Research Interests','Interests']) { if (prof[k]) return prof[k]; }
+      for (let k of Object.keys(prof)) { if ((k.toLowerCase().includes('interest')||k.toLowerCase().includes('area')||k.toLowerCase().includes('research')) && !k.toLowerCase().includes('college') && !k.toLowerCase().includes('name') && !k.toLowerCase().includes('department')) return prof[k]; }
       return '';
     }
 
-    function scoreItem(item, keywords, fields) {
-      if (!keywords || keywords.length === 0) return 0;
-      const hay = fields.map(f => item[f] || '').join(' ').toLowerCase();
-      let score = 0;
-      keywords.forEach(k => { if (hay.includes(k)) score += 2; });
-      if (fields[0] && item[fields[0]]) { const t = item[fields[0]].toLowerCase(); keywords.forEach(k => { if (t.includes(k)) score += 1; }); }
-      return score;
+    function scoreItem(item, kws, fields) {
+      if (!kws?.length) return 0;
+      const hay = fields.map(f => item[f]||'').join(' ').toLowerCase();
+      let s = 0; kws.forEach(k => { if (hay.includes(k)) s += 2; });
+      if (fields[0] && item[fields[0]]) { const t = item[fields[0]].toLowerCase(); kws.forEach(k => { if (t.includes(k)) s += 1; }); }
+      return s;
     }
 
-    async function analyzeResume(resumeText) {
-      const response = await fetch('/api/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ resume: resumeText }) });
-      if (!response.ok) throw new Error('Analysis failed');
-      const data = await response.json();
-      return data.result || '';
+    async function analyzeResume(text) {
+      const res = await fetch('/api/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ resume: text }) });
+      if (!res.ok) throw new Error('Analysis failed');
+      return (await res.json()).result || '';
     }
 
     function renderJobs(jobs, matchScores = {}) {
       const grid = document.getElementById('jobsGrid');
-      if (!jobs || jobs.length === 0) { grid.innerHTML = `<div class="empty-state"><div class="empty-icon"><i class="fas fa-briefcase"></i></div><h3 class="empty-title">No jobs found</h3><p class="empty-text">Try adjusting your search or filters</p></div>`; return; }
-      const hasMatches = Object.keys(matchScores).length > 0;
-      const sorted = [...jobs].sort((a, b) => {
-        const sa = matchScores[a.Company + a.Role] || 0, sb = matchScores[b.Company + b.Role] || 0;
-        if (hasMatches && sb !== sa) return sb - sa;
-        return jobs.indexOf(b) - jobs.indexOf(a);
-      });
-      grid.innerHTML = sorted.map((job, i) => {
-        const key = job.Company + job.Role;
-        const score = matchScores[key] || 0;
-        const isSaved = savedJobIds.has(key);
-        return `<div class="job-card ${score > 0 ? 'matched' : ''}">
-          <div class="job-header">
-            <div class="job-info"><div class="company-name">${job.Company || 'Company'}</div><div class="role-title">${job.Role || 'Position'}</div></div>
-            <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end;">
-              ${i < 25 ? `<div class="trending-badge">Trending</div>` : ''}
-              ${score > 0 ? `<div class="match-score"><i class="fas fa-check-circle"></i> ${Math.round(score)}% Match</div>` : ''}
-            </div>
-          </div>
-          <div class="job-meta">
-            ${job.Location ? `<div class="job-meta-item"><i class="fas fa-map-marker-alt"></i>${job.Location}</div>` : ''}
-            ${job.Stipend ? `<div class="job-meta-item"><i class="fas fa-rupee-sign"></i>${job.Stipend}</div>` : ''}
-            ${job.JobType ? `<div class="job-meta-item"><i class="fas fa-briefcase"></i>${job.JobType}</div>` : ''}
-          </div>
-          ${job.Description ? `<div class="job-description">${job.Description.slice(0,150)}${job.Description.length>150?'...':''}</div>` : ''}
+      if (!jobs?.length) { grid.innerHTML = `<div class="empty-state"><div class="empty-icon"><i class="fas fa-briefcase"></i></div><h3 class="empty-title">No jobs found</h3><p class="empty-text">Try adjusting your search or filters</p></div>`; return; }
+      const hasM = Object.keys(matchScores).length > 0;
+      const sorted = [...jobs].sort((a,b) => { const sa = matchScores[a.Company+a.Role]||0, sb = matchScores[b.Company+b.Role]||0; return hasM && sb!==sa ? sb-sa : jobs.indexOf(b)-jobs.indexOf(a); });
+      grid.innerHTML = sorted.map((job,i) => {
+        const key = job.Company + job.Role; const score = matchScores[key]||0; const isSaved = savedJobIds.has(key);
+        return `<div class="job-card ${score>0?'matched':''}">
+          <div class="job-header"><div class="job-info"><div class="company-name">${job.Company||'Company'}</div><div class="role-title">${job.Role||'Position'}</div></div>
+          <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end;">${i<25?'<div class="trending-badge">Trending</div>':''}${score>0?`<div class="match-score"><i class="fas fa-check-circle"></i> ${Math.round(score)}% Match</div>`:''}</div></div>
+          <div class="job-meta">${job.Location?`<div class="job-meta-item"><i class="fas fa-map-marker-alt"></i>${job.Location}</div>`:''}${job.Stipend?`<div class="job-meta-item"><i class="fas fa-rupee-sign"></i>${job.Stipend}</div>`:''}${job.JobType?`<div class="job-meta-item"><i class="fas fa-briefcase"></i>${job.JobType}</div>`:''}</div>
+          ${job.Description?`<div class="job-description">${job.Description.slice(0,150)}${job.Description.length>150?'...':''}</div>`:''}
           <div class="job-actions">
-            ${job.ApplyLink ? `<a href="${job.ApplyLink}" target="_blank" class="btn-apply"><i class="fas fa-paper-plane"></i> Apply Now</a>` : ''}
-            ${job.Email ? `<a href="mailto:${job.Email}" class="btn-email-job"><i class="fas fa-envelope"></i> Email</a>` : ''}
-            <button class="btn-save-job ${isSaved ? 'saved' : ''}" data-job-key="${key.replace(/"/g,'&quot;')}" onclick="toggleSaveJob('${key.replace(/'/g,"\\'")}', ${JSON.stringify({company:job.Company||'',role:job.Role||'',location:job.Location||'',stipend:job.Stipend||'',applyLink:job.ApplyLink||''}).replace(/"/g,'&quot;')})">
-              <i class="fas fa-heart"></i> ${isSaved ? 'Saved' : 'Save'}
-            </button>
+            ${job.ApplyLink?`<a href="${job.ApplyLink}" target="_blank" class="btn-apply"><i class="fas fa-paper-plane"></i> Apply Now</a>`:''}
+            ${job.Email?`<a href="mailto:${job.Email}" class="btn-email-job"><i class="fas fa-envelope"></i> Email</a>`:''}
+            <button class="btn-save-job ${isSaved?'saved':''}" data-save-key="${key}" onclick="toggleSaveJob(${JSON.stringify(key)}, ${JSON.stringify({company:job.Company||'',role:job.Role||'',location:job.Location||'',stipend:job.Stipend||'',applyLink:job.ApplyLink||''})})"><i class="fas fa-heart"></i> ${isSaved?'Saved':'Save'}</button>
             <button class="btn-analyze-fit" onclick="openSkillGap(${JSON.stringify({company:job.Company||'',role:job.Role||'',description:job.Description||''}).replace(/"/g,'&quot;')})"><i class="fas fa-chart-bar"></i> Analyze Fit</button>
             <button class="btn-share" onclick="shareJob(${JSON.stringify({company:job.Company||'',role:job.Role||'',location:job.Location||'',stipend:job.Stipend||'',applyLink:job.ApplyLink||''}).replace(/"/g,'&quot;')})"><i class="fas fa-share-alt"></i> Share</button>
-          </div>
-        </div>`;
+          </div></div>`;
       }).join('');
-      const mc = Object.values(matchScores).filter(s => s > 0).length;
-      document.getElementById('jobsTitle').innerHTML = mc > 0 ? `Your Top Matches <span style="color:var(--neon);font-weight:800;">(${mc})</span> & All Jobs` : 'Available Jobs';
+      const mc = Object.values(matchScores).filter(s=>s>0).length;
+      document.getElementById('jobsTitle').innerHTML = mc>0 ? `Your Top Matches <span style="color:var(--neon);font-weight:800;">(${mc})</span> & All Jobs` : 'Available Jobs';
     }
 
     function renderProfessors(professors, matchScores = {}) {
       const grid = document.getElementById('profsGrid');
-      if (!professors || professors.length === 0) { grid.innerHTML = `<div class="empty-state"><div class="empty-icon"><i class="fas fa-flask"></i></div><h3 class="empty-title">No research opportunities found</h3><p class="empty-text">Try adjusting your search or filters</p></div>`; return; }
-      const hasMatches = Object.keys(matchScores).length > 0;
-      const sorted = [...professors].sort((a, b) => {
-        const sa = matchScores[a.Name + a['College Name']] || 0, sb = matchScores[b.Name + b['College Name']] || 0;
-        if (hasMatches && sb !== sa) return sb - sa;
-        return 0;
-      });
+      if (!professors?.length) { grid.innerHTML = `<div class="empty-state"><div class="empty-icon"><i class="fas fa-flask"></i></div><h3 class="empty-title">No research opportunities found</h3><p class="empty-text">Try adjusting your search</p></div>`; return; }
+      const hasM = Object.keys(matchScores).length > 0;
+      const sorted = [...professors].sort((a,b) => { const sa = matchScores[a.Name+a['College Name']]||0, sb = matchScores[b.Name+b['College Name']]||0; return hasM && sb!==sa ? sb-sa : 0; });
       grid.innerHTML = sorted.map(prof => {
-        const key = prof.Name + prof['College Name'];
-        const score = matchScores[key] || 0;
-        const res = getResearchAreas(prof);
-        const email = getProfessorEmail(prof);
-        return `<div class="professor-card ${score > 0 ? 'matched' : ''}">
-          <div class="professor-header">
-            <div class="professor-info"><div class="professor-name">${prof.Name||'Professor'}</div><div class="professor-institution">${prof['College Name']||'Institution'}</div><div class="professor-department">${prof.Department||'Department'}</div></div>
-            ${score > 0 ? `<div class="match-score"><i class="fas fa-check-circle"></i> ${Math.round(score)}% Match</div>` : ''}
-          </div>
+        const key = prof.Name+prof['College Name']; const score = matchScores[key]||0; const res = getResearchAreas(prof); const email = getProfessorEmail(prof);
+        return `<div class="professor-card ${score>0?'matched':''}">
+          <div class="professor-header"><div class="professor-info"><div class="professor-name">${prof.Name||'Professor'}</div><div class="professor-institution">${prof['College Name']||'Institution'}</div><div class="professor-department">${prof.Department||'Department'}</div></div>${score>0?`<div class="match-score"><i class="fas fa-check-circle"></i> ${Math.round(score)}% Match</div>`:''}</div>
           <div class="research-areas"><div class="research-areas-title">Research Areas</div><div class="research-areas-content">${res||'No research areas listed'}</div></div>
-          <div class="job-actions">
-            ${email ? `<a href="mailto:${email}" class="btn-apply"><i class="fas fa-envelope"></i> Email Professor</a>` : `<button class="btn-apply" style="opacity:0.5;cursor:not-allowed;" disabled><i class="fas fa-envelope"></i> No Email Available</button>`}
-            <button class="btn-generate-email" onclick="openEmailModal(${JSON.stringify({name:prof.Name||'',dept:prof.Department||'',inst:prof['College Name']||'',research:res||'',email:email||''}).replace(/"/g,'&quot;')})"><i class="fas fa-magic"></i> AI Email</button>
-          </div>
+          <div class="job-actions">${email?`<a href="mailto:${email}" class="btn-apply"><i class="fas fa-envelope"></i> Email Professor</a>`:`<button class="btn-apply" style="opacity:0.5;cursor:not-allowed;" disabled><i class="fas fa-envelope"></i> No Email Available</button>`}<button class="btn-generate-email" onclick="openEmailModal(${JSON.stringify({name:prof.Name||'',dept:prof.Department||'',inst:prof['College Name']||'',research:res||'',email:email||''}).replace(/"/g,'&quot;')})"><i class="fas fa-magic"></i> AI Email</button></div>
         </div>`;
       }).join('');
-      const mc = Object.values(matchScores).filter(s => s > 0).length;
-      document.getElementById('profsTitle').innerHTML = mc > 0 ? `Your Top Matches <span style="color:var(--neon);font-weight:800;">(${mc})</span> & All Professors` : 'Available Research Opportunities';
+      const mc = Object.values(matchScores).filter(s=>s>0).length;
+      document.getElementById('profsTitle').innerHTML = mc>0 ? `Your Top Matches <span style="color:var(--neon);font-weight:800;">(${mc})</span> & All Professors` : 'Available Research Opportunities';
     }
 
     function populateFilters() {
-      const locs = new Set(), types = new Set();
-      allJobs.forEach(j => { if (j.Location) locs.add(j.Location); if (j.JobType) types.add(j.JobType); });
-      document.getElementById('jobLocationFilter').innerHTML = '<option value="">All Locations</option>' + [...locs].sort().map(l => `<option value="${l}">${l}</option>`).join('');
-      document.getElementById('jobTypeFilter').innerHTML = '<option value="">All Job Types</option>' + [...types].sort().map(t => `<option value="${t}">${t}</option>`).join('');
-      const insts = new Set(), depts = new Set();
-      allProfessors.forEach(p => { if (p['College Name']) insts.add(p['College Name']); if (p.Department) depts.add(p.Department); });
-      document.getElementById('profInstitutionFilter').innerHTML = '<option value="">All Institutions</option>' + [...insts].sort().map(i => `<option value="${i}">${i}</option>`).join('');
-      document.getElementById('profDepartmentFilter').innerHTML = '<option value="">All Departments</option>' + [...depts].sort().map(d => `<option value="${d}">${d}</option>`).join('');
+      const locs=new Set(), types=new Set();
+      allJobs.forEach(j => { if(j.Location) locs.add(j.Location); if(j.JobType) types.add(j.JobType); });
+      document.getElementById('jobLocationFilter').innerHTML = '<option value="">All Locations</option>' + [...locs].sort().map(l=>`<option value="${l}">${l}</option>`).join('');
+      document.getElementById('jobTypeFilter').innerHTML = '<option value="">All Job Types</option>' + [...types].sort().map(t=>`<option value="${t}">${t}</option>`).join('');
+      const insts=new Set(), depts=new Set();
+      allProfessors.forEach(p => { if(p['College Name']) insts.add(p['College Name']); if(p.Department) depts.add(p.Department); });
+      document.getElementById('profInstitutionFilter').innerHTML = '<option value="">All Institutions</option>' + [...insts].sort().map(i=>`<option value="${i}">${i}</option>`).join('');
+      document.getElementById('profDepartmentFilter').innerHTML = '<option value="">All Departments</option>' + [...depts].sort().map(d=>`<option value="${d}">${d}</option>`).join('');
     }
 
     function applyJobFilters() {
-      const q = document.getElementById('jobSearchInput').value.toLowerCase();
-      const loc = document.getElementById('jobLocationFilter').value;
-      const type = document.getElementById('jobTypeFilter').value;
-      const filtered = allJobs.filter(j => {
-        const hay = `${j.Company} ${j.Role} ${j.Location} ${j.Description}`.toLowerCase();
-        return (!q || hay.includes(q)) && (!loc || j.Location === loc) && (!type || j.JobType === type);
-      });
-      renderJobs(filtered, matchedJobs);
-      document.getElementById('jobsCount').textContent = `${filtered.length} Jobs`;
+      const q=document.getElementById('jobSearchInput').value.toLowerCase(), loc=document.getElementById('jobLocationFilter').value, type=document.getElementById('jobTypeFilter').value;
+      const f = allJobs.filter(j => { const h=`${j.Company} ${j.Role} ${j.Location} ${j.Description}`.toLowerCase(); return (!q||h.includes(q))&&(!loc||j.Location===loc)&&(!type||j.JobType===type); });
+      renderJobs(f, matchedJobs); document.getElementById('jobsCount').textContent = `${f.length} Jobs`;
     }
 
     function applyProfessorFilters() {
-      const q = document.getElementById('profSearchInput').value.toLowerCase();
-      const inst = document.getElementById('profInstitutionFilter').value;
-      const dept = document.getElementById('profDepartmentFilter').value;
-      const filtered = allProfessors.filter(p => {
-        const res = getResearchAreas(p);
-        const hay = `${p.Name} ${p['College Name']} ${p.Department} ${res}`.toLowerCase();
-        return (!q || hay.includes(q)) && (!inst || p['College Name'] === inst) && (!dept || p.Department === dept);
-      });
-      renderProfessors(filtered, matchedProfessors);
-      document.getElementById('profsCount').textContent = `${filtered.length} Professors`;
+      const q=document.getElementById('profSearchInput').value.toLowerCase(), inst=document.getElementById('profInstitutionFilter').value, dept=document.getElementById('profDepartmentFilter').value;
+      const f = allProfessors.filter(p => { const h=`${p.Name} ${p['College Name']} ${p.Department} ${getResearchAreas(p)}`.toLowerCase(); return (!q||h.includes(q))&&(!inst||p['College Name']===inst)&&(!dept||p.Department===dept); });
+      renderProfessors(f, matchedProfessors); document.getElementById('profsCount').textContent = `${f.length} Professors`;
     }
 
-    // File upload
     document.getElementById('uploadArea').addEventListener('click', () => document.getElementById('resumeFile').click());
     document.getElementById('uploadAreaResearch').addEventListener('click', () => document.getElementById('resumeFile').click());
-    function setSelectedFile(file) {
+    function setFile(file) {
       selectedFile = file;
-      const short = file.name.length > 20 ? file.name.slice(0,18) + '…' : file.name;
-      document.getElementById('fileNameText').textContent = short;
-      document.getElementById('fileNameDisplay').classList.add('active');
-      document.getElementById('analyzeBtn').disabled = false;
-      document.getElementById('fileNameTextResearch').textContent = short;
-      document.getElementById('fileNameDisplayResearch').classList.add('active');
-      document.getElementById('analyzeBtnResearch').disabled = false;
+      const short = file.name.length>20 ? file.name.slice(0,18)+'…' : file.name;
+      document.getElementById('fileNameText').textContent = short; document.getElementById('fileNameDisplay').classList.add('active'); document.getElementById('analyzeBtn').disabled = false;
+      document.getElementById('fileNameTextResearch').textContent = short; document.getElementById('fileNameDisplayResearch').classList.add('active'); document.getElementById('analyzeBtnResearch').disabled = false;
     }
-    document.getElementById('resumeFile').addEventListener('change', e => { if (e.target.files[0]) setSelectedFile(e.target.files[0]); });
+    document.getElementById('resumeFile').addEventListener('change', e => { if(e.target.files[0]) setFile(e.target.files[0]); });
     ['dragover','dragleave','drop'].forEach(evt => {
       [document.getElementById('uploadArea'), document.getElementById('uploadAreaResearch')].forEach(area => {
-        area.addEventListener(evt, e => {
-          e.preventDefault();
-          if (evt === 'dragover') area.classList.add('dragover');
-          else area.classList.remove('dragover');
-          if (evt === 'drop' && e.dataTransfer.files[0]) setSelectedFile(e.dataTransfer.files[0]);
-        });
+        area.addEventListener(evt, e => { e.preventDefault(); if(evt==='dragover') area.classList.add('dragover'); else area.classList.remove('dragover'); if(evt==='drop'&&e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]); });
       });
     });
 
-    async function typewriterEffect(el, text, speed = 8) {
-      el.innerHTML = '';
-      const cursor = document.createElement('span'); cursor.className = 'typing-cursor'; el.appendChild(cursor);
-      for (let i = 0; i < text.length; i++) { el.insertBefore(document.createTextNode(text[i]), cursor); await new Promise(r => setTimeout(r, speed)); }
-      cursor.remove();
+    async function typewriterEffect(el, text, speed=8) {
+      el.innerHTML = ''; const cursor = document.createElement('span'); cursor.className='typing-cursor'; el.appendChild(cursor);
+      for(let i=0;i<text.length;i++) { el.insertBefore(document.createTextNode(text[i]),cursor); await new Promise(r=>setTimeout(r,speed)); } cursor.remove();
     }
-
-    async function animateThinkingSteps(prefix, count, delay = 700) {
-      for (let i = 0; i < count; i++) {
-        const el = document.getElementById(prefix + (i+1));
-        if (!el) continue;
-        if (i > 0) { const prev = document.getElementById(prefix + i); if (prev) { prev.classList.remove('active'); prev.classList.add('done'); prev.querySelector('.step-icon').textContent = '✓'; } }
-        el.classList.add('active');
-        await new Promise(r => setTimeout(r, delay));
-      }
+    async function animateSteps(prefix, count, delay=700) {
+      for(let i=0;i<count;i++) { const el=document.getElementById(prefix+(i+1)); if(!el) continue; if(i>0){const prev=document.getElementById(prefix+i);if(prev){prev.classList.remove('active');prev.classList.add('done');prev.querySelector('.step-icon').textContent='✓';}} el.classList.add('active'); await new Promise(r=>setTimeout(r,delay)); }
     }
 
     async function runJobAnalysis(text) {
       resumeTextGlobal = text;
-      const sec = document.getElementById('analysisSection');
-      sec.classList.add('active');
-      document.getElementById('analysisContent').style.display = 'none';
-      const tb = document.getElementById('thinkingBox');
-      tb.style.display = 'block';
-      document.getElementById('thinkingStream').textContent = '';
-      ['step1','step2','step3','step4','step5'].forEach((id,i) => { const el = document.getElementById(id); if (el) { el.classList.remove('active','done'); el.querySelector('.step-icon').textContent = ['📄','🔍','🧠','⚡','✅'][i]; } });
-      const [analysis] = await Promise.all([analyzeResume(text), animateThinkingSteps('step', 5, 700)]);
-      const last = document.getElementById('step5');
-      if (last) { last.classList.remove('active'); last.classList.add('done'); last.querySelector('.step-icon').textContent = '✓'; }
-      tb.querySelector('.thinking-label').textContent = 'Analysis Complete';
-      tb.querySelector('.thinking-orb').style.cssText = 'background:var(--green);box-shadow:0 0 8px rgba(16,185,129,0.8);animation:none;';
+      const sec = document.getElementById('analysisSection'); sec.classList.add('active');
+      document.getElementById('analysisContent').style.display='none';
+      const tb = document.getElementById('thinkingBox'); tb.style.display='block'; document.getElementById('thinkingStream').textContent='';
+      ['step1','step2','step3','step4','step5'].forEach((id,i)=>{const el=document.getElementById(id);if(el){el.classList.remove('active','done');el.querySelector('.step-icon').textContent=['📄','🔍','🧠','⚡','✅'][i];}});
+      const [analysis] = await Promise.all([analyzeResume(text), animateSteps('step',5,700)]);
+      const last=document.getElementById('step5'); if(last){last.classList.remove('active');last.classList.add('done');last.querySelector('.step-icon').textContent='✓';}
+      tb.querySelector('.thinking-label').textContent='Analysis Complete';
+      tb.querySelector('.thinking-orb').style.cssText='background:var(--green);box-shadow:0 0 8px rgba(16,185,129,0.8);animation:none;';
       await typewriterEffect(document.getElementById('thinkingStream'), analysis, 6);
-      const keywords = extractKeywords(text + ' ' + analysis, 50);
+      const kws = extractKeywords(text+' '+analysis, 50);
       matchedJobs = {};
-      allJobs.forEach(job => { const s = scoreItem(job, keywords, ['Company','Role','Description','JobType']); if (s > 0) matchedJobs[job.Company + job.Role] = Math.min(100, s * 8); });
-      document.getElementById('jobMatchCount').textContent = `${Object.keys(matchedJobs).length} Matches`;
-      renderJobs(allJobs, matchedJobs);
-      document.getElementById('alertSection').style.display = 'flex';
-      showStatus('Resume analyzed! Scroll down to see matched jobs.', 'success');
-      setTimeout(() => { sec.classList.add('collapsed'); setTimeout(() => { document.querySelector('.job-card.matched')?.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 400); }, 3000);
+      allJobs.forEach(j => { const s=scoreItem(j,kws,['Company','Role','Description','JobType']); if(s>0) matchedJobs[j.Company+j.Role]=Math.min(100,s*8); });
+      document.getElementById('jobMatchCount').textContent=`${Object.keys(matchedJobs).length} Matches`;
+      renderJobs(allJobs,matchedJobs);
+      document.getElementById('alertSection').style.display='flex';
+      showStatus('Resume analyzed! Scroll down to see matched jobs.','success');
+      setTimeout(()=>{sec.classList.add('collapsed');setTimeout(()=>{document.querySelector('.job-card.matched')?.scrollIntoView({behavior:'smooth',block:'center'});},400);},3000);
     }
 
     async function runResearchAnalysis(text) {
-      const sec = document.getElementById('analysisSectionResearch');
-      sec.classList.add('active');
-      document.getElementById('analysisContentResearch').style.display = 'none';
-      const tb = document.getElementById('thinkingBoxResearch');
-      tb.style.display = 'block';
-      document.getElementById('thinkingStreamResearch').textContent = '';
-      ['stepR1','stepR2','stepR3','stepR4','stepR5'].forEach((id,i) => { const el = document.getElementById(id); if (el) { el.classList.remove('active','done'); el.querySelector('.step-icon').textContent = ['📄','🔍','🧪','🏛️','✅'][i]; } });
-      const [analysis] = await Promise.all([analyzeResume(text), animateThinkingSteps('stepR', 5, 700)]);
-      const last = document.getElementById('stepR5');
-      if (last) { last.classList.remove('active'); last.classList.add('done'); last.querySelector('.step-icon').textContent = '✓'; }
-      tb.querySelector('.thinking-label').textContent = 'Analysis Complete';
-      tb.querySelector('.thinking-orb').style.cssText = 'background:var(--green);box-shadow:0 0 8px rgba(16,185,129,0.8);animation:none;';
+      const sec=document.getElementById('analysisSectionResearch'); sec.classList.add('active');
+      document.getElementById('analysisContentResearch').style.display='none';
+      const tb=document.getElementById('thinkingBoxResearch'); tb.style.display='block'; document.getElementById('thinkingStreamResearch').textContent='';
+      ['stepR1','stepR2','stepR3','stepR4','stepR5'].forEach((id,i)=>{const el=document.getElementById(id);if(el){el.classList.remove('active','done');el.querySelector('.step-icon').textContent=['📄','🔍','🧪','🏛️','✅'][i];}});
+      const [analysis] = await Promise.all([analyzeResume(text), animateSteps('stepR',5,700)]);
+      const last=document.getElementById('stepR5'); if(last){last.classList.remove('active');last.classList.add('done');last.querySelector('.step-icon').textContent='✓';}
+      tb.querySelector('.thinking-label').textContent='Analysis Complete';
+      tb.querySelector('.thinking-orb').style.cssText='background:var(--green);box-shadow:0 0 8px rgba(16,185,129,0.8);animation:none;';
       await typewriterEffect(document.getElementById('thinkingStreamResearch'), analysis, 6);
-      const keywords = extractKeywords(text + ' ' + analysis, 50);
+      const kws = extractKeywords(text+' '+analysis, 50);
       matchedProfessors = {};
-      allProfessors.forEach(prof => {
-        const res = getResearchAreas(prof);
-        const hay = `${prof.Name} ${prof.Department} ${res}`.toLowerCase();
-        let s = 0; keywords.forEach(k => { if (hay.includes(k)) s += 2; });
-        if (s > 0) matchedProfessors[prof.Name + prof['College Name']] = Math.min(100, s * 8);
-      });
-      document.getElementById('profMatchCount').textContent = `${Object.keys(matchedProfessors).length} Matches`;
-      renderProfessors(allProfessors, matchedProfessors);
-      showStatus('Resume analyzed! Scroll down to see matched professors.', 'success');
-      setTimeout(() => { sec.classList.add('collapsed'); setTimeout(() => { document.querySelector('.professor-card.matched')?.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 400); }, 3000);
+      allProfessors.forEach(prof => { const res=getResearchAreas(prof); const hay=`${prof.Name} ${prof.Department} ${res}`.toLowerCase(); let s=0; kws.forEach(k=>{if(hay.includes(k))s+=2;}); if(s>0) matchedProfessors[prof.Name+prof['College Name']]=Math.min(100,s*8); });
+      document.getElementById('profMatchCount').textContent=`${Object.keys(matchedProfessors).length} Matches`;
+      renderProfessors(allProfessors,matchedProfessors);
+      showStatus('Resume analyzed! Scroll down to see matched professors.','success');
+      setTimeout(()=>{sec.classList.add('collapsed');setTimeout(()=>{document.querySelector('.professor-card.matched')?.scrollIntoView({behavior:'smooth',block:'center'});},400);},3000);
     }
 
     document.getElementById('analyzeBtn').addEventListener('click', async () => {
-      if (!selectedFile) return;
-      const orig = document.getElementById('analyzeBtn').innerHTML;
-      document.getElementById('analyzeBtn').innerHTML = '<span class="loading"></span>'; document.getElementById('analyzeBtn').disabled = true;
-      try {
-        let text = (selectedFile.type === 'application/pdf' || selectedFile.name.toLowerCase().endsWith('.pdf')) ? await extractTextFromPDF(selectedFile) : await selectedFile.text();
-        if (!text || text.trim().length < 10) throw new Error('File appears to be empty');
-        await runJobAnalysis(text);
-      } catch (e) { showStatus(e.message || 'Analysis failed', 'error'); }
-      finally { document.getElementById('analyzeBtn').innerHTML = orig; document.getElementById('analyzeBtn').disabled = false; }
+      if(!selectedFile) return;
+      const orig=document.getElementById('analyzeBtn').innerHTML;
+      document.getElementById('analyzeBtn').innerHTML='<span class="loading"></span>'; document.getElementById('analyzeBtn').disabled=true;
+      try { let text=(selectedFile.type==='application/pdf'||selectedFile.name.toLowerCase().endsWith('.pdf'))?await extractTextFromPDF(selectedFile):await selectedFile.text(); if(!text||text.trim().length<10) throw new Error('File empty'); await runJobAnalysis(text); }
+      catch(e){showStatus(e.message||'Analysis failed','error');}
+      finally{document.getElementById('analyzeBtn').innerHTML=orig;document.getElementById('analyzeBtn').disabled=false;}
     });
 
     document.getElementById('analyzeBtnResearch').addEventListener('click', async () => {
-      if (!selectedFile) return;
-      const orig = document.getElementById('analyzeBtnResearch').innerHTML;
-      document.getElementById('analyzeBtnResearch').innerHTML = '<span class="loading"></span>'; document.getElementById('analyzeBtnResearch').disabled = true;
-      try {
-        let text = (selectedFile.type === 'application/pdf' || selectedFile.name.toLowerCase().endsWith('.pdf')) ? await extractTextFromPDF(selectedFile) : await selectedFile.text();
-        if (!text || text.trim().length < 10) throw new Error('File appears to be empty');
-        await runResearchAnalysis(text);
-      } catch (e) { showStatus(e.message || 'Analysis failed', 'error'); }
-      finally { document.getElementById('analyzeBtnResearch').innerHTML = orig; document.getElementById('analyzeBtnResearch').disabled = false; }
+      if(!selectedFile) return;
+      const orig=document.getElementById('analyzeBtnResearch').innerHTML;
+      document.getElementById('analyzeBtnResearch').innerHTML='<span class="loading"></span>'; document.getElementById('analyzeBtnResearch').disabled=true;
+      try { let text=(selectedFile.type==='application/pdf'||selectedFile.name.toLowerCase().endsWith('.pdf'))?await extractTextFromPDF(selectedFile):await selectedFile.text(); if(!text||text.trim().length<10) throw new Error('File empty'); await runResearchAnalysis(text); }
+      catch(e){showStatus(e.message||'Analysis failed','error');}
+      finally{document.getElementById('analyzeBtnResearch').innerHTML=orig;document.getElementById('analyzeBtnResearch').disabled=false;}
     });
 
-    document.getElementById('pasteBtn').addEventListener('click', () => { document.getElementById('pasteModal').classList.add('active'); document.getElementById('pasteTextarea').focus(); });
-    document.getElementById('pasteBtnResearch').addEventListener('click', () => { document.getElementById('pasteModal').classList.add('active'); document.getElementById('pasteTextarea').focus(); });
-    document.getElementById('modalClose').addEventListener('click', () => document.getElementById('pasteModal').classList.remove('active'));
-    document.getElementById('cancelPaste').addEventListener('click', () => document.getElementById('pasteModal').classList.remove('active'));
-    document.getElementById('analyzePasted').addEventListener('click', async () => {
-      const text = document.getElementById('pasteTextarea').value.trim();
-      if (!text) { showStatus('Please paste your resume text', 'error'); return; }
-      resumeTextGlobal = text; document.getElementById('pasteModal').classList.remove('active');
-      if (currentTab === 'jobs') { try { await runJobAnalysis(text); } catch (e) { showStatus(e.message, 'error'); } }
-      else { try { await runResearchAnalysis(text); } catch (e) { showStatus(e.message, 'error'); } }
+    document.getElementById('pasteBtn').addEventListener('click', ()=>{document.getElementById('pasteModal').classList.add('active');document.getElementById('pasteTextarea').focus();});
+    document.getElementById('pasteBtnResearch').addEventListener('click', ()=>{document.getElementById('pasteModal').classList.add('active');document.getElementById('pasteTextarea').focus();});
+    document.getElementById('modalClose').addEventListener('click', ()=>document.getElementById('pasteModal').classList.remove('active'));
+    document.getElementById('cancelPaste').addEventListener('click', ()=>document.getElementById('pasteModal').classList.remove('active'));
+    document.getElementById('analyzePasted').addEventListener('click', async ()=>{
+      const text=document.getElementById('pasteTextarea').value.trim(); if(!text){showStatus('Please paste resume text','error');return;}
+      resumeTextGlobal=text; document.getElementById('pasteModal').classList.remove('active');
+      if(currentTab==='jobs'){try{await runJobAnalysis(text);}catch(e){showStatus(e.message,'error');}}
+      else{try{await runResearchAnalysis(text);}catch(e){showStatus(e.message,'error');}}
     });
 
-    ['jobSearchInput','jobLocationFilter','jobTypeFilter'].forEach(id => document.getElementById(id).addEventListener('input', applyJobFilters));
-    ['profSearchInput','profInstitutionFilter','profDepartmentFilter'].forEach(id => document.getElementById(id).addEventListener('input', applyProfessorFilters));
+    ['jobSearchInput','jobLocationFilter','jobTypeFilter'].forEach(id=>document.getElementById(id).addEventListener('input',applyJobFilters));
+    ['profSearchInput','profInstitutionFilter','profDepartmentFilter'].forEach(id=>document.getElementById(id).addEventListener('input',applyProfessorFilters));
 
-    // ── JOB ALERT ──
     async function subscribeToAlerts() {
-      const email = document.getElementById('alertEmail').value.trim();
-      const name = document.getElementById('alertName').value.trim();
-      if (!email || !email.includes('@')) { showStatus('Please enter a valid email!', 'error'); return; }
-      const btn = document.getElementById('alertSubmitBtn');
-      btn.innerHTML = '<span class="loading"></span>'; btn.disabled = true;
+      const email=document.getElementById('alertEmail').value.trim(), name=document.getElementById('alertName').value.trim();
+      if(!email||!email.includes('@')){showStatus('Please enter a valid email!','error');return;}
+      const btn=document.getElementById('alertSubmitBtn'); btn.innerHTML='<span class="loading"></span>'; btn.disabled=true;
       try {
-        const res = await fetch('/api/subscribe', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, name, skills: '' }) });
-        const data = await res.json();
-        if (res.ok && data.success) { document.getElementById('alertForm').style.display = 'none'; document.getElementById('alertSuccess').classList.add('active'); showStatus('Subscribed!', 'success'); }
-        else throw new Error(data.message || 'Failed');
-      } catch (e) { showStatus(e.message || 'Subscribe failed', 'error'); btn.innerHTML = '<i class="fas fa-bell"></i> Subscribe'; btn.disabled = false; }
+        const res=await fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,name,skills:''})});
+        const data=await res.json();
+        if(res.ok&&data.success){document.getElementById('alertForm').style.display='none';document.getElementById('alertSuccess').classList.add('active');showStatus('Subscribed!','success');}
+        else throw new Error(data.message||'Failed');
+      } catch(e){showStatus(e.message||'Subscribe failed','error');btn.innerHTML='<i class="fas fa-bell"></i> Subscribe';btn.disabled=false;}
     }
 
-    // ── SKILL GAP ──
-    let currentJobData = null;
+    let currentJobData=null;
     function openSkillGap(jobData) {
-      currentJobData = jobData;
-      document.getElementById('sgJobCompany').textContent = jobData.company || 'Company';
-      document.getElementById('sgJobRole').textContent = jobData.role || 'Role';
+      currentJobData=jobData;
+      document.getElementById('sgJobCompany').textContent=jobData.company||'Company';
+      document.getElementById('sgJobRole').textContent=jobData.role||'Role';
       document.getElementById('gapResults').classList.remove('active');
-      document.getElementById('analyzeGapBtn').innerHTML = '<i class="fas fa-chart-bar"></i> Analyze My Skill Gap';
-      document.getElementById('analyzeGapBtn').disabled = !resumeTextGlobal;
-      document.getElementById('sgResumeWarning').style.display = resumeTextGlobal ? 'none' : 'flex';
+      document.getElementById('analyzeGapBtn').innerHTML='<i class="fas fa-chart-bar"></i> Analyze My Skill Gap';
+      document.getElementById('analyzeGapBtn').disabled=!resumeTextGlobal;
+      document.getElementById('sgResumeWarning').style.display=resumeTextGlobal?'none':'flex';
       document.getElementById('skillGapModal').classList.add('active');
     }
-    document.getElementById('skillGapClose').addEventListener('click', () => document.getElementById('skillGapModal').classList.remove('active'));
-    document.getElementById('skillGapModal').addEventListener('click', e => { if (e.target === document.getElementById('skillGapModal')) document.getElementById('skillGapModal').classList.remove('active'); });
-    document.getElementById('analyzeGapBtn').addEventListener('click', async () => {
-      if (!resumeTextGlobal) return;
-      const btn = document.getElementById('analyzeGapBtn');
-      btn.innerHTML = '<span class="loading"></span> Analyzing...'; btn.disabled = true;
+    document.getElementById('skillGapClose').addEventListener('click',()=>document.getElementById('skillGapModal').classList.remove('active'));
+    document.getElementById('skillGapModal').addEventListener('click',e=>{if(e.target===document.getElementById('skillGapModal'))document.getElementById('skillGapModal').classList.remove('active');});
+    document.getElementById('analyzeGapBtn').addEventListener('click', async ()=>{
+      if(!resumeTextGlobal) return;
+      const btn=document.getElementById('analyzeGapBtn'); btn.innerHTML='<span class="loading"></span> Analyzing...'; btn.disabled=true;
       try {
-        const res = await fetch('/api/skillgap', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ resume: resumeTextGlobal, jobTitle: currentJobData.role, jobDescription: currentJobData.description, jobCompany: currentJobData.company }) });
-        if (!res.ok) throw new Error('API failed');
-        const data = await res.json();
-        if (!data.success || !data.analysis) throw new Error('Invalid response');
-        const a = data.analysis;
-        const sc = document.getElementById('scoreCircle');
-        document.getElementById('scoreNum').textContent = (a.overallScore || 0) + '%';
-        sc.className = 'score-circle ' + ((a.overallScore||0) >= 70 ? 'score-high' : (a.overallScore||0) >= 40 ? 'score-mid' : 'score-low');
-        document.getElementById('sgVerdict').textContent = a.verdict || '';
-        document.getElementById('sgTimeReady').textContent = a.timeToReady ? `Ready in: ${a.timeToReady}` : '';
-        document.getElementById('sgQuickTip').textContent = a.quickTip || '';
-        document.getElementById('matchedSkillsGrid').innerHTML = (a.matchedSkills||[]).map((s,i) => `<div class="matched-skill-item"><div class="matched-skill-top"><span class="matched-skill-name">${s.skill}</span><span class="matched-skill-pct">${s.proficiency}%</span></div><div class="skill-progress-bar"><div class="skill-progress-fill" id="sgFill${i}"></div></div><div class="matched-skill-evidence">${s.evidence||''}</div></div>`).join('') || '<div style="color:var(--text2);font-size:14px;padding:8px 0;">No direct matches found.</div>';
-        setTimeout(() => { (a.matchedSkills||[]).forEach((_,i) => { const f = document.getElementById(`sgFill${i}`); if (f) f.style.width = _.proficiency + '%'; }); }, 100);
-        document.getElementById('missingSkillsGrid').innerHTML = (a.missingSkills||[]).map(s => `<div class="missing-skill-item"><div class="missing-skill-left"><div class="missing-skill-name">${s.skill}</div><div class="missing-skill-reason">${s.reason||''}</div></div><span class="importance-badge ${s.importance==='High'?'importance-high':s.importance==='Medium'?'importance-medium':'importance-low'}">${s.importance}</span></div>`).join('') || '<div style="color:var(--green);font-size:14px;padding:8px 0;">No major gaps found!</div>';
-        document.getElementById('roadmapContainer').innerHTML = (a.roadmap||[]).map(m => `<div class="roadmap-month"><div class="roadmap-month-header"><span class="roadmap-month-title">${m.month}</span><span class="roadmap-month-focus">${m.focus}</span></div><div class="roadmap-month-body"><div class="roadmap-tasks">${(m.tasks||[]).map(t=>`<div class="roadmap-task"><i class="fas fa-arrow-right"></i><span>${t}</span></div>`).join('')}</div><div class="roadmap-resources">${(m.resources||[]).map(r=>`<a href="${r.url}" target="_blank" class="resource-link ${r.type==='YouTube'?'resource-youtube':r.type==='Coursera'?'resource-coursera':r.type==='Course'?'resource-course':'resource-default'}"><i class="${r.type==='YouTube'?'fab fa-youtube':r.type==='Coursera'?'fas fa-graduation-cap':'fas fa-book'}"></i> ${r.title}</a>`).join('')}</div></div></div>`).join('') || '<div style="color:var(--text2);font-size:14px;">Ready to apply!</div>';
+        const res=await fetch('/api/skillgap',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({resume:resumeTextGlobal,jobTitle:currentJobData.role,jobDescription:currentJobData.description,jobCompany:currentJobData.company})});
+        if(!res.ok) throw new Error('API failed');
+        const {success,analysis}=await res.json(); if(!success||!analysis) throw new Error('Invalid response');
+        const sc=document.getElementById('scoreCircle');
+        document.getElementById('scoreNum').textContent=(analysis.overallScore||0)+'%';
+        sc.className='score-circle '+((analysis.overallScore||0)>=70?'score-high':(analysis.overallScore||0)>=40?'score-mid':'score-low');
+        document.getElementById('sgVerdict').textContent=analysis.verdict||'';
+        document.getElementById('sgTimeReady').textContent=analysis.timeToReady?`Ready in: ${analysis.timeToReady}`:'';
+        document.getElementById('sgQuickTip').textContent=analysis.quickTip||'';
+        document.getElementById('matchedSkillsGrid').innerHTML=(analysis.matchedSkills||[]).map((s,i)=>`<div class="matched-skill-item"><div class="matched-skill-top"><span class="matched-skill-name">${s.skill}</span><span class="matched-skill-pct">${s.proficiency}%</span></div><div class="skill-progress-bar"><div class="skill-progress-fill" id="sgFill${i}"></div></div><div class="matched-skill-evidence">${s.evidence||''}</div></div>`).join('')||'<div style="color:var(--text2);font-size:14px;padding:8px 0;">No direct matches found.</div>';
+        setTimeout(()=>{(analysis.matchedSkills||[]).forEach((_,i)=>{const f=document.getElementById(`sgFill${i}`);if(f)f.style.width=_.proficiency+'%';});},100);
+        document.getElementById('missingSkillsGrid').innerHTML=(analysis.missingSkills||[]).map(s=>`<div class="missing-skill-item"><div class="missing-skill-left"><div class="missing-skill-name">${s.skill}</div><div class="missing-skill-reason">${s.reason||''}</div></div><span class="importance-badge ${s.importance==='High'?'importance-high':s.importance==='Medium'?'importance-medium':'importance-low'}">${s.importance}</span></div>`).join('')||'<div style="color:var(--green);font-size:14px;padding:8px 0;">No major gaps!</div>';
+        document.getElementById('roadmapContainer').innerHTML=(analysis.roadmap||[]).map(m=>`<div class="roadmap-month"><div class="roadmap-month-header"><span class="roadmap-month-title">${m.month}</span><span class="roadmap-month-focus">${m.focus}</span></div><div class="roadmap-month-body"><div class="roadmap-tasks">${(m.tasks||[]).map(t=>`<div class="roadmap-task"><i class="fas fa-arrow-right"></i><span>${t}</span></div>`).join('')}</div><div class="roadmap-resources">${(m.resources||[]).map(r=>`<a href="${r.url}" target="_blank" class="resource-link ${r.type==='YouTube'?'resource-youtube':r.type==='Coursera'?'resource-coursera':r.type==='Course'?'resource-course':'resource-default'}"><i class="${r.type==='YouTube'?'fab fa-youtube':r.type==='Coursera'?'fas fa-graduation-cap':'fas fa-book'}"></i> ${r.title}</a>`).join('')}</div></div></div>`).join('')||'<div style="color:var(--text2);font-size:14px;">Ready to apply!</div>';
         document.getElementById('gapResults').classList.add('active');
-        btn.innerHTML = '<i class="fas fa-redo"></i> Re-Analyze'; btn.disabled = false;
-      } catch (e) { showStatus('Analysis failed. Try again.', 'error'); btn.innerHTML = '<i class="fas fa-chart-bar"></i> Retry'; btn.disabled = false; }
+        btn.innerHTML='<i class="fas fa-redo"></i> Re-Analyze'; btn.disabled=false;
+      } catch(e){showStatus('Analysis failed. Try again.','error');btn.innerHTML='<i class="fas fa-chart-bar"></i> Retry';btn.disabled=false;}
     });
 
-    // ── JOB EMAIL ──
-    let currentJobEmailData = null;
+    let currentJobEmailData=null;
     function openJobEmailModal(jobData) {
-      currentJobEmailData = jobData;
-      document.getElementById('jobEmailRole').textContent = jobData.role || 'Role';
-      document.getElementById('jobEmailCompany').textContent = jobData.company || 'Company';
-      document.getElementById('jobEmailLocation').textContent = jobData.location || '';
+      currentJobEmailData=jobData;
+      document.getElementById('jobEmailRole').textContent=jobData.role||'Role';
+      document.getElementById('jobEmailCompany').textContent=jobData.company||'Company';
+      document.getElementById('jobEmailLocation').textContent=jobData.location||'';
       document.getElementById('generatedJobEmailBox').classList.remove('active');
-      document.getElementById('generateJobEmailBtn').innerHTML = '<i class="fas fa-magic"></i> Generate Application Email';
-      document.getElementById('generateJobEmailBtn').disabled = false;
+      document.getElementById('generateJobEmailBtn').disabled=false;
       document.getElementById('jobEmailModal').classList.add('active');
     }
-    document.getElementById('jobEmailModalClose').addEventListener('click', () => document.getElementById('jobEmailModal').classList.remove('active'));
-    document.getElementById('jobEmailModal').addEventListener('click', e => { if (e.target === document.getElementById('jobEmailModal')) document.getElementById('jobEmailModal').classList.remove('active'); });
+    document.getElementById('jobEmailModalClose').addEventListener('click',()=>document.getElementById('jobEmailModal').classList.remove('active'));
+    document.getElementById('jobEmailModal').addEventListener('click',e=>{if(e.target===document.getElementById('jobEmailModal'))document.getElementById('jobEmailModal').classList.remove('active');});
     async function generateJobEmail() {
-      const name = document.getElementById('jobStudentName').value.trim(), course = document.getElementById('jobStudentCourse').value.trim(), exp = document.getElementById('jobStudentProject').value.trim(), tone = document.getElementById('jobEmailTone').value;
-      if (!name || !course || !exp) { showStatus('Please fill all fields', 'error'); return; }
-      const btn = document.getElementById('generateJobEmailBtn'); btn.innerHTML = '<span class="loading"></span> Generating...'; btn.disabled = true;
-      const toneMap = { professional: 'professional and formal', enthusiastic: 'enthusiastic and energetic', concise: 'short and direct (max 150 words body)' };
-      const prompt = `Write a job application cold email.\nJob: ${currentJobEmailData.role} at ${currentJobEmailData.company} (${currentJobEmailData.location||''})\nDescription: ${(currentJobEmailData.description||'').slice(0,400)}\nStudent: ${name}, ${course}\nExperience: ${exp}\nTone: ${toneMap[tone]||'professional'}\nFormat: Start with Subject line, then blank line, then email body. Under 200 words. No explanations.`;
+      const name=document.getElementById('jobStudentName').value.trim(),course=document.getElementById('jobStudentCourse').value.trim(),exp=document.getElementById('jobStudentProject').value.trim(),tone=document.getElementById('jobEmailTone').value;
+      if(!name||!course||!exp){showStatus('Please fill all fields','error');return;}
+      const btn=document.getElementById('generateJobEmailBtn'); btn.innerHTML='<span class="loading"></span> Generating...'; btn.disabled=true;
+      const toneMap={professional:'professional and formal',enthusiastic:'enthusiastic and energetic',concise:'short and direct'};
+      const prompt=`Write a job application cold email.\nJob: ${currentJobEmailData.role} at ${currentJobEmailData.company} (${currentJobEmailData.location||''})\nDescription: ${(currentJobEmailData.description||'').slice(0,400)}\nStudent: ${name}, ${course}\nExperience: ${exp}\nTone: ${toneMap[tone]||'professional'}\nFormat: Subject line first, blank line, then email body. Under 200 words. No explanations.`;
       try {
-        const res = await fetch('/api/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ resume: prompt }) });
-        const data = await res.json(); const emailText = data.result || '';
-        if (!emailText) throw new Error('Empty');
-        document.getElementById('generatedJobEmailText').textContent = emailText;
+        const res=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({resume:prompt})});
+        const emailText=(await res.json()).result||''; if(!emailText) throw new Error('Empty');
+        document.getElementById('generatedJobEmailText').textContent=emailText;
         document.getElementById('generatedJobEmailBox').classList.add('active');
-        const lines = emailText.split('\n'); const sub = lines[0].replace('Subject: ','').trim(); const body = lines.slice(2).join('\n');
-        if (currentJobEmailData.email) { document.getElementById('sendJobEmailBtn').href = `mailto:${currentJobEmailData.email}?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`; document.getElementById('sendJobEmailBtn').style.display = 'flex'; }
-        else document.getElementById('sendJobEmailBtn').style.display = 'none';
-        showStatus('Email generated!', 'success');
-      } catch (e) { showStatus('Generation failed', 'error'); }
-      finally { btn.innerHTML = '<i class="fas fa-magic"></i> Generate Application Email'; btn.disabled = false; }
+        const lines=emailText.split('\n'),sub=lines[0].replace('Subject: ','').trim(),body=lines.slice(2).join('\n');
+        if(currentJobEmailData.email){document.getElementById('sendJobEmailBtn').href=`mailto:${currentJobEmailData.email}?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;document.getElementById('sendJobEmailBtn').style.display='flex';}
+        else document.getElementById('sendJobEmailBtn').style.display='none';
+        showStatus('Email generated!','success');
+      } catch(e){showStatus('Generation failed','error');}
+      finally{btn.innerHTML='<i class="fas fa-magic"></i> Generate Application Email';btn.disabled=false;}
     }
-    document.getElementById('generateJobEmailBtn').addEventListener('click', generateJobEmail);
-    document.getElementById('regenerateJobBtn').addEventListener('click', generateJobEmail);
-    document.getElementById('copyJobEmailBtn').addEventListener('click', () => { navigator.clipboard.writeText(document.getElementById('generatedJobEmailText').textContent).then(() => { const b = document.getElementById('copyJobEmailBtn'); b.innerHTML = '<i class="fas fa-check"></i> Copied!'; b.classList.add('copied'); setTimeout(() => { b.innerHTML = '<i class="fas fa-copy"></i> Copy'; b.classList.remove('copied'); }, 2000); }); });
+    document.getElementById('generateJobEmailBtn').addEventListener('click',generateJobEmail);
+    document.getElementById('regenerateJobBtn').addEventListener('click',generateJobEmail);
+    document.getElementById('copyJobEmailBtn').addEventListener('click',()=>{navigator.clipboard.writeText(document.getElementById('generatedJobEmailText').textContent).then(()=>{const b=document.getElementById('copyJobEmailBtn');b.innerHTML='<i class="fas fa-check"></i> Copied!';b.classList.add('copied');setTimeout(()=>{b.innerHTML='<i class="fas fa-copy"></i> Copy';b.classList.remove('copied');},2000);});});
 
-    // ── COLD EMAIL (Research) ──
-    let currentProfData = null;
+    let currentProfData=null;
     function openEmailModal(profData) {
-      currentProfData = profData;
-      document.getElementById('emailProfName').textContent = profData.name || 'Professor';
-      document.getElementById('emailProfDept').textContent = profData.dept || 'Department';
-      document.getElementById('emailProfInst').textContent = profData.inst || 'Institution';
+      currentProfData=profData;
+      document.getElementById('emailProfName').textContent=profData.name||'Professor';
+      document.getElementById('emailProfDept').textContent=profData.dept||'Department';
+      document.getElementById('emailProfInst').textContent=profData.inst||'Institution';
       document.getElementById('generatedEmailBox').classList.remove('active');
-      document.getElementById('generateEmailBtn').innerHTML = '<i class="fas fa-magic"></i> Generate Personalized Email';
-      document.getElementById('generateEmailBtn').disabled = false;
+      document.getElementById('generateEmailBtn').disabled=false;
       document.getElementById('emailModal').classList.add('active');
     }
-    document.getElementById('emailModalClose').addEventListener('click', () => document.getElementById('emailModal').classList.remove('active'));
-    document.getElementById('emailModal').addEventListener('click', e => { if (e.target === document.getElementById('emailModal')) document.getElementById('emailModal').classList.remove('active'); });
+    document.getElementById('emailModalClose').addEventListener('click',()=>document.getElementById('emailModal').classList.remove('active'));
+    document.getElementById('emailModal').addEventListener('click',e=>{if(e.target===document.getElementById('emailModal'))document.getElementById('emailModal').classList.remove('active');});
     async function generateColdEmail() {
-      const name = document.getElementById('studentName').value.trim(), course = document.getElementById('studentCourse').value.trim(), project = document.getElementById('studentProject').value.trim(), reason = document.getElementById('studentReason').value.trim();
-      if (!name || !course || !project) { showStatus('Please fill all required fields', 'error'); return; }
-      const btn = document.getElementById('generateEmailBtn'); btn.innerHTML = '<span class="loading"></span> Generating...'; btn.disabled = true;
-      const prompt = `Write a cold email for a research internship request.\nProfessor: ${currentProfData.name}, ${currentProfData.dept}, ${currentProfData.inst}\nResearch Areas: ${currentProfData.research}\nStudent: ${name}, ${course}\nProject: ${project}\nReason: ${reason||'Interested in the research areas'}\nFormat: Subject line first, then blank line, then email. 200-250 words. Professional tone.`;
+      const name=document.getElementById('studentName').value.trim(),course=document.getElementById('studentCourse').value.trim(),project=document.getElementById('studentProject').value.trim(),reason=document.getElementById('studentReason').value.trim();
+      if(!name||!course||!project){showStatus('Please fill all required fields','error');return;}
+      const btn=document.getElementById('generateEmailBtn'); btn.innerHTML='<span class="loading"></span> Generating...'; btn.disabled=true;
+      const prompt=`Write a cold email for a research internship request.\nProfessor: ${currentProfData.name}, ${currentProfData.dept}, ${currentProfData.inst}\nResearch Areas: ${currentProfData.research}\nStudent: ${name}, ${course}\nProject: ${project}\nReason: ${reason||'Interested in the research areas'}\nFormat: Subject line first, blank line, then email. 200-250 words. Professional tone.`;
       try {
-        const res = await fetch('/api/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ resume: prompt }) });
-        const data = await res.json(); const emailText = data.result || '';
-        if (!emailText) throw new Error('Empty');
-        document.getElementById('generatedEmailText').textContent = emailText;
+        const res=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({resume:prompt})});
+        const emailText=(await res.json()).result||''; if(!emailText) throw new Error('Empty');
+        document.getElementById('generatedEmailText').textContent=emailText;
         document.getElementById('generatedEmailBox').classList.add('active');
-        const sub = emailText.split('\n')[0].replace('Subject: ',''); const body = emailText.split('\n').slice(2).join('\n');
-        if (currentProfData.email) { document.getElementById('sendEmailBtn').href = `mailto:${currentProfData.email}?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`; document.getElementById('sendEmailBtn').style.display = 'flex'; }
-        else document.getElementById('sendEmailBtn').style.display = 'none';
-        showStatus('Email generated!', 'success');
-      } catch (e) { showStatus('Generation failed', 'error'); }
-      finally { btn.innerHTML = '<i class="fas fa-magic"></i> Generate Personalized Email'; btn.disabled = false; }
+        const sub=emailText.split('\n')[0].replace('Subject: ',''),body=emailText.split('\n').slice(2).join('\n');
+        if(currentProfData.email){document.getElementById('sendEmailBtn').href=`mailto:${currentProfData.email}?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;document.getElementById('sendEmailBtn').style.display='flex';}
+        else document.getElementById('sendEmailBtn').style.display='none';
+        showStatus('Email generated!','success');
+      } catch(e){showStatus('Generation failed','error');}
+      finally{btn.innerHTML='<i class="fas fa-magic"></i> Generate Personalized Email';btn.disabled=false;}
     }
-    document.getElementById('generateEmailBtn').addEventListener('click', generateColdEmail);
-    document.getElementById('regenerateBtn').addEventListener('click', generateColdEmail);
-    document.getElementById('copyEmailBtn').addEventListener('click', () => { navigator.clipboard.writeText(document.getElementById('generatedEmailText').textContent).then(() => { const b = document.getElementById('copyEmailBtn'); b.innerHTML = '<i class="fas fa-check"></i> Copied!'; b.classList.add('copied'); setTimeout(() => { b.innerHTML = '<i class="fas fa-copy"></i> Copy'; b.classList.remove('copied'); }, 2000); }); });
+    document.getElementById('generateEmailBtn').addEventListener('click',generateColdEmail);
+    document.getElementById('regenerateBtn').addEventListener('click',generateColdEmail);
+    document.getElementById('copyEmailBtn').addEventListener('click',()=>{navigator.clipboard.writeText(document.getElementById('generatedEmailText').textContent).then(()=>{const b=document.getElementById('copyEmailBtn');b.innerHTML='<i class="fas fa-check"></i> Copied!';b.classList.add('copied');setTimeout(()=>{b.innerHTML='<i class="fas fa-copy"></i> Copy';b.classList.remove('copied');},2000);});});
 
-    // ── SHARE ──
     async function shareJob(d) {
-      const text = `🚀 Job Opportunity!\n\n🏢 ${d.company}\n💼 ${d.role}${d.location?'\n📍 '+d.location:''}${d.stipend?'\n💰 '+d.stipend:''}\n\nvia CareerLift`;
-      const url = d.applyLink || window.location.href;
-      if (navigator.share) { try { await navigator.share({ title: `${d.role} at ${d.company}`, text, url }); return; } catch(e) {} }
-      const overlay = document.createElement('div');
-      overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);';
-      overlay.innerHTML = `<div style="background:#0D1117;border:1px solid rgba(255,255,255,0.14);border-radius:16px;padding:24px;width:300px;display:flex;flex-direction:column;gap:10px;">
-        <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:16px;color:#F1F5F9;margin-bottom:4px;">Share this Job</div>
-        <a href="https://wa.me/?text=${encodeURIComponent(text+'\n'+url)}" target="_blank" style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.25);border-radius:10px;color:#25D366;font-weight:700;font-size:14px;text-decoration:none;font-family:'DM Sans',sans-serif;"><i class="fab fa-whatsapp" style="font-size:18px;"></i> WhatsApp</a>
-        <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}" target="_blank" style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(10,102,194,0.1);border:1px solid rgba(10,102,194,0.25);border-radius:10px;color:#0A66C2;font-weight:700;font-size:14px;text-decoration:none;font-family:'DM Sans',sans-serif;"><i class="fab fa-linkedin" style="font-size:18px;"></i> LinkedIn</a>
-        <button onclick="navigator.clipboard.writeText(${JSON.stringify(text+'\n'+url)}).then(()=>{this.innerHTML='✓ Copied!';this.style.color='#10B981';setTimeout(()=>this.closest('[style*=inset]').remove(),1200);})" style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.2);border-radius:10px;color:#00D4FF;font-weight:700;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;"><i class="fas fa-link"></i> Copy Link</button>
-        <button onclick="this.closest('[style*=inset]').remove()" style="background:transparent;border:none;color:#475569;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;padding:6px;">Cancel</button>
-      </div>`;
-      document.body.appendChild(overlay);
-      overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+      const text=`🚀 Job Opportunity!\n\n🏢 ${d.company}\n💼 ${d.role}${d.location?'\n📍 '+d.location:''}${d.stipend?'\n💰 '+d.stipend:''}\n\nvia CareerLift`, url=d.applyLink||window.location.href;
+      if(navigator.share){try{await navigator.share({title:`${d.role} at ${d.company}`,text,url});return;}catch(e){}}
+      const overlay=document.createElement('div'); overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);';
+      overlay.innerHTML=`<div style="background:#0D1117;border:1px solid rgba(255,255,255,0.14);border-radius:16px;padding:24px;width:300px;display:flex;flex-direction:column;gap:10px;"><div style="font-family:'Sora',sans-serif;font-weight:700;font-size:16px;color:#F1F5F9;margin-bottom:4px;">Share this Job</div><a href="https://wa.me/?text=${encodeURIComponent(text+'\n'+url)}" target="_blank" style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.25);border-radius:10px;color:#25D366;font-weight:700;font-size:14px;text-decoration:none;font-family:'DM Sans',sans-serif;"><i class="fab fa-whatsapp" style="font-size:18px;"></i> WhatsApp</a><a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}" target="_blank" style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(10,102,194,0.1);border:1px solid rgba(10,102,194,0.25);border-radius:10px;color:#0A66C2;font-weight:700;font-size:14px;text-decoration:none;font-family:'DM Sans',sans-serif;"><i class="fab fa-linkedin" style="font-size:18px;"></i> LinkedIn</a><button onclick="navigator.clipboard.writeText(${JSON.stringify(text+'\n'+url)}).then(()=>{this.innerHTML='✓ Copied!';this.style.color='#10B981';setTimeout(()=>this.closest('[style*=inset]').remove(),1200);})" style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.2);border-radius:10px;color:#00D4FF;font-weight:700;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;"><i class="fas fa-link"></i> Copy Link</button><button onclick="this.closest('[style*=inset]').remove()" style="background:transparent;border:none;color:#475569;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;padding:6px;">Cancel</button></div>`;
+      document.body.appendChild(overlay); overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove();});
     }
 
-    // ── INIT ──
+    // ── INIT ── Data loads FIRST, auth modal shows AFTER data is ready
     async function init() {
       document.getElementById('jobsGrid').innerHTML = `<div class="empty-state"><div class="empty-icon"><span class="loading"></span></div><h3 class="empty-title">Loading jobs...</h3></div>`;
       document.getElementById('profsGrid').innerHTML = `<div class="empty-state"><div class="empty-icon"><span class="loading"></span></div><h3 class="empty-title">Loading research opportunities...</h3></div>`;
 
-      // Check auth session
+      // 1. Check auth session silently
       const { data: { session } } = await supabase.auth.getSession();
-      if (session?.user) {
-        currentUser = session.user;
-        await loadSavedJobs();
-      }
+      if (session?.user) { currentUser = session.user; await loadSavedJobs(); }
       renderAuthArea();
 
-      // If no user, show auth modal on first visit
-      if (!currentUser) {
-        setTimeout(() => openAuthModal(), 800);
-      }
-
-      // Load data
+      // 2. Load data FIRST — no modal blocking
       try {
         const [jobs, professors] = await Promise.all([fetchFromSheet(JOBS_SHEET_URL), fetchFromSheet(PROFESSORS_SHEET_URL)]);
         allJobs = jobs; allProfessors = professors;
         populateFilters(); applyJobFilters(); applyProfessorFilters();
-
-        // Update trust badges
         document.getElementById('badgeJobs').textContent = jobs.length;
         document.getElementById('badgeProfs').textContent = professors.length;
-
         showStatus(`Loaded ${jobs.length} jobs and ${professors.length} research opportunities.`, 'success');
+
+        // 3. Show auth modal AFTER data is loaded (only for new users)
+        if (!currentUser) { setTimeout(() => openAuthModal(), 1500); }
+
       } catch (e) {
-        const err = `<div class="empty-state"><div class="empty-icon"><i class="fas fa-exclamation-triangle"></i></div><h3 class="empty-title">Failed to load data</h3><p class="empty-text">Please check your internet connection and refresh</p></div>`;
+        const err = `<div class="empty-state"><div class="empty-icon"><i class="fas fa-exclamation-triangle"></i></div><h3 class="empty-title">Failed to load data</h3><p class="empty-text">Please check your connection and refresh</p></div>`;
         document.getElementById('jobsGrid').innerHTML = err;
         document.getElementById('profsGrid').innerHTML = err;
         showStatus('Failed to load data', 'error');
       }
 
-      // Auth state listener
+      // 4. Auth state changes
       supabase.auth.onAuthStateChange(async (event, session) => {
         if (event === 'SIGNED_IN' && session?.user) {
-          currentUser = session.user;
-          await loadSavedJobs();
-          renderAuthArea();
-          closeAuthModal();
+          currentUser = session.user; await loadSavedJobs(); renderAuthArea(); closeAuthModal();
           showStatus(`Welcome, ${session.user.user_metadata?.full_name?.split(' ')[0] || 'there'}! 🎉`, 'success');
-          renderJobs(allJobs, matchedJobs); // re-render to show saved states
-        } else if (event === 'SIGNED_OUT') {
-          currentUser = null; savedJobIds.clear();
-          renderAuthArea();
           renderJobs(allJobs, matchedJobs);
+        } else if (event === 'SIGNED_OUT') {
+          currentUser = null; savedJobIds.clear(); renderAuthArea(); renderJobs(allJobs, matchedJobs);
         }
       });
     }
