@@ -3,104 +3,69 @@
    ============================================================ */
 
 :root {
-  /* Backgrounds */
   --bg:    #080B14;
   --bg2:   #0D1117;
   --bg3:   #111827;
-
-  /* Glass surfaces */
-  --glass:  rgba(255, 255, 255, 0.04);
-  --glass2: rgba(255, 255, 255, 0.07);
-
-  /* Borders */
-  --border:  rgba(255, 255, 255, 0.08);
-  --border2: rgba(255, 255, 255, 0.14);
-
-  /* Brand colors */
+  --glass:  rgba(255,255,255,0.04);
+  --glass2: rgba(255,255,255,0.07);
+  --border:  rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.14);
   --neon:  #00D4FF;
   --neon2: #7C3AED;
   --neon3: #F59E0B;
-
-  /* Semantic colors */
   --green: #10B981;
   --red:   #EF4444;
-
-  /* Text hierarchy */
   --text1: #F1F5F9;
   --text2: #94A3B8;
   --text3: #475569;
-
-  /* Glow effects */
-  --glow:  0 0 20px rgba(0, 212, 255, 0.3);
-  --glow2: 0 0 40px rgba(124, 58, 237, 0.2);
+  --glow:  0 0 20px rgba(0,212,255,0.3);
+  --glow2: 0 0 40px rgba(124,58,237,0.2);
 }
 
 /* ── Reset ── */
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior: smooth; }
-
 body {
   font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text1);
-  min-height: 100vh;
-  overflow-x: hidden;
+  background: var(--bg); color: var(--text1);
+  min-height: 100vh; overflow-x: hidden;
 }
 
 /* ── Ambient orbs ── */
 body::before {
-  content: '';
-  position: fixed;
-  top: -20%; left: -10%;
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(0,212,255,0.06) 0%, transparent 70%);
-  animation: orb1 20s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 0;
+  content:''; position:fixed; top:-20%; left:-10%;
+  width:600px; height:600px;
+  background:radial-gradient(circle,rgba(0,212,255,0.06) 0%,transparent 70%);
+  animation:orb1 20s ease-in-out infinite; pointer-events:none; z-index:0;
 }
-
 body::after {
-  content: '';
-  position: fixed;
-  bottom: -20%; right: -10%;
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 70%);
-  animation: orb2 25s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 0;
+  content:''; position:fixed; bottom:-20%; right:-10%;
+  width:500px; height:500px;
+  background:radial-gradient(circle,rgba(124,58,237,0.07) 0%,transparent 70%);
+  animation:orb2 25s ease-in-out infinite; pointer-events:none; z-index:0;
 }
 
-@keyframes orb1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(60px,40px)} }
-@keyframes orb2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-40px,-60px)} }
+/* ── Animations ── */
+@keyframes orb1    { 0%,100%{transform:translate(0,0)} 50%{transform:translate(60px,40px)} }
+@keyframes orb2    { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-40px,-60px)} }
+@keyframes fadeUp  { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+@keyframes spin    { to{transform:rotate(360deg)} }
+@keyframes pulse2  { 0%,100%{transform:scale(1)} 50%{transform:scale(1.04)} }
+@keyframes modalSlideIn { from{opacity:0;transform:translateY(20px) scale(0.97)} to{opacity:1;transform:translateY(0) scale(1)} }
+@keyframes floatIcon { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+@keyframes thinkPulse { 0%,100%{opacity:1;transform:scale(1);box-shadow:0 0 8px rgba(0,212,255,0.8)} 50%{opacity:0.4;transform:scale(0.7);box-shadow:0 0 3px rgba(0,212,255,0.3)} }
+@keyframes blink   { 0%,100%{opacity:1} 50%{opacity:0} }
 
-/* ── Shared animations ── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* ── Deep-link card highlight ──
+   When someone arrives via ?job=slug, the matching card
+   pulses with a cyan glow to draw the eye to it.          */
+@keyframes deepLinkPulse {
+  0%   { box-shadow: 0 0 0  0   rgba(0,212,255,0);   border-color: rgba(0,212,255,0.3); }
+  30%  { box-shadow: 0 0 40px 8px rgba(0,212,255,0.45); border-color: var(--neon); }
+  70%  { box-shadow: 0 0 40px 8px rgba(0,212,255,0.35); border-color: var(--neon); }
+  100% { box-shadow: 0 0 0  0   rgba(0,212,255,0);   border-color: rgba(0,212,255,0.3); }
 }
 
-@keyframes spin { to { transform: rotate(360deg); } }
-
-@keyframes pulse2 { 0%,100%{transform:scale(1)} 50%{transform:scale(1.04)} }
-
-@keyframes modalSlideIn {
-  from { opacity:0; transform:translateY(20px) scale(0.97); }
-  to   { opacity:1; transform:translateY(0) scale(1); }
+.deep-link-highlight {
+  animation: deepLinkPulse 2.4s ease-in-out forwards !important;
 }
-
-@keyframes floatIcon {
-  0%,100% { transform: translateY(0); }
-  50%      { transform: translateY(-8px); }
-}
-
-@keyframes thinkPulse {
-  0%,100% { opacity:1; transform:scale(1); box-shadow:0 0 8px rgba(0,212,255,0.8); }
-  50%      { opacity:0.4; transform:scale(0.7); box-shadow:0 0 3px rgba(0,212,255,0.3); }
-}
-
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }

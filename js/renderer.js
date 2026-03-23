@@ -1,8 +1,15 @@
 /**
  * renderer.js
- * Renders job cards, professor cards, filters, and handles search/filter
- * state for both tabs.
+ * Renders job cards, professor cards, filters, and handles search/filter state.
  */
+
+/* ── Helper: unique slug for a job (used as deep-link ID) ── */
+export function jobSlug(job) {
+  return `${job.Company || ''}-${job.Role || ''}`
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+}
 
 /* ── Helper: get professor email from any column variant ── */
 export function getProfessorEmail(prof) {
@@ -34,14 +41,18 @@ export function getResearchAreas(prof) {
   return '';
 }
 
-/* ── Job card HTML ── */
+/* ─────────────────────────────────────────────
+   JOB CARD HTML
+───────────────────────────────────────────── */
 function buildJobCardHTML(job, matchScores, displayIndex) {
-  const key       = job.Company + job.Role;
-  const score     = matchScores[key] || 0;
-  const isMatched = score > 0;
+  const key        = job.Company + job.Role;
+  const score      = matchScores[key] || 0;
+  const isMatched  = score > 0;
   const isTrending = displayIndex < 25;
+  const slug       = jobSlug(job);
 
   const jobDataAttr = JSON.stringify({
+    slug       : slug,
     company    : job.Company     || '',
     role       : job.Role        || '',
     description: job.Description || '',
@@ -49,16 +60,17 @@ function buildJobCardHTML(job, matchScores, displayIndex) {
     location   : job.Location    || '',
     applyLink  : job.ApplyLink   || '',
     stipend    : job.Stipend     || '',
+    jobType    : job.JobType     || '',
   }).replace(/"/g, '&quot;');
 
   return `
-    <div class="job-card ${isMatched ? 'matched' : ''}">
+    <div class="job-card ${isMatched ? 'matched' : ''}" data-job-id="${slug}" id="job-${slug}">
       <div class="job-header">
         <div class="job-info">
           <div class="company-name">${job.Company || 'Company'}</div>
           <div class="role-title">${job.Role || 'Position'}</div>
         </div>
-        <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end;">
+        <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
           ${isTrending ? `<div class="trending-badge">Trending</div>` : ''}
           ${isMatched  ? `<div class="match-score"><i class="fas fa-check-circle"></i> ${Math.round(score)}% Match</div>` : ''}
         </div>
@@ -66,11 +78,13 @@ function buildJobCardHTML(job, matchScores, displayIndex) {
 
       <div class="job-meta">
         ${job.Location ? `<div class="job-meta-item"><i class="fas fa-map-marker-alt"></i>${job.Location}</div>` : ''}
-        ${job.Stipend  ? `<div class="job-meta-item"><i class="fas fa-rupee-sign"></i>${job.Stipend}</div>` : ''}
-        ${job.JobType  ? `<div class="job-meta-item"><i class="fas fa-briefcase"></i>${job.JobType}</div>` : ''}
+        ${job.Stipend  ? `<div class="job-meta-item"><i class="fas fa-rupee-sign"></i>${job.Stipend}</div>`  : ''}
+        ${job.JobType  ? `<div class="job-meta-item"><i class="fas fa-briefcase"></i>${job.JobType}</div>`   : ''}
       </div>
 
-      ${job.Description ? `<div class="job-description">${job.Description.slice(0,150)}${job.Description.length > 150 ? '...' : ''}</div>` : ''}
+      ${job.Description
+        ? `<div class="job-description">${job.Description.slice(0,150)}${job.Description.length > 150 ? '...' : ''}</div>`
+        : ''}
 
       <div class="job-actions">
         ${job.ApplyLink
@@ -92,7 +106,9 @@ function buildJobCardHTML(job, matchScores, displayIndex) {
     </div>`;
 }
 
-/* ── Professor card HTML ── */
+/* ─────────────────────────────────────────────
+   PROFESSOR CARD HTML
+───────────────────────────────────────────── */
 function buildProfessorCardHTML(prof, matchScores) {
   const key           = prof.Name + prof['College Name'];
   const score         = matchScores[key] || 0;
@@ -135,17 +151,9 @@ function buildProfessorCardHTML(prof, matchScores) {
     </div>`;
 }
 
-/* ────────────────────────────────────────────────
+/* ─────────────────────────────────────────────
    PUBLIC RENDER FUNCTIONS
-──────────────────────────────────────────────── */
-
-/**
- * Render job cards into a grid element.
- * @param {Object[]} jobs
- * @param {Object}   matchScores   - { key: percentageScore }
- * @param {HTMLElement} gridEl
- * @param {HTMLElement} titleEl
- */
+───────────────────────────────────────────── */
 export function renderJobs(jobs, matchScores, gridEl, titleEl) {
   if (!jobs || jobs.length === 0) {
     gridEl.innerHTML = `
@@ -157,17 +165,15 @@ export function renderJobs(jobs, matchScores, gridEl, titleEl) {
     return;
   }
 
-  const hasMatches  = Object.keys(matchScores).length > 0;
-  const sortedJobs  = [...jobs].sort((a, b) => {
-    const keyA = a.Company + a.Role, keyB = b.Company + b.Role;
-    const sA   = matchScores[keyA] || 0, sB = matchScores[keyB] || 0;
+  const hasMatches = Object.keys(matchScores).length > 0;
+  const sorted = [...jobs].sort((a, b) => {
+    const sA = matchScores[a.Company + a.Role] || 0;
+    const sB = matchScores[b.Company + b.Role] || 0;
     if (hasMatches && sB !== sA) return sB - sA;
-    return jobs.indexOf(b) - jobs.indexOf(a); // latest first when tied
+    return jobs.indexOf(b) - jobs.indexOf(a);
   });
 
-  gridEl.innerHTML = sortedJobs
-    .map((job, i) => buildJobCardHTML(job, matchScores, i))
-    .join('');
+  gridEl.innerHTML = sorted.map((job, i) => buildJobCardHTML(job, matchScores, i)).join('');
 
   const matchedCount = Object.keys(matchScores).filter(k => matchScores[k] > 0).length;
   if (titleEl) {
@@ -177,13 +183,6 @@ export function renderJobs(jobs, matchScores, gridEl, titleEl) {
   }
 }
 
-/**
- * Render professor cards into a grid element.
- * @param {Object[]} professors
- * @param {Object}   matchScores   - { key: percentageScore }
- * @param {HTMLElement} gridEl
- * @param {HTMLElement} titleEl
- */
 export function renderProfessors(professors, matchScores, gridEl, titleEl) {
   if (!professors || professors.length === 0) {
     gridEl.innerHTML = `
@@ -196,9 +195,9 @@ export function renderProfessors(professors, matchScores, gridEl, titleEl) {
   }
 
   const hasMatches = Object.keys(matchScores).length > 0;
-  const sorted     = [...professors].sort((a, b) => {
-    const kA = a.Name + a['College Name'], kB = b.Name + b['College Name'];
-    const sA = matchScores[kA] || 0, sB = matchScores[kB] || 0;
+  const sorted = [...professors].sort((a, b) => {
+    const sA = matchScores[a.Name + a['College Name']] || 0;
+    const sB = matchScores[b.Name + b['College Name']] || 0;
     return hasMatches ? sB - sA : 0;
   });
 
@@ -213,10 +212,6 @@ export function renderProfessors(professors, matchScores, gridEl, titleEl) {
 }
 
 /* ── FILTER HELPERS ── */
-
-/**
- * Populate <select> filters from dataset values.
- */
 export function populateJobFilters(jobs, locationEl, typeEl) {
   const locations = new Set(), types = new Set();
   jobs.forEach(job => {
@@ -241,9 +236,6 @@ export function populateProfessorFilters(professors, institutionEl, departmentEl
     + Array.from(departments).sort().map(d => `<option value="${d}">${d}</option>`).join('');
 }
 
-/**
- * Filter jobs by search query + dropdowns.
- */
 export function filterJobs(jobs, query, location, type) {
   const q = query.toLowerCase();
   return jobs.filter(job => {
@@ -254,16 +246,13 @@ export function filterJobs(jobs, query, location, type) {
   });
 }
 
-/**
- * Filter professors by search query + dropdowns.
- */
 export function filterProfessors(professors, query, institution, department) {
   const q = query.toLowerCase();
   return professors.filter(prof => {
     const areas = getResearchAreas(prof);
     const hay   = `${prof.Name} ${prof['College Name']} ${prof.Department} ${areas}`.toLowerCase();
-    return (!q           || hay.includes(q))
-      && (!institution   || prof['College Name'] === institution)
-      && (!department    || prof.Department      === department);
+    return (!q         || hay.includes(q))
+      && (!institution || prof['College Name'] === institution)
+      && (!department  || prof.Department      === department);
   });
 }

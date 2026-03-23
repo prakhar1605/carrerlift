@@ -45,9 +45,7 @@
 </head>
 <body>
 
-  <!-- ══════════════════════════════════════
-       HEADER
-  ══════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════ HEADER ══════════════════════════════════════ -->
   <header class="header">
     <div class="header-content">
       <a href="/" class="logo-link">
@@ -60,39 +58,27 @@
     </div>
   </header>
 
-  <!-- ══════════════════════════════════════
-       TAB NAVIGATION
-  ══════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════ TABS ══════════════════════════════════════ -->
   <div class="tab-navigation">
     <div class="tab-nav-content">
-      <button class="tab-btn active" data-tab="jobs">
-        <i class="fas fa-briefcase"></i> Jobs
-      </button>
-      <button class="tab-btn" data-tab="research">
-        <i class="fas fa-flask"></i> Research Internships
-      </button>
+      <button class="tab-btn active" data-tab="jobs"><i class="fas fa-briefcase"></i> Jobs</button>
+      <button class="tab-btn" data-tab="research"><i class="fas fa-flask"></i> Research Internships</button>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       MAIN CONTAINER
-  ══════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════ CONTAINER ══════════════════════════════════════ -->
   <div class="container">
     <div id="statusContainer"></div>
 
-    <!-- ╔══════════════════════════════════╗
-         ║          JOBS TAB               ║
-         ╚══════════════════════════════════╝ -->
+    <!-- JOBS TAB -->
     <div id="jobs" class="tab-content active">
 
-      <!-- Search -->
       <div class="search-section">
         <h2 class="search-title">Find Your Perfect Job</h2>
         <div class="search-bar">
           <div class="search-input-wrapper">
             <i class="fas fa-search search-icon"></i>
-            <input type="search" id="jobSearchInput" class="search-input"
-                   placeholder="Search by job title, company, or skills…" />
+            <input type="search" id="jobSearchInput" class="search-input" placeholder="Search by job title, company, or skills…" />
           </div>
           <select id="jobLocationFilter" class="filter-select"><option value="">All Locations</option></select>
           <select id="jobTypeFilter"     class="filter-select"><option value="">All Job Types</option></select>
@@ -103,40 +89,28 @@
         </div>
       </div>
 
-      <!-- Resume card + Alert card side-by-side on desktop -->
       <div class="desktop-row">
-
         <!-- Resume Upload -->
         <div class="resume-card">
           <h2 class="resume-card-title">Get AI-Powered Job Matches</h2>
           <p class="resume-card-subtitle">Upload your resume and let our AI find the perfect opportunities for you</p>
-
           <input type="file" id="resumeFile" accept=".pdf,.txt,.doc,.docx,application/pdf" />
-
           <div class="upload-area" id="uploadArea">
             <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-            <div class="upload-text">Click to upload or drag and drop</div>
-            <div class="upload-hint">PDF, DOC, TXT (Max 5 MB)</div>
+            <div><div class="upload-text">Click to upload or drag and drop</div><div class="upload-hint">PDF, DOC, TXT (Max 5 MB)</div></div>
           </div>
-
           <div id="fileNameDisplay" class="file-name-display"></div>
-
           <div class="upload-actions">
-            <button id="analyzeBtn" class="btn btn-primary" disabled>
-              <i class="fas fa-magic"></i> Analyze Resume
-            </button>
-            <button id="pasteBtn" class="btn btn-secondary">
-              <i class="fas fa-paste"></i> Paste Resume Text
-            </button>
+            <button id="analyzeBtn" class="btn btn-primary" disabled><i class="fas fa-magic"></i> Analyze Resume</button>
+            <button id="pasteBtn"   class="btn btn-secondary"><i class="fas fa-paste"></i> Paste Resume Text</button>
           </div>
         </div>
 
-        <!-- Job Alert Subscribe (hidden until resume uploaded) -->
+        <!-- Job Alert Subscribe -->
         <div class="alert-subscribe-section" style="display:none;">
           <div class="alert-badge"><i class="fas fa-circle"></i> Live Alerts</div>
           <h2 class="alert-title">Never Miss Your Dream Job</h2>
           <p class="alert-subtitle">Get daily email alerts at 9 AM with new jobs matching your skills. Free forever.</p>
-
           <div class="alert-form" id="alertForm">
             <input type="text"  class="alert-input"            id="alertName"   placeholder="Your Name" />
             <input type="email" class="alert-input"            id="alertEmail"  placeholder="your@email.com" required />
@@ -145,19 +119,17 @@
               <i class="fas fa-bell"></i> Get Free Job Alerts
             </button>
           </div>
-
           <div class="alert-success" id="alertSuccess">
             <i class="fas fa-check-circle"></i>
-            <div><strong>You're subscribed!</strong> Check your email for confirmation. First alert arrives tomorrow at 9 AM.</div>
+            <div><strong>You're subscribed!</strong> Check your email. First alert arrives tomorrow at 9 AM.</div>
           </div>
-
           <div class="alert-stats">
             <div class="alert-stat"><i class="fas fa-clock"></i> Daily at 9 AM</div>
             <div class="alert-stat"><i class="fas fa-bolt"></i> Instant confirmation</div>
             <div class="alert-stat"><i class="fas fa-lock"></i> No spam, ever</div>
           </div>
         </div>
-      </div><!-- /desktop-row -->
+      </div>
 
       <!-- Analysis Section -->
       <div class="analysis-section" id="analysisSection">
@@ -169,13 +141,8 @@
           </div>
         </div>
         <div id="analysisContent" class="analysis-content" style="display:none;"></div>
-
-        <!-- Thinking animation -->
         <div id="thinkingBox" class="thinking-box" style="display:none;">
-          <div class="thinking-header">
-            <div class="thinking-orb"></div>
-            <span class="thinking-label">AI is thinking…</span>
-          </div>
+          <div class="thinking-header"><div class="thinking-orb"></div><span class="thinking-label">AI is thinking…</span></div>
           <div class="thinking-steps">
             <div class="thinking-step" id="step1"><span class="step-icon">📄</span><span>Reading your resume…</span></div>
             <div class="thinking-step" id="step2"><span class="step-icon">🔍</span><span>Extracting skills &amp; experience…</span></div>
@@ -187,29 +154,21 @@
         </div>
       </div>
 
-      <!-- Jobs Grid -->
       <div class="results-header">
         <h2 class="results-title" id="jobsTitle">Available Jobs</h2>
         <span id="jobsCount" class="results-count">0 Jobs</span>
       </div>
       <div id="jobsGrid" class="results-grid"></div>
+    </div><!-- /jobs -->
 
-    </div><!-- /jobs tab -->
-
-
-    <!-- ╔══════════════════════════════════╗
-         ║        RESEARCH TAB             ║
-         ╚══════════════════════════════════╝ -->
+    <!-- RESEARCH TAB -->
     <div id="research" class="tab-content">
-
-      <!-- Search -->
       <div class="search-section">
         <h2 class="search-title">Find Research Opportunities</h2>
         <div class="search-bar">
           <div class="search-input-wrapper">
             <i class="fas fa-search search-icon"></i>
-            <input type="search" id="profSearchInput" class="search-input"
-                   placeholder="Search by research area, professor name, or department…" />
+            <input type="search" id="profSearchInput" class="search-input" placeholder="Search by research area, professor name, or department…" />
           </div>
           <select id="profInstitutionFilter" class="filter-select"><option value="">All Institutions</option></select>
           <select id="profDepartmentFilter"  class="filter-select"><option value="">All Departments</option></select>
@@ -220,30 +179,20 @@
         </div>
       </div>
 
-      <!-- Resume Upload (Research) -->
       <div class="resume-card">
         <h2 class="resume-card-title">Get AI-Powered Research Matches</h2>
         <p class="resume-card-subtitle">Upload your resume and let our AI match you with 1500+ IIT professors</p>
-
         <div class="upload-area" id="uploadAreaResearch">
           <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-          <div class="upload-text">Click to upload or drag and drop</div>
-          <div class="upload-hint">PDF, DOC, TXT (Max 5 MB)</div>
+          <div><div class="upload-text">Click to upload or drag and drop</div><div class="upload-hint">PDF, DOC, TXT (Max 5 MB)</div></div>
         </div>
-
         <div id="fileNameDisplayResearch" class="file-name-display"></div>
-
         <div class="upload-actions">
-          <button id="analyzeBtnResearch" class="btn btn-primary" disabled>
-            <i class="fas fa-magic"></i> Analyze Resume
-          </button>
-          <button id="pasteBtnResearch" class="btn btn-secondary">
-            <i class="fas fa-paste"></i> Paste Resume Text
-          </button>
+          <button id="analyzeBtnResearch" class="btn btn-primary" disabled><i class="fas fa-magic"></i> Analyze Resume</button>
+          <button id="pasteBtnResearch"   class="btn btn-secondary"><i class="fas fa-paste"></i> Paste Resume Text</button>
         </div>
       </div>
 
-      <!-- Analysis Section (Research) -->
       <div class="analysis-section" id="analysisSectionResearch">
         <div class="analysis-header" id="analysisHeaderResearch">
           <h3 class="analysis-title">AI Analysis Results</h3>
@@ -253,12 +202,8 @@
           </div>
         </div>
         <div id="analysisContentResearch" class="analysis-content" style="display:none;"></div>
-
         <div id="thinkingBoxResearch" class="thinking-box" style="display:none;">
-          <div class="thinking-header">
-            <div class="thinking-orb"></div>
-            <span class="thinking-label">AI is thinking…</span>
-          </div>
+          <div class="thinking-header"><div class="thinking-orb"></div><span class="thinking-label">AI is thinking…</span></div>
           <div class="thinking-steps">
             <div class="thinking-step" id="stepR1"><span class="step-icon">📄</span><span>Reading your resume…</span></div>
             <div class="thinking-step" id="stepR2"><span class="step-icon">🔍</span><span>Extracting research interests…</span></div>
@@ -270,22 +215,18 @@
         </div>
       </div>
 
-      <!-- Professors Grid -->
       <div class="results-header">
         <h2 class="results-title" id="profsTitle">Available Research Opportunities</h2>
         <span id="profsCount" class="results-count">0 Professors</span>
       </div>
       <div id="profsGrid" class="results-grid"></div>
-
-    </div><!-- /research tab -->
+    </div><!-- /research -->
   </div><!-- /container -->
 
 
-  <!-- ══════════════════════════════════════
-       MODALS
-  ══════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════ MODALS ══════════════════════════════════════ -->
 
-  <!-- Paste Resume Modal -->
+  <!-- Paste Resume -->
   <div class="modal" id="pasteModal">
     <div class="modal-content">
       <div class="modal-header">
@@ -302,7 +243,68 @@
     </div>
   </div>
 
-  <!-- Skill Gap Analyzer Modal -->
+  <!-- ════════════════════════════════════════════════════════════
+       JOB DETAIL MODAL  — opens when someone clicks a shared link
+       ?job=slug  →  this modal auto-opens with that job's details
+  ════════════════════════════════════════════════════════════ -->
+  <div class="email-modal" id="jobDetailModal">
+    <div class="email-modal-content" style="max-width:560px;">
+      <div class="email-modal-header">
+        <div style="flex:1;min-width:0;">
+          <div class="email-modal-title" id="jdRole" style="font-size:20px;"></div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
+            <span style="font-size:14px;color:var(--text2);" id="jdCompany"></span>
+          </div>
+        </div>
+        <button class="email-modal-close" id="jobDetailClose"><i class="fas fa-times"></i></button>
+      </div>
+
+      <div class="email-modal-body" style="padding:18px 24px 24px;">
+
+        <!-- Tags row -->
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;" id="jdTagsRow"></div>
+
+        <!-- Description -->
+        <div id="jdDescriptionBox"
+             style="font-size:13px;line-height:1.8;color:var(--text2);
+                    background:var(--glass);border:1px solid var(--border);
+                    border-radius:12px;padding:14px 16px;margin-bottom:20px;
+                    white-space:pre-wrap;max-height:200px;overflow-y:auto;">
+        </div>
+
+        <!-- Action buttons -->
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <a id="jdApplyBtn" href="#" target="_blank"
+             style="flex:1;min-width:120px;background:linear-gradient(135deg,var(--neon),#0099cc);
+                    color:#080B14;padding:12px 18px;border-radius:10px;
+                    font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;
+                    text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;
+                    box-shadow:0 4px 15px rgba(0,212,255,0.25);">
+            <i class="fas fa-paper-plane"></i> Apply Now
+          </a>
+          <button id="jdShareAgainBtn"
+                  style="background:rgba(37,211,102,0.1);color:#25D366;
+                         border:1px solid rgba(37,211,102,0.25);padding:12px 16px;
+                         border-radius:10px;font-family:'DM Sans',sans-serif;
+                         font-size:14px;font-weight:700;cursor:pointer;
+                         display:flex;align-items:center;gap:7px;">
+            <i class="fas fa-share-alt"></i> Share
+          </button>
+          <button id="jdAiEmailBtn"
+                  style="background:rgba(124,58,237,0.1);color:var(--neon2);
+                         border:1px solid rgba(124,58,237,0.25);padding:12px 16px;
+                         border-radius:10px;font-family:'DM Sans',sans-serif;
+                         font-size:14px;font-weight:700;cursor:pointer;
+                         display:flex;align-items:center;gap:7px;">
+            <i class="fas fa-magic"></i> AI Email
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Skill Gap Analyzer -->
   <div class="skill-gap-modal" id="skillGapModal">
     <div class="skill-gap-content">
       <div class="skill-gap-header">
@@ -322,15 +324,13 @@
         </div>
         <div class="resume-warning" id="sgResumeWarning" style="display:none;">
           <i class="fas fa-exclamation-triangle"></i>
-          <div><strong>Resume not uploaded yet!</strong><br>Please upload or paste your resume first, then come back to analyze your fit.</div>
+          <div><strong>Resume not uploaded yet!</strong><br>Please upload or paste your resume first.</div>
         </div>
-        <button class="analyze-gap-btn" id="analyzeGapBtn">
-          <i class="fas fa-chart-bar"></i> Analyze My Skill Gap
-        </button>
+        <button class="analyze-gap-btn" id="analyzeGapBtn"><i class="fas fa-chart-bar"></i> Analyze My Skill Gap</button>
         <div class="gap-results" id="gapResults">
           <div class="overall-score-card">
             <div class="score-circle" id="scoreCircle">
-              <span class="score-num"   id="scoreNum">0%</span>
+              <span class="score-num" id="scoreNum">0%</span>
               <span class="score-label">Match</span>
             </div>
             <div class="score-details">
@@ -350,7 +350,7 @@
     </div>
   </div>
 
-  <!-- Job Application Email Modal -->
+  <!-- Job Application Email -->
   <div class="email-modal" id="jobEmailModal">
     <div class="email-modal-content">
       <div class="email-modal-header">
@@ -369,50 +369,38 @@
             <div class="inst" id="jobEmailLocation"></div>
           </div>
         </div>
-
         <label class="email-form-label">Your Name</label>
         <input type="text" id="jobStudentName"   class="email-form-input" placeholder="Your full name" />
-
         <label class="email-form-label">Your Course &amp; College</label>
         <input type="text" id="jobStudentCourse" class="email-form-input" placeholder="e.g. B.Tech CSE, 3rd Year, IIT Delhi" />
-
-        <label class="email-form-label">Why you're a great fit (your relevant experience)</label>
-        <textarea id="jobStudentProject" class="email-form-textarea" placeholder="e.g. I have experience in React and Node.js, built multiple full-stack projects…"></textarea>
-
+        <label class="email-form-label">Why you're a great fit</label>
+        <textarea id="jobStudentProject" class="email-form-textarea" placeholder="e.g. I have experience in React and Node.js…"></textarea>
         <label class="email-form-label">Tone</label>
         <select id="jobEmailTone" class="email-form-input" style="cursor:pointer;">
           <option value="professional">Professional &amp; Confident</option>
           <option value="enthusiastic">Enthusiastic &amp; Energetic</option>
           <option value="concise">Short &amp; Direct</option>
         </select>
-
         <button class="generate-btn" id="generateJobEmailBtn"
                 style="background:linear-gradient(135deg,var(--neon),#0099cc);box-shadow:0 4px 15px rgba(0,212,255,0.3);">
           <i class="fas fa-magic"></i> Generate Application Email
         </button>
-
         <div class="generated-email-box" id="generatedJobEmailBox">
           <div class="generated-email-toolbar">
             <span class="generated-email-label">Generated Email</span>
-            <button class="copy-btn" id="copyJobEmailBtn" style="background:var(--neon);color:#080B14;">
-              <i class="fas fa-copy"></i> Copy
-            </button>
+            <button class="copy-btn" id="copyJobEmailBtn" style="background:var(--neon);color:#080B14;"><i class="fas fa-copy"></i> Copy</button>
           </div>
           <div class="generated-email-text" id="generatedJobEmailText"></div>
           <div class="email-actions-row">
-            <a href="#" class="btn-send-email" id="sendJobEmailBtn" target="_blank">
-              <i class="fas fa-paper-plane"></i> Open in Gmail
-            </a>
-            <button class="btn-regenerate" id="regenerateJobBtn">
-              <i class="fas fa-redo"></i> Regenerate
-            </button>
+            <a href="#" class="btn-send-email" id="sendJobEmailBtn" target="_blank"><i class="fas fa-paper-plane"></i> Open in Gmail</a>
+            <button class="btn-regenerate" id="regenerateJobBtn"><i class="fas fa-redo"></i> Regenerate</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Research Cold Email Modal -->
+  <!-- Research Cold Email -->
   <div class="email-modal" id="emailModal">
     <div class="email-modal-content">
       <div class="email-modal-header">
@@ -431,23 +419,15 @@
             <div class="inst" id="emailProfInst">Institution</div>
           </div>
         </div>
-
         <label class="email-form-label">Your Name</label>
-        <input type="text" id="studentName"    class="email-form-input" placeholder="Your full name" />
-
+        <input type="text" id="studentName"   class="email-form-input" placeholder="Your full name" />
         <label class="email-form-label">Your Course &amp; Year</label>
-        <input type="text" id="studentCourse"  class="email-form-input" placeholder="e.g. B.Tech CSE, 2nd Year, IIT Bombay" />
-
+        <input type="text" id="studentCourse" class="email-form-input" placeholder="e.g. B.Tech CSE, 2nd Year, IIT Bombay" />
         <label class="email-form-label">Your Relevant Project / Research</label>
-        <textarea id="studentProject" class="email-form-textarea" placeholder="e.g. I built a deep learning model for image classification using PyTorch…"></textarea>
-
+        <textarea id="studentProject" class="email-form-textarea" placeholder="e.g. I built a deep learning model…"></textarea>
         <label class="email-form-label">Why This Professor? (optional)</label>
-        <input type="text" id="studentReason"  class="email-form-input" placeholder="e.g. I came across your recent paper and it aligns with my research interests…" />
-
-        <button class="generate-btn" id="generateEmailBtn">
-          <i class="fas fa-magic"></i> Generate Personalised Email
-        </button>
-
+        <input type="text" id="studentReason" class="email-form-input" placeholder="e.g. I came across your recent paper…" />
+        <button class="generate-btn" id="generateEmailBtn"><i class="fas fa-magic"></i> Generate Personalised Email</button>
         <div class="generated-email-box" id="generatedEmailBox">
           <div class="generated-email-toolbar">
             <span class="generated-email-label">Generated Email</span>
@@ -455,12 +435,8 @@
           </div>
           <div class="generated-email-text" id="generatedEmailText"></div>
           <div class="email-actions-row">
-            <a href="#" class="btn-send-email" id="sendEmailBtn" target="_blank">
-              <i class="fas fa-paper-plane"></i> Open in Gmail
-            </a>
-            <button class="btn-regenerate" id="regenerateBtn">
-              <i class="fas fa-redo"></i> Regenerate
-            </button>
+            <a href="#" class="btn-send-email" id="sendEmailBtn" target="_blank"><i class="fas fa-paper-plane"></i> Open in Gmail</a>
+            <button class="btn-regenerate" id="regenerateBtn"><i class="fas fa-redo"></i> Regenerate</button>
           </div>
         </div>
       </div>
@@ -468,15 +444,11 @@
   </div>
 
 
-  <!-- ══════════════════════════════════════
-       FOOTER
-  ══════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════ FOOTER ══════════════════════════════════════ -->
   <footer style="background:var(--bg2);border-top:1px solid var(--border);padding:40px 20px;margin-top:60px;">
     <div style="max-width:1200px;margin:0 auto;text-align:center;">
       <div style="margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:10px;">
-        <img src="logo.png" alt="CareerLift"
-             style="height:28px;width:auto;object-fit:contain;border-radius:6px;"
-             onerror="this.style.display='none'" />
+        <img src="logo.png" alt="CareerLift" style="height:28px;width:auto;border-radius:6px;" onerror="this.style.display='none'" />
         <a href="/" style="font-size:22px;font-weight:800;background:linear-gradient(135deg,#00D4FF,#7C3AED);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;">CareerLift</a>
       </div>
       <p style="color:var(--text2);font-size:14px;margin-bottom:8px;">AI-Powered Jobs &amp; Research Platform for Students</p>
@@ -487,12 +459,7 @@
     </div>
   </footer>
 
-
-  <!-- ══════════════════════════════════════
-       SCRIPTS
-  ══════════════════════════════════════ -->
-
-  <!-- PDF.js (must load before main.js) -->
+  <!-- PDF.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script>
     if (typeof pdfjsLib !== 'undefined') {
@@ -500,9 +467,6 @@
         'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     }
   </script>
-
-  <!-- App entry point (ES module) -->
   <script type="module" src="js/main.js"></script>
-
 </body>
 </html>
