@@ -1,6 +1,5 @@
 /**
- * main.js
- * Application entry point.
+ * main.js — Application entry point
  */
 
 import { fetchAllData }                               from './dataLoader.js';
@@ -46,14 +45,12 @@ const el = {
   totalCount        : document.getElementById('totalCount'),
   tabButtons        : document.querySelectorAll('.tab-btn'),
 
-  /* Jobs tab */
   jobsGrid          : document.getElementById('jobsGrid'),
   jobsCount         : document.getElementById('jobsCount'),
   jobsTitle         : document.getElementById('jobsTitle'),
   jobSearchInput    : document.getElementById('jobSearchInput'),
   jobLocFilter      : document.getElementById('jobLocationFilter'),
   jobTypeFilter     : document.getElementById('jobTypeFilter'),
-  jobSortSelect     : document.getElementById('jobSortSelect'),
 
   resumeFile        : document.getElementById('resumeFile'),
   uploadArea        : document.getElementById('uploadArea'),
@@ -66,7 +63,6 @@ const el = {
   desktopRow        : document.querySelector('.desktop-row'),
   alertSubscribe    : document.querySelector('.alert-subscribe-section'),
 
-  /* Research tab */
   profsGrid         : document.getElementById('profsGrid'),
   profsCount        : document.getElementById('profsCount'),
   profsTitle        : document.getElementById('profsTitle'),
@@ -81,7 +77,6 @@ const el = {
   analysisHeaderR   : document.getElementById('analysisHeaderResearch'),
   profMatchCount    : document.getElementById('profMatchCount'),
 
-  /* Paste modal */
   pasteModal    : document.getElementById('pasteModal'),
   pasteTextarea : document.getElementById('pasteTextarea'),
   modalClose    : document.getElementById('modalClose'),
@@ -90,22 +85,18 @@ const el = {
 };
 
 /* ─────────────────────────────────────────────
-   GRID LAYOUT HELPER
-   Show alert card → switch desktop-row to 2 columns.
-   Hide alert card → resume card stretches full width.
+   GRID LAYOUT — show alert card → 2 columns
 ───────────────────────────────────────────── */
 function showAlertCard() {
   if (!el.alertSubscribe || !el.desktopRow) return;
   el.alertSubscribe.style.display = 'block';
-  // Only go 2-col on wide screens
   if (window.innerWidth >= 1024) {
     el.desktopRow.style.gridTemplateColumns = '1fr 1fr';
   }
 }
 
-// Keep layout correct on resize
 window.addEventListener('resize', () => {
-  if (el.alertSubscribe && el.alertSubscribe.style.display !== 'none') {
+  if (el.alertSubscribe && el.alertSubscribe.style.display !== 'none' && el.desktopRow) {
     el.desktopRow.style.gridTemplateColumns = window.innerWidth >= 1024 ? '1fr 1fr' : '1fr';
   }
 });
@@ -124,26 +115,16 @@ el.tabButtons.forEach(btn => {
 });
 
 /* ─────────────────────────────────────────────
-   FILTER / SEARCH
+   FILTERS
 ───────────────────────────────────────────── */
 function applyJobFilters() {
-  const filtered = filterJobs(
-    allJobs,
-    el.jobSearchInput.value,
-    el.jobLocFilter.value,
-    el.jobTypeFilter.value,
-  );
+  const filtered = filterJobs(allJobs, el.jobSearchInput.value, el.jobLocFilter.value, el.jobTypeFilter.value);
   renderJobs(filtered, matchedJobs, el.jobsGrid, el.jobsTitle);
   el.jobsCount.textContent = `${filtered.length} Jobs`;
 }
 
 function applyProfessorFilters() {
-  const filtered = filterProfessors(
-    allProfessors,
-    el.profSearchInput.value,
-    el.profInstFilter.value,
-    el.profDeptFilter.value,
-  );
+  const filtered = filterProfessors(allProfessors, el.profSearchInput.value, el.profInstFilter.value, el.profDeptFilter.value);
   renderProfessors(filtered, matchedProfs, el.profsGrid, el.profsTitle);
   el.profsCount.textContent = `${filtered.length} Professors`;
 }
@@ -152,24 +133,24 @@ function applyProfessorFilters() {
 [el.profSearchInput, el.profInstFilter, el.profDeptFilter].forEach(e => e?.addEventListener('input', applyProfessorFilters));
 
 /* ─────────────────────────────────────────────
-   ANALYSIS SECTION COLLAPSE TOGGLE
+   COLLAPSE TOGGLE
 ───────────────────────────────────────────── */
 el.analysisHeader?.addEventListener('click',  () => el.analysisSection.classList.toggle('collapsed'));
 el.analysisHeaderR?.addEventListener('click', () => el.analysisSectionR.classList.toggle('collapsed'));
 
 /* ─────────────────────────────────────────────
-   FILE UPLOAD HANDLING
+   FILE UPLOAD
 ───────────────────────────────────────────── */
 function onFileSelected(file) {
   if (!file) return;
   selectedFile = file;
-  const label  = `Selected: ${file.name}`;
-  el.fileNameDisplay.textContent = label;
+  const label  = `📄 ${file.name}`;
+  el.fileNameDisplay.textContent  = label;
   el.fileNameDisplay.style.display = 'block';
-  el.analyzeBtn.disabled = false;
+  el.analyzeBtn.disabled          = false;
   el.fileNameDisplayR.textContent = label;
   el.fileNameDisplayR.style.display = 'block';
-  el.analyzeBtnR.disabled = false;
+  el.analyzeBtnR.disabled         = false;
 }
 
 el.uploadArea?.addEventListener('click', () => el.resumeFile.click());
@@ -216,9 +197,7 @@ el.analyzeBtn?.addEventListener('click', async () => {
   } catch (err) {
     showStatus(err.message || 'Analysis failed', 'error');
     showThinkingError('thinkingStream', err.message);
-  } finally {
-    setButtonLoading(el.analyzeBtn, false);
-  }
+  } finally { setButtonLoading(el.analyzeBtn, false); }
 });
 
 el.analyzeBtnR?.addEventListener('click', async () => {
@@ -231,28 +210,24 @@ el.analyzeBtnR?.addEventListener('click', async () => {
   } catch (err) {
     showStatus(err.message || 'Analysis failed', 'error');
     showThinkingError('thinkingStreamResearch', err.message);
-  } finally {
-    setButtonLoading(el.analyzeBtnR, false);
-  }
+  } finally { setButtonLoading(el.analyzeBtnR, false); }
 });
 
 /* ─────────────────────────────────────────────
-   RESUME ANALYSIS — JOBS TAB
+   RESUME ANALYSIS — JOBS
 ───────────────────────────────────────────── */
 const JOB_STEP_ICONS = ['📄','🔍','🧠','⚡','✅'];
 
 async function triggerJobAnalysis(resumeTextInput) {
   setResumeText(resumeTextInput);
-
   el.analysisSection.classList.add('active');
   el.analysisSection.classList.remove('collapsed');
   document.getElementById('analysisContent').style.display = 'none';
 
   const thinkBox    = document.getElementById('thinkingBox');
   const thinkStream = document.getElementById('thinkingStream');
-  thinkBox.style.display = 'block';
+  thinkBox.style.display  = 'block';
   thinkStream.textContent = '';
-
   resetThinkingSteps('step', 5, JOB_STEP_ICONS, 'thinkingBox');
 
   const [analysis] = await Promise.all([
@@ -264,45 +239,37 @@ async function triggerJobAnalysis(resumeTextInput) {
   await typewriterEffect(thinkStream, analysis, 6);
 
   const keywords = extractKeywords(`${resumeTextInput} ${analysis}`, 50);
-  matchedJobs    = buildMatchScores(
-    allJobs, keywords,
-    ['Company', 'Role', 'Description', 'JobType'],
-    job => job.Company + job.Role,
-  );
+  matchedJobs    = buildMatchScores(allJobs, keywords, ['Company','Role','Description','JobType'], job => job.Company + job.Role);
 
   el.jobMatchCount.textContent = `${Object.keys(matchedJobs).length} Matches`;
   applyJobFilters();
   showStatus('Resume analyzed! Scroll down to see matched jobs.', 'success');
-
-  // Show alert card + switch to 2-col grid
   showAlertCard();
 
   setTimeout(() => {
     el.analysisSection.classList.add('collapsed');
     setTimeout(() => {
-      const firstMatch = document.querySelector('.job-card.matched');
-      if (firstMatch) firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const f = document.querySelector('.job-card.matched');
+      if (f) f.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 400);
   }, 3000);
 }
 
 /* ─────────────────────────────────────────────
-   RESUME ANALYSIS — RESEARCH TAB
+   RESUME ANALYSIS — RESEARCH
 ───────────────────────────────────────────── */
 const RESEARCH_STEP_ICONS = ['📄','🔍','🧪','🏛️','✅'];
 
 async function triggerResearchAnalysis(resumeTextInput) {
   setResumeText(resumeTextInput);
-
   el.analysisSectionR.classList.add('active');
   el.analysisSectionR.classList.remove('collapsed');
   document.getElementById('analysisContentResearch').style.display = 'none';
 
   const thinkBoxR    = document.getElementById('thinkingBoxResearch');
   const thinkStreamR = document.getElementById('thinkingStreamResearch');
-  thinkBoxR.style.display = 'block';
+  thinkBoxR.style.display  = 'block';
   thinkStreamR.textContent = '';
-
   resetThinkingSteps('stepR', 5, RESEARCH_STEP_ICONS, 'thinkingBoxResearch');
 
   const [analysis] = await Promise.all([
@@ -313,13 +280,12 @@ async function triggerResearchAnalysis(resumeTextInput) {
   markThinkingComplete('stepR', 5, 'thinkingBoxResearch');
   await typewriterEffect(thinkStreamR, analysis, 6);
 
-  // Professor matching (custom scoring — haystack is freeform text)
   const kws  = extractKeywords(`${resumeTextInput} ${analysis}`, 50);
   matchedProfs = {};
   allProfessors.forEach(prof => {
     const areas    = getResearchAreas(prof);
     const haystack = `${prof.Name} ${prof.Department} ${areas}`.toLowerCase();
-    let score      = 0;
+    let score = 0;
     kws.forEach(kw => {
       if (haystack.includes(kw)) score += 2;
       const parts = kw.split(/\s+/);
@@ -335,62 +301,94 @@ async function triggerResearchAnalysis(resumeTextInput) {
   setTimeout(() => {
     el.analysisSectionR.classList.add('collapsed');
     setTimeout(() => {
-      const firstMatch = document.querySelector('.professor-card.matched');
-      if (firstMatch) firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const f = document.querySelector('.professor-card.matched');
+      if (f) f.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 400);
   }, 3000);
 }
 
 /* ─────────────────────────────────────────────
-   API CALL
+   API
 ───────────────────────────────────────────── */
 async function callAnalyzeAPI(resumeText) {
   const res = await fetch(API_ENDPOINTS.analyze, {
-    method : 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body   : JSON.stringify({ resume: resumeText }),
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ resume: resumeText }),
   });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({ message: 'Analysis failed' }));
-    throw new Error(err.message || 'Failed to analyze resume');
-  }
+  if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.message || 'Failed to analyze'); }
   const data = await res.json();
   return data.result || '';
 }
 
 /* ─────────────────────────────────────────────
-   SHARE FUNCTIONALITY
+   SHARE — proper bottom sheet / modal
 ───────────────────────────────────────────── */
 async function shareJob(d) {
-  const text = `🚀 Job Opportunity!\n\n🏢 ${d.company}\n💼 ${d.role}${d.location ? '\n📍 ' + d.location : ''}${d.stipend ? '\n💰 ' + d.stipend : ''}\n\nvia CareerLift`;
-  const url  = d.applyLink || window.location.href;
+  const shareText = `🚀 Job Opportunity!\n\n🏢 ${d.company}\n💼 ${d.role}${d.location ? '\n📍 ' + d.location : ''}${d.stipend ? '\n💰 ' + d.stipend : ''}\n\nvia CareerLift`;
+  const shareUrl  = d.applyLink || window.location.href;
 
+  // Native share (mobile browsers)
   if (navigator.share) {
-    try { await navigator.share({ title: `${d.role} at ${d.company}`, text, url }); return; } catch { /* fallthrough */ }
+    try {
+      await navigator.share({ title: `${d.role} at ${d.company}`, text: shareText, url: shareUrl });
+      return;
+    } catch { /* user cancelled or not supported — fall through */ }
   }
 
+  // Custom share sheet
   const overlay = document.createElement('div');
-  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);';
+  overlay.className = 'share-overlay';
+
   overlay.innerHTML = `
-    <div style="background:#0D1117;border:1px solid rgba(255,255,255,0.14);border-radius:16px;padding:24px;width:300px;display:flex;flex-direction:column;gap:10px;">
-      <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:16px;color:#F1F5F9;margin-bottom:4px;">Share this Job</div>
-      <a href="https://wa.me/?text=${encodeURIComponent(text + '\n' + url)}" target="_blank"
-         style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.25);border-radius:10px;color:#25D366;font-weight:700;font-size:14px;text-decoration:none;font-family:'DM Sans',sans-serif;">
-        <i class="fab fa-whatsapp" style="font-size:18px;"></i> WhatsApp
+    <div class="share-sheet">
+      <div class="share-handle"></div>
+      <div class="share-job-title">${d.role}</div>
+      <div class="share-job-meta">${d.company}${d.location ? ' · ' + d.location : ''}${d.stipend ? ' · ' + d.stipend : ''}</div>
+      <div class="share-divider"></div>
+
+      <a href="https://wa.me/?text=${encodeURIComponent(shareText + '\n' + shareUrl)}"
+         target="_blank" class="share-btn" id="shareWA">
+        <div class="share-btn-icon wa"><i class="fab fa-whatsapp"></i></div>
+        <span>Share on WhatsApp</span>
       </a>
-      <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}" target="_blank"
-         style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(10,102,194,0.1);border:1px solid rgba(10,102,194,0.25);border-radius:10px;color:#0A66C2;font-weight:700;font-size:14px;text-decoration:none;font-family:'DM Sans',sans-serif;">
-        <i class="fab fa-linkedin" style="font-size:18px;"></i> LinkedIn
+
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}"
+         target="_blank" class="share-btn" id="shareLI">
+        <div class="share-btn-icon li"><i class="fab fa-linkedin"></i></div>
+        <span>Share on LinkedIn</span>
       </a>
-      <button onclick="navigator.clipboard.writeText(${JSON.stringify(text + '\n' + url)}).then(()=>{this.innerHTML='<i class=\\'fas fa-check\\'></i> Copied!';this.style.color='#10B981';setTimeout(()=>this.closest('[style*=inset]').remove(),1200);})"
-              style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.2);border-radius:10px;color:#00D4FF;font-weight:700;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;">
-        <i class="fas fa-link" style="font-size:16px;"></i> Copy Link
+
+      <button class="share-btn" id="shareCopy">
+        <div class="share-btn-icon cp"><i class="fas fa-link"></i></div>
+        <span>Copy Link</span>
       </button>
-      <button onclick="this.closest('[style*=inset]').remove()"
-              style="margin-top:4px;background:transparent;border:none;color:#475569;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;padding:6px;">Cancel</button>
+
+      <div class="share-divider"></div>
+      <div class="share-cancel" id="shareCancel">Cancel</div>
     </div>`;
+
   document.body.appendChild(overlay);
+
+  // Copy link handler
+  overlay.querySelector('#shareCopy').addEventListener('click', () => {
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      const btn = overlay.querySelector('#shareCopy');
+      btn.querySelector('span').textContent = 'Copied!';
+      btn.querySelector('.share-btn-icon').style.color = 'var(--green)';
+      setTimeout(() => overlay.remove(), 1200);
+    });
+  });
+
+  // Close handlers
+  overlay.querySelector('#shareCancel').addEventListener('click', () => overlay.remove());
   overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+
+  // Close on link click
+  ['#shareWA','#shareLI'].forEach(id => {
+    overlay.querySelector(id)?.addEventListener('click', () => {
+      setTimeout(() => overlay.remove(), 300);
+    });
+  });
 }
 
 /* ─────────────────────────────────────────────
@@ -408,7 +406,7 @@ document.getElementById('jobEmailModal')?.addEventListener('click', e => {
 
 document.getElementById('emailModalClose')?.addEventListener('click',    () => document.getElementById('emailModal').classList.remove('active'));
 document.getElementById('jobEmailModalClose')?.addEventListener('click', () => document.getElementById('jobEmailModal').classList.remove('active'));
-document.getElementById('skillGapClose')?.addEventListener('click',      closeSkillGap);
+document.getElementById('skillGapClose')?.addEventListener('click', closeSkillGap);
 
 document.getElementById('generateEmailBtn')?.addEventListener('click',    generateColdEmail);
 document.getElementById('regenerateBtn')?.addEventListener('click',       generateColdEmail);
@@ -422,7 +420,7 @@ document.getElementById('analyzeGapBtn')?.addEventListener('click', runSkillGapA
 document.getElementById('alertEmail')?.addEventListener('keypress', e => { if (e.key === 'Enter') subscribeToAlerts(); });
 
 /* ─────────────────────────────────────────────
-   EXPOSE TO WINDOW (inline onclick in cards)
+   EXPOSE TO WINDOW
 ───────────────────────────────────────────── */
 window.openEmailModal    = openEmailModal;
 window.openJobEmailModal = openJobEmailModal;
@@ -434,23 +432,15 @@ window.subscribeToAlerts = subscribeToAlerts;
    HELPERS
 ───────────────────────────────────────────── */
 function setButtonLoading(btn, loading) {
-  if (loading) {
-    btn._originalHTML = btn.innerHTML;
-    btn.innerHTML     = '<span class="loading"></span> Analyzing...';
-    btn.disabled      = true;
-  } else {
-    btn.innerHTML = btn._originalHTML || 'Analyze Resume';
-    btn.disabled  = false;
-  }
+  if (loading) { btn._orig = btn.innerHTML; btn.innerHTML = '<span class="loading"></span> Analyzing...'; btn.disabled = true; }
+  else { btn.innerHTML = btn._orig || 'Analyze Resume'; btn.disabled = false; }
 }
-
 function validateResumeText(text) {
   if (!text || text.trim().length < 10) throw new Error('File appears to be empty or unreadable.');
 }
-
 function showThinkingError(streamId, message) {
-  const stream = document.getElementById(streamId);
-  if (stream) stream.textContent = `Error: ${message}\n\nPlease try again or use the paste option.`;
+  const s = document.getElementById(streamId);
+  if (s) s.textContent = `Error: ${message}\n\nPlease try again or paste your resume text.`;
 }
 
 /* ─────────────────────────────────────────────
@@ -467,22 +457,16 @@ async function init() {
 
     populateJobFilters(allJobs, el.jobLocFilter, el.jobTypeFilter);
     populateProfessorFilters(allProfessors, el.profInstFilter, el.profDeptFilter);
-
     applyJobFilters();
     applyProfessorFilters();
 
     el.totalCount.style.display = 'inline-block';
     el.totalCount.innerHTML =
-      `${allJobs.length} Jobs<span style="color:var(--text3);margin:0 6px;">•</span>${allProfessors.length} Research`;
+      `${allJobs.length} Jobs · ${allProfessors.length} Research`;
 
-    showStatus(`Welcome! Loaded ${allJobs.length} jobs and ${allProfessors.length} research opportunities.`, 'success');
+    showStatus(`Loaded ${allJobs.length} jobs & ${allProfessors.length} research opportunities.`, 'success');
   } catch {
-    const errHTML = `
-      <div class="empty-state">
-        <div class="empty-icon"><i class="fas fa-exclamation-triangle"></i></div>
-        <h3 class="empty-title">Failed to load data</h3>
-        <p class="empty-text">Please check your internet connection and refresh the page</p>
-      </div>`;
+    const errHTML = `<div class="empty-state"><div class="empty-icon"><i class="fas fa-exclamation-triangle"></i></div><h3 class="empty-title">Failed to load data</h3><p class="empty-text">Check your internet connection and refresh</p></div>`;
     el.jobsGrid.innerHTML  = errHTML;
     el.profsGrid.innerHTML = errHTML;
     showStatus('Failed to load data', 'error');
