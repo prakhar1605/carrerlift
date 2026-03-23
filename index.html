@@ -3,21 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CareerLift - AI-Powered Jobs & Research Platform</title>
+  <title>Carrerlift - AI-Powered Jobs & Research Platform</title>
   <meta name="description" content="Find jobs and research internships with AI-powered resume matching. Connect with 1500+ IIT professors and top companies." />
 
   <link rel="icon" type="image/png" href="logo.png" />
 
   <!-- Open Graph -->
   <meta property="og:type"        content="website" />
-  <meta property="og:title"       content="CareerLift - AI-Powered Jobs & Research" />
+  <meta property="og:title"       content="Carrerlift - AI-Powered Jobs & Research" />
   <meta property="og:description" content="Find jobs and research internships with AI matching. Connect with 1500+ IIT professors." />
   <meta property="og:image"       content="logo.png" />
-  <meta property="og:site_name"   content="CareerLift" />
+  <meta property="og:site_name"   content="Carrerlift" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image" />
-  <meta name="twitter:title"       content="CareerLift - AI Jobs & Research" />
+  <meta name="twitter:title"       content="Carrerlift - AI Jobs & Research" />
   <meta name="twitter:description" content="AI-powered job and research internship platform for students" />
 
   <!-- Google Analytics -->
@@ -50,7 +50,7 @@
     <div class="header-content">
       <a href="/" class="logo-link">
         <img src="logo.png" alt="CareerLift" class="logo-img" onerror="this.style.display='none'" />
-        <span class="logo-text">CareerLift</span>
+        <span class="logo-text">Carrerlift</span>
       </a>
       <div class="header-actions">
         <span id="totalCount" class="results-count" style="display:none;"></span>
@@ -62,6 +62,7 @@
   <div class="tab-navigation">
     <div class="tab-nav-content">
       <button class="tab-btn active" data-tab="jobs"><i class="fas fa-briefcase"></i> Jobs</button>
+      <button class="tab-btn" data-tab="hr"><i class="fas fa-users"></i> HR Contacts</button>
       <button class="tab-btn" data-tab="research"><i class="fas fa-flask"></i> Research Internships</button>
     </div>
   </div>
@@ -160,6 +161,26 @@
       </div>
       <div id="jobsGrid" class="results-grid"></div>
     </div><!-- /jobs -->
+
+    <!-- HR CONTACTS TAB -->
+    <div id="hr" class="tab-content">
+      <div class="search-section">
+        <h2 class="search-title">Find HR & Talent Acquisition Contacts</h2>
+        <div class="search-bar">
+          <div class="search-input-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input type="search" id="hrSearchInput" class="search-input" placeholder="Search by name, job title, or company…" />
+          </div>
+          <select id="hrCompanyFilter"  class="filter-select"><option value="">All Companies</option></select>
+          <select id="hrLocationFilter" class="filter-select"><option value="">All Locations</option></select>
+        </div>
+      </div>
+      <div class="results-header">
+        <h2 class="results-title" id="hrTitle">HR & Talent Acquisition Contacts</h2>
+        <span id="hrCount" class="results-count">0 Contacts</span>
+      </div>
+      <div id="hrGrid" class="results-grid"></div>
+    </div><!-- /hr -->
 
     <!-- RESEARCH TAB -->
     <div id="research" class="tab-content">
@@ -449,12 +470,13 @@
     <div style="max-width:1200px;margin:0 auto;text-align:center;">
       <div style="margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:10px;">
         <img src="logo.png" alt="CareerLift" style="height:28px;width:auto;border-radius:6px;" onerror="this.style.display='none'" />
-        <a href="/" style="font-size:22px;font-weight:800;background:linear-gradient(135deg,#00D4FF,#7C3AED);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;">CareerLift</a>
+        <a href="/" style="font-size:22px;font-weight:800;background:linear-gradient(135deg,#00D4FF,#7C3AED);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;">Carrerlift</a>
       </div>
       <p style="color:var(--text2);font-size:14px;margin-bottom:8px;">AI-Powered Jobs &amp; Research Platform for Students</p>
       <p style="color:var(--text3);font-size:13px;margin-bottom:20px;">Connecting students with opportunities at top companies and 1500+ IIT professors</p>
+      <p style="margin-bottom:20px;"><a href="mailto:contactcarrerlift@gmail.com" style="color:var(--neon);font-size:13px;text-decoration:none;">contactcarrerlift@gmail.com</a></p>
       <div style="border-top:1px solid var(--border);padding-top:20px;margin-top:20px;">
-        <p style="color:var(--text3);font-size:12px;">© 2026 CareerLift. All rights reserved.</p>
+        <p style="color:var(--text3);font-size:12px;">© 2026 Carrerlift. All rights reserved.</p>
       </div>
     </div>
   </footer>

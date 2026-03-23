@@ -211,7 +211,84 @@ export function renderProfessors(professors, matchScores, gridEl, titleEl) {
   }
 }
 
-/* ── FILTER HELPERS ── */
+/* ─────────────────────────────────────────────
+   HR CONTACT CARD HTML
+───────────────────────────────────────────── */
+function buildHRCardHTML(hr) {
+  const name     = hr['Name']            || hr['name']             || 'HR Contact';
+  const title    = hr['Job Title']       || hr['job title']        || hr['Title'] || '';
+  const company  = hr['Company Name']    || hr['company name']     || hr['Company'] || '';
+  const location = hr['Location']        || hr['location']         || '';
+  const linkedin = hr['Linkedin URL']    || hr['LinkedIn URL']     || hr['linkedin url'] || '';
+  const niche    = hr['Company Niche']   || hr['company niche']    || '';
+  const website  = hr['Company Website'] || hr['company website']  || '';
+
+  return `
+    <div class="professor-card">
+      <div class="professor-header">
+        <div class="professor-info">
+          <div class="professor-name">${name}</div>
+          <div class="professor-department">${title}</div>
+          <div class="professor-institution">${company}${location ? ' · ' + location : ''}</div>
+        </div>
+        ${niche ? `<div class="trending-badge" style="background:rgba(124,58,237,0.15);color:var(--neon2);border:1px solid rgba(124,58,237,0.3);font-size:10px;max-width:110px;text-align:center;">${niche}</div>` : ''}
+      </div>
+
+      <div class="job-actions" style="margin-top:14px;">
+        ${linkedin
+          ? `<a href="${linkedin}" target="_blank" class="btn-apply" style="background:linear-gradient(135deg,#0A66C2,#0077B5);"><i class="fab fa-linkedin"></i> LinkedIn</a>`
+          : ''}
+        ${website
+          ? `<a href="${website}" target="_blank" class="btn-save"><i class="fas fa-globe"></i> Website</a>`
+          : ''}
+      </div>
+    </div>`;
+}
+
+export function renderHRContacts(hrContacts, gridEl, titleEl) {
+  if (!hrContacts || hrContacts.length === 0) {
+    gridEl.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon"><i class="fas fa-users"></i></div>
+        <h3 class="empty-title">No HR contacts found</h3>
+        <p class="empty-text">Try adjusting your search or filters</p>
+      </div>`;
+    return;
+  }
+  gridEl.innerHTML = hrContacts.map(hr => buildHRCardHTML(hr)).join('');
+  if (titleEl) titleEl.textContent = 'HR & Talent Acquisition Contacts';
+}
+
+export function populateHRFilters(hrContacts, companyEl, locationEl) {
+  const companies  = new Set();
+  const locations  = new Set();
+  hrContacts.forEach(hr => {
+    const co  = hr['Company Name'] || hr['Company'] || '';
+    const loc = hr['Location']     || '';
+    if (co)  companies.add(co);
+    if (loc) locations.add(loc);
+  });
+  companyEl.innerHTML = '<option value="">All Companies</option>'
+    + Array.from(companies).sort().map(c => `<option value="${c}">${c}</option>`).join('');
+  locationEl.innerHTML = '<option value="">All Locations</option>'
+    + Array.from(locations).sort().map(l => `<option value="${l}">${l}</option>`).join('');
+}
+
+export function filterHRContacts(hrContacts, query, company, location) {
+  const q = (query || '').toLowerCase();
+  return hrContacts.filter(hr => {
+    const name    = hr['Name']         || '';
+    const title   = hr['Job Title']    || '';
+    const co      = hr['Company Name'] || hr['Company'] || '';
+    const loc     = hr['Location']     || '';
+    const hay     = `${name} ${title} ${co} ${loc}`.toLowerCase();
+    return (!q        || hay.includes(q))
+      && (!company  || co  === company)
+      && (!location || loc === location);
+  });
+}
+
+
 export function populateJobFilters(jobs, locationEl, typeEl) {
   const locations = new Set(), types = new Set();
   jobs.forEach(job => {

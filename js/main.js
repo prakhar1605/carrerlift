@@ -6,9 +6,9 @@ import { fetchAllData }                               from './dataLoader.js';
 import { extractResumeText }                          from './resumeParser.js';
 import { extractKeywords, buildMatchScores }          from './jobMatcher.js';
 import {
-  renderJobs, renderProfessors,
-  populateJobFilters, populateProfessorFilters,
-  filterJobs, filterProfessors,
+  renderJobs, renderProfessors, renderHRContacts,
+  populateJobFilters, populateProfessorFilters, populateHRFilters,
+  filterJobs, filterProfessors, filterHRContacts,
   getResearchAreas, jobSlug,
 }                                                     from './renderer.js';
 import {
@@ -33,6 +33,7 @@ import { API_ENDPOINTS }                              from './config.js';
 ───────────────────────────────────────────── */
 let allJobs       = [];
 let allProfessors = [];
+let allHRContacts = [];
 let matchedJobs   = {};
 let matchedProfs  = {};
 let currentTab    = 'jobs';
@@ -51,6 +52,13 @@ const el = {
   jobSearchInput    : document.getElementById('jobSearchInput'),
   jobLocFilter      : document.getElementById('jobLocationFilter'),
   jobTypeFilter     : document.getElementById('jobTypeFilter'),
+
+  hrGrid            : document.getElementById('hrGrid'),
+  hrCount           : document.getElementById('hrCount'),
+  hrTitle           : document.getElementById('hrTitle'),
+  hrSearchInput     : document.getElementById('hrSearchInput'),
+  hrCompanyFilter   : document.getElementById('hrCompanyFilter'),
+  hrLocationFilter  : document.getElementById('hrLocationFilter'),
 
   resumeFile        : document.getElementById('resumeFile'),
   uploadArea        : document.getElementById('uploadArea'),
@@ -119,12 +127,18 @@ function applyJobFilters() {
   renderJobs(filtered, matchedJobs, el.jobsGrid, el.jobsTitle);
   el.jobsCount.textContent = `${filtered.length} Jobs`;
 }
+function applyHRFilters() {
+  const filtered = filterHRContacts(allHRContacts, el.hrSearchInput?.value, el.hrCompanyFilter?.value, el.hrLocationFilter?.value);
+  renderHRContacts(filtered, el.hrGrid, el.hrTitle);
+  if (el.hrCount) el.hrCount.textContent = `${filtered.length} Contacts`;
+}
 function applyProfessorFilters() {
   const filtered = filterProfessors(allProfessors, el.profSearchInput.value, el.profInstFilter.value, el.profDeptFilter.value);
   renderProfessors(filtered, matchedProfs, el.profsGrid, el.profsTitle);
   el.profsCount.textContent = `${filtered.length} Professors`;
 }
 [el.jobSearchInput, el.jobLocFilter, el.jobTypeFilter].forEach(e => e?.addEventListener('input', applyJobFilters));
+[el.hrSearchInput, el.hrCompanyFilter, el.hrLocationFilter].forEach(e => e?.addEventListener('input', applyHRFilters));
 [el.profSearchInput, el.profInstFilter, el.profDeptFilter].forEach(e => e?.addEventListener('input', applyProfessorFilters));
 
 /* ─────────────────────────────────────────────
@@ -450,22 +464,25 @@ function showThinkingError(id, msg) { const s = document.getElementById(id); if 
 async function init() {
   el.jobsGrid.innerHTML  = `<div class="empty-state"><div class="empty-icon"><span class="loading"></span></div><h3 class="empty-title">Loading jobs…</h3></div>`;
   el.profsGrid.innerHTML = `<div class="empty-state"><div class="empty-icon"><span class="loading"></span></div><h3 class="empty-title">Loading research opportunities…</h3></div>`;
+  if (el.hrGrid) el.hrGrid.innerHTML = `<div class="empty-state"><div class="empty-icon"><span class="loading"></span></div><h3 class="empty-title">Loading HR contacts…</h3></div>`;
 
   try {
-    const { jobs, professors } = await fetchAllData();
-    allJobs = jobs; allProfessors = professors;
+    const { jobs, professors, hrContacts } = await fetchAllData();
+    allJobs = jobs; allProfessors = professors; allHRContacts = hrContacts;
     populateJobFilters(allJobs, el.jobLocFilter, el.jobTypeFilter);
     populateProfessorFilters(allProfessors, el.profInstFilter, el.profDeptFilter);
-    applyJobFilters(); applyProfessorFilters();
+    if (el.hrCompanyFilter && el.hrLocationFilter) populateHRFilters(allHRContacts, el.hrCompanyFilter, el.hrLocationFilter);
+    applyJobFilters(); applyProfessorFilters(); applyHRFilters();
     el.totalCount.style.display = 'inline-block';
-    el.totalCount.innerHTML = `${allJobs.length} Jobs · ${allProfessors.length} Research`;
-    showStatus(`Loaded ${allJobs.length} jobs & ${allProfessors.length} research opportunities.`, 'success');
+    el.totalCount.innerHTML = `${allJobs.length} Jobs · ${allHRContacts.length} HR · ${allProfessors.length} Research`;
+    showStatus(`Loaded ${allJobs.length} jobs, ${allHRContacts.length} HR contacts & ${allProfessors.length} research opportunities.`, 'success');
 
     // Handle deep link AFTER data is ready
     handleDeepLink();
   } catch {
     const errHTML = `<div class="empty-state"><div class="empty-icon"><i class="fas fa-exclamation-triangle"></i></div><h3 class="empty-title">Failed to load data</h3><p class="empty-text">Check your internet and refresh</p></div>`;
     el.jobsGrid.innerHTML = errHTML; el.profsGrid.innerHTML = errHTML;
+    if (el.hrGrid) el.hrGrid.innerHTML = errHTML;
     showStatus('Failed to load data', 'error');
   }
 }

@@ -3,7 +3,7 @@
  * Fetches and parses data from Google Sheets (Jobs + Professors).
  */
 
-import { JOBS_SHEET_URL, PROFESSORS_SHEET_URL } from './config.js';
+import { JOBS_SHEET_URL, PROFESSORS_SHEET_URL, HR_SHEET_URL } from './config.js';
 
 /**
  * Parse a raw Google Sheets gviz JSON response into an array of objects.
@@ -47,10 +47,20 @@ export async function fetchProfessors() {
 }
 
 /**
- * Fetch both datasets in parallel.
- * @returns {Promise<{ jobs: Object[], professors: Object[] }>}
+ * Fetch HR contacts from the configured Google Sheet.
+ * @returns {Promise<Object[]>}
+ */
+export async function fetchHRContacts() {
+  const response = await fetch(HR_SHEET_URL);
+  if (!response.ok) throw new Error(`Sheet fetch failed: ${response.status}`);
+  return parseSheetResponse(await response.text());
+}
+
+/**
+ * Fetch all three datasets in parallel.
+ * @returns {Promise<{ jobs: Object[], professors: Object[], hrContacts: Object[] }>}
  */
 export async function fetchAllData() {
-  const [jobs, professors] = await Promise.all([fetchJobs(), fetchProfessors()]);
-  return { jobs, professors };
+  const [jobs, professors, hrContacts] = await Promise.all([fetchJobs(), fetchProfessors(), fetchHRContacts()]);
+  return { jobs, professors, hrContacts };
 }
