@@ -2,6 +2,7 @@
  * main.js — Application entry point
  */
 
+import { initCareerAgent, openCareerAgent }           from './agent.js';
 import { fetchAllData }                               from './dataLoader.js';
 import { extractResumeText }                          from './resumeParser.js';
 import { extractKeywords, buildMatchScores }          from './jobMatcher.js';
@@ -208,6 +209,8 @@ el.analyzeBtnR?.addEventListener('click', async () => {
 const JOB_STEP_ICONS = ['📄','🔍','🧠','⚡','✅'];
 async function triggerJobAnalysis(resumeTextInput) {
   setResumeText(resumeTextInput);
+  // Update agent context with resume
+  if (window.agentContext) window.agentContext.resumeText = resumeTextInput;
   el.analysisSection.classList.add('active'); el.analysisSection.classList.remove('collapsed');
   document.getElementById('analysisContent').style.display = 'none';
   const thinkBox = document.getElementById('thinkingBox'), thinkStream = document.getElementById('thinkingStream');
@@ -447,6 +450,10 @@ window.openJobDetailModal   = openJobDetailModal;
 window.openSkillGap         = openSkillGap;
 window.shareJob             = shareJob;
 window.subscribeToAlerts    = subscribeToAlerts;
+window.openCareerAgent      = openCareerAgent;
+
+// Global agent context — updated when resume is uploaded
+window.agentContext = { resumeText: '', jobContext: '' };
 
 /* ─────────────────────────────────────────────
    HELPERS
@@ -476,6 +483,16 @@ async function init() {
     el.totalCount.style.display = 'inline-block';
     el.totalCount.innerHTML = `${allJobs.length} Jobs · ${allHRContacts.length} HR · ${allProfessors.length} Research`;
     showStatus(`Loaded ${allJobs.length} jobs, ${allHRContacts.length} HR contacts & ${allProfessors.length} research opportunities.`, 'success');
+
+    // Feed job context to agent
+    if (window.agentContext) {
+      window.agentContext.jobContext = allJobs.slice(0, 30)
+        .map(j => `${j.Role} at ${j.Company} (${j.Location || 'Remote'}) — ${j.JobType || ''}`)
+        .join('\n');
+    }
+
+    // Init Career Agent floating widget
+    initCareerAgent();
 
     // Handle deep link AFTER data is ready
     handleDeepLink();

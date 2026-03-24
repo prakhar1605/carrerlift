@@ -26,4 +26,5 @@ export const API_ENDPOINTS = {
   analyze  : '/api/analyze',
   skillGap : '/api/skillgap',
   subscribe: '/api/subscribe',
+  agent    : '/api/agent',
 };
