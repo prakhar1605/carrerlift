@@ -251,13 +251,21 @@ function buildHRCardHTML(hr) {
 
   return `
     <div class="professor-card">
-      <div class="professor-header">
-        <div class="professor-info">
-          <div class="professor-name">${name}</div>
-          <div class="professor-department">${title}</div>
-          <div class="professor-institution">${company}${location ? ' · ' + location : ''}</div>
+      <div class="professor-header" style="flex-direction:column;gap:8px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;width:100%;">
+          <div class="professor-info" style="min-width:0;flex:1;">
+            <div class="professor-name" style="word-break:break-word;">${name}</div>
+            <div class="professor-department" style="word-break:break-word;">${title}</div>
+            <div class="professor-institution">${company}${location ? ' · ' + location : ''}</div>
+          </div>
         </div>
-        ${niche ? `<div class="trending-badge" style="background:rgba(124,58,237,0.15);color:var(--neon2);border:1px solid rgba(124,58,237,0.3);font-size:10px;max-width:110px;text-align:center;">${niche}</div>` : ''}
+        ${niche ? `
+        <div style="display:inline-flex;align-items:center;padding:3px 10px;border-radius:100px;
+                    background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.3);
+                    color:var(--neon2);font-size:10px;font-weight:700;letter-spacing:0.3px;
+                    max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+          ${niche}
+        </div>` : ''}
       </div>
 
       <div class="job-actions" style="margin-top:14px;">
