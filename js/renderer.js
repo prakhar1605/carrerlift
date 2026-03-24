@@ -212,16 +212,38 @@ export function renderProfessors(professors, matchScores, gridEl, titleEl) {
 }
 
 /* ─────────────────────────────────────────────
+   HR CONTACT — case-insensitive field helper
+   Google Sheets gviz API kabhi kabhi column names
+   mein slight differences deta hai (casing, spaces).
+   Yeh helper exact match try karta hai, phir fallback.
+───────────────────────────────────────────── */
+function hrField(hr, ...keys) {
+  // 1. Exact match
+  for (const key of keys) {
+    if (hr[key] && String(hr[key]).trim()) return String(hr[key]).trim();
+  }
+  // 2. Case-insensitive + whitespace-collapsed fallback
+  const normKeys = keys.map(k => k.toLowerCase().replace(/[\s_-]+/g, ''));
+  for (const objKey of Object.keys(hr)) {
+    const norm = objKey.toLowerCase().replace(/[\s_-]+/g, '');
+    if (normKeys.includes(norm) && hr[objKey] && String(hr[objKey]).trim()) {
+      return String(hr[objKey]).trim();
+    }
+  }
+  return '';
+}
+
+/* ─────────────────────────────────────────────
    HR CONTACT CARD HTML
 ───────────────────────────────────────────── */
 function buildHRCardHTML(hr) {
-  const name     = hr['Name']            || hr['name']             || 'HR Contact';
-  const title    = hr['Job Title']       || hr['job title']        || hr['Title'] || '';
-  const company  = hr['Company Name']    || hr['company name']     || hr['Company'] || '';
-  const location = hr['Location']        || hr['location']         || '';
-  const linkedin = hr['Linkedin URL']    || hr['LinkedIn URL']     || hr['linkedin url'] || '';
-  const niche    = hr['Company Niche']   || hr['company niche']    || '';
-  const website  = hr['Company Website'] || hr['company website']  || '';
+  const name     = hrField(hr, 'Name', 'name', 'Full Name', 'FullName') || 'HR Contact';
+  const title    = hrField(hr, 'Job Title', 'job title', 'Title', 'title', 'Designation', 'Role');
+  const company  = hrField(hr, 'Company Name', 'company name', 'Company', 'company', 'Organisation');
+  const location = hrField(hr, 'Location', 'location', 'City', 'city');
+  const linkedin = hrField(hr, 'Linkedin URL', 'LinkedIn URL', 'linkedin url', 'LinkedinURL', 'Linkedin', 'linkedin');
+  const niche    = hrField(hr, 'Company Niche', 'company niche', 'Niche', 'niche', 'Industry', 'industry');
+  const website  = hrField(hr, 'Company Website', 'company website', 'Website', 'website');
 
   return `
     <div class="professor-card">
@@ -263,8 +285,8 @@ export function populateHRFilters(hrContacts, companyEl, locationEl) {
   const companies  = new Set();
   const locations  = new Set();
   hrContacts.forEach(hr => {
-    const co  = hr['Company Name'] || hr['Company'] || '';
-    const loc = hr['Location']     || '';
+    const co  = hrField(hr, 'Company Name', 'company name', 'Company', 'company') || '';
+    const loc = hrField(hr, 'Location', 'location', 'City', 'city') || '';
     if (co)  companies.add(co);
     if (loc) locations.add(loc);
   });
@@ -277,17 +299,16 @@ export function populateHRFilters(hrContacts, companyEl, locationEl) {
 export function filterHRContacts(hrContacts, query, company, location) {
   const q = (query || '').toLowerCase();
   return hrContacts.filter(hr => {
-    const name    = hr['Name']         || '';
-    const title   = hr['Job Title']    || '';
-    const co      = hr['Company Name'] || hr['Company'] || '';
-    const loc     = hr['Location']     || '';
-    const hay     = `${name} ${title} ${co} ${loc}`.toLowerCase();
+    const name = hrField(hr, 'Name', 'name', 'Full Name') || '';
+    const title = hrField(hr, 'Job Title', 'job title', 'Title') || '';
+    const co    = hrField(hr, 'Company Name', 'company name', 'Company', 'company') || '';
+    const loc   = hrField(hr, 'Location', 'location', 'City') || '';
+    const hay   = `${name} ${title} ${co} ${loc}`.toLowerCase();
     return (!q        || hay.includes(q))
       && (!company  || co  === company)
       && (!location || loc === location);
   });
 }
-
 
 export function populateJobFilters(jobs, locationEl, typeEl) {
   const locations = new Set(), types = new Set();
