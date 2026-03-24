@@ -237,13 +237,17 @@ function hrField(hr, ...keys) {
    HR CONTACT CARD HTML
 ───────────────────────────────────────────── */
 function buildHRCardHTML(hr) {
-  const name     = hrField(hr, 'Name', 'name', 'Full Name', 'FullName') || 'HR Contact';
-  const title    = hrField(hr, 'Job Title', 'job title', 'Title', 'title', 'Designation', 'Role');
-  const company  = hrField(hr, 'Company Name', 'company name', 'Company', 'company', 'Organisation');
+  // CSV se exact headers: Name, Job Title, Linkedin URL, Company Name,
+  // Company Website, Location, Company Niche
+  const name     = hrField(hr, 'Name', 'name', 'Full Name', 'FullName', 'NAME') || 'HR Contact';
+  const title    = hrField(hr, 'Job Title', 'job title', 'JobTitle', 'Title', 'title', 'Designation');
+  const company  = hrField(hr, 'Company Name', 'company name', 'CompanyName', 'Company', 'company');
   const location = hrField(hr, 'Location', 'location', 'City', 'city');
-  const linkedin = hrField(hr, 'Linkedin URL', 'LinkedIn URL', 'linkedin url', 'LinkedinURL', 'Linkedin', 'linkedin');
-  const niche    = hrField(hr, 'Company Niche', 'company niche', 'Niche', 'niche', 'Industry', 'industry');
-  const website  = hrField(hr, 'Company Website', 'company website', 'Website', 'website');
+  const linkedin = hrField(hr, 'Linkedin URL', 'LinkedIn URL', 'linkedin url', 'LinkedinURL',
+                            'Linkedin Url', 'LINKEDIN URL', 'linkedinurl', 'Linkedin', 'linkedin');
+  const niche    = hrField(hr, 'Company Niche', 'company niche', 'CompanyNiche', 'Niche', 'niche',
+                            'Company_Niche', 'Industry', 'industry');
+  const website  = hrField(hr, 'Company Website', 'company website', 'CompanyWebsite', 'Website', 'website');
 
   return `
     <div class="professor-card">

@@ -18,6 +18,10 @@ export const PROFESSORS_SHEET_URL =
 export const HR_SHEET_URL =
   `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${HR_GID}`;
 
+// CSV export — reliable headers, used for HR sheet
+export const HR_CSV_URL =
+  `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${HR_GID}`;
+
 export const API_ENDPOINTS = {
   analyze  : '/api/analyze',
   skillGap : '/api/skillgap',
