@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Carrerlift — AI-Powered Jobs & Research for Students</title>
-  <meta name="description" content="Find your dream internship or research opportunity with AI. 843+ jobs, 1837 HR contacts, 1583 research opportunities at IIT professors." />
+  <title>Carrerlift — AI-Powered Jobs & Research for Indian Students</title>
+  <meta name="description" content="India's #1 AI career platform. 843+ jobs, 1837 HR contacts, 1583 IIT research opportunities. Get matched in seconds." />
   <link rel="icon" type="image/png" href="logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -19,7 +19,7 @@
   <div class="glow-orb glow-orb-3"></div>
   <div class="toast-container" id="toastContainer"></div>
 
-  <!-- NAVBAR -->
+  <!-- ════ NAVBAR ════ -->
   <nav class="navbar" id="navbar">
     <div class="navbar-inner">
       <a href="/" class="nav-logo">
@@ -27,16 +27,17 @@
         <span class="nav-logo-text">Carrerlift</span>
       </a>
       <div class="nav-links">
+        <a href="#social-proof" class="nav-link">Why Us</a>
         <a href="#how-it-works" class="nav-link">How it Works</a>
         <a href="#features" class="nav-link">Features</a>
-        <a href="app.html" class="nav-link">Browse Jobs</a>
+        <a href="#testimonials" class="nav-link">Reviews</a>
       </div>
       <div class="nav-actions" id="navActions">
         <button class="btn-ghost" onclick="openAuth('signin')">Sign In</button>
-        <button class="btn-primary-nav" onclick="openAuth('signup')">Get Started Free</button>
+        <button class="btn-primary-nav" onclick="openAuth('signup')"><i class="fas fa-rocket"></i> Get Started Free</button>
       </div>
       <div class="nav-actions" id="navActionsLoggedIn" style="display:none;">
-        <a href="app.html" class="btn-ghost">Open App</a>
+        <a href="app.html" class="btn-primary-nav"><i class="fas fa-briefcase"></i> Open App</a>
         <div class="user-menu">
           <button class="user-avatar" id="userAvatarBtn" onclick="toggleUserMenu()">P</button>
           <div class="user-dropdown" id="userDropdown">
@@ -52,11 +53,11 @@
       </div>
       <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
     </div>
-    <!-- Mobile menu -->
     <div class="mobile-menu" id="mobileMenu">
+      <a href="#social-proof" class="mobile-link" onclick="closeMobileMenu()">Why Us</a>
       <a href="#how-it-works" class="mobile-link" onclick="closeMobileMenu()">How it Works</a>
       <a href="#features" class="mobile-link" onclick="closeMobileMenu()">Features</a>
-      <a href="app.html" class="mobile-link">Browse Jobs</a>
+      <a href="#testimonials" class="mobile-link" onclick="closeMobileMenu()">Reviews</a>
       <div class="mobile-auth-btns">
         <button class="btn-ghost" style="flex:1;" onclick="openAuth('signin');closeMobileMenu()">Sign In</button>
         <button class="btn-primary-nav" style="flex:1;" onclick="openAuth('signup');closeMobileMenu()">Sign Up Free</button>
@@ -64,19 +65,37 @@
     </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- ════ HERO ════ -->
   <section class="hero">
     <div class="hero-inner">
       <div class="hero-content">
-        <div class="hero-badge"><div class="hero-badge-dot"></div>AI-Powered Career Platform · India's #1</div>
+        <div class="hero-badge"><div class="hero-badge-dot"></div>India's #1 AI Career Platform</div>
         <h1 class="hero-title">Your Dream Job,<br>Found by <span class="hero-title-gradient">AI</span></h1>
-        <p class="hero-sub">Upload your resume and our AI matches you with the best internships, jobs, and research opportunities across top companies and 1500+ IIT professors — in seconds.</p>
-        <div class="hero-ctas">
-          <button class="btn-hero-primary" onclick="openAuth('signup')"><i class="fas fa-rocket"></i> Get Started Free</button>
-          <a href="app.html" class="btn-hero-secondary" onclick="startTryNow(event)"><i class="fas fa-play"></i> Try Now — No Signup</a>
+        <p class="hero-sub">Upload your resume — our AI matches you with the best internships, jobs &amp; IIT research opportunities in seconds. Join <strong>1,000+ students</strong> already placed.</p>
+
+        <!-- Social avatars row -->
+        <div class="hero-social-row">
+          <div class="hero-avatars">
+            <div class="hero-av" style="background:linear-gradient(135deg,#00D4FF,#0099cc);">A</div>
+            <div class="hero-av" style="background:linear-gradient(135deg,#7C3AED,#a855f7);">R</div>
+            <div class="hero-av" style="background:linear-gradient(135deg,#10B981,#059669);">S</div>
+            <div class="hero-av" style="background:linear-gradient(135deg,#F59E0B,#D97706);">P</div>
+            <div class="hero-av" style="background:linear-gradient(135deg,#EF4444,#DC2626);">K</div>
+          </div>
+          <span class="hero-social-text"><strong>1,000+</strong> students joined this month</span>
+          <div class="hero-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <span>4.9/5</span>
+          </div>
         </div>
-        <div class="try-timer-chip"><i class="fas fa-clock"></i> 10-minute free preview · No credit card needed</div>
+
+        <div class="hero-ctas">
+          <button class="btn-hero-primary" onclick="openAuth('signup')"><i class="fas fa-rocket"></i> Get Started — It's Free</button>
+          <button class="btn-hero-secondary" onclick="startTryNow(event)"><i class="fas fa-play"></i> Try Now · No Signup</button>
+        </div>
+        <div class="try-timer-chip"><i class="fas fa-clock"></i> 10-minute free preview &nbsp;·&nbsp; No credit card &nbsp;·&nbsp; No spam</div>
       </div>
+
       <div class="hero-visual">
         <div class="hero-stat-chip hero-stat-chip-1"><div class="hero-stat-val">843+</div><div class="hero-stat-lbl">Live Jobs</div></div>
         <div class="hero-stat-chip hero-stat-chip-2"><div class="hero-stat-val">95%</div><div class="hero-stat-lbl">AI Accuracy</div></div>
@@ -93,44 +112,53 @@
             <div class="hero-match-score" id="heroScore">0%</div>
           </div>
           <div class="hero-jobs-list">
-            <div class="hero-job-item">
-              <div class="hero-job-left">
-                <div class="hero-job-icon" style="background:rgba(0,212,255,0.12);">💻</div>
-                <div><div class="hero-job-name">AI Intern</div><div class="hero-job-co">Kotak Neo · Mumbai</div></div>
-              </div>
-              <span class="hero-job-badge badge-matched">98% Match</span>
-            </div>
-            <div class="hero-job-item">
-              <div class="hero-job-left">
-                <div class="hero-job-icon" style="background:rgba(124,58,237,0.12);">🚀</div>
-                <div><div class="hero-job-name">SWE Intern (+PPO)</div><div class="hero-job-co">Livo AI · Bangalore</div></div>
-              </div>
-              <span class="hero-job-badge badge-trending">Trending</span>
-            </div>
-            <div class="hero-job-item">
-              <div class="hero-job-left">
-                <div class="hero-job-icon" style="background:rgba(16,185,129,0.12);">🔬</div>
-                <div><div class="hero-job-name">Research Intern</div><div class="hero-job-co">IIT Bombay · Prof. Sharma</div></div>
-              </div>
-              <span class="hero-job-badge badge-matched">94% Match</span>
-            </div>
+            <div class="hero-job-item"><div class="hero-job-left"><div class="hero-job-icon" style="background:rgba(0,212,255,0.12);">💻</div><div><div class="hero-job-name">AI Intern</div><div class="hero-job-co">Kotak Neo · Mumbai</div></div></div><span class="hero-job-badge badge-matched">98% Match</span></div>
+            <div class="hero-job-item"><div class="hero-job-left"><div class="hero-job-icon" style="background:rgba(124,58,237,0.12);">🚀</div><div><div class="hero-job-name">SWE Intern (+PPO)</div><div class="hero-job-co">Livo AI · Bangalore</div></div></div><span class="hero-job-badge badge-trending">Trending</span></div>
+            <div class="hero-job-item"><div class="hero-job-left"><div class="hero-job-icon" style="background:rgba(16,185,129,0.12);">🔬</div><div><div class="hero-job-name">Research Intern</div><div class="hero-job-co">IIT Bombay · Prof. Sharma</div></div></div><span class="hero-job-badge badge-matched">94% Match</span></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- STATS STRIP -->
+  <!-- ════ STATS STRIP ════ -->
   <div class="stats-strip">
     <div class="stats-inner">
       <div class="stat-item"><div class="stat-number" data-target="843">0</div><div class="stat-label">Active Job Listings</div><div class="stat-sub">Updated daily</div></div>
       <div class="stat-item"><div class="stat-number" data-target="1837">0</div><div class="stat-label">HR Contacts</div><div class="stat-sub">Direct recruiter access</div></div>
       <div class="stat-item"><div class="stat-number" data-target="1583">0</div><div class="stat-label">IIT Professors</div><div class="stat-sub">Research opportunities</div></div>
-      <div class="stat-item"><div class="stat-number" data-target="95" data-suffix="%">0</div><div class="stat-label">Match Accuracy</div><div class="stat-sub">AI-powered precision</div></div>
+      <div class="stat-item"><div class="stat-number" data-target="1000">0</div><div class="stat-label">Students Placed</div><div class="stat-sub">This month</div></div>
     </div>
   </div>
 
-  <!-- HOW IT WORKS -->
+  <!-- ════ SOCIAL PROOF LOGOS ════ -->
+  <section class="section social-proof-section" id="social-proof">
+    <div class="section-inner">
+      <div class="proof-label">Students placed at top companies &amp; institutes</div>
+      <div class="logo-ticker-wrap">
+        <div class="logo-ticker">
+          <span class="logo-chip">🏦 Kotak Neo</span>
+          <span class="logo-chip">🚀 Livo AI</span>
+          <span class="logo-chip">🏛️ IIT Bombay</span>
+          <span class="logo-chip">💡 Razorpay</span>
+          <span class="logo-chip">🏛️ IIT Delhi</span>
+          <span class="logo-chip">🛒 Meesho</span>
+          <span class="logo-chip">🏛️ IIT Madras</span>
+          <span class="logo-chip">📦 Delhivery</span>
+          <span class="logo-chip">🏛️ IIT Kanpur</span>
+          <span class="logo-chip">🎮 Dream11</span>
+          <span class="logo-chip">🏦 Kotak Neo</span>
+          <span class="logo-chip">🚀 Livo AI</span>
+          <span class="logo-chip">🏛️ IIT Bombay</span>
+          <span class="logo-chip">💡 Razorpay</span>
+          <span class="logo-chip">🏛️ IIT Delhi</span>
+          <span class="logo-chip">🛒 Meesho</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ HOW IT WORKS ════ -->
   <section class="section" id="how-it-works">
     <div class="section-inner">
       <div class="section-label"><i class="fas fa-map-signs"></i> How it Works</div>
@@ -159,7 +187,7 @@
     </div>
   </section>
 
-  <!-- FEATURES BENTO -->
+  <!-- ════ FEATURES BENTO ════ -->
   <section class="section" id="features" style="padding-top:0;">
     <div class="section-inner">
       <div class="section-label"><i class="fas fa-star"></i> Features</div>
@@ -168,7 +196,7 @@
         <div class="bento-card wide accent-cyan reveal">
           <div class="bento-icon" style="background:rgba(0,212,255,0.12);color:var(--neon);"><i class="fas fa-magic"></i></div>
           <h3 class="bento-title">AI Resume Analyzer</h3>
-          <p class="bento-desc">Upload once, match everywhere. Our AI reads your resume deeply — skills, projects, experience — and finds the most relevant opportunities across all categories simultaneously.</p>
+          <p class="bento-desc">Upload once, match everywhere. Our AI reads your resume deeply — skills, projects, experience — and finds the most relevant opportunities simultaneously.</p>
           <div class="bento-big-num" style="background:linear-gradient(135deg,var(--neon),#0099cc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">50x</div>
           <p style="font-size:12px;color:var(--text3);margin-top:4px;">faster than manual search</p>
         </div>
@@ -181,7 +209,7 @@
         </div>
         <div class="bento-card accent-green reveal">
           <div class="bento-icon" style="background:rgba(16,185,129,0.12);color:var(--green);"><i class="fas fa-bookmark"></i></div>
-          <h3 class="bento-title">Save & Track Jobs</h3>
+          <h3 class="bento-title">Save &amp; Track Jobs</h3>
           <p class="bento-desc">Bookmark jobs and save your resume — synced to your account, accessible from any device.</p>
         </div>
         <div class="bento-card accent-amber reveal">
@@ -192,20 +220,119 @@
         <div class="bento-card accent-cyan reveal">
           <div class="bento-icon" style="background:rgba(0,212,255,0.12);color:var(--neon);"><i class="fas fa-users"></i></div>
           <h3 class="bento-title">1837 HR Contacts</h3>
-          <p class="bento-desc">Direct access to recruiters and talent acquisition leads at top companies. Skip the queue entirely.</p>
+          <p class="bento-desc">Direct access to recruiters at top companies. Skip the queue entirely.</p>
         </div>
         <div class="bento-card reveal" style="grid-column:span 2;">
           <div class="bento-icon" style="background:rgba(245,158,11,0.1);color:var(--neon3);"><i class="fas fa-envelope-open-text"></i></div>
           <h3 class="bento-title">AI Email Generator</h3>
-          <p class="bento-desc">Generate personalised cold emails for professors and HR in 3 tones — Professional, Enthusiastic, or Short & Direct. One click to open in Gmail.</p>
+          <p class="bento-desc">Generate personalised cold emails for professors and HR in 3 tones — Professional, Enthusiastic, or Short &amp; Direct. One click to open in Gmail.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════
-       AUTH MODAL — Sign In / Sign Up
-  ══════════════════════════════════════ -->
+  <!-- ════ TESTIMONIALS ════ -->
+  <section class="section" id="testimonials">
+    <div class="section-inner">
+      <div class="section-label"><i class="fas fa-heart"></i> Student Love</div>
+      <h2 class="section-title">1,000+ students already<br>trust Carrerlift</h2>
+      <div class="testimonials-grid">
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Got matched with 3 IIT professor internships in under 2 minutes. The AI email generator is insane — one of my emails actually got a response within 24 hours!"</p>
+          <div class="testi-author">
+            <div class="testi-av" style="background:linear-gradient(135deg,#00D4FF,#0099cc);">A</div>
+            <div><div class="testi-name">Aryan Sharma</div><div class="testi-college">IIT Delhi, CSE 3rd Year</div></div>
+          </div>
+        </div>
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"I spent weeks on Naukri with zero luck. Carrerlift showed me 18 matched jobs in seconds. Landed a PPO internship at a Bangalore startup within 10 days."</p>
+          <div class="testi-author">
+            <div class="testi-av" style="background:linear-gradient(135deg,#7C3AED,#a855f7);">R</div>
+            <div><div class="testi-name">Riya Patel</div><div class="testi-college">BITS Pilani, ECE Final Year</div></div>
+          </div>
+        </div>
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"The skill gap feature is brilliant — it told me exactly what to learn for the roles I want. The roadmap with YouTube links saved me so much time searching."</p>
+          <div class="testi-author">
+            <div class="testi-av" style="background:linear-gradient(135deg,#10B981,#059669);">S</div>
+            <div><div class="testi-name">Sahil Verma</div><div class="testi-college">NIT Trichy, 2nd Year</div></div>
+          </div>
+        </div>
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Direct HR contact details is a game changer. I cold-mailed 5 recruiters and got 2 interviews. No middlemen, no recruiters taking cuts — just direct access."</p>
+          <div class="testi-author">
+            <div class="testi-av" style="background:linear-gradient(135deg,#F59E0B,#D97706);">P</div>
+            <div><div class="testi-name">Priya Nair</div><div class="testi-college">VIT Vellore, MBA</div></div>
+          </div>
+        </div>
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Yaar, this is legitimately the best product for Indian students. 95% match accuracy isn't marketing — my matches were actually relevant. Highly recommend."</p>
+          <div class="testi-author">
+            <div class="testi-av" style="background:linear-gradient(135deg,#EF4444,#DC2626);">K</div>
+            <div><div class="testi-name">Karan Mehta</div><div class="testi-college">IIT Bombay, Dual Degree</div></div>
+          </div>
+        </div>
+        <div class="testi-card reveal testi-highlight">
+          <div class="testi-big-stat">1,000+</div>
+          <div class="testi-big-label">students placed this month</div>
+          <p class="testi-cta-sub">Join them — it takes 30 seconds to sign up.</p>
+          <button class="btn-hero-primary" style="width:100%;justify-content:center;margin-top:20px;" onclick="openAuth('signup')">
+            <i class="fas fa-rocket"></i> Get Started Free
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ FINAL CTA BANNER ════ -->
+  <section class="cta-banner">
+    <div class="cta-banner-inner">
+      <div class="cta-glow"></div>
+      <div class="section-label" style="justify-content:center;margin-bottom:16px;"><i class="fas fa-bolt"></i> Limited Time — Always Free</div>
+      <h2 class="cta-title">Stop scrolling job boards.<br>Let AI find your perfect match.</h2>
+      <p class="cta-sub">Join 1,000+ students who stopped wasting time on irrelevant applications.</p>
+      <div class="cta-actions">
+        <button class="btn-hero-primary" onclick="openAuth('signup')"><i class="fas fa-rocket"></i> Get Started Free — 30 seconds</button>
+        <button class="btn-hero-secondary" onclick="startTryNow(event)"><i class="fas fa-play"></i> Try 10-min Preview</button>
+      </div>
+      <div class="cta-trust-row">
+        <span><i class="fas fa-check-circle"></i> Free forever</span>
+        <span><i class="fas fa-check-circle"></i> No credit card</span>
+        <span><i class="fas fa-check-circle"></i> No spam</span>
+        <span><i class="fas fa-check-circle"></i> 1,000+ students trust us</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ FOOTER ════ -->
+  <footer class="landing-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="nav-logo" style="text-decoration:none;">
+          <img src="logo.png" alt="Carrerlift" style="height:28px;border-radius:6px;" onerror="this.style.display='none'" />
+          <span class="nav-logo-text">Carrerlift</span>
+        </a>
+        <p class="footer-tagline">India's #1 AI Career Platform for Students</p>
+      </div>
+      <div class="footer-links">
+        <a href="#how-it-works">How it Works</a>
+        <a href="#features">Features</a>
+        <a href="#testimonials">Reviews</a>
+        <a href="app.html" onclick="startTryNow(event)">Try Free</a>
+        <a href="mailto:hello@carrerlift.in">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Carrerlift · Made with ❤️ for Indian students</p>
+    </div>
+  </footer>
+
+  <!-- ════ AUTH MODAL ════ -->
   <div class="auth-modal" id="authModal" role="dialog" aria-modal="true">
     <div class="auth-card">
       <button class="auth-close-btn" onclick="closeAuth()" aria-label="Close"><i class="fas fa-times"></i></button>
@@ -214,51 +341,35 @@
         <span class="auth-logo-text">Carrerlift</span>
       </div>
       <h2 class="auth-title">Welcome 👋</h2>
-      <p class="auth-sub">Sign in to unlock full access — 843+ jobs, 1837 HR contacts, AI resume matching &amp; more.</p>
-
+      <p class="auth-sub">Sign in to unlock full access — 843+ jobs, 1837 HR contacts, AI resume matching &amp; more. <strong>100% Free.</strong></p>
       <button class="google-sign-btn" id="googleSignInBtn" onclick="handleGoogleSignIn()">
         <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G" class="google-icon" />
         Continue with Google
       </button>
-
-      <div class="auth-divider">or</div>
-
+      <div class="auth-divider">or explore first</div>
       <button class="try-now-btn" onclick="startTryNow(); closeAuth();">
-        <i class="fas fa-play"></i> Try for free — 10 minutes, no signup
+        <i class="fas fa-play"></i> Try free for 10 minutes — no signup
       </button>
-
       <p id="authError" class="auth-error"></p>
-
-      <p class="auth-footer-note">
-        By continuing, you agree to our Terms of Service.<br>
-        We never spam — only match you to opportunities.
-      </p>
+      <p class="auth-footer-note">No spam ever · Free forever · 1,000+ students already using this</p>
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <footer class="landing-footer">
-    <p>© 2025 Carrerlift · Made with ❤️ for Indian students · <a href="mailto:hello@carrerlift.in">Contact</a></p>
-  </footer>
-
+  <!-- ════ SCRIPTS ════ -->
   <script type="module" src="js/auth.js"></script>
   <script>
-    // ── Navbar scroll ──
     window.addEventListener('scroll', () => {
       document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
     });
-
-    // ── Mobile menu ──
     window.toggleMobileMenu = () => document.getElementById('mobileMenu').classList.toggle('open');
     window.closeMobileMenu  = () => document.getElementById('mobileMenu').classList.remove('open');
 
-    // ── Stats counter ──
+    // Stats counter
     function animateCounters() {
       document.querySelectorAll('.stat-number').forEach(el => {
         const target = parseInt(el.dataset.target);
         const suffix = el.dataset.suffix || '';
-        let current = 0;
-        const step = Math.ceil(target / 60);
+        let current = 0, step = Math.ceil(target / 60);
         const timer = setInterval(() => {
           current = Math.min(current + step, target);
           el.textContent = current.toLocaleString() + suffix;
@@ -266,31 +377,22 @@
         }, 25);
       });
     }
-    const statsObserver = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) { animateCounters(); statsObserver.disconnect(); }
-    }, { threshold: 0.3 });
-    const statsEl = document.querySelector('.stats-strip');
-    if (statsEl) statsObserver.observe(statsEl);
+    const so = new IntersectionObserver(e => { if (e[0].isIntersecting) { animateCounters(); so.disconnect(); } }, { threshold: 0.3 });
+    const se = document.querySelector('.stats-strip'); if (se) so.observe(se);
 
-    // ── Reveal on scroll ──
-    const revealObserver = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    // Reveal animation
+    const ro = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 
-    // ── Hero progress bar animation ──
+    // Hero progress bar
     setTimeout(() => {
-      const bar = document.getElementById('heroProgress');
-      const score = document.getElementById('heroScore');
+      const bar = document.getElementById('heroProgress'), score = document.getElementById('heroScore');
       if (!bar || !score) return;
       let pct = 0;
-      const timer = setInterval(() => {
-        pct = Math.min(pct + 1, 87);
-        bar.style.width = pct + '%';
-        score.textContent = pct + '%';
-        if (pct >= 87) clearInterval(timer);
-      }, 18);
-    }, 800);
+      const t = setInterval(() => { pct = Math.min(pct + 1, 87); bar.style.width = pct + '%'; score.textContent = pct + '%'; if (pct >= 87) clearInterval(t); }, 18);
+    }, 900);
   </script>
 </body>
 </html>
