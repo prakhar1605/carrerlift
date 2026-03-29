@@ -1,5 +1,10 @@
 /**
  * firebase.js — Google Sign-In auth for Carrerlift
+ *
+ * NOTE: Firebase apiKey in frontend is SAFE by design.
+ * It identifies the project, not authenticates it.
+ * Real security = Firebase Auth domain restrictions in Console.
+ * Restrict to: carrerlift.in only (Console > Auth > Settings > Authorized domains)
  */
 
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';

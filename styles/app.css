@@ -112,3 +112,147 @@
 @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
 @keyframes spin   { to{transform:rotate(360deg)} }
 @keyframes blink  { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ══════════════════════════════════════
+   HEADER RIGHT + PROFILE PILL
+══════════════════════════════════════ */
+.header-right {
+  display: flex; align-items: center; gap: 12px;
+  flex: 1; justify-content: flex-end;
+}
+.app-nav-guest, .app-nav-loggedin { display: none; }
+
+/* ── PROFILE PILL ── */
+.profile-pill {
+  display: flex; align-items: center; gap: 9px;
+  padding: 5px 14px 5px 5px;
+  background: var(--glass2);
+  border: 1px solid var(--border2);
+  border-radius: 100px;
+  cursor: pointer; transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text1);
+}
+.profile-pill:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.2);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.profile-pill-avatar {
+  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--neon), var(--neon2));
+  color: #080B14; font-weight: 800; font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.profile-pill-name {
+  font-size: 14px; font-weight: 600; max-width: 100px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.profile-pill-arrow {
+  font-size: 11px; color: var(--text3);
+  transition: transform 0.25s; margin-left: 2px;
+}
+.profile-pill-arrow.rotated { transform: rotate(180deg); }
+
+/* ── APP DROPDOWN (classy) ── */
+.app-dropdown {
+  min-width: 260px; right: 0; top: calc(100% + 12px);
+  border-radius: 16px; padding-bottom: 8px;
+}
+.dropdown-profile-header {
+  display: flex; align-items: center; gap: 14px;
+  padding: 18px 18px 14px;
+}
+.dropdown-avatar-lg {
+  width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--neon), var(--neon2));
+  color: #080B14; font-weight: 800; font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.dropdown-profile-name  { font-size: 15px; font-weight: 700; color: var(--text1); }
+.dropdown-profile-email { font-size: 12px; color: var(--text3); margin-top: 3px; word-break: break-all; }
+.dropdown-divider { height: 1px; background: var(--border); margin: 4px 0; }
+
+/* ══════════════════════════════════════
+   MOBILE RESPONSIVE — app.html
+══════════════════════════════════════ */
+
+/* ── Tablet ── */
+@media (max-width: 900px) {
+  .results-grid { grid-template-columns: 1fr !important; }
+  .desktop-row  { grid-template-columns: 1fr !important; }
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  /* Header */
+  .header-content { padding: 8px 14px; }
+  .logo-text { font-size: 17px; }
+  .results-count { display: none !important; }
+  .profile-pill-name { display: none; }
+  .profile-pill { padding: 4px; border-radius: 50%; }
+  .profile-pill-arrow { display: none; }
+
+  /* Tabs */
+  .tab-nav-content { padding: 0 10px; gap: 0; }
+  .tab-btn { padding: 10px 10px; font-size: 12px; gap: 4px; }
+  .tab-btn span.tab-count { display: none; }
+
+  /* Container */
+  .container { padding: 14px 12px; }
+
+  /* Resume card */
+  .resume-card { padding: 16px; }
+  .upload-area { padding: 20px 14px; }
+  .upload-actions { flex-direction: column; gap: 8px; }
+  .upload-actions .btn { width: 100%; }
+
+  /* Search */
+  .search-section { padding: 14px 14px 16px; }
+  .search-bar { flex-direction: column; gap: 8px; }
+  .filter-select { width: 100%; min-width: unset; }
+
+  /* Results */
+  .results-grid { grid-template-columns: 1fr !important; gap: 10px; }
+  .results-title { font-size: 16px; }
+
+  /* Alert input */
+  .alert-input-row { flex-direction: column; gap: 8px; }
+  .alert-input-row .btn { width: 100%; }
+
+  /* Trial bar */
+  .trial-bar { font-size: 12px; padding: 8px 12px; gap: 6px; flex-wrap: wrap; justify-content: center; }
+
+  /* Modals */
+  .modal-content,
+  .email-modal-content,
+  .skill-gap-content { max-width: 100% !important; margin: 0; border-radius: 20px 20px 0 0; }
+  .modal { align-items: flex-end !important; padding: 0 !important; }
+  .email-modal, .skill-gap-modal { align-items: flex-end !important; padding: 0 !important; }
+  .modal-footer { flex-direction: column-reverse; gap: 8px; }
+  .modal-footer .btn, .modal-footer a.btn { width: 100%; justify-content: center; }
+  .modal-footer > div { display: flex; gap: 8px; width: 100%; }
+  .modal-footer > div .btn { flex: 1; justify-content: center; }
+
+  /* Trial expired */
+  .trial-expired-card { border-radius: 20px 20px 0 0; max-width: 100%; }
+  .trial-expired-overlay { align-items: flex-end; padding: 0; }
+
+  /* Auth modal on mobile */
+  .auth-card { border-radius: 20px 20px 0 0; }
+  .auth-modal { align-items: flex-end; padding: 0; }
+
+  /* App dropdown */
+  .app-dropdown { right: -10px; min-width: 240px; }
+}
+
+/* ── Very small ── */
+@media (max-width: 380px) {
+  .tab-btn { padding: 10px 8px; font-size: 11px; }
+  .tab-btn i { display: none; }
+}
+
+/* ── user-dropdown z-index override for app ── */
+#appUserDropdown { z-index: 3000; }

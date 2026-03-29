@@ -37,24 +37,35 @@
         <img src="logo.png" alt="Carrerlift" class="logo-img" onerror="this.style.display='none'" />
         <span class="logo-text">Carrerlift</span>
       </a>
-      <div style="display:flex;align-items:center;gap:10px;flex:1;justify-content:flex-end;">
+      <div class="header-right">
         <span class="results-count" id="totalCount" style="display:none;"></span>
-        <!-- Guest nav (trial user) -->
-        <div id="appNavGuest">
+
+        <!-- Guest nav -->
+        <div id="appNavGuest" class="app-nav-guest">
           <button class="app-nav-signin-btn" onclick="openAppAuth()">
-            <i class="fas fa-rocket"></i> Sign Up Free
+            <i class="fas fa-rocket"></i> <span>Sign Up Free</span>
           </button>
         </div>
-        <!-- Logged-in nav -->
-        <div id="appNavLoggedIn">
+
+        <!-- Logged-in nav — classy profile pill -->
+        <div id="appNavLoggedIn" class="app-nav-loggedin">
           <div class="user-menu">
-            <button class="user-avatar" id="appUserBtn" onclick="toggleAppUserMenu()">U</button>
-            <div class="user-dropdown" id="appUserDropdown">
-              <div class="user-dropdown-email">
-                <span>Signed in as</span>
-                <p id="appUserEmail">user@email.com</p>
+            <button class="profile-pill" id="appUserBtn" onclick="toggleAppUserMenu()">
+              <div class="profile-pill-avatar" id="appUserAvatar">U</div>
+              <span class="profile-pill-name" id="appUserName">Account</span>
+              <i class="fas fa-chevron-down profile-pill-arrow" id="profileArrow"></i>
+            </button>
+            <div class="user-dropdown app-dropdown" id="appUserDropdown">
+              <div class="dropdown-profile-header">
+                <div class="dropdown-avatar-lg" id="appUserAvatarLg">U</div>
+                <div class="dropdown-profile-info">
+                  <div class="dropdown-profile-name" id="appUserDisplayName">User</div>
+                  <div class="dropdown-profile-email" id="appUserEmail">user@email.com</div>
+                </div>
               </div>
-              <a href="/" class="dropdown-item"><i class="fas fa-home"></i> Landing Page</a>
+              <div class="dropdown-divider"></div>
+              <a href="/" class="dropdown-item"><i class="fas fa-home"></i> Back to Home</a>
+              <div class="dropdown-divider"></div>
               <button class="dropdown-item danger" onclick="handleAppSignOut()">
                 <i class="fas fa-sign-out-alt"></i> Sign Out
               </button>
@@ -430,10 +441,18 @@
     };
 
     // ── User dropdown ──
-    window.toggleAppUserMenu = () => document.getElementById('appUserDropdown')?.classList.toggle('active');
+    window.toggleAppUserMenu = () => {
+      const dd = document.getElementById('appUserDropdown');
+      const arrow = document.getElementById('profileArrow');
+      dd?.classList.toggle('active');
+      arrow?.classList.toggle('rotated');
+    };
     window.handleAppSignOut  = async () => { await signOutUser(); window.location.href = '/'; };
     document.addEventListener('click', e => {
-      if (!e.target.closest('.user-menu')) document.getElementById('appUserDropdown')?.classList.remove('active');
+      if (!e.target.closest('.user-menu')) {
+        document.getElementById('appUserDropdown')?.classList.remove('active');
+        document.getElementById('profileArrow')?.classList.remove('rotated');
+      }
     });
 
     // ── Trial guard ──
@@ -453,10 +472,36 @@
         if (trialBar) trialBar.style.display = 'none';
         if (navGuest) navGuest.style.display = 'none';
         if (navIn)    navIn.style.display    = 'flex';
-        const btn = document.getElementById('appUserBtn');
-        const em  = document.getElementById('appUserEmail');
-        if (btn) btn.textContent = (user.displayName || user.email || 'U')[0].toUpperCase();
-        if (em)  em.textContent  = user.email || user.displayName || '';
+
+        const firstName   = (user.displayName || '').split(' ')[0] || 'You';
+        const initial     = firstName[0].toUpperCase();
+        const photoURL    = user.photoURL;
+
+        // Profile pill
+        const pillAvatar = document.getElementById('appUserAvatar');
+        const pillName   = document.getElementById('appUserName');
+        if (pillName) pillName.textContent = firstName;
+        if (pillAvatar) {
+          if (photoURL) {
+            pillAvatar.innerHTML = `<img src="${photoURL}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" />`;
+          } else {
+            pillAvatar.textContent = initial;
+          }
+        }
+
+        // Dropdown large avatar
+        const lgAvatar = document.getElementById('appUserAvatarLg');
+        if (lgAvatar) {
+          if (photoURL) {
+            lgAvatar.innerHTML = `<img src="${photoURL}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" />`;
+          } else {
+            lgAvatar.textContent = initial;
+          }
+        }
+        const dispName = document.getElementById('appUserDisplayName');
+        const email    = document.getElementById('appUserEmail');
+        if (dispName) dispName.textContent = user.displayName || firstName;
+        if (email)    email.textContent    = user.email || '';
         return;
       }
 
