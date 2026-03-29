@@ -124,7 +124,7 @@ function buildJobCardHTML(job, matchScores, displayIndex) {
           <i class="fas fa-chart-bar"></i> Fit
         </button>
         <button class="btn-share" onclick="window.shareJob(${jobDataAttr})">
-          <i class="fas fa-share-alt"></i>
+          <i class="fas fa-share-alt"></i><span class="share-label"> Share</span>
         </button>
       </div>
     </div>`;
