@@ -3,6 +3,27 @@
  * Renders job cards, professor cards, filters, and handles search/filter state.
  */
 
+/* ── Save/Unsave job helpers ── */
+function getSavedJobs() {
+  try { return JSON.parse(localStorage.getItem('cl_saved_jobs') || '[]'); } catch { return []; }
+}
+function toggleSaveJob(slug, jobDataAttr) {
+  const saved = getSavedJobs();
+  const idx   = saved.indexOf(slug);
+  if (idx === -1) saved.push(slug); else saved.splice(idx, 1);
+  localStorage.setItem('cl_saved_jobs', JSON.stringify(saved));
+  // Update button UI
+  const btn = document.querySelector(`[data-save-slug="${slug}"]`);
+  if (btn) {
+    const isSaved = saved.includes(slug);
+    btn.innerHTML = isSaved
+      ? `<i class="fas fa-bookmark"></i> Saved`
+      : `<i class="far fa-bookmark"></i> Save`;
+    btn.classList.toggle('btn-saved', isSaved);
+  }
+}
+window._toggleSaveJob = toggleSaveJob;
+
 /* ── Helper: unique slug for a job (used as deep-link ID) ── */
 export function jobSlug(job) {
   return `${job.Company || ''}-${job.Role || ''}`
@@ -50,6 +71,7 @@ function buildJobCardHTML(job, matchScores, displayIndex) {
   const isMatched  = score > 0;
   const isTrending = displayIndex < 25;
   const slug       = jobSlug(job);
+  const isSaved    = getSavedJobs().includes(slug);
 
   const jobDataAttr = JSON.stringify({
     slug       : slug,
@@ -93,14 +115,16 @@ function buildJobCardHTML(job, matchScores, displayIndex) {
         ${job.Email
           ? `<a href="mailto:${job.Email}" class="btn-save"><i class="fas fa-envelope"></i> Email</a>`
           : ''}
-        ${job.Email && !job.ApplyLink
-          ? `<button class="btn-generate-email" onclick="window.openJobEmailModal(${jobDataAttr})"><i class="fas fa-magic"></i> AI Email</button>`
-          : ''}
+        <button class="btn-generate-email" onclick="window.openJobEmailModal(${jobDataAttr})"><i class="fas fa-magic"></i> AI Email</button>
+        <button class="btn-save-job ${isSaved ? 'btn-saved' : ''}" data-save-slug="${slug}"
+          onclick="window._toggleSaveJob('${slug}')">
+          <i class="${isSaved ? 'fas' : 'far'} fa-bookmark"></i> ${isSaved ? 'Saved' : 'Save'}
+        </button>
         <button class="btn-analyze-fit" onclick="window.openSkillGap(${jobDataAttr})">
-          <i class="fas fa-chart-bar"></i> Analyze Fit
+          <i class="fas fa-chart-bar"></i> Fit
         </button>
         <button class="btn-share" onclick="window.shareJob(${jobDataAttr})">
-          <i class="fas fa-share-alt"></i> Share
+          <i class="fas fa-share-alt"></i>
         </button>
       </div>
     </div>`;

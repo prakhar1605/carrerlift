@@ -587,3 +587,49 @@ body {
   .cta-trust-row { gap: 12px; font-size: 12px; }
   .footer-links { gap: 16px; }
 }
+
+/* ── PROOF COLLEGES (replaces ticker) ── */
+.proof-colleges {
+  display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+  margin: 20px 0;
+}
+.proof-college-chip {
+  padding: 7px 16px; border-radius: 100px;
+  background: var(--glass); border: 1px solid var(--border);
+  font-size: 13px; font-weight: 600; color: var(--text2); transition: all 0.2s;
+}
+.proof-college-chip:hover { border-color: var(--neon); color: var(--text1); }
+.proof-honest-note {
+  margin-top: 24px; font-size: 14px; color: var(--text2);
+  line-height: 1.7; max-width: 520px; margin-left: auto; margin-right: auto;
+}
+.proof-honest-note strong { color: var(--text1); }
+
+/* ── REVIEW CTA CARD ── */
+.review-cta-card {
+  background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(0,212,255,0.06));
+  border: 1px solid rgba(245,158,11,0.25); border-radius: 20px;
+  padding: 28px; display: flex; align-items: center;
+  justify-content: space-between; gap: 20px; flex-wrap: wrap;
+}
+.review-cta-left { display: flex; align-items: flex-start; gap: 18px; flex: 1; }
+.review-cta-icon { font-size: 36px; flex-shrink: 0; }
+.review-cta-title { font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 700; color: var(--text1); margin-bottom: 6px; }
+.review-cta-sub   { font-size: 14px; color: var(--text2); line-height: 1.6; }
+.btn-leave-review {
+  padding: 13px 26px;
+  background: linear-gradient(135deg, var(--neon3), #D97706);
+  border: none; border-radius: 12px; color: #080B14;
+  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(245,158,11,0.3);
+}
+.btn-leave-review:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,158,11,0.45); }
+
+@media (max-width: 600px) {
+  .review-cta-card { flex-direction: column; }
+  .btn-leave-review { width: 100%; justify-content: center; }
+  .proof-colleges   { gap: 8px; }
+  .proof-college-chip { font-size: 12px; padding: 6px 12px; }
+}

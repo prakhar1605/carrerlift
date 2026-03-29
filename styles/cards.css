@@ -412,3 +412,17 @@
   .btn-apply, .btn-save, .btn-analyze-fit,
   .btn-generate-email, .btn-share { width: 100%; justify-content: center; }
 }
+
+/* ── SAVE JOB BUTTON ── */
+.btn-save-job {
+  background: var(--glass2); color: var(--text2);
+  border: 1px solid var(--border2); padding: 9px 12px;
+  border-radius: 9px; font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 600; cursor: pointer;
+  display: flex; align-items: center; gap: 5px; transition: all 0.2s;
+}
+.btn-save-job:hover { border-color: var(--neon3); color: var(--neon3); }
+.btn-save-job.btn-saved {
+  background: rgba(245,158,11,0.12); color: var(--neon3);
+  border-color: rgba(245,158,11,0.35);
+}

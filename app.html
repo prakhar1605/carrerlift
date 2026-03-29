@@ -39,21 +39,17 @@
       </a>
       <div class="header-right">
         <span class="results-count" id="totalCount" style="display:none;"></span>
-
-        <!-- Guest nav -->
+        <!-- Guest -->
         <div id="appNavGuest" class="app-nav-guest">
           <button class="app-nav-signin-btn" onclick="openAppAuth()">
-            <i class="fas fa-rocket"></i> <span>Sign Up Free</span>
+            <i class="fas fa-rocket"></i> <span class="btn-text-hide">Sign Up Free</span>
           </button>
         </div>
-
-        <!-- Logged-in nav — classy profile pill -->
+        <!-- Logged-in: just a small avatar circle -->
         <div id="appNavLoggedIn" class="app-nav-loggedin">
           <div class="user-menu">
-            <button class="profile-pill" id="appUserBtn" onclick="toggleAppUserMenu()">
-              <div class="profile-pill-avatar" id="appUserAvatar">U</div>
-              <span class="profile-pill-name" id="appUserName">Account</span>
-              <i class="fas fa-chevron-down profile-pill-arrow" id="profileArrow"></i>
+            <button class="app-avatar-btn" id="appUserBtn" onclick="toggleAppUserMenu()" title="Account">
+              <div class="app-avatar-inner" id="appUserAvatar">U</div>
             </button>
             <div class="user-dropdown app-dropdown" id="appUserDropdown">
               <div class="dropdown-profile-header">

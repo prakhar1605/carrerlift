@@ -256,3 +256,36 @@
 
 /* ── user-dropdown z-index override for app ── */
 #appUserDropdown { z-index: 3000; }
+
+/* ══════════════════════════════════════
+   COMPACT AVATAR BUTTON (replaces profile-pill)
+══════════════════════════════════════ */
+.app-avatar-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%; border: 2px solid var(--border2);
+  background: none; cursor: pointer;
+  transition: all 0.2s; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.app-avatar-btn:hover {
+  border-color: var(--neon);
+  box-shadow: 0 0 0 3px rgba(0,212,255,0.15);
+  transform: scale(1.06);
+}
+.app-avatar-inner {
+  width: 100%; height: 100%; border-radius: 50%;
+  background: linear-gradient(135deg, var(--neon), var(--neon2));
+  color: #080B14; font-weight: 800; font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+
+/* Hide old profile-pill if it lingers */
+.profile-pill { display: none !important; }
+
+/* ── BTN TEXT HIDE ON TINY SCREENS ── */
+@media (max-width: 400px) {
+  .btn-text-hide { display: none; }
+  .app-nav-signin-btn { padding: 8px 12px; }
+}
