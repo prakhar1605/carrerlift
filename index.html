@@ -3,492 +3,239 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Carrerlift - AI-Powered Jobs & Research Platform</title>
-  <meta name="description" content="Find jobs and research internships with AI-powered resume matching. Connect with 1500+ IIT professors and top companies." />
-
+  <title>Carrerlift — AI-Powered Jobs & Research for Students</title>
+  <meta name="description" content="Find your dream internship or research opportunity with AI. 843+ jobs, 1837 HR contacts, 1583 research opportunities at IIT professors." />
   <link rel="icon" type="image/png" href="logo.png" />
-
-  <!-- Open Graph -->
-  <meta property="og:type"        content="website" />
-  <meta property="og:title"       content="Carrerlift - AI-Powered Jobs & Research" />
-  <meta property="og:description" content="Find jobs and research internships with AI matching. Connect with 1500+ IIT professors." />
-  <meta property="og:image"       content="logo.png" />
-  <meta property="og:site_name"   content="Carrerlift" />
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card"        content="summary_large_image" />
-  <meta name="twitter:title"       content="Carrerlift - AI Jobs & Research" />
-  <meta name="twitter:description" content="AI-powered job and research internship platform for students" />
-
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FRMVZ6H187"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-FRMVZ6H187');
-  </script>
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-
-  <!-- Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="styles/variables.css" />
-  <link rel="stylesheet" href="styles/layout.css" />
-  <link rel="stylesheet" href="styles/cards.css" />
-  <link rel="stylesheet" href="styles/modals.css" />
+  <link rel="stylesheet" href="styles/landing.css" />
+  <link rel="stylesheet" href="styles/auth.css" />
 </head>
 <body>
+  <div class="glow-orb glow-orb-1"></div>
+  <div class="glow-orb glow-orb-2"></div>
+  <div class="glow-orb glow-orb-3"></div>
+  <div class="toast-container" id="toastContainer"></div>
 
-  <!-- ══════════════════════════════════════ HEADER ══════════════════════════════════════ -->
-  <header class="header">
-    <div class="header-content">
-      <a href="/" class="logo-link">
-        <img src="logo.png" alt="CareerLift" class="logo-img" onerror="this.style.display='none'" />
-        <span class="logo-text">Carrerlift</span>
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+      <a href="/" class="nav-logo">
+        <img src="logo.png" alt="Carrerlift" onerror="this.style.display='none'" />
+        <span class="nav-logo-text">Carrerlift</span>
       </a>
-      <div class="header-actions">
-        <span id="totalCount" class="results-count" style="display:none;"></span>
+      <div class="nav-links">
+        <a href="#how-it-works" class="nav-link">How it Works</a>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="app.html" class="nav-link">Browse Jobs</a>
       </div>
-    </div>
-  </header>
-
-  <!-- ══════════════════════════════════════ TABS ══════════════════════════════════════ -->
-  <div class="tab-navigation">
-    <div class="tab-nav-content">
-      <button class="tab-btn active" data-tab="jobs"><i class="fas fa-briefcase"></i> Jobs</button>
-      <button class="tab-btn" data-tab="hr"><i class="fas fa-users"></i> HR Contacts</button>
-      <button class="tab-btn" data-tab="research"><i class="fas fa-flask"></i> Research Internships</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════ CONTAINER ══════════════════════════════════════ -->
-  <div class="container">
-    <div id="statusContainer"></div>
-
-    <!-- JOBS TAB -->
-    <div id="jobs" class="tab-content active">
-
-      <div class="search-section">
-        <h2 class="search-title">Find Your Perfect Job</h2>
-        <div class="search-bar">
-          <div class="search-input-wrapper">
-            <i class="fas fa-search search-icon"></i>
-            <input type="search" id="jobSearchInput" class="search-input" placeholder="Search by job title, company, or skills…" />
-          </div>
-          <select id="jobLocationFilter" class="filter-select"><option value="">All Locations</option></select>
-          <select id="jobTypeFilter"     class="filter-select"><option value="">All Job Types</option></select>
-          <select id="jobSortSelect"     class="filter-select">
-            <option value="match">Best Match</option>
-            <option value="new">Latest First</option>
-          </select>
-        </div>
+      <div class="nav-actions" id="navActions">
+        <button class="btn-ghost" onclick="openAuth('signin')">Sign In</button>
+        <button class="btn-primary-nav" onclick="openAuth('signup')">Get Started Free</button>
       </div>
-
-      <div class="desktop-row">
-        <!-- Resume Upload -->
-        <div class="resume-card">
-          <h2 class="resume-card-title">Get AI-Powered Job Matches</h2>
-          <p class="resume-card-subtitle">Upload your resume and let our AI find the perfect opportunities for you</p>
-          <input type="file" id="resumeFile" accept=".pdf,.txt,.doc,.docx,application/pdf" />
-          <div class="upload-area" id="uploadArea">
-            <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-            <div><div class="upload-text">Click to upload or drag and drop</div><div class="upload-hint">PDF, DOC, TXT (Max 5 MB)</div></div>
-          </div>
-          <div id="fileNameDisplay" class="file-name-display"></div>
-          <div class="upload-actions">
-            <button id="analyzeBtn" class="btn btn-primary" disabled><i class="fas fa-magic"></i> Analyze Resume</button>
-            <button id="pasteBtn"   class="btn btn-secondary"><i class="fas fa-paste"></i> Paste Resume Text</button>
-          </div>
-        </div>
-
-        <!-- Job Alert Subscribe -->
-        <div class="alert-subscribe-section" style="display:none;">
-          <div class="alert-badge"><i class="fas fa-circle"></i> Live Alerts</div>
-          <h2 class="alert-title">Never Miss Your Dream Job</h2>
-          <p class="alert-subtitle">Get daily email alerts at 9 AM with new jobs matching your skills. Free forever.</p>
-          <div class="alert-form" id="alertForm">
-            <input type="text"  class="alert-input"            id="alertName"   placeholder="Your Name" />
-            <input type="email" class="alert-input"            id="alertEmail"  placeholder="your@email.com" required />
-            <input type="text"  class="alert-input full-width" id="alertSkills" placeholder="Your skills (e.g. Python, Machine Learning, React)" />
-            <button class="alert-submit-btn" id="alertSubmitBtn" onclick="window.subscribeToAlerts()">
-              <i class="fas fa-bell"></i> Get Free Job Alerts
-            </button>
-          </div>
-          <div class="alert-success" id="alertSuccess">
-            <i class="fas fa-check-circle"></i>
-            <div><strong>You're subscribed!</strong> Check your email. First alert arrives tomorrow at 9 AM.</div>
-          </div>
-          <div class="alert-stats">
-            <div class="alert-stat"><i class="fas fa-clock"></i> Daily at 9 AM</div>
-            <div class="alert-stat"><i class="fas fa-bolt"></i> Instant confirmation</div>
-            <div class="alert-stat"><i class="fas fa-lock"></i> No spam, ever</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Analysis Section -->
-      <div class="analysis-section" id="analysisSection">
-        <div class="analysis-header" id="analysisHeader">
-          <h3 class="analysis-title">AI Analysis Results</h3>
-          <div style="display:flex;gap:12px;align-items:center;">
-            <span id="jobMatchCount" class="match-count">0 Matches</span>
-            <button id="toggleAnalysis" class="btn-toggle"><i class="fas fa-chevron-up"></i></button>
-          </div>
-        </div>
-        <div id="analysisContent" class="analysis-content" style="display:none;"></div>
-        <div id="thinkingBox" class="thinking-box" style="display:none;">
-          <div class="thinking-header"><div class="thinking-orb"></div><span class="thinking-label">AI is thinking…</span></div>
-          <div class="thinking-steps">
-            <div class="thinking-step" id="step1"><span class="step-icon">📄</span><span>Reading your resume…</span></div>
-            <div class="thinking-step" id="step2"><span class="step-icon">🔍</span><span>Extracting skills &amp; experience…</span></div>
-            <div class="thinking-step" id="step3"><span class="step-icon">🧠</span><span>Mapping to job requirements…</span></div>
-            <div class="thinking-step" id="step4"><span class="step-icon">⚡</span><span>Finding best matches…</span></div>
-            <div class="thinking-step" id="step5"><span class="step-icon">✅</span><span>Generating recommendations…</span></div>
-          </div>
-          <div class="thinking-text-stream" id="thinkingStream"></div>
-        </div>
-      </div>
-
-      <div class="results-header">
-        <h2 class="results-title" id="jobsTitle">Available Jobs</h2>
-        <span id="jobsCount" class="results-count">0 Jobs</span>
-      </div>
-      <div id="jobsGrid" class="results-grid"></div>
-    </div><!-- /jobs -->
-
-    <!-- HR CONTACTS TAB -->
-    <div id="hr" class="tab-content">
-      <div class="search-section">
-        <h2 class="search-title">Find HR & Talent Acquisition Contacts</h2>
-        <div class="search-bar">
-          <div class="search-input-wrapper">
-            <i class="fas fa-search search-icon"></i>
-            <input type="search" id="hrSearchInput" class="search-input" placeholder="Search by name, job title, or company…" />
-          </div>
-          <select id="hrCompanyFilter"  class="filter-select"><option value="">All Companies</option></select>
-          <select id="hrLocationFilter" class="filter-select"><option value="">All Locations</option></select>
-        </div>
-      </div>
-      <div class="results-header">
-        <h2 class="results-title" id="hrTitle">HR & Talent Acquisition Contacts</h2>
-        <span id="hrCount" class="results-count">0 Contacts</span>
-      </div>
-      <div id="hrGrid" class="results-grid"></div>
-    </div><!-- /hr -->
-
-    <!-- RESEARCH TAB -->
-    <div id="research" class="tab-content">
-      <div class="search-section">
-        <h2 class="search-title">Find Research Opportunities</h2>
-        <div class="search-bar">
-          <div class="search-input-wrapper">
-            <i class="fas fa-search search-icon"></i>
-            <input type="search" id="profSearchInput" class="search-input" placeholder="Search by research area, professor name, or department…" />
-          </div>
-          <select id="profInstitutionFilter" class="filter-select"><option value="">All Institutions</option></select>
-          <select id="profDepartmentFilter"  class="filter-select"><option value="">All Departments</option></select>
-          <select id="profSortSelect"        class="filter-select">
-            <option value="match">Best Match</option>
-            <option value="name">By Name</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="resume-card">
-        <h2 class="resume-card-title">Get AI-Powered Research Matches</h2>
-        <p class="resume-card-subtitle">Upload your resume and let our AI match you with 1500+ IIT professors</p>
-        <div class="upload-area" id="uploadAreaResearch">
-          <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-          <div><div class="upload-text">Click to upload or drag and drop</div><div class="upload-hint">PDF, DOC, TXT (Max 5 MB)</div></div>
-        </div>
-        <div id="fileNameDisplayResearch" class="file-name-display"></div>
-        <div class="upload-actions">
-          <button id="analyzeBtnResearch" class="btn btn-primary" disabled><i class="fas fa-magic"></i> Analyze Resume</button>
-          <button id="pasteBtnResearch"   class="btn btn-secondary"><i class="fas fa-paste"></i> Paste Resume Text</button>
-        </div>
-      </div>
-
-      <div class="analysis-section" id="analysisSectionResearch">
-        <div class="analysis-header" id="analysisHeaderResearch">
-          <h3 class="analysis-title">AI Analysis Results</h3>
-          <div style="display:flex;gap:12px;align-items:center;">
-            <span id="profMatchCount" class="match-count">0 Matches</span>
-            <button id="toggleAnalysisResearch" class="btn-toggle"><i class="fas fa-chevron-up"></i></button>
-          </div>
-        </div>
-        <div id="analysisContentResearch" class="analysis-content" style="display:none;"></div>
-        <div id="thinkingBoxResearch" class="thinking-box" style="display:none;">
-          <div class="thinking-header"><div class="thinking-orb"></div><span class="thinking-label">AI is thinking…</span></div>
-          <div class="thinking-steps">
-            <div class="thinking-step" id="stepR1"><span class="step-icon">📄</span><span>Reading your resume…</span></div>
-            <div class="thinking-step" id="stepR2"><span class="step-icon">🔍</span><span>Extracting research interests…</span></div>
-            <div class="thinking-step" id="stepR3"><span class="step-icon">🧪</span><span>Matching to professor research areas…</span></div>
-            <div class="thinking-step" id="stepR4"><span class="step-icon">🏛️</span><span>Scanning 1583 IIT professors…</span></div>
-            <div class="thinking-step" id="stepR5"><span class="step-icon">✅</span><span>Ranking best matches…</span></div>
-          </div>
-          <div class="thinking-text-stream" id="thinkingStreamResearch"></div>
-        </div>
-      </div>
-
-      <div class="results-header">
-        <h2 class="results-title" id="profsTitle">Available Research Opportunities</h2>
-        <span id="profsCount" class="results-count">0 Professors</span>
-      </div>
-      <div id="profsGrid" class="results-grid"></div>
-    </div><!-- /research -->
-  </div><!-- /container -->
-
-
-  <!-- ══════════════════════════════════════ MODALS ══════════════════════════════════════ -->
-
-  <!-- Paste Resume -->
-  <div class="modal" id="pasteModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">Paste Your Resume</h3>
-        <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
-      </div>
-      <div class="modal-body">
-        <textarea id="pasteTextarea" class="paste-textarea" placeholder="Paste your resume text here…"></textarea>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" id="cancelPaste">Cancel</button>
-        <button class="btn btn-primary"   id="analyzePasted">Analyze Resume</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ════════════════════════════════════════════════════════════
-       JOB DETAIL MODAL  — opens when someone clicks a shared link
-       ?job=slug  →  this modal auto-opens with that job's details
-  ════════════════════════════════════════════════════════════ -->
-  <div class="email-modal" id="jobDetailModal">
-    <div class="email-modal-content" style="max-width:560px;">
-      <div class="email-modal-header">
-        <div style="flex:1;min-width:0;">
-          <div class="email-modal-title" id="jdRole" style="font-size:20px;"></div>
-          <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
-            <span style="font-size:14px;color:var(--text2);" id="jdCompany"></span>
-          </div>
-        </div>
-        <button class="email-modal-close" id="jobDetailClose"><i class="fas fa-times"></i></button>
-      </div>
-
-      <div class="email-modal-body" style="padding:18px 24px 24px;">
-
-        <!-- Tags row -->
-        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;" id="jdTagsRow"></div>
-
-        <!-- Description -->
-        <div id="jdDescriptionBox"
-             style="font-size:13px;line-height:1.8;color:var(--text2);
-                    background:var(--glass);border:1px solid var(--border);
-                    border-radius:12px;padding:14px 16px;margin-bottom:20px;
-                    white-space:pre-wrap;max-height:200px;overflow-y:auto;">
-        </div>
-
-        <!-- Action buttons -->
-        <div style="display:flex;gap:10px;flex-wrap:wrap;">
-          <a id="jdApplyBtn" href="#" target="_blank"
-             style="flex:1;min-width:120px;background:linear-gradient(135deg,var(--neon),#0099cc);
-                    color:#080B14;padding:12px 18px;border-radius:10px;
-                    font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;
-                    text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;
-                    box-shadow:0 4px 15px rgba(0,212,255,0.25);">
-            <i class="fas fa-paper-plane"></i> Apply Now
-          </a>
-          <button id="jdShareAgainBtn"
-                  style="background:rgba(37,211,102,0.1);color:#25D366;
-                         border:1px solid rgba(37,211,102,0.25);padding:12px 16px;
-                         border-radius:10px;font-family:'DM Sans',sans-serif;
-                         font-size:14px;font-weight:700;cursor:pointer;
-                         display:flex;align-items:center;gap:7px;">
-            <i class="fas fa-share-alt"></i> Share
-          </button>
-          <button id="jdAiEmailBtn"
-                  style="background:rgba(124,58,237,0.1);color:var(--neon2);
-                         border:1px solid rgba(124,58,237,0.25);padding:12px 16px;
-                         border-radius:10px;font-family:'DM Sans',sans-serif;
-                         font-size:14px;font-weight:700;cursor:pointer;
-                         display:flex;align-items:center;gap:7px;">
-            <i class="fas fa-magic"></i> AI Email
-          </button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- Skill Gap Analyzer -->
-  <div class="skill-gap-modal" id="skillGapModal">
-    <div class="skill-gap-content">
-      <div class="skill-gap-header">
-        <div>
-          <div class="skill-gap-title">Skill Gap Analyzer</div>
-          <div class="skill-gap-subtitle">See exactly what you have, what's missing, and how to get there</div>
-        </div>
-        <button class="skill-gap-close" id="skillGapClose"><i class="fas fa-times"></i></button>
-      </div>
-      <div class="skill-gap-body">
-        <div class="job-banner-modal">
-          <i class="fas fa-briefcase"></i>
-          <div>
-            <div class="company" id="sgJobCompany">Company</div>
-            <div class="role"    id="sgJobRole">Job Role</div>
-          </div>
-        </div>
-        <div class="resume-warning" id="sgResumeWarning" style="display:none;">
-          <i class="fas fa-exclamation-triangle"></i>
-          <div><strong>Resume not uploaded yet!</strong><br>Please upload or paste your resume first.</div>
-        </div>
-        <button class="analyze-gap-btn" id="analyzeGapBtn"><i class="fas fa-chart-bar"></i> Analyze My Skill Gap</button>
-        <div class="gap-results" id="gapResults">
-          <div class="overall-score-card">
-            <div class="score-circle" id="scoreCircle">
-              <span class="score-num" id="scoreNum">0%</span>
-              <span class="score-label">Match</span>
+      <div class="nav-actions" id="navActionsLoggedIn" style="display:none;">
+        <a href="app.html" class="btn-ghost">Open App</a>
+        <div class="user-menu">
+          <button class="user-avatar" id="userAvatarBtn" onclick="toggleUserMenu()">P</button>
+          <div class="user-dropdown" id="userDropdown">
+            <div class="user-dropdown-email">
+              <span>Signed in as</span>
+              <p id="userEmailDisplay">user@email.com</p>
             </div>
-            <div class="score-details">
-              <div class="verdict"       id="sgVerdict">Analyzing…</div>
-              <div class="time-to-ready" id="sgTimeReady"></div>
-              <div class="quick-tip"     id="sgQuickTip"></div>
+            <a href="app.html" class="dropdown-item"><i class="fas fa-briefcase"></i> Browse Jobs</a>
+            <a href="app.html" class="dropdown-item"><i class="fas fa-bookmark"></i> Saved Jobs</a>
+            <button class="dropdown-item danger" onclick="signOut()"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+          </div>
+        </div>
+      </div>
+      <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+    </div>
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#how-it-works" class="mobile-link" onclick="closeMobileMenu()">How it Works</a>
+      <a href="#features" class="mobile-link" onclick="closeMobileMenu()">Features</a>
+      <a href="app.html" class="mobile-link">Browse Jobs</a>
+      <div class="mobile-auth-btns">
+        <button class="btn-ghost" style="flex:1;" onclick="openAuth('signin');closeMobileMenu()">Sign In</button>
+        <button class="btn-primary-nav" style="flex:1;" onclick="openAuth('signup');closeMobileMenu()">Sign Up Free</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge"><div class="hero-badge-dot"></div>AI-Powered Career Platform · India's #1</div>
+        <h1 class="hero-title">Your Dream Job,<br>Found by <span class="hero-title-gradient">AI</span></h1>
+        <p class="hero-sub">Upload your resume and our AI matches you with the best internships, jobs, and research opportunities across top companies and 1500+ IIT professors — in seconds.</p>
+        <div class="hero-ctas">
+          <button class="btn-hero-primary" onclick="openAuth('signup')"><i class="fas fa-rocket"></i> Get Started Free</button>
+          <a href="app.html" class="btn-hero-secondary" onclick="startTryNow(event)"><i class="fas fa-play"></i> Try Now — No Signup</a>
+        </div>
+        <div class="try-timer-chip"><i class="fas fa-clock"></i> 10-minute free preview · No credit card needed</div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-stat-chip hero-stat-chip-1"><div class="hero-stat-val">843+</div><div class="hero-stat-lbl">Live Jobs</div></div>
+        <div class="hero-stat-chip hero-stat-chip-2"><div class="hero-stat-val">95%</div><div class="hero-stat-lbl">AI Accuracy</div></div>
+        <div class="hero-card-main">
+          <div class="hero-card-header">
+            <div class="hero-card-avatar">🤖</div>
+            <div class="hero-card-info"><h4>AI Resume Analysis</h4><span>Scanning your profile…</span></div>
+          </div>
+          <div class="hero-match-bar">
+            <div style="flex:1;">
+              <div class="hero-match-label">Overall Match Score</div>
+              <div class="hero-progress"><div class="hero-progress-fill" id="heroProgress" style="width:0%"></div></div>
+            </div>
+            <div class="hero-match-score" id="heroScore">0%</div>
+          </div>
+          <div class="hero-jobs-list">
+            <div class="hero-job-item">
+              <div class="hero-job-left">
+                <div class="hero-job-icon" style="background:rgba(0,212,255,0.12);">💻</div>
+                <div><div class="hero-job-name">AI Intern</div><div class="hero-job-co">Kotak Neo · Mumbai</div></div>
+              </div>
+              <span class="hero-job-badge badge-matched">98% Match</span>
+            </div>
+            <div class="hero-job-item">
+              <div class="hero-job-left">
+                <div class="hero-job-icon" style="background:rgba(124,58,237,0.12);">🚀</div>
+                <div><div class="hero-job-name">SWE Intern (+PPO)</div><div class="hero-job-co">Livo AI · Bangalore</div></div>
+              </div>
+              <span class="hero-job-badge badge-trending">Trending</span>
+            </div>
+            <div class="hero-job-item">
+              <div class="hero-job-left">
+                <div class="hero-job-icon" style="background:rgba(16,185,129,0.12);">🔬</div>
+                <div><div class="hero-job-name">Research Intern</div><div class="hero-job-co">IIT Bombay · Prof. Sharma</div></div>
+              </div>
+              <span class="hero-job-badge badge-matched">94% Match</span>
             </div>
           </div>
-          <div class="gap-section-title green"><i class="fas fa-check-circle"></i> Skills You Already Have</div>
-          <div class="matched-skills-grid" id="matchedSkillsGrid"></div>
-          <div class="gap-section-title red"><i class="fas fa-times-circle"></i> Skills You Need</div>
-          <div class="missing-skills-grid" id="missingSkillsGrid"></div>
-          <div class="gap-section-title blue"><i class="fas fa-map-marked-alt"></i> Your Learning Roadmap</div>
-          <div class="roadmap-container"  id="roadmapContainer"></div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <div class="stats-strip">
+    <div class="stats-inner">
+      <div class="stat-item"><div class="stat-number" data-target="843">0</div><div class="stat-label">Active Job Listings</div><div class="stat-sub">Updated daily</div></div>
+      <div class="stat-item"><div class="stat-number" data-target="1837">0</div><div class="stat-label">HR Contacts</div><div class="stat-sub">Direct recruiter access</div></div>
+      <div class="stat-item"><div class="stat-number" data-target="1583">0</div><div class="stat-label">IIT Professors</div><div class="stat-sub">Research opportunities</div></div>
+      <div class="stat-item"><div class="stat-number" data-target="95" data-suffix="%">0</div><div class="stat-label">Match Accuracy</div><div class="stat-sub">AI-powered precision</div></div>
     </div>
   </div>
 
-  <!-- Job Application Email -->
-  <div class="email-modal" id="jobEmailModal">
-    <div class="email-modal-content">
-      <div class="email-modal-header">
-        <div>
-          <div class="email-modal-title">AI Job Application Email</div>
-          <div class="email-modal-subtitle">Generate a cold email to HR/Recruiter for this role</div>
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how-it-works">
+    <div class="section-inner">
+      <div class="section-label"><i class="fas fa-map-signs"></i> How it Works</div>
+      <h2 class="section-title">Land your dream opportunity<br>in 3 simple steps</h2>
+      <p class="section-sub">No manual browsing. No guesswork. Just AI doing the heavy lifting for you.</p>
+      <div class="steps-grid">
+        <div class="step-card reveal">
+          <div class="step-num">01</div>
+          <div class="step-icon step-icon-1"><i class="fas fa-file-upload"></i></div>
+          <h3 class="step-title">Upload Your Resume</h3>
+          <p class="step-desc">Drop your PDF, DOCX, or paste text. Our AI instantly extracts your skills, experience, and interests with pinpoint accuracy.</p>
         </div>
-        <button class="email-modal-close" id="jobEmailModalClose"><i class="fas fa-times"></i></button>
-      </div>
-      <div class="email-modal-body">
-        <div class="prof-info-banner" style="background:rgba(0,212,255,0.08);border-color:rgba(0,212,255,0.2);">
-          <i class="fas fa-briefcase" style="color:var(--neon);"></i>
-          <div class="prof-info-details">
-            <div class="name" id="jobEmailRole">Role</div>
-            <div class="dept" style="color:var(--neon);" id="jobEmailCompany">Company</div>
-            <div class="inst" id="jobEmailLocation"></div>
-          </div>
+        <div class="step-card reveal">
+          <div class="step-num">02</div>
+          <div class="step-icon step-icon-2"><i class="fas fa-brain"></i></div>
+          <h3 class="step-title">AI Matches You</h3>
+          <p class="step-desc">Our model scans 843+ jobs and 1583 professor profiles, ranking opportunities by how well they match your unique profile.</p>
         </div>
-        <label class="email-form-label">Your Name</label>
-        <input type="text" id="jobStudentName"   class="email-form-input" placeholder="Your full name" />
-        <label class="email-form-label">Your Course &amp; College</label>
-        <input type="text" id="jobStudentCourse" class="email-form-input" placeholder="e.g. B.Tech CSE, 3rd Year, IIT Delhi" />
-        <label class="email-form-label">Why you're a great fit</label>
-        <textarea id="jobStudentProject" class="email-form-textarea" placeholder="e.g. I have experience in React and Node.js…"></textarea>
-        <label class="email-form-label">Tone</label>
-        <select id="jobEmailTone" class="email-form-input" style="cursor:pointer;">
-          <option value="professional">Professional &amp; Confident</option>
-          <option value="enthusiastic">Enthusiastic &amp; Energetic</option>
-          <option value="concise">Short &amp; Direct</option>
-        </select>
-        <button class="generate-btn" id="generateJobEmailBtn"
-                style="background:linear-gradient(135deg,var(--neon),#0099cc);box-shadow:0 4px 15px rgba(0,212,255,0.3);">
-          <i class="fas fa-magic"></i> Generate Application Email
-        </button>
-        <div class="generated-email-box" id="generatedJobEmailBox">
-          <div class="generated-email-toolbar">
-            <span class="generated-email-label">Generated Email</span>
-            <button class="copy-btn" id="copyJobEmailBtn" style="background:var(--neon);color:#080B14;"><i class="fas fa-copy"></i> Copy</button>
-          </div>
-          <div class="generated-email-text" id="generatedJobEmailText"></div>
-          <div class="email-actions-row">
-            <a href="#" class="btn-send-email" id="sendJobEmailBtn" target="_blank"><i class="fas fa-paper-plane"></i> Open in Gmail</a>
-            <button class="btn-regenerate" id="regenerateJobBtn"><i class="fas fa-redo"></i> Regenerate</button>
-          </div>
+        <div class="step-card reveal">
+          <div class="step-num">03</div>
+          <div class="step-icon step-icon-3"><i class="fas fa-paper-plane"></i></div>
+          <h3 class="step-title">Apply with AI Emails</h3>
+          <p class="step-desc">Generate personalised cold emails to HR or professors with one click. Higher response rates, zero effort.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- FEATURES BENTO -->
+  <section class="section" id="features" style="padding-top:0;">
+    <div class="section-inner">
+      <div class="section-label"><i class="fas fa-star"></i> Features</div>
+      <h2 class="section-title">Everything you need,<br>nothing you don't</h2>
+      <div class="bento-grid">
+        <div class="bento-card wide accent-cyan reveal">
+          <div class="bento-icon" style="background:rgba(0,212,255,0.12);color:var(--neon);"><i class="fas fa-magic"></i></div>
+          <h3 class="bento-title">AI Resume Analyzer</h3>
+          <p class="bento-desc">Upload once, match everywhere. Our AI reads your resume deeply — skills, projects, experience — and finds the most relevant opportunities across all categories simultaneously.</p>
+          <div class="bento-big-num" style="background:linear-gradient(135deg,var(--neon),#0099cc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">50x</div>
+          <p style="font-size:12px;color:var(--text3);margin-top:4px;">faster than manual search</p>
+        </div>
+        <div class="bento-card tall accent-purple reveal">
+          <div class="bento-icon" style="background:rgba(124,58,237,0.12);color:var(--neon2);"><i class="fas fa-flask"></i></div>
+          <h3 class="bento-title">Research Matching</h3>
+          <p class="bento-desc">Get matched with IIT professors whose research aligns with your interests. Send personalised cold emails that actually get responses.</p>
+          <div class="bento-big-num" style="background:linear-gradient(135deg,var(--neon2),#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">1583</div>
+          <p style="font-size:12px;color:var(--text3);margin-top:4px;">professors across all IITs</p>
+        </div>
+        <div class="bento-card accent-green reveal">
+          <div class="bento-icon" style="background:rgba(16,185,129,0.12);color:var(--green);"><i class="fas fa-bookmark"></i></div>
+          <h3 class="bento-title">Save & Track Jobs</h3>
+          <p class="bento-desc">Bookmark jobs and save your resume — synced to your account, accessible from any device.</p>
+        </div>
+        <div class="bento-card accent-amber reveal">
+          <div class="bento-icon" style="background:rgba(245,158,11,0.12);color:var(--neon3);"><i class="fas fa-chart-bar"></i></div>
+          <h3 class="bento-title">Skill Gap Analyzer</h3>
+          <p class="bento-desc">See exactly which skills you have, what's missing, and a personalised learning roadmap to close the gap.</p>
+        </div>
+        <div class="bento-card accent-cyan reveal">
+          <div class="bento-icon" style="background:rgba(0,212,255,0.12);color:var(--neon);"><i class="fas fa-users"></i></div>
+          <h3 class="bento-title">1837 HR Contacts</h3>
+          <p class="bento-desc">Direct access to recruiters and talent acquisition leads at top companies. Skip the queue entirely.</p>
+        </div>
+        <div class="bento-card reveal" style="grid-column:span 2;">
+          <div class="bento-icon" style="background:rgba(245,158,11,0.1);color:var(--neon3);"><i class="fas fa-envelope-open-text"></i></div>
+          <h3 class="bento-title">AI Email Generator</h3>
+          <p class="bento-desc">Generate personalised cold emails for professors and HR in 3 tones — Professional, Enthusiastic, or Short & Direct. One click to open in Gmail.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       AUTH MODAL — Sign In / Sign Up
+  ══════════════════════════════════════ -->
+  <div class="auth-modal" id="authModal" role="dialog" aria-modal="true">
+    <div class="auth-card">
+      <button class="auth-close-btn" onclick="closeAuth()" aria-label="Close"><i class="fas fa-times"></i></button>
+      <div class="auth-logo">
+        <img src="logo.png" alt="Carrerlift" onerror="this.style.display='none'" />
+        <span class="auth-logo-text">Carrerlift</span>
+      </div>
+      <h2 class="auth-title">Welcome 👋</h2>
+      <p class="auth-sub">Sign in to unlock full access — 843+ jobs, 1837 HR contacts, AI resume matching &amp; more.</p>
+
+      <button class="google-sign-btn" id="googleSignInBtn" onclick="handleGoogleSignIn()">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G" class="google-icon" />
+        Continue with Google
+      </button>
+
+      <div class="auth-divider">or</div>
+
+      <button class="try-now-btn" onclick="startTryNow(); closeAuth();">
+        <i class="fas fa-play"></i> Try for free — 10 minutes, no signup
+      </button>
+
+      <p id="authError" class="auth-error"></p>
+
+      <p class="auth-footer-note">
+        By continuing, you agree to our Terms of Service.<br>
+        We never spam — only match you to opportunities.
+      </p>
     </div>
   </div>
 
-  <!-- Research Cold Email -->
-  <div class="email-modal" id="emailModal">
-    <div class="email-modal-content">
-      <div class="email-modal-header">
-        <div>
-          <div class="email-modal-title">AI Cold Email Generator</div>
-          <div class="email-modal-subtitle">Generate a personalised email for this professor in seconds</div>
-        </div>
-        <button class="email-modal-close" id="emailModalClose"><i class="fas fa-times"></i></button>
-      </div>
-      <div class="email-modal-body">
-        <div class="prof-info-banner">
-          <i class="fas fa-user-tie"></i>
-          <div class="prof-info-details">
-            <div class="name" id="emailProfName">Professor Name</div>
-            <div class="dept" id="emailProfDept">Department</div>
-            <div class="inst" id="emailProfInst">Institution</div>
-          </div>
-        </div>
-        <label class="email-form-label">Your Name</label>
-        <input type="text" id="studentName"   class="email-form-input" placeholder="Your full name" />
-        <label class="email-form-label">Your Course &amp; Year</label>
-        <input type="text" id="studentCourse" class="email-form-input" placeholder="e.g. B.Tech CSE, 2nd Year, IIT Bombay" />
-        <label class="email-form-label">Your Relevant Project / Research</label>
-        <textarea id="studentProject" class="email-form-textarea" placeholder="e.g. I built a deep learning model…"></textarea>
-        <label class="email-form-label">Why This Professor? (optional)</label>
-        <input type="text" id="studentReason" class="email-form-input" placeholder="e.g. I came across your recent paper…" />
-        <button class="generate-btn" id="generateEmailBtn"><i class="fas fa-magic"></i> Generate Personalised Email</button>
-        <div class="generated-email-box" id="generatedEmailBox">
-          <div class="generated-email-toolbar">
-            <span class="generated-email-label">Generated Email</span>
-            <button class="copy-btn" id="copyEmailBtn"><i class="fas fa-copy"></i> Copy</button>
-          </div>
-          <div class="generated-email-text" id="generatedEmailText"></div>
-          <div class="email-actions-row">
-            <a href="#" class="btn-send-email" id="sendEmailBtn" target="_blank"><i class="fas fa-paper-plane"></i> Open in Gmail</a>
-            <button class="btn-regenerate" id="regenerateBtn"><i class="fas fa-redo"></i> Regenerate</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ══════════════════════════════════════ FOOTER ══════════════════════════════════════ -->
-  <footer style="background:var(--bg2);border-top:1px solid var(--border);padding:40px 20px;margin-top:60px;">
-    <div style="max-width:1200px;margin:0 auto;text-align:center;">
-      <div style="margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:10px;">
-        <img src="logo.png" alt="CareerLift" style="height:28px;width:auto;border-radius:6px;" onerror="this.style.display='none'" />
-        <a href="/" style="font-size:22px;font-weight:800;background:linear-gradient(135deg,#00D4FF,#7C3AED);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;">Carrerlift</a>
-      </div>
-      <p style="color:var(--text2);font-size:14px;margin-bottom:8px;">AI-Powered Jobs &amp; Research Platform for Students</p>
-      <p style="color:var(--text3);font-size:13px;margin-bottom:20px;">Connecting students with opportunities at top companies and 1500+ IIT professors</p>
-      <p style="margin-bottom:20px;"><a href="mailto:contactcarrerlift@gmail.com" style="color:var(--neon);font-size:13px;text-decoration:none;">contactcarrerlift@gmail.com</a></p>
-      <div style="border-top:1px solid var(--border);padding-top:20px;margin-top:20px;">
-        <p style="color:var(--text3);font-size:12px;">© 2026 Carrerlift. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- PDF.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  <script>
-    if (typeof pdfjsLib !== 'undefined') {
-      pdfjsLib.GlobalWorkerOptions.workerSrc =
-        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-    }
-  </script>
-  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/auth.js"></script>
 </body>
 </html>
