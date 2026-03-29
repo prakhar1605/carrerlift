@@ -213,7 +213,7 @@ Pull requests are welcome! For major changes, please open an issue first.
 Built with ❤️ for Indian students.
 
 - 🌐 Website: [carrerlift.in](https://carrerlift.in)
-- 📧 Email: hello@carrerlift.in
+- 📧 Email: carrerlift@gmail.com
 - 🐛 Issues: [GitHub Issues](https://github.com/your-username/carrerlift/issues)
 
 ---

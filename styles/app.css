@@ -267,3 +267,86 @@
 @media (max-width: 400px) {
   .btn-text-hide { display: none; }
 }
+
+/* ══════════════════════════════════════
+   SAVED JOBS SLIDE-IN PANEL
+══════════════════════════════════════ */
+.saved-panel-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+  z-index: 4000;
+}
+.saved-panel-overlay.active { display: block; }
+
+.saved-panel {
+  position: fixed; top: 0; right: -360px; bottom: 0;
+  width: 340px; max-width: 92vw;
+  background: #0D1117;
+  border-left: 1px solid rgba(255,255,255,0.1);
+  z-index: 4001;
+  display: flex; flex-direction: column;
+  transition: right 0.3s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: -8px 0 40px rgba(0,0,0,0.6);
+}
+.saved-panel.active { right: 0; }
+
+.saved-panel-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.02);
+}
+.saved-panel-title {
+  font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700;
+  color: #F1F5F9; display: flex; align-items: center; gap: 8px;
+}
+.saved-panel-title i { color: var(--neon3); }
+.saved-panel-close {
+  width: 30px; height: 30px; border-radius: 8px;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  color: #94A3B8; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.saved-panel-close:hover { background: rgba(255,255,255,0.12); color: #F1F5F9; }
+
+.saved-panel-body { flex: 1; overflow-y: auto; padding: 16px; }
+
+.saved-empty {
+  text-align: center; padding: 48px 20px;
+  color: var(--text3);
+}
+.saved-empty i { font-size: 36px; margin-bottom: 12px; display: block; opacity: 0.4; }
+.saved-empty p { font-size: 15px; font-weight: 600; color: var(--text2); margin-bottom: 6px; }
+.saved-empty span { font-size: 13px; }
+
+.saved-job-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px 14px; border-radius: 12px;
+  background: var(--glass); border: 1px solid var(--border);
+  margin-bottom: 8px; transition: all 0.2s;
+}
+.saved-job-row:hover { border-color: var(--border2); }
+.saved-job-name {
+  font-size: 13px; font-weight: 600; color: var(--text1);
+  line-height: 1.4;
+}
+.saved-job-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.saved-view-btn, .saved-remove-btn {
+  width: 30px; height: 30px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; cursor: pointer; transition: all 0.2s;
+  border: 1px solid var(--border); text-decoration: none;
+}
+.saved-view-btn { background: rgba(0,212,255,0.1); color: var(--neon); border-color: rgba(0,212,255,0.2); }
+.saved-view-btn:hover { background: rgba(0,212,255,0.2); }
+.saved-remove-btn { background: rgba(239,68,68,0.08); color: #FCA5A5; border-color: rgba(239,68,68,0.2); }
+.saved-remove-btn:hover { background: rgba(239,68,68,0.18); }
+
+/* ── Saved count badge in dropdown ── */
+.saved-count-badge {
+  margin-left: auto; min-width: 18px; height: 18px;
+  background: var(--neon3); color: #080B14;
+  border-radius: 100px; font-size: 10px; font-weight: 800;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0 5px;
+}
+.saved-count-badge:empty { display: none; }
