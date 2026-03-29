@@ -41,8 +41,9 @@
 }
 .app-avatar-inner img { width: 100%; height: 100%; object-fit: cover; }
 
-/* ── DROPDOWN — stays INSIDE viewport, no overflow ── */
+/* ── DROPDOWN — hidden by default, shown on .active ── */
 .app-dropdown {
+  display: none;
   position: absolute;
   top: calc(100% + 8px); right: 0;
   min-width: 240px; max-width: 280px;
@@ -51,9 +52,9 @@
   border-radius: 16px; overflow: hidden;
   box-shadow: 0 16px 48px rgba(0,0,0,0.7);
   z-index: 9999;
-  /* Critical: clip content inside, no bleed-out */
-  contain: layout;
+  animation: fadeUp 0.18s ease;
 }
+.app-dropdown.active { display: block; }
 /* Profile section INSIDE dropdown — not floating above header */
 .dropdown-profile-header {
   display: flex; align-items: center; gap: 12px;
@@ -259,8 +260,9 @@
   .tab-btn { padding: 10px 8px; font-size: 11px; }
 }
 
-/* ── z-index fix ── */
-#appUserDropdown { z-index: 9999; }
+/* ── z-index + hide override for app dropdown ── */
+#appUserDropdown { z-index: 9999; display: none; }
+#appUserDropdown.active { display: block; }
 .app-nav-signin-btn { white-space: nowrap; }
 @media (max-width: 400px) {
   .btn-text-hide { display: none; }

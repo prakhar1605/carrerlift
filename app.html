@@ -437,17 +437,21 @@
     };
 
     // ── User dropdown ──
+    // ── User dropdown — proper toggle ──
     window.toggleAppUserMenu = () => {
       const dd = document.getElementById('appUserDropdown');
-      const isOpen = dd?.classList.toggle('active');
+      if (!dd) return;
+      const isOpen = dd.classList.contains('active');
+      document.querySelectorAll('.user-dropdown').forEach(d => d.classList.remove('active'));
+      if (!isOpen) dd.classList.add('active');
     };
-    window.handleAppSignOut  = async () => { await signOutUser(); window.location.href = '/'; };
     document.addEventListener('click', e => {
-      if (!e.target.closest('.user-menu')) {
+      if (!e.target.closest('#appUserBtn') && !e.target.closest('#appUserDropdown')) {
         document.getElementById('appUserDropdown')?.classList.remove('active');
         document.getElementById('profileArrow')?.classList.remove('rotated');
       }
     });
+    window.handleAppSignOut = async () => { await signOutUser(); window.location.href = '/'; };
 
     // ── Trial guard ──
     let trialInterval = null;

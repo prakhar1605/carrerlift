@@ -426,3 +426,23 @@
   background: rgba(245,158,11,0.12); color: var(--neon3);
   border-color: rgba(245,158,11,0.35);
 }
+/* Share — icon only, square, fits in grid */
+.btn-share {
+  padding: 9px 12px;
+  min-width: unset; flex: none;
+}
+.share-label { display: none; }
+/* Mobile job action grid — 2 columns */
+@media (max-width: 640px) {
+  .job-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 7px !important;
+  }
+  .job-actions .btn-apply { grid-column: 1 / -1; }
+  .job-actions a.btn-apply { grid-column: 1 / -1; }
+  .btn-apply, .btn-save, .btn-generate-email,
+  .btn-save-job, .btn-analyze-fit, .btn-share {
+    width: 100%; justify-content: center; font-size: 12px;
+  }
+}
