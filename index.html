@@ -236,6 +236,61 @@
     </div>
   </div>
 
+  <!-- FOOTER -->
+  <footer class="landing-footer">
+    <p>© 2025 Carrerlift · Made with ❤️ for Indian students · <a href="mailto:hello@carrerlift.in">Contact</a></p>
+  </footer>
+
   <script type="module" src="js/auth.js"></script>
+  <script>
+    // ── Navbar scroll ──
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // ── Mobile menu ──
+    window.toggleMobileMenu = () => document.getElementById('mobileMenu').classList.toggle('open');
+    window.closeMobileMenu  = () => document.getElementById('mobileMenu').classList.remove('open');
+
+    // ── Stats counter ──
+    function animateCounters() {
+      document.querySelectorAll('.stat-number').forEach(el => {
+        const target = parseInt(el.dataset.target);
+        const suffix = el.dataset.suffix || '';
+        let current = 0;
+        const step = Math.ceil(target / 60);
+        const timer = setInterval(() => {
+          current = Math.min(current + step, target);
+          el.textContent = current.toLocaleString() + suffix;
+          if (current >= target) clearInterval(timer);
+        }, 25);
+      });
+    }
+    const statsObserver = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) { animateCounters(); statsObserver.disconnect(); }
+    }, { threshold: 0.3 });
+    const statsEl = document.querySelector('.stats-strip');
+    if (statsEl) statsObserver.observe(statsEl);
+
+    // ── Reveal on scroll ──
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ── Hero progress bar animation ──
+    setTimeout(() => {
+      const bar = document.getElementById('heroProgress');
+      const score = document.getElementById('heroScore');
+      if (!bar || !score) return;
+      let pct = 0;
+      const timer = setInterval(() => {
+        pct = Math.min(pct + 1, 87);
+        bar.style.width = pct + '%';
+        score.textContent = pct + '%';
+        if (pct >= 87) clearInterval(timer);
+      }, 18);
+    }, 800);
+  </script>
 </body>
 </html>
