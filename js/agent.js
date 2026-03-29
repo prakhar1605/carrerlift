@@ -16,10 +16,12 @@ let agentPanel, agentMessages, agentInput, agentSendBtn;
    BUILD UI
 ───────────────────────────────────────────── */
 export function initCareerAgent() {
-  injectStyles();
-  buildFAB();
-  buildPanel();
-  addSuggestedPrompts();
+  // Temporarily hidden — uncomment below to re-enable
+  // injectStyles();
+  // buildFAB();
+  // buildPanel();
+  // addSuggestedPrompts();
+  return;
 }
 
 function buildFAB() {
