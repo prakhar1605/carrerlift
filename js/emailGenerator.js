@@ -19,56 +19,58 @@ let currentProfData = null;
 /** Open the research cold-email modal for a given professor. */
 export function openEmailModal(profData) {
   currentProfData = profData;
-  document.getElementById('emailProfName').textContent = profData.name || 'Professor';
-  document.getElementById('emailProfDept').textContent = profData.dept || 'Department';
-  document.getElementById('emailProfInst').textContent = profData.inst || 'Institution';
-  document.getElementById('generatedEmailBox').classList.remove('active');
+  // app.html uses: profNameDisplay, profDeptDisplay, profInstDisplay
+  const nameEl = document.getElementById('profNameDisplay');
+  const deptEl = document.getElementById('profDeptDisplay');
+  const instEl = document.getElementById('profInstDisplay');
+  if (nameEl) nameEl.textContent = profData.name || 'Professor';
+  if (deptEl) deptEl.textContent = profData.dept || 'Department';
+  if (instEl) instEl.textContent = profData.inst || 'Institution';
+  document.getElementById('generatedEmailBox')?.classList.remove('active');
   const btn = document.getElementById('generateEmailBtn');
-  btn.innerHTML = '<i class="fas fa-magic"></i> Generate Personalized Email';
-  btn.disabled  = false;
-  document.getElementById('emailModal').classList.add('active');
+  if (btn) { btn.innerHTML = '<i class="fas fa-magic"></i> Generate Email'; btn.disabled = false; }
+  document.getElementById('emailModal')?.classList.add('active');
 }
 
 /** Generate a cold email for a professor using the AI API. */
 export async function generateColdEmail() {
-  const studentName    = document.getElementById('studentName').value.trim();
-  const studentCourse  = document.getElementById('studentCourse').value.trim();
-  const studentProject = document.getElementById('studentProject').value.trim();
-  const studentReason  = document.getElementById('studentReason').value.trim();
+  // app.html IDs: senderName, senderBackground, emailTone
+  const studentName    = (document.getElementById('senderName')?.value || '').trim();
+  const studentCourse  = (document.getElementById('senderBackground')?.value || '').trim();
+  const studentProject = studentCourse; // combined in one field
+  const studentReason  = '';
+  const tone           = document.getElementById('emailTone')?.value || 'professional';
 
-  if (!studentName || !studentCourse)  { showStatus('Please enter your name and course details', 'error'); return; }
-  if (!studentProject)                 { showStatus('Please describe your project or research', 'error'); return; }
+  if (!studentName)   { showStatus('Please enter your name', 'error'); return; }
+  if (!studentCourse) { showStatus('Please enter your background', 'error'); return; }
 
   const btn = document.getElementById('generateEmailBtn');
-  btn.innerHTML = '<span class="loading"></span> Generating...';
-  btn.disabled  = true;
+  if (btn) { btn.innerHTML = '<span class="loading"></span> Generating...'; btn.disabled = true; }
 
-  const prompt = buildResearchEmailPrompt({ studentName, studentCourse, studentProject, studentReason });
+  const prompt = buildResearchEmailPrompt({ studentName, studentCourse, studentProject, studentReason, tone });
 
   try {
     const emailText = await callGenerateEmail(prompt);
     displayGeneratedEmail({
       emailText,
-      textElId     : 'generatedEmailText',
-      boxId        : 'generatedEmailBox',
-      sendBtnId    : 'sendEmailBtn',
-      toEmail      : currentProfData.email,
+      textElId  : 'generatedEmailText',
+      boxId     : 'generatedEmailBox',
+      sendBtnId : 'openGmailBtn',
+      toEmail   : currentProfData.email,
     });
-    showStatus('Email generated successfully!', 'success');
+    showStatus('Email generated!', 'success');
   } catch {
-    // Fallback template
     const fallback = buildResearchEmailFallback({ studentName, studentCourse, studentProject, studentReason });
     displayGeneratedEmail({
-      emailText    : fallback,
-      textElId     : 'generatedEmailText',
-      boxId        : 'generatedEmailBox',
-      sendBtnId    : 'sendEmailBtn',
-      toEmail      : currentProfData.email,
+      emailText : fallback,
+      textElId  : 'generatedEmailText',
+      boxId     : 'generatedEmailBox',
+      sendBtnId : 'openGmailBtn',
+      toEmail   : currentProfData.email,
     });
     showStatus('Email template generated!', 'success');
   } finally {
-    btn.innerHTML = '<i class="fas fa-magic"></i> Generate Personalized Email';
-    btn.disabled  = false;
+    if (btn) { btn.innerHTML = '<i class="fas fa-magic"></i> Generate Email'; btn.disabled = false; }
   }
 }
 
@@ -81,46 +83,41 @@ let currentJobEmailData = null;
 /** Open the job application email modal for a given job. */
 export function openJobEmailModal(jobData) {
   currentJobEmailData = jobData;
-  document.getElementById('jobEmailRole').textContent     = jobData.role     || 'Role';
-  document.getElementById('jobEmailCompany').textContent  = jobData.company  || 'Company';
-  document.getElementById('jobEmailLocation').textContent = jobData.location || '';
-  document.getElementById('generatedJobEmailBox').classList.remove('active');
+  // app.html IDs: jobRoleDisplay, jobCompanyDisplay
+  const roleEl    = document.getElementById('jobRoleDisplay');
+  const companyEl = document.getElementById('jobCompanyDisplay');
+  if (roleEl)    roleEl.textContent    = jobData.role    || 'Role';
+  if (companyEl) companyEl.textContent = jobData.company || 'Company';
+  document.getElementById('generatedJobEmailBox')?.classList.remove('active');
   const btn = document.getElementById('generateJobEmailBtn');
-  btn.innerHTML = '<i class="fas fa-magic"></i> Generate Application Email';
-  btn.disabled  = false;
-  document.getElementById('jobEmailModal').classList.add('active');
+  if (btn) { btn.innerHTML = '<i class="fas fa-magic"></i> Generate Email'; btn.disabled = false; }
+  document.getElementById('jobEmailModal')?.classList.add('active');
 }
 
 /** Generate a job application email using the AI API. */
 export async function generateJobEmail() {
-  const studentName   = document.getElementById('jobStudentName').value.trim();
-  const studentCourse = document.getElementById('jobStudentCourse').value.trim();
-  const studentExp    = document.getElementById('jobStudentProject').value.trim();
-  const tone          = document.getElementById('jobEmailTone').value;
+  // app.html IDs: jobSenderName, jobSenderBackground, jobEmailTone
+  const studentName   = (document.getElementById('jobSenderName')?.value || '').trim();
+  const studentCourse = (document.getElementById('jobSenderBackground')?.value || '').trim();
+  const studentExp    = studentCourse;
+  const tone          = document.getElementById('jobEmailTone')?.value || 'professional';
 
-  if (!studentName || !studentCourse) { showStatus('Please enter your name and course details', 'error'); return; }
-  if (!studentExp)                    { showStatus('Please describe your relevant experience', 'error'); return; }
+  if (!studentName)   { showStatus('Please enter your name', 'error'); return; }
+  if (!studentCourse) { showStatus('Please enter your background', 'error'); return; }
 
   const btn = document.getElementById('generateJobEmailBtn');
-  btn.innerHTML = '<span class="loading"></span> Generating...';
-  btn.disabled  = true;
+  if (btn) { btn.innerHTML = '<span class="loading"></span> Generating...'; btn.disabled = true; }
 
   const prompt = buildJobEmailPrompt({ studentName, studentCourse, studentExp, tone });
 
   try {
     const emailText = await callGenerateEmail(prompt);
-    const lines     = emailText.split('\n');
-    const subject   = lines[0].replace('Subject: ', '').trim();
-    const body      = lines.slice(2).join('\n');
-
     displayGeneratedEmail({
       emailText,
       textElId  : 'generatedJobEmailText',
       boxId     : 'generatedJobEmailBox',
-      sendBtnId : 'sendJobEmailBtn',
+      sendBtnId : 'openJobGmailBtn',
       toEmail   : currentJobEmailData.email,
-      subject,
-      body,
     });
     showStatus('Email generated!', 'success');
   } catch {
@@ -129,13 +126,12 @@ export async function generateJobEmail() {
       emailText : fallback,
       textElId  : 'generatedJobEmailText',
       boxId     : 'generatedJobEmailBox',
-      sendBtnId : 'sendJobEmailBtn',
+      sendBtnId : 'openJobGmailBtn',
       toEmail   : currentJobEmailData.email,
     });
     showStatus('Email template generated!', 'success');
   } finally {
-    btn.innerHTML = '<i class="fas fa-magic"></i> Generate Application Email';
-    btn.disabled  = false;
+    if (btn) { btn.innerHTML = '<i class="fas fa-magic"></i> Generate Email'; btn.disabled = false; }
   }
 }
 
@@ -155,18 +151,17 @@ async function callGenerateEmail(prompt) {
   return data.result;
 }
 
-function displayGeneratedEmail({ emailText, textElId, boxId, sendBtnId, toEmail, subject, body }) {
-  document.getElementById(textElId).textContent = emailText;
-  document.getElementById(boxId).classList.add('active');
-
+function displayGeneratedEmail({ emailText, textElId, boxId, sendBtnId, toEmail }) {
+  const textEl = document.getElementById(textElId);
+  const boxEl  = document.getElementById(boxId);
   const sendBtn = document.getElementById(sendBtnId);
-  if (toEmail) {
-    const sub  = subject || emailText.split('\n')[0].replace('Subject: ', '');
-    const bod  = body    || emailText.split('\n').slice(2).join('\n');
-    sendBtn.href  = `mailto:${toEmail}?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(bod)}`;
-    sendBtn.style.display = 'flex';
-  } else {
-    sendBtn.style.display = 'none';
+  if (textEl) textEl.textContent = emailText;
+  if (boxEl)  boxEl.classList.add('active');
+  if (sendBtn && toEmail) {
+    const lines   = emailText.split('\n');
+    const subject = lines[0].replace(/^Subject:\s*/i, '').trim();
+    const body    = lines.slice(2).join('\n');
+    sendBtn.href  = `mailto:${toEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
 }
 

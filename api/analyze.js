@@ -62,8 +62,8 @@ export default async function handler(req, res) {
         headers: {
           'Authorization': `Bearer ${apiKey}`,
           'Content-Type': 'application/json',
-          'HTTP-Referer': process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://naukri-chakri.vercel.app',
-          'X-Title': 'NaukriChakri Resume Analyzer'
+          'HTTP-Referer': 'https://carrerlift.in',
+          'X-Title': 'CarrerLift Resume Analyzer'
         },
         body: JSON.stringify({
           model: 'openai/gpt-4o-mini',
