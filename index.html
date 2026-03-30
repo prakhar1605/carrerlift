@@ -27,9 +27,9 @@
         <span class="nav-logo-text">Carrerlift</span>
       </a>
       <div class="nav-links">
-        <a href="#social-proof" class="nav-link">Why Us</a>
         <a href="#how-it-works" class="nav-link">How it Works</a>
         <a href="#features" class="nav-link">Features</a>
+        <a href="#job-alerts" class="nav-link">Job Alerts</a>
         <a href="#testimonials" class="nav-link">Reviews</a>
       </div>
       <div class="nav-actions" id="navActions">
@@ -280,6 +280,79 @@
     </div>
   </section>
 
+  <!-- ════ JOB ALERTS SECTION ════ -->
+  <section class="section" id="alerts" style="padding-top:0;">
+    <div class="section-inner">
+      <div class="alert-landing-card reveal">
+        <div class="alert-landing-left">
+          <div class="alert-landing-icon">🔔</div>
+          <div>
+            <div class="section-label" style="margin-bottom:10px;"><i class="fas fa-bolt"></i> Free Job Alerts</div>
+            <h2 class="alert-landing-title">Get new jobs in your inbox — daily</h2>
+            <p class="alert-landing-sub">We update jobs every day. Subscribe and get a morning email with the latest listings matched to your skills. Free forever.</p>
+            <div class="alert-landing-trust">
+              <span><i class="fas fa-check-circle"></i> Free forever</span>
+              <span><i class="fas fa-check-circle"></i> No spam</span>
+              <span><i class="fas fa-check-circle"></i> Unsubscribe anytime</span>
+            </div>
+          </div>
+        </div>
+        <div class="alert-landing-form" id="alertLandingForm">
+          <input type="text"  class="alert-field" id="alertLandingName"   placeholder="Your name" />
+          <input type="email" class="alert-field" id="alertLandingEmail"  placeholder="your@email.com" required />
+          <input type="text"  class="alert-field" id="alertLandingSkills" placeholder="Skills (e.g. Python, ML, React)" />
+          <button class="alert-submit-landing" onclick="subscribeLanding()">
+            <i class="fas fa-bell"></i> Subscribe to Job Alerts
+          </button>
+          <p class="alert-landing-note" id="alertLandingMsg"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ JOB ALERT SECTION ════ -->
+  <section class="section alert-section" id="job-alerts">
+    <div class="section-inner">
+      <div class="alert-section-inner">
+        <div class="alert-section-left reveal">
+          <div class="section-label"><i class="fas fa-bell"></i> Job Alerts</div>
+          <h2 class="section-title" style="margin-bottom:14px;">Get notified the moment<br>new jobs are added</h2>
+          <p style="font-size:15px;color:var(--text2);line-height:1.7;margin-bottom:24px;">
+            Subscribe once — get an email every time we add new jobs matching your skills. No daily spam, only real updates.
+          </p>
+          <div class="alert-features">
+            <div class="alert-feature-item"><i class="fas fa-check-circle"></i> Instant email when new jobs added</div>
+            <div class="alert-feature-item"><i class="fas fa-check-circle"></i> Matched to your skills</div>
+            <div class="alert-feature-item"><i class="fas fa-check-circle"></i> Free forever · No spam</div>
+          </div>
+        </div>
+        <div class="alert-section-right reveal">
+          <div class="alert-form-card" id="alertFormCard">
+            <div class="alert-form-header">
+              <div class="alert-form-icon">🔔</div>
+              <div>
+                <div class="alert-form-title">Subscribe to Job Alerts</div>
+                <div class="alert-form-sub">Join 1,000+ students already subscribed</div>
+              </div>
+            </div>
+            <input type="text"  id="alertNameInput"   class="alert-field" placeholder="Your name" />
+            <input type="email" id="alertEmailInput"  class="alert-field" placeholder="your@email.com" />
+            <input type="text"  id="alertSkillsInput" class="alert-field" placeholder="Your skills (e.g. Python, ML, React)" />
+            <button class="alert-submit-btn" id="alertSubmitBtn" onclick="submitJobAlert()">
+              <i class="fas fa-bell"></i> Subscribe — It's Free
+            </button>
+            <p class="alert-privacy">🔒 We never share your email. Unsubscribe anytime.</p>
+          </div>
+          <div class="alert-success-card" id="alertSuccessCard" style="display:none;">
+            <div class="alert-success-icon">🎉</div>
+            <div class="alert-success-title">You're subscribed!</div>
+            <p class="alert-success-sub">Check your inbox for a confirmation email. You'll be notified the moment new jobs are added.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ════ FINAL CTA BANNER ════ -->
   <section class="cta-banner">
     <div class="cta-banner-inner">
@@ -349,6 +422,86 @@
   <!-- ════ SCRIPTS ════ -->
   <script type="module" src="js/auth.js"></script>
   <script>
+    // ── Landing page job alert subscribe ──
+    window.subscribeLanding = async function() {
+      const name   = document.getElementById('alertLandingName').value.trim();
+      const email  = document.getElementById('alertLandingEmail').value.trim();
+      const skills = document.getElementById('alertLandingSkills').value.trim();
+      const msgEl  = document.getElementById('alertLandingMsg');
+      const btn    = document.querySelector('.alert-submit-landing');
+
+      if (!email || !email.includes('@')) {
+        msgEl.style.color = '#EF4444';
+        msgEl.textContent = 'Please enter a valid email address.';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="auth-spinner"></span> Subscribing...';
+      msgEl.textContent = '';
+
+      try {
+        const res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, skills })
+        });
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById('alertLandingForm').innerHTML = `
+            <div style="text-align:center;padding:24px 0;">
+              <div style="font-size:48px;margin-bottom:12px;">🎉</div>
+              <div style="font-family:'Sora',sans-serif;font-size:18px;font-weight:700;color:var(--text1);margin-bottom:8px;">You're subscribed!</div>
+              <p style="font-size:14px;color:var(--text2);">Check your inbox — confirmation email on its way. You'll get daily job alerts every morning.</p>
+            </div>`;
+        } else {
+          msgEl.style.color = '#EF4444';
+          msgEl.textContent = data.error || 'Something went wrong. Please try again.';
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fas fa-bell"></i> Subscribe to Job Alerts';
+        }
+      } catch {
+        msgEl.style.color = '#EF4444';
+        msgEl.textContent = 'Network error. Please try again.';
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-bell"></i> Subscribe to Job Alerts';
+      }
+    };
+
+    // ── Job Alert Subscribe ──
+    window.submitJobAlert = async function() {
+      const name   = document.getElementById('alertNameInput').value.trim();
+      const email  = document.getElementById('alertEmailInput').value.trim();
+      const skills = document.getElementById('alertSkillsInput').value.trim();
+      const btn    = document.getElementById('alertSubmitBtn');
+
+      if (!email || !email.includes('@')) {
+        alert('Please enter a valid email address'); return;
+      }
+      btn.innerHTML = '<span class="loading-spin"></span> Subscribing...';
+      btn.disabled  = true;
+      try {
+        const res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, skills })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          document.getElementById('alertFormCard').style.display    = 'none';
+          document.getElementById('alertSuccessCard').style.display = 'block';
+        } else {
+          alert(data.error || 'Something went wrong. Please try again.');
+          btn.innerHTML = '<i class="fas fa-bell"></i> Subscribe — It\'s Free';
+          btn.disabled  = false;
+        }
+      } catch {
+        alert('Network error. Please try again.');
+        btn.innerHTML = '<i class="fas fa-bell"></i> Subscribe — It\'s Free';
+        btn.disabled  = false;
+      }
+    };
+
     window.addEventListener('scroll', () => {
       document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
     });
