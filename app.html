@@ -16,6 +16,15 @@
   <link rel="stylesheet" href="styles/modals.css" />
   <link rel="stylesheet" href="styles/auth.css" />
   <link rel="stylesheet" href="styles/app.css" />
+
+  <!-- PDF.js for resume parsing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    if (typeof pdfjsLib !== 'undefined') {
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+  </script>
 </head>
 <body>
 
