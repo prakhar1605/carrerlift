@@ -93,6 +93,15 @@
     </div>
   </header>
 
+  <!-- ── WELCOME GUIDE (first-time users) ── -->
+  <div class="welcome-guide" id="welcomeGuide">
+    <div class="welcome-guide-inner">
+      <span class="welcome-guide-emoji">👋</span>
+      <span class="welcome-guide-text">New here? <strong>Upload your resume above</strong> and AI will match you with the best jobs in seconds!</span>
+      <button class="welcome-guide-close" onclick="this.parentElement.parentElement.style.display='none';localStorage.setItem('cl_guide_seen','1')">✕</button>
+    </div>
+  </div>
+
   <!-- ── TAB NAVIGATION ── -->
   <nav class="tab-navigation">
     <div class="tab-nav-content">
@@ -566,6 +575,11 @@
     });
 
     window.dismissTrialExpired = () => window.location.href = '/';
+
+    // Hide welcome guide if already seen
+    if (localStorage.getItem('cl_guide_seen')) {
+      document.getElementById('welcomeGuide').style.display = 'none';
+    }
 
     // ── Saved Jobs Panel ──
     window.openSavedJobsPanel = () => {

@@ -350,3 +350,27 @@
   padding: 0 5px;
 }
 .saved-count-badge:empty { display: none; }
+
+/* ── WELCOME GUIDE BANNER ── */
+.welcome-guide {
+  background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(124,58,237,0.08));
+  border-bottom: 1px solid rgba(0,212,255,0.2);
+  padding: 10px 20px; position: relative; z-index: 10;
+}
+.welcome-guide-inner {
+  max-width: 1440px; margin: 0 auto;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14px; color: var(--text1);
+}
+.welcome-guide-emoji { font-size: 18px; flex-shrink: 0; }
+.welcome-guide-text  { flex: 1; line-height: 1.5; }
+.welcome-guide-text strong { color: var(--neon); }
+.welcome-guide-close {
+  background: none; border: none; color: var(--text3);
+  font-size: 16px; cursor: pointer; flex-shrink: 0; padding: 4px 8px;
+  border-radius: 4px; transition: all 0.2s;
+}
+.welcome-guide-close:hover { color: var(--text1); background: var(--glass2); }
+@media (max-width: 600px) {
+  .welcome-guide-text { font-size: 13px; }
+}
