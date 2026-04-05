@@ -159,9 +159,10 @@ function getMixedJobs() {
 
 function applyTimeFilter(jobs) {
   if (jobTimeFilter === 'all') return jobs;
-  const cutoff = jobTimeFilter === 'today' ? NOW - DAY
-               : jobTimeFilter === 'week'  ? NOW - 7 * DAY
-               :                             NOW - 30 * DAY;
+  const now    = Date.now(); // fresh timestamp every call
+  const cutoff = jobTimeFilter === 'today' ? now - DAY
+               : jobTimeFilter === 'week'  ? now - 7 * DAY
+               :                             now - 30 * DAY;
   return jobs.filter(j => j._postedAt >= cutoff);
 }
 
