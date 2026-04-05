@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Carrerlift — Find Jobs Matched by AI</title>
+  <title>Carrerlift — Find Jobs, Internships & Global Opportunities</title>
   <meta name="description" content="AI-powered job portal. Browse 843+ jobs, 1837 HR contacts, 1583 IIT research opportunities." />
   <link rel="icon" type="image/png" href="logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -109,17 +109,17 @@
         <i class="fas fa-briefcase"></i> Jobs
         <span class="tab-count" id="jobsCount">…</span>
       </button>
+      <button class="tab-btn" data-tab="global">
+        <i class="fas fa-globe"></i> Global
+        <span class="tab-count" id="globalCount">…</span>
+      </button>
       <button class="tab-btn" data-tab="research">
         <i class="fas fa-flask"></i> Research
         <span class="tab-count" id="profsCount">…</span>
       </button>
       <button class="tab-btn" data-tab="hr">
-        <i class="fas fa-users"></i> HR Contacts
+        <i class="fas fa-users"></i> HR
         <span class="tab-count" id="hrCount">…</span>
-      </button>
-      <button class="tab-btn" data-tab="global">
-        <i class="fas fa-globe"></i> Global Jobs
-        <span class="tab-count" id="globalCount">…</span>
       </button>
     </div>
   </nav>
@@ -289,27 +289,25 @@
 
     <!-- ════ GLOBAL JOBS TAB ════ -->
     <div class="tab-content" id="global">
-      <!-- Info banner -->
-      <div class="global-info-banner">
+        <div class="global-info-banner">
         <div class="global-info-left">
           <span class="global-info-icon">🌍</span>
           <div>
-            <div class="global-info-title">International AI/ML Jobs — Updated Daily</div>
-            <div class="global-info-sub">Sourced from <a href="https://github.com/speedyapply/2026-AI-College-Jobs" target="_blank" rel="noopener">speedyapply/2026-AI-College-Jobs</a> · 1,180+ positions across USA & International</div>
+            <div class="global-info-title">Global AI/ML Jobs — Updated Daily</div>
+            <div class="global-info-sub">Source: <a href="https://github.com/speedyapply/2026-AI-College-Jobs" target="_blank" rel="noopener">speedyapply/2026-AI-College-Jobs</a> · Internships + New Grad · USA & International · 1,180+ positions</div>
           </div>
         </div>
       </div>
 
-      <!-- Search + type filter -->
       <div class="search-section">
         <div class="search-title">Browse Global AI/ML Opportunities</div>
         <div class="search-bar">
           <div class="search-input-wrapper">
             <i class="fas fa-search search-icon"></i>
-            <input type="text" class="search-input" id="globalSearchInput" placeholder="Search companies, roles, locations…" />
+            <input type="text" class="search-input" id="globalSearchInput" placeholder="Search Google, NVIDIA, ML Engineer…" />
           </div>
           <select class="filter-select" id="globalTypeFilter">
-            <option value="all">All Types</option>
+            <option value="all">All Categories</option>
             <option value="intern_intl">🌍 International Internships</option>
             <option value="newgrad_intl">🌍 International New Grad</option>
             <option value="intern_usa">🦅 USA Internships</option>

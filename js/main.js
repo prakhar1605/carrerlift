@@ -504,7 +504,7 @@ async function init() {
     if (el.hrCompanyFilter && el.hrLocationFilter) populateHRFilters(allHRContacts, el.hrCompanyFilter, el.hrLocationFilter);
     applyJobFilters(); applyProfessorFilters(); applyHRFilters();
     el.totalCount.style.display = 'inline-block';
-    el.totalCount.innerHTML = `${allJobs.length} Jobs · ${allHRContacts.length} HR · ${allProfessors.length} Research`;
+    el.totalCount.innerHTML = `${allJobs.length} India · ${allHRContacts.length} HR · ${allProfessors.length} Research`;
     showStatus(`Loaded ${allJobs.length} jobs, ${allHRContacts.length} HR contacts & ${allProfessors.length} research opportunities.`, 'success');
 
     // Feed job context to agent
