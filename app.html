@@ -106,7 +106,7 @@
   <nav class="tab-navigation">
     <div class="tab-nav-content">
       <button class="tab-btn active" data-tab="jobs">
-        <i class="fas fa-briefcase"></i> Jobs
+        <i class="fas fa-fire"></i> Jobs
         <span class="tab-count" id="jobsCount">…</span>
       </button>
       <button class="tab-btn" data-tab="global">
@@ -162,6 +162,19 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- Source Toggle: India / Global / All -->
+      <div class="jobs-source-toggle">
+        <button class="source-btn active" id="srcAll" onclick="setJobSource('all')">
+          🌐 All Jobs
+        </button>
+        <button class="source-btn" id="srcIndia" onclick="setJobSource('india')">
+          🇮🇳 India
+        </button>
+        <button class="source-btn" id="srcGlobal" onclick="setJobSource('global')">
+          🌍 Global AI/ML
+        </button>
       </div>
 
       <!-- Analysis section -->

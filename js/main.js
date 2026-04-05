@@ -96,8 +96,154 @@ const el = {
 };
 
 /* ─────────────────────────────────────────────
-   GRID LAYOUT
+   JOB SOURCE TOGGLE — India / Global / All
 ───────────────────────────────────────────── */
+let jobSource = 'all'; // 'all' | 'india' | 'global'
+
+window.setJobSource = function(source) {
+  jobSource = source;
+  // Update toggle buttons
+  ['all','india','global'].forEach(s => {
+    document.getElementById(`src${s.charAt(0).toUpperCase() + s.slice(1)}`)
+      ?.classList.toggle('active', s === source);
+  });
+  applyJobFilters();
+};
+
+function getMixedJobs() {
+  // Merge India + Global into one list
+  const india = allJobs.map(j => ({
+    _type    : 'india',
+    company  : j.Company   || '',
+    role     : j.Role      || '',
+    location : j.Location  || '',
+    stipend  : j.Stipend   || '',
+    jobType  : j.JobType   || '',
+    description: j.Description || '',
+    email    : j.Email     || '',
+    applyLink: j.ApplyLink || '',
+    _raw     : j,
+  }));
+
+  const global = allGlobal.map(j => ({
+    _type    : 'global',
+    company  : j.company   || '',
+    role     : j.role      || '',
+    location : j.location  || '',
+    stipend  : j.salary    || '',
+    jobType  : j.jobType   || '',
+    description: '',
+    email    : '',
+    applyLink: j.applyLink || '',
+    _raw     : j,
+  }));
+
+  if (jobSource === 'india')  return india;
+  if (jobSource === 'global') return global;
+  // 'all' — interleave: show India first (matched), then global FAANG names, mixed
+  return [...india, ...global];
+}
+
+
+/* ─────────────────────────────────────────────
+   RENDER MIXED JOBS (India + Global)
+───────────────────────────────────────────── */
+function renderMixedJobs(jobs, gridEl, titleEl) {
+  if (!jobs || jobs.length === 0) {
+    gridEl.innerHTML = `<div class="empty-state"><div class="empty-icon"><i class="fas fa-briefcase"></i></div><h3 class="empty-title">No jobs found</h3><p class="empty-text">Try adjusting your filters</p></div>`;
+    if (titleEl) titleEl.textContent = 'No Jobs Found';
+    return;
+  }
+  gridEl.innerHTML = jobs.map((job, i) =>
+    job._type === 'india' ? buildMixedIndiaCard(job, i) : buildMixedGlobalCard(job)
+  ).join('');
+  const ic = jobs.filter(j=>j._type==='india').length;
+  const gc = jobs.filter(j=>j._type==='global').length;
+  const label = jobSource==='india'  ? `${ic} India Jobs`
+              : jobSource==='global' ? `${gc} Global AI/ML Jobs`
+              : `${jobs.length} Jobs <span style="font-size:13px;font-weight:500;color:var(--text3);">— ${ic} India + ${gc} Global</span>`;
+  if (titleEl) titleEl.innerHTML = label;
+}
+
+function buildMixedIndiaCard(job, i) {
+  const raw = job._raw;
+  const slug = jobSlug(raw);
+  const score = matchedJobs[raw.Company + raw.Role] || 0;
+  const isMatch = score > 0;
+  const isSaved = getSavedJobsLocal().includes(slug);
+  const jobData = JSON.stringify({
+    slug, company:raw.Company||'', role:raw.Role||'',
+    description:raw.Description||'', email:raw.Email||'',
+    location:raw.Location||'', applyLink:raw.ApplyLink||'',
+    stipend:raw.Stipend||'', jobType:raw.JobType||'',
+  }).replace(/"/g,'&quot;');
+  return `
+    <div class="job-card ${isMatch?'matched':''}" data-job-id="${slug}" id="job-${slug}">
+      <div class="job-header">
+        <div class="job-info">
+          <div class="company-name">${raw.Company||''}</div>
+          <div class="role-title">${raw.Role||''}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end;">
+          <span class="source-tag india-tag">🇮🇳 India</span>
+          ${isMatch ? `<div class="match-score"><i class="fas fa-check-circle"></i> ${Math.round(score)}% Match</div>` : i < 25 ? '<div class="trending-badge">Trending</div>' : ''}
+        </div>
+      </div>
+      <div class="job-meta">
+        ${raw.Location?`<div class="job-meta-item"><i class="fas fa-map-marker-alt"></i>${raw.Location}</div>`:''}
+        ${raw.Stipend?`<div class="job-meta-item"><i class="fas fa-rupee-sign"></i>${raw.Stipend}</div>`:''}
+        ${raw.JobType?`<div class="job-meta-item"><i class="fas fa-briefcase"></i>${raw.JobType}</div>`:''}
+      </div>
+      ${raw.Description?`<div class="job-description">${raw.Description.slice(0,130)}${raw.Description.length>130?'...':''}</div>`:''}
+      <div class="job-actions">
+        ${raw.ApplyLink?`<a href="${raw.ApplyLink}" target="_blank" class="btn-apply"><i class="fas fa-paper-plane"></i> Apply</a>`:''}
+        ${raw.Email?`<a href="mailto:${raw.Email}" class="btn-save"><i class="fas fa-envelope"></i> Email</a>`:''}
+        <button class="btn-generate-email" onclick="window.openJobEmailModal(${jobData})"><i class="fas fa-magic"></i> AI Email</button>
+        <button class="btn-save-job ${isSaved?'btn-saved':''}" data-save-slug="${slug}" onclick="window._toggleSaveJob('${slug}')">
+          <i class="${isSaved?'fas':'far'} fa-bookmark"></i> ${isSaved?'Saved':'Save'}
+        </button>
+        <button class="btn-analyze-fit" onclick="window.openSkillGap(${jobData})"><i class="fas fa-chart-bar"></i> Fit</button>
+        <button class="btn-share" onclick="window.shareJob(${jobData})"><i class="fas fa-share-alt"></i></button>
+      </div>
+    </div>`;
+}
+
+function buildMixedGlobalCard(job) {
+  const key = `${job.company}__${job.role}`.replace(/[^a-z0-9]/gi,'-');
+  const isSaved = getSavedJobsLocal().includes(key);
+  return `
+    <div class="job-card global-job-card">
+      <div class="job-header">
+        <div class="job-info">
+          <div class="company-name">${escHtmlLocal(job.company)}</div>
+          <div class="role-title">${escHtmlLocal(job.role)}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end;">
+          <span class="source-tag global-tag">🌍 Global</span>
+        </div>
+      </div>
+      <div class="job-meta">
+        ${job.location?`<div class="job-meta-item"><i class="fas fa-map-marker-alt"></i>${escHtmlLocal(job.location)}</div>`:''}
+        ${job.stipend?`<div class="job-meta-item"><i class="fas fa-dollar-sign"></i>${escHtmlLocal(job.stipend)}</div>`:''}
+      </div>
+      <div class="job-actions">
+        ${job.applyLink
+          ?`<a href="${job.applyLink}" target="_blank" rel="noopener" class="btn-apply"><i class="fas fa-external-link-alt"></i> Apply Now</a>`
+          :`<span style="font-size:12px;color:var(--text3);padding:8px 0;">No link available</span>`}
+        <button class="btn-save-job ${isSaved?'btn-saved':''}" data-save-slug="${key}" onclick="window._toggleSaveJob('${key}')">
+          <i class="${isSaved?'fas':'far'} fa-bookmark"></i> ${isSaved?'Saved':'Save'}
+        </button>
+      </div>
+    </div>`;
+}
+
+function getSavedJobsLocal() {
+  try { return JSON.parse(localStorage.getItem('cl_saved_jobs') || '[]'); } catch { return []; }
+}
+function escHtmlLocal(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
 function showAlertCard() {
   if (!el.alertSubscribe || !el.desktopRow) return;
   el.alertSubscribe.style.display = 'block';
@@ -126,9 +272,39 @@ el.tabButtons.forEach(btn => {
    FILTERS
 ───────────────────────────────────────────── */
 function applyJobFilters() {
-  const filtered = filterJobs(allJobs, el.jobSearchInput.value, el.jobLocFilter.value, el.jobTypeFilter.value);
-  renderJobs(filtered, matchedJobs, el.jobsGrid, el.jobsTitle);
-  el.jobsCount.textContent = `${filtered.length} Jobs`;
+  const q    = el.jobSearchInput?.value  || '';
+  const loc  = el.jobLocFilter?.value   || '';
+  const type = el.jobTypeFilter?.value  || '';
+
+  const mixed = getMixedJobs();
+
+  // Filter
+  const filtered = mixed.filter(job => {
+    const hay = `${job.company} ${job.role} ${job.location} ${job.description}`.toLowerCase();
+    const qMatch   = !q   || hay.includes(q.toLowerCase());
+    const locMatch = !loc || job.location === loc;
+    const typMatch = !type|| job.jobType  === type;
+    return qMatch && locMatch && typMatch;
+  });
+
+  // Sort: matched India first, then rest
+  const sorted = [...filtered].sort((a, b) => {
+    const sA = a._type === 'india'
+      ? (matchedJobs[a.company + a.role] || 0)
+      : 0;
+    const sB = b._type === 'india'
+      ? (matchedJobs[b.company + b.role] || 0)
+      : 0;
+    if (sB !== sA) return sB - sA;
+    // India jobs slightly above global (unless global is matched)
+    if (a._type !== b._type) return a._type === 'india' ? -1 : 1;
+    return 0;
+  });
+
+  renderMixedJobs(sorted, el.jobsGrid, el.jobsTitle);
+
+  const total = filtered.length;
+  if (el.jobsCount) el.jobsCount.textContent = `${total}`;
 }
 function applyHRFilters() {
   const filtered = filterHRContacts(allHRContacts, el.hrSearchInput?.value, el.hrCompanyFilter?.value, el.hrLocationFilter?.value);
@@ -492,6 +668,7 @@ async function init() {
     // Load global jobs in background (non-blocking)
     fetchGlobalJobs('all').then(globalJobs => {
       allGlobal = globalJobs;
+      applyJobFilters(); // refresh mixed view with global jobs
       applyGlobalFilters();
       const cnt = document.getElementById('globalCount');
       if (cnt) cnt.textContent = globalJobs.length;

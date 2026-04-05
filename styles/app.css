@@ -399,3 +399,34 @@
 /* Global job card slight tint */
 .global-job-card { border-left: 2px solid rgba(0,212,255,0.3) !important; }
 .global-job-card:hover { border-left-color: var(--neon) !important; }
+
+/* ══ JOBS SOURCE TOGGLE ══ */
+.jobs-source-toggle {
+  display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;
+}
+.source-btn {
+  padding: 8px 18px; border-radius: 100px;
+  background: var(--glass); border: 1px solid var(--border);
+  color: var(--text2); font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: all 0.2s; white-space: nowrap;
+}
+.source-btn:hover { border-color: var(--border2); color: var(--text1); }
+.source-btn.active {
+  background: linear-gradient(135deg, var(--neon), #0099cc);
+  border-color: transparent; color: #080B14;
+  box-shadow: 0 4px 14px rgba(0,212,255,0.3);
+}
+
+/* ══ SOURCE TAGS on cards ══ */
+.source-tag {
+  padding: 2px 9px; border-radius: 100px;
+  font-size: 10px; font-weight: 700; white-space: nowrap;
+}
+.india-tag  { background: rgba(16,185,129,0.12); color: var(--green); border: 1px solid rgba(16,185,129,0.25); }
+.global-tag { background: rgba(0,212,255,0.10);  color: var(--neon);  border: 1px solid rgba(0,212,255,0.2); }
+
+@media (max-width: 640px) {
+  .jobs-source-toggle { gap: 6px; }
+  .source-btn { padding: 7px 14px; font-size: 12px; }
+}
