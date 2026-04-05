@@ -12,6 +12,22 @@ const GITHUB_URLS = {
   newgrad_usa : 'https://raw.githubusercontent.com/speedyapply/2026-AI-College-Jobs/main/NEW_GRAD_USA.md',
 };
 
+/** Parse age string like "2d", "5h", "3w", "1mo" → timestamp (ms) */
+function parseAge(age) {
+  const now = Date.now();
+  if (!age) return now - 30 * 24 * 60 * 60 * 1000; // default 30 days ago
+  const m = age.match(/^(\d+)(h|d|w|mo)$/i);
+  if (!m) return now - 7 * 24 * 60 * 60 * 1000;
+  const n = parseInt(m[1]);
+  const unit = m[2].toLowerCase();
+  const ms = unit === 'h'  ? n * 60 * 60 * 1000
+           : unit === 'd'  ? n * 24 * 60 * 60 * 1000
+           : unit === 'w'  ? n * 7 * 24 * 60 * 60 * 1000
+           : unit === 'mo' ? n * 30 * 24 * 60 * 60 * 1000
+           : 7 * 24 * 60 * 60 * 1000;
+  return now - ms;
+}
+
 /** Strip ALL markdown & HTML, return plain text */
 function stripAll(str) {
   return (str || '')
@@ -69,10 +85,16 @@ function parseMarkdownTable(markdown, type) {
     const salaryRaw   = rawCells[3] || '';
     const postingRaw  = rawCells[4] || rawCells[3] || '';
 
+    const ageRaw    = stripAll(rawCells[5] || rawCells[4] || '').trim();
+
     const company  = stripAll(companyRaw).trim();
     const role     = stripAll(positionRaw).trim();
     const location = stripAll(locationRaw).trim();
     const salary   = stripAll(salaryRaw).trim();
+
+    // Parse age → postedAt timestamp
+    // Age format: "2d", "5h", "3w", "1mo"
+    const postedAt = parseAge(ageRaw);
 
     // Skip separators, empty, or closed (🔒 in raw)
     if (!company || company.startsWith(':---') || company === '---') continue;
@@ -88,7 +110,7 @@ function parseMarkdownTable(markdown, type) {
     // Skip if salary cell actually contains an href (means columns shifted)
     const salaryClean = salaryRaw.includes('href') ? '' : salary;
 
-    jobs.push({ company, role, location, salary: salaryClean, applyLink, jobType: type, source: 'speedyapply' });
+    jobs.push({ company, role, location, salary: salaryClean, applyLink, jobType: type, source: 'speedyapply', postedAt });
   }
   return jobs;
 }

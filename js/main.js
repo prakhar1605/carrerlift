@@ -96,24 +96,37 @@ const el = {
 };
 
 /* ─────────────────────────────────────────────
-   JOB SOURCE TOGGLE — India / Global / All
+   JOB TIME FILTER — Today / This Week / This Month / All
 ───────────────────────────────────────────── */
-let jobSource = 'all'; // 'all' | 'india' | 'global'
+let jobTimeFilter = 'all'; // 'today' | 'week' | 'month' | 'all'
 
-window.setJobSource = function(source) {
-  jobSource = source;
-  // Update toggle buttons
-  ['all','india','global'].forEach(s => {
-    document.getElementById(`src${s.charAt(0).toUpperCase() + s.slice(1)}`)
-      ?.classList.toggle('active', s === source);
+window.setJobTimeFilter = function(filter) {
+  jobTimeFilter = filter;
+  ['today','week','month','all'].forEach(f => {
+    document.getElementById(`tf_${f}`)?.classList.toggle('active', f === filter);
   });
   applyJobFilters();
 };
 
+const NOW = Date.now();
+const DAY  = 24 * 60 * 60 * 1000;
+
+/** India jobs: sheet is REVERSED — last row = newest.
+ *  We assign fake timestamps: row 0 (last in array) = now,
+ *  each earlier row = 1 hour older. */
+function assignIndiaTimestamps(jobs) {
+  const total = jobs.length;
+  return [...jobs].reverse().map((j, i) => ({
+    ...j,
+    _postedAt: NOW - i * 60 * 60 * 1000, // newest first, 1h apart
+  }));
+}
+
 function getMixedJobs() {
-  // Merge India + Global into one list
-  const india = allJobs.map(j => ({
+  // India: reverse sheet order → newest first, assign timestamps
+  const india = assignIndiaTimestamps(allJobs).map(j => ({
     _type    : 'india',
+    _postedAt: j._postedAt,
     company  : j.Company   || '',
     role     : j.Role      || '',
     location : j.Location  || '',
@@ -125,23 +138,31 @@ function getMixedJobs() {
     _raw     : j,
   }));
 
+  // Global: already has postedAt from API
   const global = allGlobal.map(j => ({
     _type    : 'global',
-    company  : j.company   || '',
-    role     : j.role      || '',
-    location : j.location  || '',
-    stipend  : j.salary    || '',
-    jobType  : j.jobType   || '',
+    _postedAt: j.postedAt || (NOW - 7 * DAY),
+    company  : j.company  || '',
+    role     : j.role     || '',
+    location : j.location || '',
+    stipend  : j.salary   || '',
+    jobType  : j.jobType  || '',
     description: '',
     email    : '',
     applyLink: j.applyLink || '',
     _raw     : j,
   }));
 
-  if (jobSource === 'india')  return india;
-  if (jobSource === 'global') return global;
-  // 'all' — interleave: show India first (matched), then global FAANG names, mixed
-  return [...india, ...global];
+  // Mix both, sort by time descending
+  return [...india, ...global].sort((a, b) => b._postedAt - a._postedAt);
+}
+
+function applyTimeFilter(jobs) {
+  if (jobTimeFilter === 'all') return jobs;
+  const cutoff = jobTimeFilter === 'today' ? NOW - DAY
+               : jobTimeFilter === 'week'  ? NOW - 7 * DAY
+               :                             NOW - 30 * DAY;
+  return jobs.filter(j => j._postedAt >= cutoff);
 }
 
 
@@ -159,9 +180,14 @@ function renderMixedJobs(jobs, gridEl, titleEl) {
   ).join('');
   const ic = jobs.filter(j=>j._type==='india').length;
   const gc = jobs.filter(j=>j._type==='global').length;
-  const label = jobSource==='india'  ? `${ic} India Jobs`
-              : jobSource==='global' ? `${gc} Global AI/ML Jobs`
-              : `${jobs.length} Jobs <span style="font-size:13px;font-weight:500;color:var(--text3);">— ${ic} India + ${gc} Global</span>`;
+  const timeLabel = jobTimeFilter === 'today' ? 'Today'
+                  : jobTimeFilter === 'week'  ? 'This Week'
+                  : jobTimeFilter === 'month' ? 'This Month'
+                  : '';
+  const label = `${jobs.length} Latest Jobs${timeLabel ? ' — ' + timeLabel : ''}
+    <span style="font-size:12px;font-weight:500;color:var(--text3);margin-left:6px;">
+      🇮🇳 ${ic} India · 🌍 ${gc} Global
+    </span>`;
   if (titleEl) titleEl.innerHTML = label;
 }
 
@@ -276,35 +302,29 @@ function applyJobFilters() {
   const loc  = el.jobLocFilter?.value   || '';
   const type = el.jobTypeFilter?.value  || '';
 
-  const mixed = getMixedJobs();
+  // Get mixed + time filtered
+  const mixed      = getMixedJobs();
+  const timeSorted = applyTimeFilter(mixed);
 
-  // Filter
-  const filtered = mixed.filter(job => {
-    const hay = `${job.company} ${job.role} ${job.location} ${job.description}`.toLowerCase();
-    const qMatch   = !q   || hay.includes(q.toLowerCase());
-    const locMatch = !loc || job.location === loc;
-    const typMatch = !type|| job.jobType  === type;
-    return qMatch && locMatch && typMatch;
+  // Search + location + type filter
+  const filtered = timeSorted.filter(job => {
+    const hay    = `${job.company} ${job.role} ${job.location} ${job.description}`.toLowerCase();
+    const qMatch = !q   || hay.includes(q.toLowerCase());
+    const lMatch = !loc || job.location === loc;
+    const tMatch = !type|| job.jobType  === type;
+    return qMatch && lMatch && tMatch;
   });
 
-  // Sort: matched India first, then rest
+  // Matched India jobs float to top
   const sorted = [...filtered].sort((a, b) => {
-    const sA = a._type === 'india'
-      ? (matchedJobs[a.company + a.role] || 0)
-      : 0;
-    const sB = b._type === 'india'
-      ? (matchedJobs[b.company + b.role] || 0)
-      : 0;
+    const sA = a._type === 'india' ? (matchedJobs[a._raw?.Company + a._raw?.Role] || 0) : 0;
+    const sB = b._type === 'india' ? (matchedJobs[b._raw?.Company + b._raw?.Role] || 0) : 0;
     if (sB !== sA) return sB - sA;
-    // India jobs slightly above global (unless global is matched)
-    if (a._type !== b._type) return a._type === 'india' ? -1 : 1;
-    return 0;
+    return b._postedAt - a._postedAt; // then by recency
   });
 
   renderMixedJobs(sorted, el.jobsGrid, el.jobsTitle);
-
-  const total = filtered.length;
-  if (el.jobsCount) el.jobsCount.textContent = `${total}`;
+  if (el.jobsCount) el.jobsCount.textContent = `${sorted.length}`;
 }
 function applyHRFilters() {
   const filtered = filterHRContacts(allHRContacts, el.hrSearchInput?.value, el.hrCompanyFilter?.value, el.hrLocationFilter?.value);

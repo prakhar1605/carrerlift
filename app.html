@@ -164,17 +164,12 @@
         </div>
       </div>
 
-      <!-- Source Toggle: India / Global / All -->
+      <!-- Time Filter Toggle -->
       <div class="jobs-source-toggle">
-        <button class="source-btn active" id="srcAll" onclick="setJobSource('all')">
-          🌐 All Jobs
-        </button>
-        <button class="source-btn" id="srcIndia" onclick="setJobSource('india')">
-          🇮🇳 India
-        </button>
-        <button class="source-btn" id="srcGlobal" onclick="setJobSource('global')">
-          🌍 Global AI/ML
-        </button>
+        <button class="source-btn active" id="tf_all"   onclick="setJobTimeFilter('all')">🔥 All</button>
+        <button class="source-btn"        id="tf_today" onclick="setJobTimeFilter('today')">⚡ Today</button>
+        <button class="source-btn"        id="tf_week"  onclick="setJobTimeFilter('week')">📅 This Week</button>
+        <button class="source-btn"        id="tf_month" onclick="setJobTimeFilter('month')">🗓️ This Month</button>
       </div>
 
       <!-- Analysis section -->
