@@ -1,76 +1,94 @@
 /**
  * api/global-jobs.js
- * Fetches international AI/ML job listings from GitHub repo
- * speedyapply/2026-AI-College-Jobs — parses Markdown tables
- * Returns JSON array of jobs
+ * Fetches AI/ML job listings from speedyapply GitHub repo
+ * Table format: | Company | Position | Location | Salary | Posting | Age |
+ * Posting column has: <a href="URL"><img src="...Apply..."/></a>
  */
 
 const GITHUB_URLS = {
-  intern_intl  : 'https://raw.githubusercontent.com/speedyapply/2026-AI-College-Jobs/main/INTERN_INTL.md',
-  newgrad_intl : 'https://raw.githubusercontent.com/speedyapply/2026-AI-College-Jobs/main/NEW_GRAD_INTL.md',
-  intern_usa   : 'https://raw.githubusercontent.com/speedyapply/2026-AI-College-Jobs/main/README.md',
-  newgrad_usa  : 'https://raw.githubusercontent.com/speedyapply/2026-AI-College-Jobs/main/NEW_GRAD_USA.md',
+  intern_intl : 'https://raw.githubusercontent.com/speedyapply/2026-AI-College-Jobs/main/INTERN_INTL.md',
+  newgrad_intl: 'https://raw.githubusercontent.com/speedyapply/2026-AI-College-Jobs/main/NEW_GRAD_INTL.md',
+  intern_usa  : 'https://raw.githubusercontent.com/speedyapply/2026-AI-College-Jobs/main/README.md',
+  newgrad_usa : 'https://raw.githubusercontent.com/speedyapply/2026-AI-College-Jobs/main/NEW_GRAD_USA.md',
 };
 
-/**
- * Parse a GitHub Markdown table into array of objects
- * Format: | Company | Position | Location | Salary | Posting |
- */
+/** Strip ALL markdown & HTML, return plain text */
+function stripAll(str) {
+  return (str || '')
+    .replace(/<[^>]+>/g, '')          // remove HTML tags
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1') // [text](url) → text
+    .replace(/\*\*([^*]+)\*\*/g, '$1')        // **bold** → text
+    .replace(/\*([^*]+)\*/g, '$1')             // *italic* → text
+    .replace(/`([^`]+)`/g, '$1')               // `code` → text
+    .replace(/🔒/g, '')
+    .replace(/🔥/g, '')
+    .replace(/📚/g, '')
+    .replace(/🎓/g, '')
+    .trim();
+}
+
+/** Extract FIRST href from a cell that may contain <a href="..."> or [text](url) */
+function extractHref(cell) {
+  // HTML: <a href="URL">
+  const htmlMatch = cell.match(/href="([^"]+)"/);
+  if (htmlMatch) return htmlMatch[1];
+  // Markdown: [text](URL)
+  const mdMatch = cell.match(/\]\(([^)]+)\)/);
+  if (mdMatch) return mdMatch[1];
+  return null;
+}
+
+/** Parse one markdown file → array of job objects */
 function parseMarkdownTable(markdown, type) {
   const lines = markdown.split('\n');
   const jobs  = [];
 
-  // Find table header line
+  // Find header row: must contain 'company' and 'position'
   let headerIdx = -1;
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (line.startsWith('|') && line.toLowerCase().includes('company') && line.toLowerCase().includes('position')) {
+    const low = lines[i].toLowerCase();
+    if (lines[i].startsWith('|') && low.includes('company') && low.includes('position')) {
       headerIdx = i;
       break;
     }
   }
   if (headerIdx === -1) return jobs;
 
-  // Parse header columns
-  const headers = lines[headerIdx]
-    .split('|')
-    .map(h => h.trim().toLowerCase())
-    .filter(Boolean);
-
-  // Parse data rows (skip separator line)
+  // Parse data rows (skip header + separator)
   for (let i = headerIdx + 2; i < lines.length; i++) {
     const line = lines[i].trim();
     if (!line.startsWith('|')) continue;
 
-    const cells = line.split('|').map(c => c.trim()).filter(Boolean);
-    if (cells.length < 3) continue;
+    // Split by | but keep raw content per cell
+    const rawCells = line.split('|').slice(1); // remove leading empty
+    if (rawCells.length < 3) continue;
 
-    // Extract markdown links — [text](url)
-    const extractLink = (cell) => {
-      const match = cell.match(/\[([^\]]+)\]\(([^)]+)\)/);
-      return match ? { text: match[1], url: match[2] } : { text: cell.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1'), url: null };
-    };
+    const companyRaw  = rawCells[0] || '';
+    const positionRaw = rawCells[1] || '';
+    const locationRaw = rawCells[2] || '';
+    const salaryRaw   = rawCells[3] || '';
+    const postingRaw  = rawCells[4] || rawCells[3] || '';
 
-    const company  = extractLink(cells[0] || '');
-    const position = extractLink(cells[1] || '');
-    const location = (cells[2] || '').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/🔒/g, '').trim();
-    const salary   = cells[3] ? cells[3].replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').trim() : '';
-    const posting  = extractLink(cells[4] || cells[3] || '');
+    const company  = stripAll(companyRaw).trim();
+    const role     = stripAll(positionRaw).trim();
+    const location = stripAll(locationRaw).trim();
+    const salary   = stripAll(salaryRaw).trim();
 
-    // Skip empty or separator rows
-    if (!company.text || company.text === '---' || company.text.startsWith(':---')) continue;
-    // Skip closed listings (🔒)
-    if (cells[1] && cells[1].includes('🔒')) continue;
+    // Skip separators, empty, or closed (🔒 in raw)
+    if (!company || company.startsWith(':---') || company === '---') continue;
+    if (positionRaw.includes('🔒')) continue;
 
-    jobs.push({
-      company    : company.text,
-      role       : position.text,
-      location   : location || 'International',
-      salary     : salary !== location ? salary : '',
-      applyLink  : posting.url || position.url || company.url || '',
-      jobType    : type,
-      source     : 'speedyapply',
-    });
+    // Apply link: try posting cell first, then position, then company
+    const applyLink =
+      extractHref(postingRaw) ||
+      extractHref(positionRaw) ||
+      extractHref(companyRaw) ||
+      '';
+
+    // Skip if salary cell actually contains an href (means columns shifted)
+    const salaryClean = salaryRaw.includes('href') ? '' : salary;
+
+    jobs.push({ company, role, location, salary: salaryClean, applyLink, jobType: type, source: 'speedyapply' });
   }
   return jobs;
 }
@@ -78,58 +96,40 @@ function parseMarkdownTable(markdown, type) {
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
+  res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=7200');
   if (req.method === 'OPTIONS') { res.status(200).end(); return; }
 
-  // Cache for 1 hour — GitHub updates daily
-  res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=7200');
+  const type = req.query.type || 'all';
+  const toFetch = type === 'all'
+    ? Object.entries(GITHUB_URLS)
+    : Object.entries(GITHUB_URLS).filter(([k]) => k === type);
 
-  const type = req.query.type || 'all'; // intern_intl | newgrad_intl | intern_usa | newgrad_usa | all
+  if (!toFetch.length) {
+    return res.status(400).json({ error: 'Invalid type' });
+  }
 
   try {
-    const toFetch = type === 'all'
-      ? Object.entries(GITHUB_URLS)
-      : [[type, GITHUB_URLS[type]]];
-
-    if (!toFetch.length || !toFetch[0][1]) {
-      return res.status(400).json({ error: 'Invalid type. Use: intern_intl, newgrad_intl, intern_usa, newgrad_usa, all' });
-    }
-
     const results = await Promise.allSettled(
       toFetch.map(async ([key, url]) => {
-        const r = await fetch(url, {
-          headers: { 'User-Agent': 'CarrerLift-Bot/1.0' }
-        });
-        if (!r.ok) throw new Error(`Failed to fetch ${key}: ${r.status}`);
-        const text = await r.text();
-        return parseMarkdownTable(text, key);
+        const r = await fetch(url, { headers: { 'User-Agent': 'CarrerLift/1.0' } });
+        if (!r.ok) throw new Error(`HTTP ${r.status} for ${key}`);
+        return parseMarkdownTable(await r.text(), key);
       })
     );
 
-    let allJobs = [];
-    for (const result of results) {
-      if (result.status === 'fulfilled') {
-        allJobs = allJobs.concat(result.value);
-      }
-    }
+    let all = [];
+    results.forEach(r => { if (r.status === 'fulfilled') all = all.concat(r.value); });
 
-    // Remove duplicates by company+role
+    // Deduplicate
     const seen = new Set();
-    const uniqueJobs = allJobs.filter(job => {
-      const key = `${job.company}__${job.role}`;
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
+    const unique = all.filter(j => {
+      const k = `${j.company}||${j.role}`;
+      if (seen.has(k)) return false;
+      seen.add(k); return true;
     });
 
-    return res.status(200).json({
-      success : true,
-      count   : uniqueJobs.length,
-      jobs    : uniqueJobs,
-      updated : new Date().toISOString(),
-    });
-
+    return res.status(200).json({ success: true, count: unique.length, jobs: unique });
   } catch (err) {
-    console.error('Global jobs error:', err);
     return res.status(500).json({ error: err.message });
   }
 }
