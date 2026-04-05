@@ -374,3 +374,28 @@
 @media (max-width: 600px) {
   .welcome-guide-text { font-size: 13px; }
 }
+
+/* ══ GLOBAL JOBS TAB ══ */
+.global-info-banner {
+  background: linear-gradient(135deg, rgba(0,212,255,0.07), rgba(124,58,237,0.07));
+  border: 1px solid rgba(0,212,255,0.18);
+  border-radius: 14px; padding: 16px 20px;
+  margin-bottom: 18px; display: flex; align-items: center; gap: 16px;
+}
+.global-info-left { display: flex; align-items: center; gap: 14px; }
+.global-info-icon { font-size: 28px; flex-shrink: 0; }
+.global-info-title { font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 700; color: var(--text1); margin-bottom: 3px; }
+.global-info-sub   { font-size: 12px; color: var(--text3); line-height: 1.5; }
+.global-info-sub a { color: var(--neon); text-decoration: none; }
+.global-info-sub a:hover { text-decoration: underline; }
+
+/* Global job type badge */
+.global-type-badge {
+  padding: 3px 9px; border-radius: 100px;
+  font-size: 10px; font-weight: 700;
+  color: var(--text1); white-space: nowrap;
+}
+
+/* Global job card slight tint */
+.global-job-card { border-left: 2px solid rgba(0,212,255,0.3) !important; }
+.global-job-card:hover { border-left-color: var(--neon) !important; }

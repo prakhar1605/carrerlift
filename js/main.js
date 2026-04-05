@@ -22,6 +22,7 @@ import {
   runSkillGapAnalysis, setResumeText,
 }                                                     from './skillGap.js';
 import { subscribeToAlerts }                          from './alerts.js';
+import { fetchGlobalJobs, renderGlobalJobs, filterGlobalJobs } from './globalJobs.js';
 import {
   showStatus, typewriterEffect,
   animateThinkingSteps, markThinkingComplete,
@@ -35,6 +36,7 @@ import { API_ENDPOINTS }                              from './config.js';
 let allJobs       = [];
 let allProfessors = [];
 let allHRContacts = [];
+let allGlobal     = [];
 let matchedJobs   = {};
 let matchedProfs  = {};
 let currentTab    = 'jobs';
@@ -133,6 +135,14 @@ function applyHRFilters() {
   renderHRContacts(filtered, el.hrGrid, el.hrTitle);
   if (el.hrCount) el.hrCount.textContent = `${filtered.length} Contacts`;
 }
+function applyGlobalFilters() {
+  const q    = document.getElementById('globalSearchInput')?.value || '';
+  const type = document.getElementById('globalTypeFilter')?.value || 'all';
+  const filtered = filterGlobalJobs(allGlobal, q, type);
+  renderGlobalJobs(filtered, document.getElementById('globalGrid'), document.getElementById('globalTitle'));
+  const cnt = document.getElementById('globalCount');
+  if (cnt) cnt.textContent = `${filtered.length}`;
+}
 function applyProfessorFilters() {
   const filtered = filterProfessors(allProfessors, el.profSearchInput.value, el.profInstFilter.value, el.profDeptFilter.value);
   renderProfessors(filtered, matchedProfs, el.profsGrid, el.profsTitle);
@@ -141,6 +151,8 @@ function applyProfessorFilters() {
 [el.jobSearchInput, el.jobLocFilter, el.jobTypeFilter].forEach(e => e?.addEventListener('input', applyJobFilters));
 [el.hrSearchInput, el.hrCompanyFilter, el.hrLocationFilter].forEach(e => e?.addEventListener('input', applyHRFilters));
 [el.profSearchInput, el.profInstFilter, el.profDeptFilter].forEach(e => e?.addEventListener('input', applyProfessorFilters));
+document.getElementById('globalSearchInput')?.addEventListener('input', applyGlobalFilters);
+document.getElementById('globalTypeFilter')?.addEventListener('change', applyGlobalFilters);
 
 /* ─────────────────────────────────────────────
    COLLAPSE TOGGLE
@@ -476,7 +488,18 @@ async function init() {
   try {
     const { jobs, professors, hrContacts } = await fetchAllData();
     allJobs = jobs; allProfessors = professors; allHRContacts = hrContacts;
-    populateJobFilters(allJobs, el.jobLocFilter, el.jobTypeFilter);
+
+    // Load global jobs in background (non-blocking)
+    fetchGlobalJobs('all').then(globalJobs => {
+      allGlobal = globalJobs;
+      applyGlobalFilters();
+      const cnt = document.getElementById('globalCount');
+      if (cnt) cnt.textContent = globalJobs.length;
+    }).catch(err => {
+      console.warn('Global jobs load failed:', err);
+      const grid = document.getElementById('globalGrid');
+      if (grid) grid.innerHTML = `<div class="empty-state"><div class="empty-icon"><i class="fas fa-exclamation-triangle"></i></div><h3 class="empty-title">Could not load global jobs</h3><p class="empty-text">Check your connection and refresh</p></div>`;
+    });    populateJobFilters(allJobs, el.jobLocFilter, el.jobTypeFilter);
     populateProfessorFilters(allProfessors, el.profInstFilter, el.profDeptFilter);
     if (el.hrCompanyFilter && el.hrLocationFilter) populateHRFilters(allHRContacts, el.hrCompanyFilter, el.hrLocationFilter);
     applyJobFilters(); applyProfessorFilters(); applyHRFilters();

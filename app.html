@@ -117,6 +117,10 @@
         <i class="fas fa-users"></i> HR Contacts
         <span class="tab-count" id="hrCount">…</span>
       </button>
+      <button class="tab-btn" data-tab="global">
+        <i class="fas fa-globe"></i> Global Jobs
+        <span class="tab-count" id="globalCount">…</span>
+      </button>
     </div>
   </nav>
 
@@ -282,6 +286,48 @@
       </div>
       <div class="results-grid" id="hrGrid"></div>
     </div><!-- /hr tab -->
+
+    <!-- ════ GLOBAL JOBS TAB ════ -->
+    <div class="tab-content" id="global">
+      <!-- Info banner -->
+      <div class="global-info-banner">
+        <div class="global-info-left">
+          <span class="global-info-icon">🌍</span>
+          <div>
+            <div class="global-info-title">International AI/ML Jobs — Updated Daily</div>
+            <div class="global-info-sub">Sourced from <a href="https://github.com/speedyapply/2026-AI-College-Jobs" target="_blank" rel="noopener">speedyapply/2026-AI-College-Jobs</a> · 1,180+ positions across USA & International</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search + type filter -->
+      <div class="search-section">
+        <div class="search-title">Browse Global AI/ML Opportunities</div>
+        <div class="search-bar">
+          <div class="search-input-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" id="globalSearchInput" placeholder="Search companies, roles, locations…" />
+          </div>
+          <select class="filter-select" id="globalTypeFilter">
+            <option value="all">All Types</option>
+            <option value="intern_intl">🌍 International Internships</option>
+            <option value="newgrad_intl">🌍 International New Grad</option>
+            <option value="intern_usa">🦅 USA Internships</option>
+            <option value="newgrad_usa">🦅 USA New Grad</option>
+          </select>
+        </div>
+      </div>
+      <div class="results-header">
+        <div class="results-title" id="globalTitle">Global Jobs</div>
+      </div>
+      <div class="results-grid" id="globalGrid">
+        <div class="empty-state">
+          <div class="empty-icon"><span class="loading"></span></div>
+          <h3 class="empty-title">Loading global jobs…</h3>
+          <p class="empty-text">Fetching latest AI/ML opportunities worldwide</p>
+        </div>
+      </div>
+    </div><!-- /global tab -->
 
   </div><!-- /container -->
 
