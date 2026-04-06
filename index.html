@@ -4,504 +4,1176 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Carrerlift — AI Career Platform for Students | Jobs, Internships & Research</title>
-  <meta name="description" content="India's #1 AI career platform for students. Find jobs, internships, research & global AI/ML opportunities. Get matched by AI in seconds." />
+  <meta name="description" content="India's AI career platform. Jobs, internships, IIT research & global AI/ML opportunities. Get matched by AI in seconds." />
   <link rel="icon" type="image/png" href="logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Satoshi:wght@400;500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="styles/landing.css" />
   <link rel="stylesheet" href="styles/auth.css" />
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FRMVZ6H187"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-FRMVZ6H187');
-  </script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FRMVZ6H187');</script>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #050810;
+  --bg2: #080d1a;
+  --glass: rgba(255,255,255,0.04);
+  --glass2: rgba(255,255,255,0.08);
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.15);
+  --neon: #00D4FF;
+  --neon2: #7C3AED;
+  --neon3: #F59E0B;
+  --green: #10B981;
+  --text1: #F0F4FF;
+  --text2: #8B9CC8;
+  --text3: #4A5578;
+  --font-display: 'Cabinet Grotesk', sans-serif;
+  --font-body: 'Satoshi', sans-serif;
+}
+
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text1);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── CANVAS ── */
+#bg-canvas {
+  position: fixed; inset: 0;
+  z-index: 0; pointer-events: none;
+}
+
+/* ── NOISE OVERLAY ── */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 1; opacity: 0.4;
+}
+
+/* ── NAVBAR ── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 0 20px;
+  height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(5,8,16,0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: all 0.3s;
+}
+.nav.scrolled { background: rgba(5,8,16,0.95); }
+.nav-logo {
+  display: flex; align-items: center; gap: 8px;
+  text-decoration: none; flex-shrink: 0;
+}
+.nav-logo img { height: 24px; border-radius: 6px; }
+.nav-logo-text {
+  font-family: var(--font-display);
+  font-size: 18px; font-weight: 900;
+  background: linear-gradient(135deg, var(--neon), var(--neon2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.nav-links {
+  display: none; align-items: center; gap: 4px;
+}
+@media(min-width:768px) { .nav-links { display: flex; } }
+.nav-link {
+  padding: 6px 12px; border-radius: 8px;
+  color: var(--text2); font-size: 13px; font-weight: 500;
+  text-decoration: none; transition: all 0.2s;
+}
+.nav-link:hover { color: var(--text1); background: var(--glass2); }
+.nav-actions { display: flex; align-items: center; gap: 8px; }
+.btn-ghost {
+  padding: 7px 14px; background: transparent;
+  border: 1px solid var(--border2); border-radius: 9px;
+  color: var(--text1); font-family: var(--font-body);
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: all 0.2s; white-space: nowrap;
+}
+.btn-ghost:hover { background: var(--glass2); }
+.btn-cta-nav {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, var(--neon), #0099cc);
+  border: none; border-radius: 9px;
+  color: #050810; font-family: var(--font-body);
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  transition: all 0.2s; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-cta-nav:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,212,255,0.4); }
+.hamburger {
+  display: flex; background: var(--glass2);
+  border: 1px solid var(--border); border-radius: 7px;
+  width: 36px; height: 36px;
+  align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text1); font-size: 14px;
+}
+@media(min-width:600px) { .hamburger { display: none; } .nav-actions { display: flex !important; } }
+@media(max-width:599px) { .nav-actions { display: none; } }
+
+.mobile-menu {
+  display: none; flex-direction: column; gap: 3px;
+  padding: 10px 12px 14px; border-top: 1px solid var(--border);
+  background: rgba(5,8,16,0.98); position: absolute;
+  top: 60px; left: 0; right: 0; z-index: 99;
+}
+.mobile-menu.open { display: flex; }
+.mobile-link {
+  padding: 11px 12px; border-radius: 9px;
+  color: var(--text2); font-size: 14px; font-weight: 500;
+  text-decoration: none;
+}
+.mobile-link:hover { color: var(--text1); background: var(--glass2); }
+.mobile-auth { display: flex; gap: 8px; margin-top: 10px; }
+.mobile-auth button { flex: 1; justify-content: center; }
+
+/* ── HERO ── */
+.hero {
+  position: relative; z-index: 2;
+  min-height: 100svh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 80px 20px 40px;
+  text-align: center;
+}
+.hero-inner { max-width: 780px; margin: 0 auto; }
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; border-radius: 100px;
+  background: rgba(0,212,255,0.08);
+  border: 1px solid rgba(0,212,255,0.2);
+  font-size: 12px; font-weight: 700; color: var(--neon);
+  margin-bottom: 24px;
+  animation: fadeUp 0.8s ease both;
+}
+.badge-pulse {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--neon);
+  animation: pulse 2s infinite;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 9vw, 72px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+  animation: fadeUp 0.8s ease 0.1s both;
+}
+.hero-title-line2 {
+  display: block;
+  background: linear-gradient(135deg, var(--neon) 0%, #7C3AED 50%, var(--neon3) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% auto;
+  animation: shimmer 4s linear infinite;
+}
+
+.hero-sub {
+  font-size: clamp(15px, 3.5vw, 18px);
+  color: var(--text2); line-height: 1.7;
+  margin-bottom: 32px; max-width: 560px; margin-left: auto; margin-right: auto;
+  animation: fadeUp 0.8s ease 0.2s both;
+}
+.hero-sub strong { color: var(--text1); }
+
+.hero-ctas {
+  display: flex; flex-direction: column;
+  gap: 12px; margin-bottom: 16px;
+  animation: fadeUp 0.8s ease 0.3s both;
+}
+@media(min-width:480px) {
+  .hero-ctas { flex-direction: row; justify-content: center; }
+}
+.btn-primary {
+  padding: 15px 28px;
+  background: linear-gradient(135deg, var(--neon), #0099cc);
+  border: none; border-radius: 14px; color: #050810;
+  font-family: var(--font-body); font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: all 0.3s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  box-shadow: 0 0 30px rgba(0,212,255,0.25);
+  text-decoration: none;
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 40px rgba(0,212,255,0.45); }
+.btn-secondary {
+  padding: 14px 24px; background: var(--glass2);
+  border: 1px solid var(--border2); border-radius: 14px;
+  color: var(--text1); font-family: var(--font-body);
+  font-size: 15px; font-weight: 600; cursor: pointer;
+  transition: all 0.3s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  text-decoration: none;
+}
+.btn-secondary:hover { border-color: var(--neon); color: var(--neon); transform: translateY(-2px); }
+
+.hero-note {
+  font-size: 12px; color: var(--text3);
+  animation: fadeUp 0.8s ease 0.4s both;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  flex-wrap: wrap;
+}
+.hero-note i { color: var(--neon3); }
+
+/* Social proof row */
+.hero-social {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; flex-wrap: wrap; margin-top: 36px;
+  animation: fadeUp 0.8s ease 0.5s both;
+}
+.avatars { display: flex; }
+.av {
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 2px solid var(--bg); margin-left: -8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; color: #050810;
+}
+.av:first-child { margin-left: 0; }
+.social-text { font-size: 13px; color: var(--text2); }
+.social-text strong { color: var(--text1); }
+.stars { display: flex; align-items: center; gap: 3px; font-size: 12px; color: var(--neon3); }
+
+/* ── FLOATING STATS ── */
+.hero-stats {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 10px; margin-top: 40px;
+  animation: fadeUp 0.8s ease 0.6s both;
+}
+.stat-pill {
+  padding: 8px 16px; border-radius: 100px;
+  background: var(--glass); border: 1px solid var(--border);
+  font-size: 13px; font-weight: 600; color: var(--text1);
+  display: flex; align-items: center; gap: 7px;
+  backdrop-filter: blur(10px);
+}
+.stat-pill span { color: var(--neon); font-weight: 800; }
+
+/* ── SCROLL INDICATOR ── */
+.scroll-hint {
+  position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  color: var(--text3); font-size: 11px; font-weight: 500;
+  animation: fadeIn 1s ease 1s both;
+  cursor: pointer; z-index: 2;
+}
+.scroll-line {
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--neon), transparent);
+  animation: scrollAnim 2s ease-in-out infinite;
+}
+
+/* ── SECTIONS ── */
+section {
+  position: relative; z-index: 2;
+  padding: 70px 20px;
+}
+.section-inner { max-width: 1100px; margin: 0 auto; }
+.section-label {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 5px 12px; border-radius: 100px;
+  background: var(--glass); border: 1px solid var(--border);
+  font-size: 11px; font-weight: 700; color: var(--text2);
+  text-transform: uppercase; letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 5vw, 46px);
+  font-weight: 900; line-height: 1.1;
+  letter-spacing: -0.025em; margin-bottom: 12px;
+}
+.section-sub {
+  font-size: 16px; color: var(--text2);
+  line-height: 1.7; margin-bottom: 48px;
+  max-width: 520px;
+}
+
+/* ── MARQUEE ── */
+.marquee-section {
+  padding: 30px 0; overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,212,255,0.02);
+}
+.marquee-track {
+  display: flex; gap: 0;
+  animation: marquee 30s linear infinite;
+  width: max-content;
+}
+.marquee-track:hover { animation-play-state: paused; }
+.marquee-item {
+  padding: 0 28px;
+  font-size: 13px; font-weight: 700;
+  color: var(--text3); white-space: nowrap;
+  display: flex; align-items: center; gap: 10px;
+  letter-spacing: 0.3px;
+}
+.marquee-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--neon); opacity: 0.5; }
+
+/* ── STEPS ── */
+.steps-grid {
+  display: grid; gap: 16px;
+  grid-template-columns: 1fr;
+}
+@media(min-width:600px) { .steps-grid { grid-template-columns: repeat(3,1fr); } }
+
+.step-card {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 20px; padding: 28px 24px;
+  position: relative; overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
+  cursor: default;
+}
+.step-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(0,212,255,0.05), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.step-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(0,212,255,0.3);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,212,255,0.1);
+}
+.step-card:hover::before { opacity: 1; }
+
+.step-num {
+  font-family: var(--font-display);
+  font-size: 11px; font-weight: 900;
+  color: var(--text3); letter-spacing: 1px;
+  text-transform: uppercase; margin-bottom: 16px;
+}
+.step-icon-wrap {
+  width: 52px; height: 52px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; margin-bottom: 18px;
+  position: relative;
+}
+.step-icon-1 { background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.2); }
+.step-icon-2 { background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.2); }
+.step-icon-3 { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2); }
+.step-title {
+  font-family: var(--font-display);
+  font-size: 18px; font-weight: 800; margin-bottom: 10px;
+}
+.step-desc { font-size: 14px; color: var(--text2); line-height: 1.7; }
+
+/* ── FEATURES BENTO ── */
+.bento {
+  display: grid; gap: 12px;
+  grid-template-columns: 1fr;
+}
+@media(min-width:640px) { .bento { grid-template-columns: 1fr 1fr; } }
+@media(min-width:960px) { .bento { grid-template-columns: repeat(3,1fr); } }
+
+.bento-card {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 20px; padding: 26px 22px;
+  transition: all 0.35s cubic-bezier(0.23,1,0.32,1);
+  position: relative; overflow: hidden;
+}
+.bento-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 50px rgba(0,0,0,0.4);
+}
+.bento-card.wide { grid-column: span 2; }
+@media(max-width:639px) { .bento-card.wide { grid-column: span 1; } }
+
+.bento-icon {
+  width: 46px; height: 46px; border-radius: 13px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; margin-bottom: 16px;
+}
+.bento-title {
+  font-family: var(--font-display);
+  font-size: 17px; font-weight: 800; margin-bottom: 8px;
+}
+.bento-desc { font-size: 13px; color: var(--text2); line-height: 1.65; }
+.bento-number {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 6vw, 52px);
+  font-weight: 900; line-height: 1;
+  margin-top: 14px;
+}
+.bento-glow {
+  position: absolute; width: 120px; height: 120px;
+  border-radius: 50%; filter: blur(40px);
+  right: -20px; bottom: -20px; opacity: 0.15;
+  pointer-events: none;
+}
+
+/* ── TESTIMONIALS ── */
+.testi-grid {
+  display: grid; gap: 12px;
+  grid-template-columns: 1fr;
+}
+@media(min-width:640px) { .testi-grid { grid-template-columns: 1fr 1fr; } }
+@media(min-width:960px) { .testi-grid { grid-template-columns: repeat(3,1fr); } }
+
+.testi-card {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 20px; padding: 22px;
+  display: flex; flex-direction: column; gap: 12px;
+  transition: all 0.3s;
+}
+.testi-card:hover { transform: translateY(-3px); border-color: var(--border2); }
+.testi-stars { color: var(--neon3); font-size: 14px; letter-spacing: 2px; }
+.testi-text { font-size: 14px; color: var(--text2); line-height: 1.75; flex: 1; }
+.testi-author { display: flex; align-items: center; gap: 10px; margin-top: auto; }
+.testi-av {
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800; color: #050810; flex-shrink: 0;
+}
+.testi-name { font-size: 13px; font-weight: 700; color: var(--text1); }
+.testi-role { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+.testi-cta-card {
+  background: linear-gradient(135deg, rgba(0,212,255,0.07), rgba(124,58,237,0.07));
+  border-color: rgba(0,212,255,0.2) !important;
+  text-align: center; align-items: center; justify-content: center;
+}
+.testi-big { font-family: var(--font-display); font-size: 52px; font-weight: 900; line-height: 1; }
+.testi-big-label { font-size: 15px; font-weight: 700; color: var(--text1); margin-top: 6px; }
+.testi-big-sub { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+/* ── REVIEW CTA ── */
+.review-cta {
+  background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(0,212,255,0.05));
+  border: 1px solid rgba(245,158,11,0.22);
+  border-radius: 20px; padding: 24px;
+  display: flex; flex-direction: column; gap: 16px;
+  margin-top: 12px;
+}
+@media(min-width:640px) { .review-cta { flex-direction: row; align-items: center; } }
+.review-cta-left { display: flex; gap: 14px; align-items: flex-start; flex: 1; }
+.review-cta-icon { font-size: 30px; flex-shrink: 0; }
+.review-cta-title { font-family: var(--font-display); font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+.review-cta-sub { font-size: 13px; color: var(--text2); line-height: 1.6; }
+.btn-review {
+  padding: 13px 22px;
+  background: linear-gradient(135deg, var(--neon3), #D97706);
+  border: none; border-radius: 12px; color: #050810;
+  font-family: var(--font-body); font-size: 14px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(245,158,11,0.28);
+}
+.btn-review:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,158,11,0.45); }
+
+/* ── ALERT SECTION ── */
+.alert-card {
+  background: linear-gradient(135deg, rgba(0,212,255,0.06), rgba(124,58,237,0.06));
+  border: 1px solid rgba(0,212,255,0.18);
+  border-radius: 24px; padding: 32px 24px;
+  display: flex; flex-direction: column; gap: 32px;
+}
+@media(min-width:768px) { .alert-card { flex-direction: row; align-items: flex-start; } }
+.alert-left { flex: 1; }
+.alert-title { font-family: var(--font-display); font-size: clamp(20px,3vw,28px); font-weight: 900; margin-bottom: 10px; }
+.alert-sub { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 16px; }
+.alert-trust { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--text3); }
+.alert-trust i { color: var(--green); margin-right: 4px; }
+.alert-form { flex: 0 0 min(340px, 100%); display: flex; flex-direction: column; gap: 10px; }
+.alert-input {
+  width: 100%; padding: 12px 16px;
+  background: rgba(255,255,255,0.05); border: 1px solid var(--border2);
+  border-radius: 11px; color: var(--text1);
+  font-family: var(--font-body); font-size: 14px;
+  transition: all 0.2s;
+}
+.alert-input::placeholder { color: var(--text3); }
+.alert-input:focus { outline: none; border-color: var(--neon); background: rgba(0,212,255,0.04); box-shadow: 0 0 0 3px rgba(0,212,255,0.1); }
+.btn-alert {
+  padding: 14px; background: linear-gradient(135deg, var(--neon), #0099cc);
+  border: none; border-radius: 11px; color: #050810;
+  font-family: var(--font-body); font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  box-shadow: 0 4px 20px rgba(0,212,255,0.28);
+}
+.btn-alert:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,212,255,0.4); }
+.btn-alert:disabled { opacity: 0.6; cursor: not-allowed; }
+.alert-msg { font-size: 13px; min-height: 16px; text-align: center; }
+
+/* ── CTA BANNER ── */
+.cta-section {
+  text-align: center; padding: 80px 20px;
+}
+.cta-inner { max-width: 680px; margin: 0 auto; }
+.cta-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px,6vw,52px);
+  font-weight: 900; line-height: 1.1;
+  letter-spacing: -0.025em; margin-bottom: 14px;
+}
+.cta-sub { font-size: 16px; color: var(--text2); margin-bottom: 32px; }
+.cta-btns { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+@media(min-width:480px) { .cta-btns { flex-direction: row; justify-content: center; } }
+.cta-trust {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 16px;
+  font-size: 12px; color: var(--text3); margin-top: 20px;
+}
+.cta-trust i { color: var(--green); margin-right: 4px; }
+
+/* ── FOOTER ── */
+footer {
+  position: relative; z-index: 2;
+  border-top: 1px solid var(--border);
+}
+.footer-inner {
+  max-width: 1100px; margin: 0 auto;
+  padding: 28px 20px 20px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+@media(min-width:640px) {
+  .footer-inner { flex-direction: row; justify-content: space-between; align-items: center; }
+}
+.footer-brand { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+.footer-tagline { font-size: 12px; color: var(--text3); margin-top: 4px; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 14px; }
+.footer-links a { font-size: 13px; color: var(--text2); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--neon); }
+.footer-bottom { border-top: 1px solid var(--border); padding: 14px 20px; text-align: center; }
+.footer-bottom p { font-size: 12px; color: var(--text3); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+@keyframes shimmer {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes scrollAnim {
+  0%,100%{opacity:0.3;transform:scaleY(0.8)} 50%{opacity:1;transform:scaleY(1)}
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes floatCard {
+  0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)}
+}
+@keyframes glow {
+  0%,100%{opacity:0.4} 50%{opacity:0.8}
+}
+
+/* ── REVEAL ── */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── TOAST ── */
+.toast-container { position: fixed; top: 16px; right: 16px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
+
+/* ── 3D CARD FLOATING EFFECT ── */
+.float-card {
+  background: var(--glass);
+  border: 1px solid var(--border2);
+  border-radius: 16px; padding: 14px 16px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+.floating-ui {
+  position: absolute; pointer-events: none; z-index: 3;
+  display: none;
+}
+@media(min-width:900px) { .floating-ui { display: block; } }
+.float-left { left: -40px; top: 30%; animation: floatCard 4s ease-in-out infinite; }
+.float-right { right: -40px; bottom: 25%; animation: floatCard 4s ease-in-out infinite 2s; }
+.float-top { top: 10%; right: 5%; animation: floatCard 5s ease-in-out infinite 1s; }
+
+.fc-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.fc-value { font-family: var(--font-display); font-size: 22px; font-weight: 900; color: var(--neon); }
+.fc-sub { font-size: 11px; color: var(--text2); }
+.fc-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; border-radius: 100px;
+  font-size: 11px; font-weight: 700;
+}
+.fc-green { background: rgba(16,185,129,0.15); color: var(--green); border: 1px solid rgba(16,185,129,0.25); }
+.fc-cyan  { background: rgba(0,212,255,0.12);  color: var(--neon);  border: 1px solid rgba(0,212,255,0.2); }
+
+/* ── HERO VISUAL (desktop) ── */
+.hero-layout {
+  display: block;
+}
+@media(min-width:900px) {
+  .hero-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 48px;
+    text-align: left;
+  }
+  .hero-inner { max-width: 1100px; }
+  .hero-badge, .hero-social, .hero-stats, .hero-note { justify-content: flex-start; }
+  .hero-ctas { justify-content: flex-start; }
+  .hero-sub { margin-left: 0; }
+}
+.hero-visual-wrap { position: relative; display: none; }
+@media(min-width:900px) { .hero-visual-wrap { display: block; } }
+
+/* Hero card */
+.hero-card {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 20px; padding: 20px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+  animation: floatCard 6s ease-in-out infinite;
+}
+.hc-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+.hc-avatar {
+  width: 40px; height: 40px; border-radius: 11px;
+  background: linear-gradient(135deg,rgba(0,212,255,0.15),rgba(124,58,237,0.15));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; border: 1px solid var(--border2);
+}
+.hc-name { font-family: var(--font-display); font-size: 14px; font-weight: 800; }
+.hc-sub  { font-size: 11px; color: var(--text3); margin-top: 1px; }
+
+.hc-match { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+.hc-match-info { flex: 1; }
+.hc-match-lbl { font-size: 10px; color: var(--text2); margin-bottom: 5px; }
+.hc-bar { height: 5px; background: var(--glass2); border-radius: 3px; overflow: hidden; }
+.hc-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg,var(--neon),var(--neon2)); transition: width 2s cubic-bezier(0.4,0,0.2,1); }
+.hc-score { font-family: var(--font-display); font-size: 20px; font-weight: 900; color: var(--neon); flex-shrink: 0; }
+
+.hc-job {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px; padding: 9px 12px;
+  background: var(--glass); border: 1px solid var(--border);
+  border-radius: 11px; margin-bottom: 8px;
+  transition: all 0.2s;
+}
+.hc-job:hover { border-color: var(--border2); background: var(--glass2); }
+.hc-job-l { display: flex; align-items: center; gap: 10px; }
+.hc-job-icon { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.hc-job-name { font-size: 12px; font-weight: 700; color: var(--text1); }
+.hc-job-co   { font-size: 10px; color: var(--text3); margin-top: 1px; }
+.badge { padding: 3px 9px; border-radius: 100px; font-size: 10px; font-weight: 700; }
+.b-match   { background: rgba(0,212,255,0.12); color: var(--neon); border: 1px solid rgba(0,212,255,0.2); }
+.b-trend   { background: rgba(124,58,237,0.12); color: var(--neon2); border: 1px solid rgba(124,58,237,0.2); }
+.b-new     { background: rgba(16,185,129,0.12); color: var(--green); border: 1px solid rgba(16,185,129,0.2); }
+</style>
 </head>
 <body>
-  <div class="glow-orb glow-orb-1"></div>
-  <div class="glow-orb glow-orb-2"></div>
-  <div class="glow-orb glow-orb-3"></div>
-  <div class="toast-container" id="toastContainer"></div>
 
-  <!-- ════ NAVBAR ════ -->
-  <nav class="navbar" id="navbar">
-    <div class="navbar-inner">
-      <a href="/" class="nav-logo">
-        <img src="logo.png" alt="Carrerlift" onerror="this.style.display='none'" />
+<canvas id="bg-canvas"></canvas>
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ── NAVBAR ── -->
+<nav class="nav" id="navbar">
+  <a href="/" class="nav-logo">
+    <img src="logo.png" alt="Carrerlift" onerror="this.style.display='none'" />
+    <span class="nav-logo-text">Carrerlift</span>
+  </a>
+  <div class="nav-links">
+    <a href="#how-it-works" class="nav-link">How it Works</a>
+    <a href="#features" class="nav-link">Features</a>
+    <a href="#alerts" class="nav-link">Job Alerts</a>
+    <a href="#reviews" class="nav-link">Reviews</a>
+  </div>
+  <div class="nav-actions" id="navActions">
+    <button class="btn-ghost" onclick="openAuth('signin')">Sign In</button>
+    <button class="btn-cta-nav" onclick="openAuth('signup')"><i class="fas fa-rocket"></i> Get Started Free</button>
+  </div>
+  <div class="nav-actions" id="navActionsLoggedIn" style="display:none;">
+    <a href="app.html" class="btn-cta-nav"><i class="fas fa-search"></i> Browse Jobs</a>
+    <div class="user-menu">
+      <button class="user-avatar" id="userAvatarBtn" onclick="toggleUserMenu()">P</button>
+      <div class="user-dropdown" id="userDropdown">
+        <div class="user-dropdown-email"><span>Signed in as</span><p id="userEmailDisplay">user@email.com</p></div>
+        <a href="app.html" class="dropdown-item"><i class="fas fa-search"></i> Browse Jobs</a>
+        <button class="dropdown-item danger" onclick="signOut()"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+      </div>
+    </div>
+  </div>
+  <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#how-it-works" class="mobile-link" onclick="closeMobileMenu()">How it Works</a>
+    <a href="#features" class="mobile-link" onclick="closeMobileMenu()">Features</a>
+    <a href="#alerts" class="mobile-link" onclick="closeMobileMenu()">Job Alerts</a>
+    <a href="#reviews" class="mobile-link" onclick="closeMobileMenu()">Reviews</a>
+    <div class="mobile-auth">
+      <button class="btn-ghost" style="flex:1;" onclick="openAuth('signin');closeMobileMenu()">Sign In</button>
+      <button class="btn-cta-nav" style="flex:1;" onclick="openAuth('signup');closeMobileMenu()">Start Free</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-layout">
+      <div class="hero-content">
+        <div class="hero-badge"><div class="badge-pulse"></div>AI Career Platform · India &amp; Global</div>
+        <h1 class="hero-title">
+          Your Dream Career,<br>
+          <span class="hero-title-line2">Powered by AI</span>
+        </h1>
+        <p class="hero-sub">Upload your resume — AI matches you with <strong>jobs, internships, IIT research</strong> &amp; 1,180+ global AI/ML opportunities. Join <strong>1,000+ students</strong> worldwide.</p>
+        <div class="hero-ctas">
+          <button class="btn-primary" onclick="openAuth('signup')"><i class="fas fa-rocket"></i> Start Matching — Free</button>
+          <button class="btn-secondary" onclick="startTryNow(event)"><i class="fas fa-eye"></i> See How It Works</button>
+        </div>
+        <div class="hero-note"><i class="fas fa-clock"></i> 10-min free preview &nbsp;·&nbsp; No credit card &nbsp;·&nbsp; No spam</div>
+        <div class="hero-social">
+          <div class="avatars">
+            <div class="av" style="background:linear-gradient(135deg,#00D4FF,#0099cc);">A</div>
+            <div class="av" style="background:linear-gradient(135deg,#7C3AED,#a855f7);">R</div>
+            <div class="av" style="background:linear-gradient(135deg,#10B981,#059669);">S</div>
+            <div class="av" style="background:linear-gradient(135deg,#F59E0B,#D97706);">P</div>
+            <div class="av" style="background:linear-gradient(135deg,#EF4444,#DC2626);">K</div>
+          </div>
+          <span class="social-text"><strong>1,000+</strong> students this month</span>
+          <div class="stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <span style="color:var(--text2);font-weight:600;font-size:11px;"> 4.9</span>
+          </div>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-pill"><span>843+</span> India Jobs</div>
+          <div class="stat-pill"><span>1,180+</span> Global AI/ML</div>
+          <div class="stat-pill"><span>1,583</span> IIT Professors</div>
+          <div class="stat-pill"><span>1,837</span> HR Contacts</div>
+        </div>
+      </div>
+
+      <!-- Desktop visual card -->
+      <div class="hero-visual-wrap" style="position:relative;">
+        <div class="hero-card" id="heroCard">
+          <div class="hc-header">
+            <div class="hc-avatar">🤖</div>
+            <div><div class="hc-name">AI Resume Analysis</div><div class="hc-sub">Scanning your profile…</div></div>
+          </div>
+          <div class="hc-match">
+            <div class="hc-match-info">
+              <div class="hc-match-lbl">Overall Match Score</div>
+              <div class="hc-bar"><div class="hc-fill" id="hcFill" style="width:0%"></div></div>
+            </div>
+            <div class="hc-score" id="hcScore">0%</div>
+          </div>
+          <div class="hc-job"><div class="hc-job-l"><div class="hc-job-icon" style="background:rgba(0,212,255,0.12)">💻</div><div><div class="hc-job-name">AI Engineer Intern</div><div class="hc-job-co">Google · Mountain View</div></div></div><span class="badge b-match">98% Match</span></div>
+          <div class="hc-job"><div class="hc-job-l"><div class="hc-job-icon" style="background:rgba(124,58,237,0.12)">🚀</div><div><div class="hc-job-name">SWE Intern (PPO)</div><div class="hc-job-co">Livo AI · Bangalore</div></div></div><span class="badge b-trend">Trending</span></div>
+          <div class="hc-job"><div class="hc-job-l"><div class="hc-job-icon" style="background:rgba(16,185,129,0.12)">🔬</div><div><div class="hc-job-name">Research Intern</div><div class="hc-job-co">IIT Bombay · Prof. Sharma</div></div></div><span class="badge b-new">New</span></div>
+        </div>
+        <!-- Floating chips -->
+        <div style="position:absolute;top:-18px;left:-18px;animation:floatCard 4s ease-in-out infinite;">
+          <div class="float-card"><div class="fc-label">Live Jobs</div><div class="fc-value">843+</div><div class="fc-sub">Updated daily</div></div>
+        </div>
+        <div style="position:absolute;bottom:-16px;right:-18px;animation:floatCard 5s ease-in-out infinite 2s;">
+          <div class="float-card">
+            <div class="fc-badge fc-green"><i class="fas fa-check-circle" style="font-size:9px;"></i> AI Matched</div>
+            <div style="font-size:11px;color:var(--text2);margin-top:5px;">87% accuracy</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint" onclick="document.getElementById('how-it-works').scrollIntoView({behavior:'smooth'})">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ── MARQUEE ── -->
+<div class="marquee-section">
+  <div class="marquee-track" id="marqueeTrack"></div>
+</div>
+
+<!-- ── HOW IT WORKS ── -->
+<section id="how-it-works">
+  <div class="section-inner">
+    <div class="section-label"><i class="fas fa-map-signs"></i> How it Works</div>
+    <h2 class="section-title reveal">3 steps to your next opportunity</h2>
+    <p class="section-sub reveal">No manual browsing. No guesswork. AI does the heavy lifting.</p>
+    <div class="steps-grid">
+      <div class="step-card reveal">
+        <div class="step-num">01</div>
+        <div class="step-icon-wrap step-icon-1">📄</div>
+        <h3 class="step-title">Upload Resume</h3>
+        <p class="step-desc">Drop your PDF or DOCX. AI extracts your skills, experience &amp; interests with pinpoint accuracy.</p>
+      </div>
+      <div class="step-card reveal" style="transition-delay:0.1s">
+        <div class="step-num">02</div>
+        <div class="step-icon-wrap step-icon-2">🧠</div>
+        <h3 class="step-title">AI Matches You</h3>
+        <p class="step-desc">Scans 843+ India jobs + 1,180+ global AI/ML roles + 1,583 IIT professors — ranked by fit.</p>
+      </div>
+      <div class="step-card reveal" style="transition-delay:0.2s">
+        <div class="step-num">03</div>
+        <div class="step-icon-wrap step-icon-3">✉️</div>
+        <h3 class="step-title">Apply with AI Email</h3>
+        <p class="step-desc">One-click personalised cold emails to HR or professors. Higher response rates, zero effort.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES ── -->
+<section id="features" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="section-label"><i class="fas fa-star"></i> Features</div>
+    <h2 class="section-title reveal">Everything you need,<br>nothing you don't</h2>
+    <div class="bento reveal">
+      <div class="bento-card wide" style="border-color:rgba(0,212,255,0.2);">
+        <div class="bento-icon" style="background:rgba(0,212,255,0.1);color:var(--neon);">✨</div>
+        <h3 class="bento-title">AI Resume Analyzer</h3>
+        <p class="bento-desc">Upload once, match everywhere. Finds the most relevant jobs, research &amp; HR contacts simultaneously.</p>
+        <div class="bento-number" style="background:linear-gradient(135deg,var(--neon),#0099cc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">50x</div>
+        <p style="font-size:12px;color:var(--text3);margin-top:4px;">faster than manual search</p>
+        <div class="bento-glow" style="background:var(--neon);"></div>
+      </div>
+      <div class="bento-card" style="border-color:rgba(124,58,237,0.2);">
+        <div class="bento-icon" style="background:rgba(124,58,237,0.1);color:var(--neon2);">🔬</div>
+        <h3 class="bento-title">IIT Research Matching</h3>
+        <p class="bento-desc">Match with professors whose research aligns with your interests across all IITs.</p>
+        <div class="bento-number" style="background:linear-gradient(135deg,var(--neon2),#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">1,583</div>
+        <div class="bento-glow" style="background:var(--neon2);"></div>
+      </div>
+      <div class="bento-card" style="border-color:rgba(16,185,129,0.2);">
+        <div class="bento-icon" style="background:rgba(16,185,129,0.1);color:var(--green);">🌍</div>
+        <h3 class="bento-title">Global AI/ML Jobs</h3>
+        <p class="bento-desc">USA &amp; International AI/ML roles from FAANG+ companies. Updated daily.</p>
+        <div class="bento-number" style="background:linear-gradient(135deg,var(--green),#059669);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">1,180+</div>
+        <div class="bento-glow" style="background:var(--green);"></div>
+      </div>
+      <div class="bento-card" style="border-color:rgba(245,158,11,0.2);">
+        <div class="bento-icon" style="background:rgba(245,158,11,0.1);color:var(--neon3);">⚡</div>
+        <h3 class="bento-title">AI Email Generator</h3>
+        <p class="bento-desc">Personalised cold emails in 3 tones. One click to Gmail. Higher response rates.</p>
+        <div class="bento-glow" style="background:var(--neon3);"></div>
+      </div>
+      <div class="bento-card" style="border-color:rgba(0,212,255,0.2);">
+        <div class="bento-icon" style="background:rgba(0,212,255,0.1);color:var(--neon);">👥</div>
+        <h3 class="bento-title">1,837 HR Contacts</h3>
+        <p class="bento-desc">Direct access to recruiters at top companies. Skip the queue entirely.</p>
+        <div class="bento-glow" style="background:var(--neon);"></div>
+      </div>
+      <div class="bento-card" style="border-color:rgba(124,58,237,0.2);">
+        <div class="bento-icon" style="background:rgba(124,58,237,0.1);color:var(--neon2);">📊</div>
+        <h3 class="bento-title">Skill Gap Analyzer</h3>
+        <p class="bento-desc">See exactly what's missing and get a personalised learning roadmap to close the gap.</p>
+        <div class="bento-glow" style="background:var(--neon2);"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── REVIEWS ── -->
+<section id="reviews" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="section-label"><i class="fas fa-star"></i> Student Reviews</div>
+    <h2 class="section-title reveal">What our 1,000+ users say</h2>
+    <p class="section-sub reveal">Real feedback from real students.</p>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Found 3 matched jobs in seconds. The AI email generator is a game changer — highly recommend!"</p>
+        <div class="testi-author"><div class="testi-av" style="background:linear-gradient(135deg,#00D4FF,#0099cc);">A</div><div><div class="testi-name">Aryan S.</div><div class="testi-role">3rd Year CSE · IIT Delhi</div></div></div>
+      </div>
+      <div class="testi-card reveal" style="transition-delay:0.1s">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"IIT professor matching is incredible. Sent emails to 5 professors and got 2 replies in 3 days!"</p>
+        <div class="testi-author"><div class="testi-av" style="background:linear-gradient(135deg,#7C3AED,#a855f7);">R</div><div><div class="testi-name">Riya P.</div><div class="testi-role">Final Year ECE · NIT Trichy</div></div></div>
+      </div>
+      <div class="testi-card testi-cta-card reveal" style="transition-delay:0.2s">
+        <div class="testi-big" style="background:linear-gradient(135deg,var(--neon),var(--neon2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">1,000+</div>
+        <div class="testi-big-label">students this month</div>
+        <div class="testi-big-sub">Be part of India's fastest growing student career platform.</div>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPtLnKIYZxBAQaPMFRis0-8TLCRE4FWCO_PWtC0g-VMosahA/viewform" target="_blank" class="btn-primary" style="margin-top:16px;font-size:13px;padding:11px 18px;">
+          <i class="fas fa-star"></i> Add Your Review
+        </a>
+      </div>
+    </div>
+    <div class="review-cta reveal">
+      <div class="review-cta-left">
+        <div class="review-cta-icon">⭐</div>
+        <div>
+          <div class="review-cta-title">Used Carrerlift? Share your experience!</div>
+          <p class="review-cta-sub">Takes 2 minutes. Helps other students discover us &amp; helps us build better.</p>
+        </div>
+      </div>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPtLnKIYZxBAQaPMFRis0-8TLCRE4FWCO_PWtC0g-VMosahA/viewform" target="_blank" class="btn-review"><i class="fas fa-pen"></i> Leave a Review</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── JOB ALERTS ── -->
+<section id="alerts" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="alert-card reveal">
+      <div class="alert-left">
+        <div class="section-label" style="margin-bottom:12px;"><i class="fas fa-bell"></i> Free Job Alerts</div>
+        <div class="alert-title">Get new jobs in your inbox — daily</div>
+        <p class="alert-sub">We update jobs every day. Get a morning email with the latest listings matched to your skills.</p>
+        <div class="alert-trust">
+          <span><i class="fas fa-check-circle"></i> Free forever</span>
+          <span><i class="fas fa-check-circle"></i> No spam</span>
+          <span><i class="fas fa-check-circle"></i> Unsubscribe anytime</span>
+        </div>
+      </div>
+      <div class="alert-form" id="alertForm">
+        <input type="text"  class="alert-input" id="alertName"   placeholder="Your name" />
+        <input type="email" class="alert-input" id="alertEmail"  placeholder="your@email.com" required />
+        <input type="text"  class="alert-input" id="alertSkills" placeholder="Skills (e.g. Python, ML, React)" />
+        <button class="btn-alert" onclick="subscribeLanding()" id="alertBtn">
+          <i class="fas fa-bell"></i> Subscribe to Job Alerts
+        </button>
+        <p class="alert-msg" id="alertMsg"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="section-label" style="justify-content:center;margin-bottom:16px;"><i class="fas fa-bolt"></i> Always Free</div>
+    <h2 class="cta-title reveal">Stop scrolling job boards.<br>Let AI find your match.</h2>
+    <p class="cta-sub reveal">Join 1,000+ students who found their next opportunity with Carrerlift.</p>
+    <div class="cta-btns reveal">
+      <button class="btn-primary" onclick="openAuth('signup')"><i class="fas fa-search"></i> Find My Matching Jobs</button>
+      <button class="btn-secondary" onclick="startTryNow(event)"><i class="fas fa-eye"></i> Preview First</button>
+    </div>
+    <div class="cta-trust reveal">
+      <span><i class="fas fa-check-circle"></i> Free forever</span>
+      <span><i class="fas fa-check-circle"></i> No credit card</span>
+      <span><i class="fas fa-check-circle"></i> No spam</span>
+      <span><i class="fas fa-check-circle"></i> 1,000+ students</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <a href="/" class="footer-brand">
+        <img src="logo.png" alt="" style="height:24px;border-radius:5px;" onerror="this.style.display='none'">
         <span class="nav-logo-text">Carrerlift</span>
       </a>
-      <div class="nav-links">
-        <a href="#how-it-works" class="nav-link">How it Works</a>
-        <a href="#features" class="nav-link">Features</a>
-        <a href="#job-alerts" class="nav-link">Job Alerts</a>
-        <a href="#testimonials" class="nav-link">Reviews</a>
-      </div>
-      <div class="nav-actions" id="navActions">
-        <button class="btn-ghost" onclick="openAuth('signin')">Sign In</button>
-        <button class="btn-primary-nav" onclick="openAuth('signup')"><i class="fas fa-rocket"></i> Get Started Free</button>
-      </div>
-      <div class="nav-actions" id="navActionsLoggedIn" style="display:none;">
-        <a href="app.html" class="btn-primary-nav"><i class="fas fa-search"></i> Find Jobs</a>
-        <div class="user-menu">
-          <button class="user-avatar" id="userAvatarBtn" onclick="toggleUserMenu()">P</button>
-          <div class="user-dropdown" id="userDropdown">
-            <div class="user-dropdown-email">
-              <span>Signed in as</span>
-              <p id="userEmailDisplay">user@email.com</p>
-            </div>
-            <a href="app.html" class="dropdown-item"><i class="fas fa-briefcase"></i> Find Jobs</a>
-            <a href="app.html" class="dropdown-item"><i class="fas fa-bookmark"></i> Saved Jobs</a>
-            <button class="dropdown-item danger" onclick="signOut()"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
-          </div>
-        </div>
-      </div>
-      <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+      <div class="footer-tagline">AI Career Platform for Students · India &amp; Global</div>
     </div>
-    <div class="mobile-menu" id="mobileMenu">
-      <a href="#social-proof" class="mobile-link" onclick="closeMobileMenu()">Why Us</a>
-      <a href="#how-it-works" class="mobile-link" onclick="closeMobileMenu()">How it Works</a>
-      <a href="#features" class="mobile-link" onclick="closeMobileMenu()">Features</a>
-      <a href="#testimonials" class="mobile-link" onclick="closeMobileMenu()">Reviews</a>
-      <div class="mobile-auth-btns">
-        <button class="btn-ghost" style="flex:1;" onclick="openAuth('signin');closeMobileMenu()">Sign In</button>
-        <button class="btn-primary-nav" style="flex:1;" onclick="openAuth('signup');closeMobileMenu()">Sign Up Free</button>
-      </div>
-    </div>
-  </nav>
-
-  <!-- ════ HERO ════ -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-content">
-        <div class="hero-badge"><div class="hero-badge-dot"></div>AI Career Platform · India & Global</div>
-        <h1 class="hero-title">Your Dream Career,<br>Powered by <span class="hero-title-gradient">AI</span></h1>
-        <p class="hero-sub">Upload your resume — AI matches you with jobs, internships, IIT research & global AI/ML opportunities. Join <strong>1,000+ students</strong> worldwide.</p>
-
-        <!-- Social avatars row -->
-        <div class="hero-social-row">
-          <div class="hero-avatars">
-            <div class="hero-av" style="background:linear-gradient(135deg,#00D4FF,#0099cc);">A</div>
-            <div class="hero-av" style="background:linear-gradient(135deg,#7C3AED,#a855f7);">R</div>
-            <div class="hero-av" style="background:linear-gradient(135deg,#10B981,#059669);">S</div>
-            <div class="hero-av" style="background:linear-gradient(135deg,#F59E0B,#D97706);">P</div>
-            <div class="hero-av" style="background:linear-gradient(135deg,#EF4444,#DC2626);">K</div>
-          </div>
-          <span class="hero-social-text"><strong>1,000+</strong> students joined this month</span>
-          <div class="hero-stars">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-            <span>4.9/5</span>
-          </div>
-        </div>
-
-        <div class="hero-ctas">
-          <button class="btn-hero-primary" onclick="openAuth('signup')"><i class="fas fa-rocket"></i> Start Matching Jobs — Free</button>
-          <button class="btn-hero-secondary" onclick="startTryNow(event)"><i class="fas fa-eye"></i> See How It Works · No Signup</button>
-        </div>
-        <div class="try-timer-chip"><i class="fas fa-clock"></i> 10-minute free preview &nbsp;·&nbsp; No credit card &nbsp;·&nbsp; No spam</div>
-      </div>
-
-      <div class="hero-visual">
-        <div class="hero-stat-chip hero-stat-chip-1"><div class="hero-stat-val">843+</div><div class="hero-stat-lbl">Live Jobs</div></div>
-        <div class="hero-stat-chip hero-stat-chip-2"><div class="hero-stat-val">95%</div><div class="hero-stat-lbl">AI Accuracy</div></div>
-        <div class="hero-card-main">
-          <div class="hero-card-header">
-            <div class="hero-card-avatar">🤖</div>
-            <div class="hero-card-info"><h4>AI Resume Analysis</h4><span>Scanning your profile…</span></div>
-          </div>
-          <div class="hero-match-bar">
-            <div style="flex:1;">
-              <div class="hero-match-label">Overall Match Score</div>
-              <div class="hero-progress"><div class="hero-progress-fill" id="heroProgress" style="width:0%"></div></div>
-            </div>
-            <div class="hero-match-score" id="heroScore">0%</div>
-          </div>
-          <div class="hero-jobs-list">
-            <div class="hero-job-item"><div class="hero-job-left"><div class="hero-job-icon" style="background:rgba(0,212,255,0.12);">💻</div><div><div class="hero-job-name">AI Intern</div><div class="hero-job-co">Kotak Neo · Mumbai</div></div></div><span class="hero-job-badge badge-matched">98% Match</span></div>
-            <div class="hero-job-item"><div class="hero-job-left"><div class="hero-job-icon" style="background:rgba(124,58,237,0.12);">🚀</div><div><div class="hero-job-name">SWE Intern (+PPO)</div><div class="hero-job-co">Livo AI · Bangalore</div></div></div><span class="hero-job-badge badge-trending">Trending</span></div>
-            <div class="hero-job-item"><div class="hero-job-left"><div class="hero-job-icon" style="background:rgba(16,185,129,0.12);">🔬</div><div><div class="hero-job-name">Research Intern</div><div class="hero-job-co">IIT Bombay · Prof. Sharma</div></div></div><span class="hero-job-badge badge-matched">94% Match</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ════ STATS STRIP ════ -->
-  <div class="stats-strip">
-    <div class="stats-inner">
-      <div class="stat-item"><div class="stat-number" data-target="843">0</div><div class="stat-label">India Jobs & Internships</div><div class="stat-sub">Updated daily</div></div>
-      <div class="stat-item"><div class="stat-number" data-target="1180">0</div><div class="stat-label">Global AI/ML Jobs</div><div class="stat-sub">USA & International</div></div>
-      <div class="stat-item"><div class="stat-number" data-target="1583">0</div><div class="stat-label">IIT Professors</div><div class="stat-sub">Research opportunities</div></div>
-      <div class="stat-item"><div class="stat-number" data-target="1000">0</div><div class="stat-label">Students Placed</div><div class="stat-sub">This month</div></div>
+    <div class="footer-links">
+      <a href="#how-it-works">How it Works</a>
+      <a href="#features">Features</a>
+      <a href="#reviews">Reviews</a>
+      <a href="app.html" onclick="startTryNow(event)">Try Free</a>
+      <a href="mailto:carrerlift@gmail.com">Contact</a>
     </div>
   </div>
+  <div class="footer-bottom"><p>© 2025 Carrerlift · Made with ❤️ for students worldwide</p></div>
+</footer>
 
-  <!-- ════ SOCIAL PROOF LOGOS ════ -->
-  <section class="section social-proof-section" id="social-proof">
-    <div class="section-inner" style="text-align:center;">
-      <div class="proof-label">🚀 Already trusted by students from</div>
-      <div class="proof-colleges">
-        <span class="proof-college-chip">IIT Delhi</span>
-        <span class="proof-college-chip">IIT Bombay</span>
-        <span class="proof-college-chip">NIT Trichy</span>
-        <span class="proof-college-chip">BITS Pilani</span>
-        <span class="proof-college-chip">VIT Vellore</span>
-        <span class="proof-college-chip">DTU Delhi</span>
-        <span class="proof-college-chip">NSUT</span>
-        <span class="proof-college-chip">Jadavpur University</span>
-        <span class="proof-college-chip">IIIT Hyderabad</span>
-        <span class="proof-college-chip">Amity University</span>
-        <span class="proof-college-chip">Manipal Institute</span>
-        <span class="proof-college-chip">& many more...</span>
-      </div>
-      <p class="proof-honest-note">
-        <i class="fas fa-heart" style="color:var(--red);"></i>
-        We're a small startup — but our community is growing fast. <strong>1,000+ students</strong> are actively using Carrerlift to find their next opportunity.
-      </p>
+<!-- ── AUTH MODAL ── -->
+<div class="auth-modal" id="authModal" role="dialog" aria-modal="true">
+  <div class="auth-card">
+    <button class="auth-close-btn" onclick="closeAuth()" aria-label="Close"><i class="fas fa-times"></i></button>
+    <div class="auth-logo">
+      <img src="logo.png" alt="Carrerlift" onerror="this.style.display='none'" />
+      <span class="auth-logo-text">Carrerlift</span>
     </div>
-  </section>
-
-  <!-- ════ HOW IT WORKS ════ -->
-  <section class="section" id="how-it-works">
-    <div class="section-inner">
-      <div class="section-label"><i class="fas fa-map-signs"></i> How it Works</div>
-      <h2 class="section-title">Land your dream opportunity<br>in 3 simple steps</h2>
-      <p class="section-sub">No manual browsing. No guesswork. Just AI doing the heavy lifting for you.</p>
-      <div class="steps-grid">
-        <div class="step-card reveal">
-          <div class="step-num">01</div>
-          <div class="step-icon step-icon-1"><i class="fas fa-file-upload"></i></div>
-          <h3 class="step-title">Upload Your Resume</h3>
-          <p class="step-desc">Drop your PDF, DOCX, or paste text. Our AI instantly extracts your skills, experience, and interests with pinpoint accuracy.</p>
-        </div>
-        <div class="step-card reveal">
-          <div class="step-num">02</div>
-          <div class="step-icon step-icon-2"><i class="fas fa-brain"></i></div>
-          <h3 class="step-title">AI Matches You</h3>
-          <p class="step-desc">Our model scans 843+ jobs and 1583 professor profiles, ranking opportunities by how well they match your unique profile.</p>
-        </div>
-        <div class="step-card reveal">
-          <div class="step-num">03</div>
-          <div class="step-icon step-icon-3"><i class="fas fa-paper-plane"></i></div>
-          <h3 class="step-title">Apply with AI Emails</h3>
-          <p class="step-desc">Generate personalised cold emails to HR or professors with one click. Higher response rates, zero effort.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ════ FEATURES BENTO ════ -->
-  <section class="section" id="features" style="padding-top:0;">
-    <div class="section-inner">
-      <div class="section-label"><i class="fas fa-star"></i> Features</div>
-      <h2 class="section-title">Everything you need,<br>nothing you don't</h2>
-      <div class="bento-grid">
-        <div class="bento-card wide accent-cyan reveal">
-          <div class="bento-icon" style="background:rgba(0,212,255,0.12);color:var(--neon);"><i class="fas fa-magic"></i></div>
-          <h3 class="bento-title">AI Resume Analyzer</h3>
-          <p class="bento-desc">Upload once, match everywhere. Our AI reads your resume deeply — skills, projects, experience — and finds the most relevant opportunities simultaneously.</p>
-          <div class="bento-big-num" style="background:linear-gradient(135deg,var(--neon),#0099cc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">50x</div>
-          <p style="font-size:12px;color:var(--text3);margin-top:4px;">faster than manual search</p>
-        </div>
-        <div class="bento-card tall accent-purple reveal">
-          <div class="bento-icon" style="background:rgba(124,58,237,0.12);color:var(--neon2);"><i class="fas fa-flask"></i></div>
-          <h3 class="bento-title">Research Matching</h3>
-          <p class="bento-desc">Get matched with IIT professors whose research aligns with your interests. Send personalised cold emails that actually get responses.</p>
-          <div class="bento-big-num" style="background:linear-gradient(135deg,var(--neon2),#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">1583</div>
-          <p style="font-size:12px;color:var(--text3);margin-top:4px;">professors across all IITs</p>
-        </div>
-        <div class="bento-card accent-green reveal">
-          <div class="bento-icon" style="background:rgba(16,185,129,0.12);color:var(--green);"><i class="fas fa-bookmark"></i></div>
-          <h3 class="bento-title">Save &amp; Track Jobs</h3>
-          <p class="bento-desc">Bookmark jobs and save your resume — synced to your account, accessible from any device.</p>
-        </div>
-        <div class="bento-card accent-amber reveal">
-          <div class="bento-icon" style="background:rgba(245,158,11,0.12);color:var(--neon3);"><i class="fas fa-chart-bar"></i></div>
-          <h3 class="bento-title">Skill Gap Analyzer</h3>
-          <p class="bento-desc">See exactly which skills you have, what's missing, and a personalised learning roadmap to close the gap.</p>
-        </div>
-        <div class="bento-card accent-cyan reveal">
-          <div class="bento-icon" style="background:rgba(0,212,255,0.12);color:var(--neon);"><i class="fas fa-users"></i></div>
-          <h3 class="bento-title">1837 HR Contacts</h3>
-          <p class="bento-desc">Direct access to recruiters at top companies. Skip the queue entirely.</p>
-        </div>
-        <div class="bento-card reveal" style="grid-column:span 2;">
-          <div class="bento-icon" style="background:rgba(245,158,11,0.1);color:var(--neon3);"><i class="fas fa-envelope-open-text"></i></div>
-          <h3 class="bento-title">AI Email Generator</h3>
-          <p class="bento-desc">Generate personalised cold emails for professors and HR in 3 tones — Professional, Enthusiastic, or Short &amp; Direct. One click to open in Gmail.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ════ TESTIMONIALS / REVIEWS ════ -->
-  <section class="section" id="testimonials">
-    <div class="section-inner">
-      <div class="section-label"><i class="fas fa-star"></i> Student Reviews</div>
-      <h2 class="section-title">What our 1,000+ users<br>are saying</h2>
-      <p class="section-sub" style="margin-bottom:36px;">Real feedback from real students. We're a growing startup and every review helps us improve.</p>
-
-      <!-- Review CTA card -->
-      <div class="review-cta-card reveal">
-        <div class="review-cta-left">
-          <div class="review-cta-icon">⭐</div>
-          <div>
-            <div class="review-cta-title">Used Carrerlift? Share your experience!</div>
-            <p class="review-cta-sub">Takes 2 minutes. Your review helps other students discover us and helps us build a better product.</p>
-          </div>
-        </div>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPtLnKIYZxBAQaPMFRis0-8TLCRE4FWCO_PWtC0g-VMosahA/viewform" target="_blank" rel="noopener" class="btn-leave-review" id="reviewBtn">
-          <i class="fas fa-pen"></i> Leave a Review
-        </a>
-      </div>
-
-      <!-- Placeholder cards while reviews come in -->
-      <div class="testimonials-grid" style="margin-top:28px;">
-        <div class="testi-card reveal">
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"Found 3 matched jobs within seconds of uploading my resume. The AI email generator is a game changer — highly recommend to every student!"</p>
-          <div class="testi-author">
-            <div class="testi-av" style="background:linear-gradient(135deg,#00D4FF,#0099cc);">A</div>
-            <div><div class="testi-name">Aryan S.</div><div class="testi-college">3rd Year CSE Student</div></div>
-          </div>
-        </div>
-        <div class="testi-card reveal">
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"The IIT professor matching feature is incredible. Sent emails to 5 professors and got 2 replies in 3 days. This never happened before!"</p>
-          <div class="testi-author">
-            <div class="testi-av" style="background:linear-gradient(135deg,#7C3AED,#a855f7);">R</div>
-            <div><div class="testi-name">Riya P.</div><div class="testi-college">Final Year ECE</div></div>
-          </div>
-        </div>
-        <div class="testi-card testi-highlight reveal">
-          <div class="testi-big-stat">1,000+</div>
-          <div class="testi-big-label">active users this month</div>
-          <p class="testi-cta-sub">We're just getting started. Be part of India's fastest growing student career platform.</p>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPtLnKIYZxBAQaPMFRis0-8TLCRE4FWCO_PWtC0g-VMosahA/viewform" target="_blank" class="btn-hero-primary" style="width:100%;justify-content:center;margin-top:20px;text-decoration:none;">
-            <i class="fas fa-star"></i> Add Your Review
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ════ JOB ALERTS SECTION ════ -->
-  <section class="section" id="alerts" style="padding-top:0;">
-    <div class="section-inner">
-      <div class="alert-landing-card reveal">
-        <div class="alert-landing-left">
-          <div class="alert-landing-icon">🔔</div>
-          <div>
-            <div class="section-label" style="margin-bottom:10px;"><i class="fas fa-bolt"></i> Free Job Alerts</div>
-            <h2 class="alert-landing-title">Get new jobs in your inbox — daily</h2>
-            <p class="alert-landing-sub">We update jobs every day. Subscribe and get a morning email with the latest listings matched to your skills. Free forever.</p>
-            <div class="alert-landing-trust">
-              <span><i class="fas fa-check-circle"></i> Free forever</span>
-              <span><i class="fas fa-check-circle"></i> No spam</span>
-              <span><i class="fas fa-check-circle"></i> Unsubscribe anytime</span>
-            </div>
-          </div>
-        </div>
-        <div class="alert-landing-form" id="alertLandingForm">
-          <input type="text"  class="alert-field" id="alertLandingName"   placeholder="Your name" />
-          <input type="email" class="alert-field" id="alertLandingEmail"  placeholder="your@email.com" required />
-          <input type="text"  class="alert-field" id="alertLandingSkills" placeholder="Skills (e.g. Python, ML, React)" />
-          <button class="alert-submit-landing" onclick="subscribeLanding()">
-            <i class="fas fa-bell"></i> Subscribe to Job Alerts
-          </button>
-          <p class="alert-landing-note" id="alertLandingMsg"></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ════ FINAL CTA BANNER ════ -->
-  <section class="cta-banner">
-    <div class="cta-banner-inner">
-      <div class="cta-glow"></div>
-      <div class="section-label" style="justify-content:center;margin-bottom:16px;"><i class="fas fa-bolt"></i> Limited Time — Always Free</div>
-      <h2 class="cta-title">Stop scrolling job boards.<br>Upload resume → AI finds your jobs.</h2>
-      <p class="cta-sub">Join 1,000+ students who stopped wasting time on irrelevant applications.</p>
-      <div class="cta-actions">
-        <button class="btn-hero-primary" onclick="openAuth('signup')"><i class="fas fa-search"></i> Find My Matching Jobs — Free</button>
-        <button class="btn-hero-secondary" onclick="startTryNow(event)"><i class="fas fa-eye"></i> Preview First · No Signup</button>
-      </div>
-      <div class="cta-trust-row">
-        <span><i class="fas fa-check-circle"></i> Free forever</span>
-        <span><i class="fas fa-check-circle"></i> No credit card</span>
-        <span><i class="fas fa-check-circle"></i> No spam</span>
-        <span><i class="fas fa-check-circle"></i> 1,000+ students trust us</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ════ FOOTER ════ -->
-  <footer class="landing-footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <a href="/" class="nav-logo" style="text-decoration:none;">
-          <img src="logo.png" alt="Carrerlift" style="height:28px;border-radius:6px;" onerror="this.style.display='none'" />
-          <span class="nav-logo-text">Carrerlift</span>
-        </a>
-        <p class="footer-tagline">India's #1 AI Career Platform for Students</p>
-      </div>
-      <div class="footer-links">
-        <a href="#how-it-works">How it Works</a>
-        <a href="#features">Features</a>
-        <a href="#testimonials">Reviews</a>
-        <a href="app.html" onclick="startTryNow(event)">Try Free</a>
-        <a href="mailto:carrerlift@gmail.com">Contact</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2025 Carrerlift · Made with ❤️ for Indian students</p>
-    </div>
-  </footer>
-
-  <!-- ════ AUTH MODAL ════ -->
-  <div class="auth-modal" id="authModal" role="dialog" aria-modal="true">
-    <div class="auth-card">
-      <button class="auth-close-btn" onclick="closeAuth()" aria-label="Close"><i class="fas fa-times"></i></button>
-      <div class="auth-logo">
-        <img src="logo.png" alt="Carrerlift" onerror="this.style.display='none'" />
-        <span class="auth-logo-text">Carrerlift</span>
-      </div>
-      <h2 class="auth-title">Find Your Perfect Job 🎯</h2>
-      <p class="auth-sub">Sign in and upload your resume — our AI matches you with the best jobs, internships &amp; IIT research in seconds. <strong>100% Free.</strong></p>
-      <button class="google-sign-btn" id="googleSignInBtn" onclick="handleGoogleSignIn()">
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G" class="google-icon" />
-        Continue with Google
-      </button>
-      <div class="auth-divider">or explore first</div>
-      <button class="try-now-btn" onclick="startTryNow(); closeAuth();">
-        <i class="fas fa-play"></i> Try free for 10 minutes — no signup
-      </button>
-      <p id="authError" class="auth-error"></p>
-      <p class="auth-footer-note">No spam ever · Free forever · 1,000+ students already using this</p>
-    </div>
+    <h2 class="auth-title">Find Your Perfect Job 🎯</h2>
+    <p class="auth-sub">Sign in and upload your resume — AI matches you with the best jobs, internships &amp; IIT research in seconds. <strong>100% Free.</strong></p>
+    <button class="google-sign-btn" id="googleSignInBtn" onclick="handleGoogleSignIn()">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G" class="google-icon" />
+      Continue with Google
+    </button>
+    <div class="auth-divider">or explore first</div>
+    <button class="try-now-btn" onclick="startTryNow(); closeAuth();">
+      <i class="fas fa-play"></i> Try free for 10 minutes — no signup
+    </button>
+    <p id="authError" class="auth-error"></p>
+    <p class="auth-footer-note">No spam ever · Free forever · 1,000+ students already using this</p>
   </div>
+</div>
 
-  <!-- ════ SCRIPTS ════ -->
-  <script type="module" src="js/auth.js"></script>
-  <script>
-    // ── Landing page job alert subscribe ──
-    window.subscribeLanding = async function() {
-      const name   = document.getElementById('alertLandingName').value.trim();
-      const email  = document.getElementById('alertLandingEmail').value.trim();
-      const skills = document.getElementById('alertLandingSkills').value.trim();
-      const msgEl  = document.getElementById('alertLandingMsg');
-      const btn    = document.querySelector('.alert-submit-landing');
+<!-- THREE.JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script type="module" src="js/auth.js"></script>
+<script>
+/* ── 3D CANVAS BACKGROUND ── */
+(function() {
+  const canvas = document.getElementById('bg-canvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 0);
 
-      if (!email || !email.includes('@')) {
-        msgEl.style.color = '#EF4444';
-        msgEl.textContent = 'Please enter a valid email address.';
-        return;
-      }
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 1000);
+  camera.position.z = 5;
 
-      btn.disabled = true;
-      btn.innerHTML = '<span class="auth-spinner"></span> Subscribing...';
-      msgEl.textContent = '';
+  function resize() {
+    renderer.setSize(innerWidth, innerHeight);
+    camera.aspect = innerWidth / innerHeight;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize', resize);
 
-      try {
-        const res = await fetch('/api/subscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, skills })
-        });
-        const data = await res.json();
-        if (data.success) {
-          document.getElementById('alertLandingForm').innerHTML = `
-            <div style="text-align:center;padding:24px 0;">
-              <div style="font-size:48px;margin-bottom:12px;">🎉</div>
-              <div style="font-family:'Sora',sans-serif;font-size:18px;font-weight:700;color:var(--text1);margin-bottom:8px;">You're subscribed!</div>
-              <p style="font-size:14px;color:var(--text2);">Check your inbox — confirmation email on its way. You'll get daily job alerts every morning.</p>
-            </div>`;
-        } else {
-          msgEl.style.color = '#EF4444';
-          msgEl.textContent = data.error || 'Something went wrong. Please try again.';
-          btn.disabled = false;
-          btn.innerHTML = '<i class="fas fa-bell"></i> Subscribe to Job Alerts';
-        }
-      } catch {
-        msgEl.style.color = '#EF4444';
-        msgEl.textContent = 'Network error. Please try again.';
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-bell"></i> Subscribe to Job Alerts';
-      }
-    };
+  // Particles
+  const count = window.innerWidth < 600 ? 800 : 1800;
+  const geo = new THREE.BufferGeometry();
+  const pos = new Float32Array(count * 3);
+  const col = new Float32Array(count * 3);
+  const sizes = new Float32Array(count);
 
-    // ── Job Alert Subscribe ──
-    window.submitJobAlert = async function() {
-      const name   = document.getElementById('alertNameInput').value.trim();
-      const email  = document.getElementById('alertEmailInput').value.trim();
-      const skills = document.getElementById('alertSkillsInput').value.trim();
-      const btn    = document.getElementById('alertSubmitBtn');
+  for (let i = 0; i < count; i++) {
+    pos[i*3]   = (Math.random() - 0.5) * 18;
+    pos[i*3+1] = (Math.random() - 0.5) * 18;
+    pos[i*3+2] = (Math.random() - 0.5) * 10;
+    const r = Math.random();
+    if (r < 0.5) { col[i*3]=0; col[i*3+1]=0.83; col[i*3+2]=1; }       // cyan
+    else if (r < 0.8) { col[i*3]=0.49; col[i*3+1]=0.23; col[i*3+2]=0.93; } // purple
+    else { col[i*3]=0.96; col[i*3+1]=0.62; col[i*3+2]=0.04; }            // amber
+    sizes[i] = Math.random() * 2 + 0.5;
+  }
 
-      if (!email || !email.includes('@')) {
-        alert('Please enter a valid email address'); return;
-      }
-      btn.innerHTML = '<span class="loading-spin"></span> Subscribing...';
-      btn.disabled  = true;
-      try {
-        const res = await fetch('/api/subscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, skills })
-        });
-        const data = await res.json();
-        if (res.ok && data.success) {
-          document.getElementById('alertFormCard').style.display    = 'none';
-          document.getElementById('alertSuccessCard').style.display = 'block';
-        } else {
-          alert(data.error || 'Something went wrong. Please try again.');
-          btn.innerHTML = '<i class="fas fa-bell"></i> Subscribe — It\'s Free';
-          btn.disabled  = false;
-        }
-      } catch {
-        alert('Network error. Please try again.');
-        btn.innerHTML = '<i class="fas fa-bell"></i> Subscribe — It\'s Free';
-        btn.disabled  = false;
-      }
-    };
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
+  geo.setAttribute('size',     new THREE.BufferAttribute(sizes, 1));
 
-    window.addEventListener('scroll', () => {
-      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
-    });
-    window.toggleMobileMenu = () => document.getElementById('mobileMenu').classList.toggle('open');
-    window.closeMobileMenu  = () => document.getElementById('mobileMenu').classList.remove('open');
+  const mat = new THREE.PointsMaterial({
+    size: 0.04, vertexColors: true,
+    transparent: true, opacity: 0.6,
+    sizeAttenuation: true,
+  });
 
-    // Stats counter
-    function animateCounters() {
-      document.querySelectorAll('.stat-number').forEach(el => {
-        const target = parseInt(el.dataset.target);
-        const suffix = el.dataset.suffix || '';
-        let current = 0, step = Math.ceil(target / 60);
-        const timer = setInterval(() => {
-          current = Math.min(current + step, target);
-          el.textContent = current.toLocaleString() + suffix;
-          if (current >= target) clearInterval(timer);
-        }, 25);
-      });
+  const particles = new THREE.Points(geo, mat);
+  scene.add(particles);
+
+  // Connection lines
+  const lineMat = new THREE.LineBasicMaterial({ color: 0x00D4FF, transparent: true, opacity: 0.04 });
+  const lineCount = window.innerWidth < 600 ? 60 : 120;
+  for (let i = 0; i < lineCount; i++) {
+    const pts = [
+      new THREE.Vector3((Math.random()-0.5)*18, (Math.random()-0.5)*18, (Math.random()-0.5)*8),
+      new THREE.Vector3((Math.random()-0.5)*18, (Math.random()-0.5)*18, (Math.random()-0.5)*8),
+    ];
+    const lg = new THREE.BufferGeometry().setFromPoints(pts);
+    scene.add(new THREE.Line(lg, lineMat));
+  }
+
+  // Mouse
+  let mx = 0, my = 0;
+  window.addEventListener('mousemove', e => {
+    mx = (e.clientX / innerWidth  - 0.5) * 0.3;
+    my = (e.clientY / innerHeight - 0.5) * 0.2;
+  });
+
+  // Animate
+  let t = 0;
+  function animate() {
+    requestAnimationFrame(animate);
+    t += 0.002;
+    particles.rotation.y = t * 0.1 + mx;
+    particles.rotation.x = t * 0.05 + my;
+    const p = geo.attributes.position;
+    for (let i = 0; i < count; i++) {
+      p.array[i*3+1] += Math.sin(t + i * 0.01) * 0.0005;
     }
-    const so = new IntersectionObserver(e => { if (e[0].isIntersecting) { animateCounters(); so.disconnect(); } }, { threshold: 0.3 });
-    const se = document.querySelector('.stats-strip'); if (se) so.observe(se);
+    p.needsUpdate = true;
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
 
-    // Reveal animation
-    const ro = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+/* ── MARQUEE ── */
+const colleges = ['IIT Delhi','IIT Bombay','IIT Madras','IIT Kanpur','NIT Trichy','BITS Pilani','DTU Delhi','NSUT','VIT Vellore','IIIT Hyderabad','Jadavpur University','Manipal Institute','BITS Goa','NIT Surathkal','IIIT Bangalore','Thapar University','Amity University','SRM University','Pune University','IIT Roorkee'];
+const track = document.getElementById('marqueeTrack');
+const doubled = [...colleges, ...colleges];
+track.innerHTML = doubled.map(c => `<div class="marquee-item"><div class="marquee-dot"></div>${c}</div>`).join('');
 
-    // Hero progress bar
-    setTimeout(() => {
-      const bar = document.getElementById('heroProgress'), score = document.getElementById('heroScore');
-      if (!bar || !score) return;
-      let pct = 0;
-      const t = setInterval(() => { pct = Math.min(pct + 1, 87); bar.style.width = pct + '%'; score.textContent = pct + '%'; if (pct >= 87) clearInterval(t); }, 18);
-    }, 900);
-  </script>
+/* ── HERO PROGRESS ANIMATION ── */
+setTimeout(() => {
+  const fill = document.getElementById('hcFill');
+  const score = document.getElementById('hcScore');
+  if (!fill || !score) return;
+  let p = 0;
+  const t = setInterval(() => {
+    p = Math.min(p + 1, 87);
+    fill.style.width = p + '%';
+    score.textContent = p + '%';
+    if (p >= 87) clearInterval(t);
+  }, 18);
+}, 800);
+
+/* ── SCROLL ── */
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar')?.classList.toggle('scrolled', scrollY > 20);
+});
+
+/* ── MOBILE MENU ── */
+window.toggleMobileMenu = () => document.getElementById('mobileMenu')?.classList.toggle('open');
+window.closeMobileMenu  = () => document.getElementById('mobileMenu')?.classList.remove('open');
+
+/* ── REVEAL ON SCROLL ── */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+/* ── JOB ALERT SUBSCRIBE ── */
+window.subscribeLanding = async function() {
+  const name   = document.getElementById('alertName').value.trim();
+  const email  = document.getElementById('alertEmail').value.trim();
+  const skills = document.getElementById('alertSkills').value.trim();
+  const msgEl  = document.getElementById('alertMsg');
+  const btn    = document.getElementById('alertBtn');
+
+  if (!email || !email.includes('@')) {
+    msgEl.style.color = '#EF4444'; msgEl.textContent = 'Please enter a valid email.'; return;
+  }
+  btn.disabled = true;
+  btn.innerHTML = '<span class="auth-spinner"></span> Subscribing...';
+  msgEl.textContent = '';
+
+  try {
+    const res = await fetch('/api/subscribe', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ name, email, skills })
+    });
+    const data = await res.json();
+    if (data.success) {
+      document.getElementById('alertForm').innerHTML = `
+        <div style="text-align:center;padding:24px 0;">
+          <div style="font-size:48px;margin-bottom:12px;">🎉</div>
+          <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:18px;font-weight:900;color:var(--text1);margin-bottom:8px;">You're subscribed!</div>
+          <p style="font-size:14px;color:var(--text2);">Check your inbox — confirmation email on its way.</p>
+        </div>`;
+    } else {
+      msgEl.style.color = '#EF4444';
+      msgEl.textContent = data.error || 'Something went wrong. Try again.';
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-bell"></i> Subscribe to Job Alerts';
+    }
+  } catch {
+    msgEl.style.color = '#EF4444'; msgEl.textContent = 'Network error. Try again.';
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-bell"></i> Subscribe to Job Alerts';
+  }
+};
+</script>
 </body>
 </html>
