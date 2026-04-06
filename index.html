@@ -62,15 +62,16 @@ body::after {
 .nav {
   position: fixed; top: 0; left: 0; right: 0;
   z-index: 100;
-  padding: 0 20px;
-  height: 60px;
+  padding: 0 16px;
+  height: 58px;
   display: flex; align-items: center; justify-content: space-between;
-  background: rgba(5,8,16,0.7);
+  gap: 12px;
+  background: rgba(5,8,16,0.75);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
-  transition: all 0.3s;
+  transition: background 0.3s;
 }
-.nav.scrolled { background: rgba(5,8,16,0.95); }
+.nav.scrolled { background: rgba(5,8,16,0.97); }
 .nav-logo {
   display: flex; align-items: center; gap: 8px;
   text-decoration: none; flex-shrink: 0;
@@ -78,55 +79,64 @@ body::after {
 .nav-logo img { height: 24px; border-radius: 6px; }
 .nav-logo-text {
   font-family: var(--font-display);
-  font-size: 18px; font-weight: 900;
+  font-size: 17px; font-weight: 900;
   background: linear-gradient(135deg, var(--neon), var(--neon2));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 .nav-links {
-  display: none; align-items: center; gap: 4px;
+  display: none; align-items: center; gap: 2px;
 }
-@media(min-width:768px) { .nav-links { display: flex; } }
+@media(min-width:860px) { .nav-links { display: flex; } }
+
 .nav-link {
-  padding: 6px 12px; border-radius: 8px;
+  padding: 6px 10px; border-radius: 8px;
   color: var(--text2); font-size: 13px; font-weight: 500;
-  text-decoration: none; transition: all 0.2s;
+  text-decoration: none; transition: all 0.2s; white-space: nowrap;
 }
 .nav-link:hover { color: var(--text1); background: var(--glass2); }
-.nav-actions { display: flex; align-items: center; gap: 8px; }
+
+/* Right side of navbar */
+.nav-right {
+  display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+}
 .btn-ghost {
-  padding: 7px 14px; background: transparent;
+  padding: 7px 13px; background: transparent;
   border: 1px solid var(--border2); border-radius: 9px;
   color: var(--text1); font-family: var(--font-body);
   font-size: 13px; font-weight: 600; cursor: pointer;
-  transition: all 0.2s; white-space: nowrap;
+  transition: all 0.2s; white-space: nowrap; display: none;
 }
+@media(min-width:600px) { .btn-ghost { display: inline-flex; } }
 .btn-ghost:hover { background: var(--glass2); }
+
 .btn-cta-nav {
-  padding: 8px 16px;
+  padding: 8px 14px;
   background: linear-gradient(135deg, var(--neon), #0099cc);
   border: none; border-radius: 9px;
   color: #050810; font-family: var(--font-body);
   font-size: 13px; font-weight: 700; cursor: pointer;
   transition: all 0.2s; white-space: nowrap;
   display: inline-flex; align-items: center; gap: 6px;
+  text-decoration: none;
 }
-.btn-cta-nav:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,212,255,0.4); }
+.btn-cta-nav:hover { transform: translateY(-1px); box-shadow: 0 4px 18px rgba(0,212,255,0.4); }
+
 .hamburger {
   display: flex; background: var(--glass2);
   border: 1px solid var(--border); border-radius: 7px;
-  width: 36px; height: 36px;
+  width: 34px; height: 34px;
   align-items: center; justify-content: center;
   cursor: pointer; color: var(--text1); font-size: 14px;
+  flex-shrink: 0;
 }
-@media(min-width:600px) { .hamburger { display: none; } .nav-actions { display: flex !important; } }
-@media(max-width:599px) { .nav-actions { display: none; } }
+@media(min-width:600px) { .hamburger { display: none; } }
 
 .mobile-menu {
   display: none; flex-direction: column; gap: 3px;
   padding: 10px 12px 14px; border-top: 1px solid var(--border);
-  background: rgba(5,8,16,0.98); position: absolute;
-  top: 60px; left: 0; right: 0; z-index: 99;
+  background: rgba(5,8,16,0.98);
+  position: absolute; top: 58px; left: 0; right: 0; z-index: 99;
 }
 .mobile-menu.open { display: flex; }
 .mobile-link {
@@ -136,7 +146,7 @@ body::after {
 }
 .mobile-link:hover { color: var(--text1); background: var(--glass2); }
 .mobile-auth { display: flex; gap: 8px; margin-top: 10px; }
-.mobile-auth button { flex: 1; justify-content: center; }
+.mobile-auth button,.mobile-auth a { flex: 1; justify-content: center; }
 
 /* ── HERO ── */
 .hero {
@@ -588,18 +598,27 @@ footer {
 .float-card {
   background: var(--glass);
   border: 1px solid var(--border2);
-  border-radius: 16px; padding: 14px 16px;
+  border-radius: 16px; padding: 12px 16px;
   backdrop-filter: blur(12px);
   box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
-.floating-ui {
-  position: absolute; pointer-events: none; z-index: 3;
-  display: none;
+
+/* Hero floating chips */
+.hero-chip-left,
+.hero-chip-right { display: none; position: absolute; }
+
+@media(min-width:1100px) {
+  .hero-chip-left {
+    display: block;
+    top: 0; left: -10px;
+    animation: floatCard 4s ease-in-out infinite;
+  }
+  .hero-chip-right {
+    display: block;
+    bottom: 0; right: -10px;
+    animation: floatCard 5s ease-in-out infinite 2s;
+  }
 }
-@media(min-width:900px) { .floating-ui { display: block; } }
-.float-left { left: -40px; top: 30%; animation: floatCard 4s ease-in-out infinite; }
-.float-right { right: -40px; bottom: 25%; animation: floatCard 4s ease-in-out infinite 2s; }
-.float-top { top: 10%; right: 5%; animation: floatCard 5s ease-in-out infinite 1s; }
 
 .fc-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
 .fc-value { font-family: var(--font-display); font-size: 22px; font-weight: 900; color: var(--neon); }
@@ -612,25 +631,28 @@ footer {
 .fc-green { background: rgba(16,185,129,0.15); color: var(--green); border: 1px solid rgba(16,185,129,0.25); }
 .fc-cyan  { background: rgba(0,212,255,0.12);  color: var(--neon);  border: 1px solid rgba(0,212,255,0.2); }
 
-/* ── HERO VISUAL (desktop) ── */
-.hero-layout {
-  display: block;
-}
-@media(min-width:900px) {
+/* ── HERO VISUAL (desktop only) ── */
+.hero-layout { display: block; }
+
+@media(min-width:960px) {
   .hero-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
-    gap: 48px;
+    gap: 40px;
     text-align: left;
   }
   .hero-inner { max-width: 1100px; }
-  .hero-badge, .hero-social, .hero-stats, .hero-note { justify-content: flex-start; }
-  .hero-ctas { justify-content: flex-start; }
-  .hero-sub { margin-left: 0; }
+  .hero-badge { justify-content: flex-start; }
+  .hero-social { justify-content: flex-start; }
+  .hero-stats  { justify-content: flex-start; }
+  .hero-note   { justify-content: flex-start; }
+  .hero-ctas   { justify-content: flex-start; }
+  .hero-sub    { margin-left: 0; }
 }
-.hero-visual-wrap { position: relative; display: none; }
-@media(min-width:900px) { .hero-visual-wrap { display: block; } }
+
+.hero-visual-wrap { display: none; }
+@media(min-width:960px) { .hero-visual-wrap { display: block; } }
 
 /* Hero card */
 .hero-card {
@@ -692,30 +714,35 @@ footer {
     <a href="#alerts" class="nav-link">Job Alerts</a>
     <a href="#reviews" class="nav-link">Reviews</a>
   </div>
-  <div class="nav-actions" id="navActions">
+  <!-- Guest actions -->
+  <div class="nav-right" id="navActions">
     <button class="btn-ghost" onclick="openAuth('signin')">Sign In</button>
     <button class="btn-cta-nav" onclick="openAuth('signup')"><i class="fas fa-rocket"></i> Get Started Free</button>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
   </div>
-  <div class="nav-actions" id="navActionsLoggedIn" style="display:none;">
+  <!-- Logged-in actions -->
+  <div class="nav-right" id="navActionsLoggedIn" style="display:none;">
     <a href="app.html" class="btn-cta-nav"><i class="fas fa-search"></i> Browse Jobs</a>
-    <div class="user-menu">
-      <button class="user-avatar" id="userAvatarBtn" onclick="toggleUserMenu()">P</button>
-      <div class="user-dropdown" id="userDropdown">
-        <div class="user-dropdown-email"><span>Signed in as</span><p id="userEmailDisplay">user@email.com</p></div>
-        <a href="app.html" class="dropdown-item"><i class="fas fa-search"></i> Browse Jobs</a>
-        <button class="dropdown-item danger" onclick="signOut()"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+    <div style="position:relative;">
+      <button id="userAvatarBtn" onclick="toggleUserMenu()" style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#00D4FF,#7C3AED);color:#050810;font-weight:800;font-size:13px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;">P</button>
+      <div id="userDropdown" style="display:none;position:absolute;top:calc(100%+10px);right:0;background:#0D1117;border:1px solid rgba(255,255,255,0.12);border-radius:14px;min-width:200px;box-shadow:0 20px 50px rgba(0,0,0,0.6);overflow:hidden;z-index:3000;margin-top:8px;">
+        <div style="padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.07);">
+          <div style="font-size:10px;color:#475569;text-transform:uppercase;">Signed in as</div>
+          <div id="userEmailDisplay" style="font-size:12px;font-weight:600;color:#F1F5F9;margin-top:2px;word-break:break-all;">user@email.com</div>
+        </div>
+        <a href="app.html" style="display:flex;align-items:center;gap:10px;padding:11px 14px;color:#94A3B8;font-size:13px;text-decoration:none;"><i class="fas fa-search" style="font-size:12px;width:14px;"></i> Browse Jobs</a>
+        <button onclick="signOut()" style="display:flex;align-items:center;gap:10px;padding:11px 14px;color:#94A3B8;font-size:13px;background:none;border:none;width:100%;cursor:pointer;font-family:inherit;text-align:left;"><i class="fas fa-sign-out-alt" style="font-size:12px;width:14px;"></i> Sign Out</button>
       </div>
     </div>
   </div>
-  <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
-  <!-- Mobile menu -->
+  <!-- Mobile menu dropdown -->
   <div class="mobile-menu" id="mobileMenu">
     <a href="#how-it-works" class="mobile-link" onclick="closeMobileMenu()">How it Works</a>
     <a href="#features" class="mobile-link" onclick="closeMobileMenu()">Features</a>
     <a href="#alerts" class="mobile-link" onclick="closeMobileMenu()">Job Alerts</a>
     <a href="#reviews" class="mobile-link" onclick="closeMobileMenu()">Reviews</a>
     <div class="mobile-auth">
-      <button class="btn-ghost" style="flex:1;" onclick="openAuth('signin');closeMobileMenu()">Sign In</button>
+      <button class="btn-ghost" style="flex:1;display:flex;" onclick="openAuth('signin');closeMobileMenu()">Sign In</button>
       <button class="btn-cta-nav" style="flex:1;" onclick="openAuth('signup');closeMobileMenu()">Start Free</button>
     </div>
   </div>
@@ -760,7 +787,7 @@ footer {
       </div>
 
       <!-- Desktop visual card -->
-      <div class="hero-visual-wrap" style="position:relative;">
+      <div class="hero-visual-wrap" style="position:relative;padding:24px 24px 24px 24px;">
         <div class="hero-card" id="heroCard">
           <div class="hc-header">
             <div class="hc-avatar">🤖</div>
@@ -777,11 +804,11 @@ footer {
           <div class="hc-job"><div class="hc-job-l"><div class="hc-job-icon" style="background:rgba(124,58,237,0.12)">🚀</div><div><div class="hc-job-name">SWE Intern (PPO)</div><div class="hc-job-co">Livo AI · Bangalore</div></div></div><span class="badge b-trend">Trending</span></div>
           <div class="hc-job"><div class="hc-job-l"><div class="hc-job-icon" style="background:rgba(16,185,129,0.12)">🔬</div><div><div class="hc-job-name">Research Intern</div><div class="hc-job-co">IIT Bombay · Prof. Sharma</div></div></div><span class="badge b-new">New</span></div>
         </div>
-        <!-- Floating chips -->
-        <div style="position:absolute;top:-18px;left:-18px;animation:floatCard 4s ease-in-out infinite;">
+        <!-- Floating chips — only visible on large screens via CSS -->
+        <div class="hero-chip-left">
           <div class="float-card"><div class="fc-label">Live Jobs</div><div class="fc-value">843+</div><div class="fc-sub">Updated daily</div></div>
         </div>
-        <div style="position:absolute;bottom:-16px;right:-18px;animation:floatCard 5s ease-in-out infinite 2s;">
+        <div class="hero-chip-right">
           <div class="float-card">
             <div class="fc-badge fc-green"><i class="fas fa-check-circle" style="font-size:9px;"></i> AI Matched</div>
             <div style="font-size:11px;color:var(--text2);margin-top:5px;">87% accuracy</div>
@@ -1127,6 +1154,17 @@ window.addEventListener('scroll', () => {
 /* ── MOBILE MENU ── */
 window.toggleMobileMenu = () => document.getElementById('mobileMenu')?.classList.toggle('open');
 window.closeMobileMenu  = () => document.getElementById('mobileMenu')?.classList.remove('open');
+window.toggleUserMenu   = () => {
+  const d = document.getElementById('userDropdown');
+  if (d) d.style.display = d.style.display === 'block' ? 'none' : 'block';
+};
+document.addEventListener('click', e => {
+  const btn = document.getElementById('userAvatarBtn');
+  const dd  = document.getElementById('userDropdown');
+  if (dd && btn && !btn.contains(e.target) && !dd.contains(e.target)) {
+    dd.style.display = 'none';
+  }
+});
 
 /* ── REVEAL ON SCROLL ── */
 const ro = new IntersectionObserver(entries => {
