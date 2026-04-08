@@ -127,7 +127,7 @@ function assignIndiaTimestamps(jobs) {
 }
 
 function getMixedJobs() {
-  // India: reverse sheet order → newest first, assign timestamps
+  // India: real PostedDate timestamps, newest first
   const india = assignIndiaTimestamps(allJobs).map(j => ({
     _type    : 'india',
     _postedAt: j._postedAt,
@@ -142,7 +142,7 @@ function getMixedJobs() {
     _raw     : j,
   }));
 
-  // Global: already has postedAt from API
+  // Global: use postedAt from API
   const global = allGlobal.map(j => ({
     _type    : 'global',
     _postedAt: j.postedAt || (NOW - 7 * DAY),
@@ -157,8 +157,24 @@ function getMixedJobs() {
     _raw     : j,
   }));
 
-  // Mix both, sort by time descending
-  return [...india, ...global].sort((a, b) => b._postedAt - a._postedAt);
+  // Strategy: India jobs ke beech beech mein global mix karo
+  // Har 3 India jobs ke baad 1 Global job aaye
+  // Agar global loaded nahi hai toh sirf India dikhao
+  if (global.length === 0) return india;
+
+  const mixed = [];
+  let gi = 0; // global index
+  for (let i = 0; i < india.length; i++) {
+    mixed.push(india[i]);
+    // Har 3 india jobs ke baad ek global job insert karo
+    if ((i + 1) % 3 === 0 && gi < global.length) {
+      mixed.push(global[gi++]);
+    }
+  }
+  // Remaining global jobs at the end
+  while (gi < global.length) mixed.push(global[gi++]);
+
+  return mixed;
 }
 
 function applyTimeFilter(jobs) {
@@ -308,11 +324,9 @@ function applyJobFilters() {
   const loc  = el.jobLocFilter?.value   || '';
   const type = el.jobTypeFilter?.value  || '';
 
-  // Get mixed + time filtered
   const mixed      = getMixedJobs();
   const timeSorted = applyTimeFilter(mixed);
 
-  // Search + location + type filter
   const filtered = timeSorted.filter(job => {
     const hay    = `${job.company} ${job.role} ${job.location} ${job.description}`.toLowerCase();
     const qMatch = !q   || hay.includes(q.toLowerCase());
@@ -321,13 +335,13 @@ function applyJobFilters() {
     return qMatch && lMatch && tMatch;
   });
 
-  // Matched India jobs float to top
-  const sorted = [...filtered].sort((a, b) => {
+  // Resume match kiya hua → matched India jobs float to top, baaki order maintain
+  const hasMatch = Object.keys(matchedJobs).length > 0;
+  const sorted = hasMatch ? [...filtered].sort((a, b) => {
     const sA = a._type === 'india' ? (matchedJobs[a._raw?.Company + a._raw?.Role] || 0) : 0;
     const sB = b._type === 'india' ? (matchedJobs[b._raw?.Company + b._raw?.Role] || 0) : 0;
-    if (sB !== sA) return sB - sA;
-    return b._postedAt - a._postedAt; // then by recency
-  });
+    return sB - sA; // only matched jobs float up, rest stay in mixed order
+  }) : filtered;
 
   renderMixedJobs(sorted, el.jobsGrid, el.jobsTitle);
   if (el.jobsCount) el.jobsCount.textContent = `${sorted.length}`;
@@ -741,24 +755,26 @@ async function init() {
     const { jobs, professors, hrContacts } = await fetchAllData();
     allJobs = jobs; allProfessors = professors; allHRContacts = hrContacts;
 
-    // Load global jobs in background (non-blocking)
-    fetchGlobalJobs('all').then(globalJobs => {
-      allGlobal = globalJobs;
-      applyJobFilters(); // refresh mixed view with global jobs
-      applyGlobalFilters();
-      const cnt = document.getElementById('globalCount');
-      if (cnt) cnt.textContent = globalJobs.length;
-    }).catch(err => {
-      console.warn('Global jobs load failed:', err);
-      const grid = document.getElementById('globalGrid');
-      if (grid) grid.innerHTML = `<div class="empty-state"><div class="empty-icon"><i class="fas fa-exclamation-triangle"></i></div><h3 class="empty-title">Could not load global jobs</h3><p class="empty-text">Check your connection and refresh</p></div>`;
-    });    populateJobFilters(allJobs, el.jobLocFilter, el.jobTypeFilter);
-    populateProfessorFilters(allProfessors, el.profInstFilter, el.profDeptFilter);
-    if (el.hrCompanyFilter && el.hrLocationFilter) populateHRFilters(allHRContacts, el.hrCompanyFilter, el.hrLocationFilter);
+    // Load India jobs first — show immediately
     applyJobFilters(); applyProfessorFilters(); applyHRFilters();
     el.totalCount.style.display = 'inline-block';
     el.totalCount.innerHTML = `${allJobs.length} India · ${allHRContacts.length} HR · ${allProfessors.length} Research`;
-    showStatus(`Loaded ${allJobs.length} jobs, ${allHRContacts.length} HR contacts & ${allProfessors.length} research opportunities.`, 'success');
+    showStatus(`Loaded ${allJobs.length} India jobs. Loading global jobs...`, 'success');
+
+    // Load global jobs in background — merge after
+    fetchGlobalJobs('all').then(globalJobs => {
+      allGlobal = globalJobs;
+      applyJobFilters(); // re-render with both India + Global mixed
+      applyGlobalFilters();
+      const cnt = document.getElementById('globalCount');
+      if (cnt) cnt.textContent = globalJobs.length;
+      el.totalCount.innerHTML = `${allJobs.length} India · ${globalJobs.length} Global · ${allHRContacts.length} HR`;
+      showStatus(`All jobs loaded — ${allJobs.length} India + ${globalJobs.length} Global`, 'success');
+    }).catch(err => {
+      console.warn('Global jobs load failed:', err);
+      // India jobs still showing — no problem
+      showStatus(`${allJobs.length} India jobs loaded`, 'success');
+    });
 
     // Feed job context to agent
     if (window.agentContext) {
