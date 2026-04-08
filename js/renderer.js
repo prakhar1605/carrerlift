@@ -3,7 +3,7 @@
  * Renders job cards, professor cards, filters, and handles search/filter state.
  */
 
-/* ── Save/Unsave job helpers ── */
+import { timeAgo, postedTimestamp } from './dataLoader.js';
 function getSavedJobs() {
   try { return JSON.parse(localStorage.getItem('cl_saved_jobs') || '[]'); } catch { return []; }
 }
@@ -72,6 +72,11 @@ function buildJobCardHTML(job, matchScores, displayIndex) {
   const isTrending = displayIndex < 25;
   const slug       = jobSlug(job);
   const isSaved    = getSavedJobs().includes(slug);
+  const ago        = timeAgo(job.PostedDate);
+  const isNew      = (() => {
+    const ts = postedTimestamp(job.PostedDate);
+    return ts > 0 && (Date.now() - ts) < 3 * 86400000; // within 3 days
+  })();
 
   const jobDataAttr = JSON.stringify({
     slug       : slug,
@@ -93,8 +98,9 @@ function buildJobCardHTML(job, matchScores, displayIndex) {
           <div class="role-title">${job.Role || 'Position'}</div>
         </div>
         <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
-          ${isTrending ? `<div class="trending-badge">Trending</div>` : ''}
+          ${isNew      ? `<div class="new-badge">🆕 New</div>` : isTrending ? `<div class="trending-badge">Trending</div>` : ''}
           ${isMatched  ? `<div class="match-score"><i class="fas fa-check-circle"></i> ${Math.round(score)}% Match</div>` : ''}
+          ${ago        ? `<div class="posted-ago">${ago}</div>` : ''}
         </div>
       </div>
 

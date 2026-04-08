@@ -72,12 +72,43 @@ function parseCSV(text) {
 }
 
 /* ─────────────────────────────────────────────
-   Fetch functions
+   Date helper — "X days ago" from PostedDate
 ───────────────────────────────────────────── */
+export function timeAgo(dateVal) {
+  if (!dateVal) return '';
+  // Google Sheets gviz returns dates as "Date(2026,1,16)" format
+  let d;
+  if (typeof dateVal === 'string' && dateVal.startsWith('Date(')) {
+    const parts = dateVal.replace('Date(','').replace(')','').split(',');
+    d = new Date(+parts[0], +parts[1], +parts[2]);
+  } else {
+    d = new Date(dateVal);
+  }
+  if (isNaN(d)) return '';
+  const days = Math.floor((Date.now() - d) / 86400000);
+  if (days === 0) return 'Today';
+  if (days === 1) return '1d ago';
+  if (days < 7)  return `${days}d ago`;
+  if (days < 30) return `${Math.floor(days/7)}w ago`;
+  if (days < 365) return `${Math.floor(days/30)}mo ago`;
+  return `${Math.floor(days/365)}y ago`;
+}
+
+export function postedTimestamp(dateVal) {
+  if (!dateVal) return 0;
+  if (typeof dateVal === 'string' && dateVal.startsWith('Date(')) {
+    const parts = dateVal.replace('Date(','').replace(')','').split(',');
+    return new Date(+parts[0], +parts[1], +parts[2]).getTime();
+  }
+  return new Date(dateVal).getTime() || 0;
+}
+
 export async function fetchJobs() {
   const response = await fetch(JOBS_SHEET_URL);
   if (!response.ok) throw new Error(`Jobs sheet fetch failed: ${response.status}`);
-  return parseSheetResponse(await response.text());
+  const jobs = parseSheetResponse(await response.text());
+  // Sheet is in reverse order — newest at bottom, so reverse to get latest first
+  return jobs.reverse();
 }
 
 export async function fetchProfessors() {

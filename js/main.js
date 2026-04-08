@@ -23,6 +23,7 @@ import {
 }                                                     from './skillGap.js';
 import { subscribeToAlerts }                          from './alerts.js';
 import { fetchGlobalJobs, renderGlobalJobs, filterGlobalJobs } from './globalJobs.js';
+import { postedTimestamp } from './dataLoader.js';
 import {
   showStatus, typewriterEffect,
   animateThinkingSteps, markThinkingComplete,
@@ -115,11 +116,14 @@ const DAY  = 24 * 60 * 60 * 1000;
  *  We assign fake timestamps: row 0 (last in array) = now,
  *  each earlier row = 1 hour older. */
 function assignIndiaTimestamps(jobs) {
-  const total = jobs.length;
-  return [...jobs].reverse().map((j, i) => ({
-    ...j,
-    _postedAt: NOW - i * 60 * 60 * 1000, // newest first, 1h apart
-  }));
+  return jobs.map((j, i) => {
+    // Use real PostedDate if available, else fallback: newest = index 0
+    const realTs = postedTimestamp(j.PostedDate);
+    return {
+      ...j,
+      _postedAt: realTs > 0 ? realTs : (Date.now() - i * 60 * 60 * 1000),
+    };
+  });
 }
 
 function getMixedJobs() {

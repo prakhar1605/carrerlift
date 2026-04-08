@@ -430,3 +430,21 @@
   .jobs-source-toggle { gap: 6px; }
   .source-btn { padding: 7px 14px; font-size: 12px; }
 }
+
+/* ── POSTED DATE TAG ── */
+.posted-ago {
+  font-size: 10px; font-weight: 600;
+  color: var(--text3);
+  padding: 2px 7px; border-radius: 100px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
+.new-badge {
+  padding: 3px 9px; border-radius: 100px;
+  background: rgba(16,185,129,0.15);
+  border: 1px solid rgba(16,185,129,0.3);
+  color: var(--green);
+  font-size: 10px; font-weight: 800;
+  white-space: nowrap;
+}
