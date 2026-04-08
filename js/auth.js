@@ -8,8 +8,9 @@ import { startTrial } from './trialManager.js';
 
 /* ── DOM refs ── */
 const authModal       = document.getElementById('authModal');
-const navActions      = document.getElementById('navActions');
-const navActionsIn    = document.getElementById('navActionsLoggedIn');
+// Support both old IDs and new landing page IDs
+const navActions      = document.getElementById('navActions')    || document.getElementById('navGuest');
+const navActionsIn    = document.getElementById('navActionsLoggedIn') || document.getElementById('navLoggedIn');
 const userEmailEl     = document.getElementById('userEmailDisplay');
 const userAvatarBtn   = document.getElementById('userAvatarBtn');
 const authErrorEl     = document.getElementById('authError');
@@ -59,11 +60,25 @@ window.signOut = async function() {
 
 /* ── User menu toggle ── */
 window.toggleUserMenu = function() {
-  document.getElementById('userDropdown')?.classList.toggle('active');
+  const dd = document.getElementById('userDropdown');
+  if (!dd) return;
+  // Support both class-based (old) and style-based (new) toggle
+  if (dd.classList.contains('active')) {
+    dd.classList.remove('active');
+    dd.style.display = 'none';
+  } else if (dd.style.display === 'block') {
+    dd.style.display = 'none';
+  } else {
+    dd.classList.add('active');
+    dd.style.display = 'block';
+  }
 };
 document.addEventListener('click', e => {
-  if (!e.target.closest('.user-menu')) {
-    document.getElementById('userDropdown')?.classList.remove('active');
+  const btn = document.getElementById('userAvatarBtn');
+  const dd  = document.getElementById('userDropdown');
+  if (dd && btn && !btn.contains(e.target) && !dd.contains(e.target)) {
+    dd.classList.remove('active');
+    dd.style.display = 'none';
   }
 });
 
