@@ -348,28 +348,59 @@
   </div>
 
   <!-- ════ JOB DETAIL MODAL ════ -->
-  <div class="modal" id="jobDetailModal">
-    <div class="modal-content" style="max-width:620px;">
-      <div class="modal-header">
-        <div>
-          <div class="modal-title" id="jdRole">Job Title</div>
-          <div style="font-size:13px;color:var(--text2);margin-top:2px;" id="jdCompany">Company</div>
+  <div class="jd-overlay" id="jobDetailModal">
+    <div class="jd-panel">
+
+      <!-- Header -->
+      <div class="jd-header">
+        <button class="jd-back" id="jobDetailClose">
+          <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="jd-header-actions">
+          <button class="jd-icon-btn" id="jdShareAgainBtn" title="Share">
+            <i class="fas fa-share-alt"></i>
+          </button>
+          <button class="jd-icon-btn" id="jdSaveBtn" title="Save Job">
+            <i class="far fa-bookmark"></i>
+          </button>
         </div>
-        <button class="modal-close" id="jobDetailClose"><i class="fas fa-times"></i></button>
       </div>
-      <div class="modal-body">
-        <div id="jdTagsRow" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;"></div>
-        <div style="font-size:13px;color:var(--text2);line-height:1.7;white-space:pre-wrap;" id="jdDescriptionBox"></div>
-      </div>
-      <div class="modal-footer" style="justify-content:space-between;">
-        <div style="display:flex;gap:8px;">
-          <button class="btn btn-secondary" id="jdShareAgainBtn"><i class="fas fa-share-alt"></i> Share</button>
-          <button class="btn btn-secondary" id="jdAiEmailBtn"><i class="fas fa-envelope"></i> AI Email</button>
+
+      <!-- Scrollable body -->
+      <div class="jd-body">
+
+        <!-- Company + Role -->
+        <div class="jd-hero">
+          <div class="jd-company-logo" id="jdLogoCircle">C</div>
+          <div class="jd-hero-info">
+            <div class="jd-company" id="jdCompany">Company</div>
+            <h1 class="jd-role" id="jdRole">Job Title</h1>
+          </div>
         </div>
-        <a href="#" class="btn btn-primary" id="jdApplyBtn" target="_blank" rel="noopener">
-          <i class="fas fa-external-link-alt"></i> Apply Now
-        </a>
+
+        <!-- Quick meta tags -->
+        <div class="jd-tags" id="jdTagsRow"></div>
+
+        <!-- Apply + AI Email CTAs -->
+        <div class="jd-ctas">
+          <a href="#" class="jd-btn-primary" id="jdApplyBtn" target="_blank" rel="noopener">
+            <i class="fas fa-paper-plane"></i> Apply Now
+          </a>
+          <button class="jd-btn-secondary" id="jdAiEmailBtn">
+            <i class="fas fa-magic"></i> Generate AI Email
+          </button>
+        </div>
+
+        <!-- Divider -->
+        <div class="jd-divider"></div>
+
+        <!-- Description formatted -->
+        <div class="jd-description" id="jdDescriptionBox"></div>
+
+        <!-- Bottom padding for mobile -->
+        <div style="height:32px;"></div>
       </div>
+
     </div>
   </div>
 

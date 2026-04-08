@@ -132,6 +132,9 @@ function buildJobCardHTML(job, matchScores, displayIndex) {
         <button class="btn-share" onclick="window.shareJob(${jobDataAttr})">
           <i class="fas fa-share-alt"></i><span class="share-label"> Share</span>
         </button>
+        <button class="btn-view-details" onclick="window.openJobDetailModal(${jobDataAttr})">
+          View Details <i class="fas fa-arrow-right"></i>
+        </button>
       </div>
     </div>`;
 }

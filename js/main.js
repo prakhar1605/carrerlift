@@ -235,6 +235,7 @@ function buildMixedIndiaCard(job, i) {
         </button>
         <button class="btn-analyze-fit" onclick="window.openSkillGap(${jobData})"><i class="fas fa-chart-bar"></i> Fit</button>
         <button class="btn-share" onclick="window.shareJob(${jobData})"><i class="fas fa-share-alt"></i></button>
+        <button class="btn-view-details" onclick="window.openJobDetailModal(${jobData})">View Details <i class="fas fa-arrow-right"></i></button>
       </div>
     </div>`;
 }
@@ -486,49 +487,99 @@ let _jdCurrentJob = null;
 export function openJobDetailModal(jobData) {
   _jdCurrentJob = jobData;
 
+  // Company logo circle
+  const logo = document.getElementById('jdLogoCircle');
+  if (logo) logo.textContent = (jobData.company || 'C')[0].toUpperCase();
+
   document.getElementById('jdRole').textContent    = jobData.role    || 'Position';
   document.getElementById('jdCompany').textContent = jobData.company || 'Company';
 
   // Tags row
   const tagsRow = document.getElementById('jdTagsRow');
   tagsRow.innerHTML = '';
-  const addTag = (icon, text, colorVar, bg) => {
+  const addTag = (icon, text, color, bg) => {
     if (!text) return;
-    tagsRow.insertAdjacentHTML('beforeend', `
-      <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;
-                   color:${colorVar};background:${bg};border:1px solid ${colorVar}33;
-                   padding:4px 12px;border-radius:100px;">
-        <i class="${icon}" style="font-size:10px;"></i>${text}
+    tagsRow.insertAdjacentHTML('beforeend',
+      `<span class="jd-tag" style="color:${color};background:${bg};border-color:${color}33;">
+        <i class="${icon}"></i>${text}
       </span>`);
   };
   addTag('fas fa-map-marker-alt', jobData.location, 'var(--text2)', 'var(--glass2)');
   addTag('fas fa-rupee-sign',     jobData.stipend,  'var(--green)', 'rgba(16,185,129,0.08)');
   addTag('fas fa-briefcase',      jobData.jobType,  'var(--neon)',  'rgba(0,212,255,0.08)');
+  if (jobData.ago) addTag('fas fa-clock', jobData.ago, 'var(--text3)', 'var(--glass)');
 
-  // Description
+  // Format description — convert bullet lines to proper HTML
   const descBox = document.getElementById('jdDescriptionBox');
-  descBox.textContent = jobData.description || 'No description available.';
+  if (jobData.description && jobData.description.trim()) {
+    descBox.innerHTML = formatJobDescription(jobData.description);
+  } else {
+    descBox.innerHTML = '<p style="color:var(--text3);font-size:14px;">No description available for this job.</p>';
+  }
 
   // Apply button
   const applyBtn = document.getElementById('jdApplyBtn');
-  if (jobData.applyLink) { applyBtn.href = jobData.applyLink; applyBtn.style.display = 'flex'; }
-  else                   { applyBtn.style.display = 'none'; }
+  if (jobData.applyLink) {
+    applyBtn.href = jobData.applyLink;
+    applyBtn.style.display = 'flex';
+  } else {
+    applyBtn.style.display = 'none';
+  }
 
-  // Share Again button
+  // Save button state
+  const slug    = jobData.slug || jobSlug({ Company: jobData.company, Role: jobData.role });
+  const isSaved = (JSON.parse(localStorage.getItem('cl_saved_jobs') || '[]')).includes(slug);
+  const saveBtn = document.getElementById('jdSaveBtn');
+  if (saveBtn) {
+    saveBtn.innerHTML = isSaved ? '<i class="fas fa-bookmark"></i>' : '<i class="far fa-bookmark"></i>';
+    saveBtn.onclick = () => {
+      window._toggleSaveJob(slug);
+      const nowSaved = (JSON.parse(localStorage.getItem('cl_saved_jobs') || '[]')).includes(slug);
+      saveBtn.innerHTML = nowSaved ? '<i class="fas fa-bookmark"></i>' : '<i class="far fa-bookmark"></i>';
+    };
+  }
+
   document.getElementById('jdShareAgainBtn').onclick = () => shareJob(jobData);
-
-  // AI Email button
   document.getElementById('jdAiEmailBtn').onclick = () => {
-    document.getElementById('jobDetailModal').classList.remove('active');
+    closeJobDetailModal();
     openJobEmailModal(jobData);
   };
 
-  document.getElementById('jobDetailModal').classList.add('active');
+  // Open panel
+  const overlay = document.getElementById('jobDetailModal');
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+/** Format raw job description text into readable HTML */
+function formatJobDescription(text) {
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  let html = '';
+  let inList = false;
+
+  lines.forEach(line => {
+    const isBullet = /^[•\-\*·]/.test(line) || /^\d+[\.\)]/.test(line);
+    const isHeading = /^(what you|who you|responsibilities|requirements|about|skills|qualifications|how to apply|benefits|what we|perks|role|job desc|description|location|stipend|batch|company)/i.test(line) && line.length < 80;
+
+    if (isHeading) {
+      if (inList) { html += '</ul>'; inList = false; }
+      html += `<div class="jd-section-title">${line}</div>`;
+    } else if (isBullet) {
+      if (!inList) { html += '<ul class="jd-list">'; inList = true; }
+      html += `<li>${line.replace(/^[•\-\*·]\s*/, '').replace(/^\d+[\.\)]\s*/, '')}</li>`;
+    } else {
+      if (inList) { html += '</ul>'; inList = false; }
+      html += `<p class="jd-para">${line}</p>`;
+    }
+  });
+
+  if (inList) html += '</ul>';
+  return html;
 }
 
 function closeJobDetailModal() {
   document.getElementById('jobDetailModal').classList.remove('active');
-  // Remove ?job= from URL without page reload
+  document.body.style.overflow = '';
   const url = new URL(window.location.href);
   url.searchParams.delete('job');
   window.history.replaceState({}, '', url.toString());
