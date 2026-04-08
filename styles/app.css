@@ -639,3 +639,25 @@
   border-color: var(--neon);
   transform: translateY(-1px);
 }
+
+/* Key-Value lines like "Company - Decisions", "Role - SDE Intern" */
+.jd-keyval {
+  display: flex; gap: 10px; align-items: baseline;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 14px;
+}
+.jd-keyval:last-of-type { border-bottom: none; }
+.jd-key {
+  font-weight: 700; color: var(--text1);
+  min-width: 90px; flex-shrink: 0; font-size: 13px;
+}
+.jd-val { color: var(--text2); flex: 1; }
+
+/* Better paragraph spacing */
+.jd-para { margin-bottom: 12px; }
+.jd-para:last-child { margin-bottom: 0; }
+
+/* List item spacing */
+.jd-list { margin-bottom: 12px; }
+.jd-list li { margin-bottom: 6px; }

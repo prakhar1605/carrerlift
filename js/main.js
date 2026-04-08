@@ -567,28 +567,71 @@ export function openJobDetailModal(jobData) {
 
 /** Format raw job description text into readable HTML */
 function formatJobDescription(text) {
-  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  if (!text || !text.trim()) return '<p class="jd-para" style="color:var(--text3);">No description available.</p>';
+
+  // Normalize — replace literal \n, \\n, <br> with real newlines
+  let t = text
+    .replace(/\\n/g, '\n')
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/\r\n/g, '\n')
+    .replace(/\r/g, '\n');
+
+  // Known section heading patterns
+  const headingRe = /^(company|role|batch|stipend|location|what you.ll do|what you.ll learn|what we.re looking for|how to apply|responsibilities|requirements|about|skills|qualifications|benefits|perks|job desc|description|who you are|we are looking)/i;
+
+  // Split by newlines
+  const lines = t.split('\n').map(l => l.trim()).filter(Boolean);
+
   let html = '';
   let inList = false;
 
+  const closeList = () => { if (inList) { html += '</ul>'; inList = false; } };
+
   lines.forEach(line => {
-    const isBullet = /^[•\-\*·]/.test(line) || /^\d+[\.\)]/.test(line);
-    const isHeading = /^(what you|who you|responsibilities|requirements|about|skills|qualifications|how to apply|benefits|what we|perks|role|job desc|description|location|stipend|batch|company)/i.test(line) && line.length < 80;
+    const isBullet  = /^[•\-\*·➤▸▷→✓✔]/.test(line) || /^\d+[\.\)]\s/.test(line);
+    const isHeading = headingRe.test(line) && line.length < 90;
+    const isKeyVal  = /^[A-Za-z ]+\s*[-:]\s*.+/.test(line) && line.length < 80 && !isBullet;
 
     if (isHeading) {
-      if (inList) { html += '</ul>'; inList = false; }
-      html += `<div class="jd-section-title">${line}</div>`;
+      closeList();
+      html += `<div class="jd-section-title">${esc(line)}</div>`;
     } else if (isBullet) {
       if (!inList) { html += '<ul class="jd-list">'; inList = true; }
-      html += `<li>${line.replace(/^[•\-\*·]\s*/, '').replace(/^\d+[\.\)]\s*/, '')}</li>`;
+      const clean = line.replace(/^[•\-\*·➤▸▷→✓✔]\s*/, '').replace(/^\d+[\.\)]\s*/, '');
+      html += `<li>${esc(clean)}</li>`;
+    } else if (isKeyVal) {
+      closeList();
+      const colonIdx = line.search(/\s*[-:]\s*/);
+      const key = line.slice(0, colonIdx).trim();
+      const val = line.slice(colonIdx).replace(/^[-:]\s*/, '').trim();
+      html += `<div class="jd-keyval"><span class="jd-key">${esc(key)}</span><span class="jd-val">${esc(val)}</span></div>`;
     } else {
-      if (inList) { html += '</ul>'; inList = false; }
-      html += `<p class="jd-para">${line}</p>`;
+      closeList();
+      html += `<p class="jd-para">${esc(line)}</p>`;
     }
   });
 
-  if (inList) html += '</ul>';
-  return html;
+  closeList();
+
+  // If result is just one big paragraph (no structure found), try sentence splitting
+  if (!html.includes('jd-section-title') && !html.includes('jd-list') && !html.includes('jd-keyval')) {
+    // Split long run-on text at sentence boundaries
+    const sentences = text.replace(/\\n/g,'').split(/(?<=[.!?])\s+(?=[A-Z])/);
+    if (sentences.length > 3) {
+      // Group into chunks of ~3 sentences each
+      html = '';
+      for (let i = 0; i < sentences.length; i += 3) {
+        const chunk = sentences.slice(i, i + 3).join(' ').trim();
+        if (chunk) html += `<p class="jd-para">${esc(chunk)}</p>`;
+      }
+    }
+  }
+
+  return html || `<p class="jd-para">${esc(text)}</p>`;
+}
+
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 function closeJobDetailModal() {
