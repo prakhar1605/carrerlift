@@ -1,7 +1,7 @@
 <div align="center">
 
 <img src="logo.png" alt="Carrerlift Logo" width="80" height="80" style="border-radius:16px" />
-
+ 
 # 🚀 Carrerlift 
 
 ### India's #1 AI-Powered Career Platform for Students
