@@ -825,6 +825,11 @@ async function init() {
     const { jobs, professors, hrContacts } = await fetchAllData();
     allJobs = jobs; allProfessors = professors; allHRContacts = hrContacts;
 
+    // Populate filters first
+    populateJobFilters(allJobs, el.jobLocFilter, el.jobTypeFilter);
+    populateProfessorFilters(allProfessors, el.profInstFilter, el.profDeptFilter);
+    if (el.hrCompanyFilter && el.hrLocationFilter) populateHRFilters(allHRContacts, el.hrCompanyFilter, el.hrLocationFilter);
+
     // Load India jobs first — show immediately
     applyJobFilters(); applyProfessorFilters(); applyHRFilters();
     el.totalCount.style.display = 'inline-block';
