@@ -56,7 +56,7 @@ export default async function handler(req, res) {
   
       console.log('API key found, calling OpenRouter...');
   
-      // Call OpenRouter API
+      // Call OpenRouter API — using claude-haiku for fastest response
       const openRouterResponse = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -66,32 +66,22 @@ export default async function handler(req, res) {
           'X-Title': 'CarrerLift Resume Analyzer'
         },
         body: JSON.stringify({
-          model: 'openai/gpt-4o-mini',
+          model: 'anthropic/claude-haiku-4-5',
           messages: [
             {
-              role: 'system',
-              content: 'You are an expert career advisor and resume analyst. Analyze resumes and provide clear, actionable insights about skills, experience, and job recommendations. Be concise and professional.'
-            },
-            {
               role: 'user',
-              content: `Please analyze this resume and provide:
-  
-  1. KEY SKILLS: List the main technical and soft skills
-  2. EXPERIENCE LEVEL: Junior/Mid/Senior and domain
-  3. TOP JOB ROLES: 3-5 best-fit positions based on skills
-  4. RECOMMENDATIONS: Brief career advice
-  
-  Resume:
-  ${resume.slice(0, 3500)}
-  
-  Keep your response clear, structured, and under 300 words.`
+              content: `Extract from this resume in under 150 words:
+SKILLS: (comma separated list)
+LEVEL: (Junior/Mid/Senior + domain)
+BEST ROLES: (3 roles, comma separated)
+ADVICE: (one short sentence)
+
+Resume:
+${resume.slice(0, 2000)}`
             }
           ],
-          temperature: 0.7,
-          max_tokens: 500,
-          top_p: 1,
-          frequency_penalty: 0,
-          presence_penalty: 0
+          temperature: 0.3,
+          max_tokens: 200,
         })
       });
   

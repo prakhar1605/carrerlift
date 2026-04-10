@@ -437,21 +437,46 @@ el.analyzeBtnR?.addEventListener('click', async () => {
 const JOB_STEP_ICONS = ['📄','🔍','🧠','⚡','✅'];
 async function triggerJobAnalysis(resumeTextInput) {
   setResumeText(resumeTextInput);
-  // Update agent context with resume
   if (window.agentContext) window.agentContext.resumeText = resumeTextInput;
-  el.analysisSection.classList.add('active'); el.analysisSection.classList.remove('collapsed');
+  el.analysisSection.classList.add('active');
+  el.analysisSection.classList.remove('collapsed');
   document.getElementById('analysisContent').style.display = 'none';
-  const thinkBox = document.getElementById('thinkingBox'), thinkStream = document.getElementById('thinkingStream');
-  thinkBox.style.display = 'block'; thinkStream.textContent = '';
+  const thinkBox   = document.getElementById('thinkingBox');
+  const thinkStream = document.getElementById('thinkingStream');
+  thinkBox.style.display = 'block';
+  thinkStream.textContent = '';
   resetThinkingSteps('step', 5, JOB_STEP_ICONS, 'thinkingBox');
-  const [analysis] = await Promise.all([callAnalyzeAPI(resumeTextInput), animateThinkingSteps('step', 5, 700)]);
+
+  // ── Start keyword matching IMMEDIATELY (no API wait) ──
+  const quickKeywords = extractKeywords(resumeTextInput, 40);
+  matchedJobs = buildMatchScores(allJobs, quickKeywords,
+    ['Company','Role','Description','JobType'], job => job.Company + job.Role);
+  applyJobFilters(); // show instant results while AI loads
+
+  // ── Call AI in parallel ──
+  const [analysis] = await Promise.all([
+    callAnalyzeAPI(resumeTextInput),
+    animateThinkingSteps('step', 5, 700),
+  ]);
+
   markThinkingComplete('step', 5, 'thinkingBox');
   await typewriterEffect(thinkStream, analysis, 6);
-  const keywords = extractKeywords(`${resumeTextInput} ${analysis}`, 50);
-  matchedJobs = buildMatchScores(allJobs, keywords, ['Company','Role','Description','JobType'], job => job.Company + job.Role);
+
+  // Refine keywords with AI output
+  const refinedKeywords = extractKeywords(`${resumeTextInput} ${analysis}`, 50);
+  matchedJobs = buildMatchScores(allJobs, refinedKeywords,
+    ['Company','Role','Description','JobType'], job => job.Company + job.Role);
   el.jobMatchCount.textContent = `${Object.keys(matchedJobs).length} Matches`;
-  applyJobFilters(); showStatus('Resume analyzed! Scroll down to see matched jobs.', 'success'); showAlertCard();
-  setTimeout(() => { el.analysisSection.classList.add('collapsed'); setTimeout(() => { const f = document.querySelector('.job-card.matched'); if (f) f.scrollIntoView({ behavior:'smooth', block:'center' }); }, 400); }, 3000);
+  applyJobFilters();
+  showStatus('Resume analyzed! Matched jobs highlighted below.', 'success');
+  showAlertCard();
+  setTimeout(() => {
+    el.analysisSection.classList.add('collapsed');
+    setTimeout(() => {
+      const f = document.querySelector('.job-card.matched');
+      if (f) f.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 400);
+  }, 2500);
 }
 
 /* ─────────────────────────────────────────────
