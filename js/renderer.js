@@ -356,44 +356,38 @@ export function filterHRContacts(hrContacts, query, company, location) {
 }
 
 export function populateJobFilters(jobs, locationEl, typeEl) {
-  // ── Fixed curated location list — top cities from actual sheet data ──
   const LOCATION_OPTIONS = [
-    { value: '',            label: '📍 All Locations' },
-    { value: 'Remote',      label: '🏠 Remote' },
-    { value: 'PAN India',   label: '🇮🇳 PAN India' },
-    { value: 'Bangalore',   label: '🏙️ Bangalore' },
-    { value: 'Bengaluru',   label: '🏙️ Bengaluru' },
-    { value: 'Mumbai',      label: '🏙️ Mumbai' },
-    { value: 'Noida',       label: '🏙️ Noida' },
-    { value: 'Gurgaon',     label: '🏙️ Gurgaon' },
-    { value: 'Gurugram',    label: '🏙️ Gurugram' },
-    { value: 'Hyderabad',   label: '🏙️ Hyderabad' },
-    { value: 'Pune',        label: '🏙️ Pune' },
-    { value: 'Chennai',     label: '🏙️ Chennai' },
-    { value: 'New Delhi',   label: '🏙️ New Delhi' },
-    { value: 'Delhi',       label: '🏙️ Delhi' },
-    { value: 'Jaipur',      label: '🏙️ Jaipur' },
-    { value: 'Indore',      label: '🏙️ Indore' },
-    { value: 'Ahmedabad',   label: '🏙️ Ahmedabad' },
-    { value: 'Mohali',      label: '🏙️ Mohali' },
+    { value: '',           label: '📍 All Locations' },
+    { value: 'Remote',     label: '🏠 Remote' },
+    { value: 'PAN India',  label: '🇮🇳 PAN India' },
+    { value: 'Bangalore',  label: 'Bangalore' },
+    { value: 'Bengaluru',  label: 'Bengaluru' },
+    { value: 'Mumbai',     label: 'Mumbai' },
+    { value: 'Noida',      label: 'Noida' },
+    { value: 'Gurgaon',    label: 'Gurgaon' },
+    { value: 'Gurugram',   label: 'Gurugram' },
+    { value: 'Hyderabad',  label: 'Hyderabad' },
+    { value: 'Pune',       label: 'Pune' },
+    { value: 'Chennai',    label: 'Chennai' },
+    { value: 'New Delhi',  label: 'New Delhi' },
+    { value: 'Delhi',      label: 'Delhi' },
+    { value: 'Jaipur',     label: 'Jaipur' },
+    { value: 'Ahmedabad',  label: 'Ahmedabad' },
+    { value: 'Indore',     label: 'Indore' },
+    { value: 'Mohali',     label: 'Mohali' },
   ];
 
-  // ── Fixed curated job type list ──
   const TYPE_OPTIONS = [
     { value: '',          label: '💼 All Types' },
     { value: 'Intern',    label: '🎓 Internship' },
     { value: 'Full-time', label: '💼 Full-time' },
-    { value: 'Full Time', label: '💼 Full Time' },
-    { value: 'Part-time', label: '⏰ Part-time' },
   ];
 
   locationEl.innerHTML = LOCATION_OPTIONS
-    .map(o => `<option value="${o.value}">${o.label}</option>`)
-    .join('');
+    .map(o => `<option value="${o.value}">${o.label}</option>`).join('');
 
   typeEl.innerHTML = TYPE_OPTIONS
-    .map(o => `<option value="${o.value}">${o.label}</option>`)
-    .join('');
+    .map(o => `<option value="${o.value}">${o.label}</option>`).join('');
 }
 
 export function populateProfessorFilters(professors, institutionEl, departmentEl) {
