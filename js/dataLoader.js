@@ -13,7 +13,7 @@ import { JOBS_SHEET_URL, PROFESSORS_SHEET_URL, HR_CSV_URL } from './config.js';
 function parseSheetResponse(rawText) {
   const jsonText = rawText.substring(rawText.indexOf('{'), rawText.lastIndexOf(')'));
   const data     = JSON.parse(jsonText);
-  const cols     = data.table.cols.map(c => (c.label || '').trim());
+  const cols = data.table.cols.map(c => (c.label || '').trim()); // trim spaces from col names
   const rows     = data.table.rows.map(row =>
     row.c ? row.c.map(cell => (cell ? cell.v : '') ?? '') : []
   );

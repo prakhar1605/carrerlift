@@ -330,8 +330,10 @@ function applyJobFilters() {
   const filtered = timeSorted.filter(job => {
     const hay    = `${job.company} ${job.role} ${job.location} ${job.description}`.toLowerCase();
     const qMatch = !q   || hay.includes(q.toLowerCase());
-    const lMatch = !loc || job.location === loc;
-    const tMatch = !type|| job.jobType  === type;
+    const lMatch = !loc || (job.location || '').trim() === loc;
+    // Normalize type — "Full Time" == "Full-time"
+    const norm = t => (t||'').toLowerCase().replace(/[-\s]/g,'');
+    const tMatch = !type|| norm(job.jobType) === norm(type);
     return qMatch && lMatch && tMatch;
   });
 

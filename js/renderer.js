@@ -356,15 +356,44 @@ export function filterHRContacts(hrContacts, query, company, location) {
 }
 
 export function populateJobFilters(jobs, locationEl, typeEl) {
-  const locations = new Set(), types = new Set();
-  jobs.forEach(job => {
-    if (job.Location) locations.add(job.Location);
-    if (job.JobType)  types.add(job.JobType);
-  });
-  locationEl.innerHTML = '<option value="">All Locations</option>'
-    + Array.from(locations).sort().map(l => `<option value="${l}">${l}</option>`).join('');
-  typeEl.innerHTML = '<option value="">All Job Types</option>'
-    + Array.from(types).sort().map(t => `<option value="${t}">${t}</option>`).join('');
+  // ── Fixed curated location list — top cities from actual sheet data ──
+  const LOCATION_OPTIONS = [
+    { value: '',            label: '📍 All Locations' },
+    { value: 'Remote',      label: '🏠 Remote' },
+    { value: 'PAN India',   label: '🇮🇳 PAN India' },
+    { value: 'Bangalore',   label: '🏙️ Bangalore' },
+    { value: 'Bengaluru',   label: '🏙️ Bengaluru' },
+    { value: 'Mumbai',      label: '🏙️ Mumbai' },
+    { value: 'Noida',       label: '🏙️ Noida' },
+    { value: 'Gurgaon',     label: '🏙️ Gurgaon' },
+    { value: 'Gurugram',    label: '🏙️ Gurugram' },
+    { value: 'Hyderabad',   label: '🏙️ Hyderabad' },
+    { value: 'Pune',        label: '🏙️ Pune' },
+    { value: 'Chennai',     label: '🏙️ Chennai' },
+    { value: 'New Delhi',   label: '🏙️ New Delhi' },
+    { value: 'Delhi',       label: '🏙️ Delhi' },
+    { value: 'Jaipur',      label: '🏙️ Jaipur' },
+    { value: 'Indore',      label: '🏙️ Indore' },
+    { value: 'Ahmedabad',   label: '🏙️ Ahmedabad' },
+    { value: 'Mohali',      label: '🏙️ Mohali' },
+  ];
+
+  // ── Fixed curated job type list ──
+  const TYPE_OPTIONS = [
+    { value: '',          label: '💼 All Types' },
+    { value: 'Intern',    label: '🎓 Internship' },
+    { value: 'Full-time', label: '💼 Full-time' },
+    { value: 'Full Time', label: '💼 Full Time' },
+    { value: 'Part-time', label: '⏰ Part-time' },
+  ];
+
+  locationEl.innerHTML = LOCATION_OPTIONS
+    .map(o => `<option value="${o.value}">${o.label}</option>`)
+    .join('');
+
+  typeEl.innerHTML = TYPE_OPTIONS
+    .map(o => `<option value="${o.value}">${o.label}</option>`)
+    .join('');
 }
 
 export function populateProfessorFilters(professors, institutionEl, departmentEl) {
@@ -380,12 +409,16 @@ export function populateProfessorFilters(professors, institutionEl, departmentEl
 }
 
 export function filterJobs(jobs, query, location, type) {
-  const q = query.toLowerCase();
+  const q = (query || '').toLowerCase();
+  // Normalize type for matching — "Full Time" == "Full-time"
+  const normalizeType = t => (t || '').toLowerCase().replace(/[-\s]/g, '');
+  const typeNorm = normalizeType(type);
+
   return jobs.filter(job => {
     const hay = `${job.Company} ${job.Role} ${job.Location} ${job.Description}`.toLowerCase();
-    return (!q || hay.includes(q))
-      && (!location || job.Location === location)
-      && (!type     || job.JobType  === type);
+    const locMatch  = !location || (job.Location || '').trim() === location;
+    const typeMatch = !type || normalizeType(job.JobType) === typeNorm;
+    return (!q || hay.includes(q)) && locMatch && typeMatch;
   });
 }
 
