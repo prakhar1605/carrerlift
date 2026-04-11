@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Carrerlift — Find Jobs, Internships & Research Opportunities</title>
+  <meta name="description" content="Upload your resume. Get matched with jobs, internships & IIT research in seconds. Free for students." />
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="styles/auth.css" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FRMVZ6H187"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FRMVZ6H187');</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#05080f;
+  --bg2:#0a0f1e;
+  --glass:rgba(255,255,255,0.04);
+  --glass2:rgba(255,255,255,0.07);
+  --border:rgba(255,255,255,0.08);
+  --border2:rgba(255,255,255,0.14);
+  --neon:#00D4FF;
+  --purple:#7C3AED;
+  --green:#10B981;
+  --amber:#F59E0B;
+  --text1:#F0F4FF;
+  --text2:#8B9CC8;
+  --text3:#4A5578;
+  --font:'Plus Jakarta Sans',sans-serif;
+}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{font-family:var(--font);background:var(--bg);color:var(--text1);min-height:100vh;overflow-x:hidden;}
+
+/* Canvas */
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.7;}
+
+/* ── NAVBAR ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;
+  display:flex;align-items:center;justify-content:space-between;padding:0 20px;gap:12px;
+  background:rgba(5,8,15,0.8);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);transition:background 0.3s;}
+.nav.scrolled{background:rgba(5,8,15,0.97);}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0;}
+.nav-logo img{height:24px;border-radius:6px;}
+.nav-logo-text{font-size:17px;font-weight:800;
+  background:linear-gradient(135deg,var(--neon),var(--purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.nav-links{display:none;align-items:center;gap:2px;}
+@media(min-width:768px){.nav-links{display:flex;}}
+.nav-link{padding:6px 12px;border-radius:8px;color:var(--text2);font-size:13px;font-weight:500;text-decoration:none;transition:all 0.2s;}
+.nav-link:hover{color:var(--text1);background:var(--glass2);}
+.nav-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.btn-signin{padding:7px 14px;background:transparent;border:1px solid var(--border2);border-radius:9px;
+  color:var(--text1);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;
+  transition:all 0.2s;white-space:nowrap;display:none;}
+@media(min-width:480px){.btn-signin{display:inline-flex;}}
+.btn-signin:hover{background:var(--glass2);}
+.btn-start{padding:8px 16px;background:linear-gradient(135deg,var(--neon),#0099cc);
+  border:none;border-radius:9px;color:#05080f;font-family:var(--font);font-size:13px;font-weight:700;
+  cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;text-decoration:none;
+  transition:all 0.2s;}
+.btn-start:hover{transform:translateY(-1px);box-shadow:0 4px 18px rgba(0,212,255,0.4);}
+.hamburger{display:flex;background:var(--glass2);border:1px solid var(--border);border-radius:7px;
+  width:34px;height:34px;align-items:center;justify-content:center;cursor:pointer;color:var(--text1);font-size:14px;}
+@media(min-width:600px){.hamburger{display:none;}}
+.mobile-menu{display:none;flex-direction:column;gap:3px;padding:10px 12px 14px;
+  border-top:1px solid var(--border);background:rgba(5,8,15,0.98);
+  position:absolute;top:58px;left:0;right:0;z-index:99;}
+.mobile-menu.open{display:flex;}
+.mobile-link{padding:11px 12px;border-radius:9px;color:var(--text2);font-size:14px;font-weight:500;text-decoration:none;}
+.mobile-link:hover{color:var(--text1);background:var(--glass2);}
+.mobile-btns{display:flex;gap:8px;margin-top:10px;}
+.mobile-btns button,.mobile-btns a{flex:1;justify-content:center;}
+
+/* Logged in nav */
+#navLoggedIn{display:none;}
+#navGuest{display:flex;align-items:center;gap:8px;}
+
+/* ── HERO ── */
+.hero{position:relative;z-index:1;min-height:100svh;display:flex;align-items:center;
+  padding:78px 20px 48px;text-align:center;}
+.hero-inner{max-width:680px;margin:0 auto;width:100%;}
+
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:20px;
+  padding:6px 14px;border-radius:100px;background:rgba(0,212,255,0.08);
+  border:1px solid rgba(0,212,255,0.2);font-size:12px;font-weight:700;color:var(--neon);}
+.eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--neon);animation:pulse 2s infinite;}
+
+.hero-title{font-size:clamp(32px,8vw,60px);font-weight:800;line-height:1.1;
+  letter-spacing:-0.025em;margin-bottom:18px;}
+.hero-title span{
+  background:linear-gradient(135deg,var(--neon),var(--purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+.hero-sub{font-size:clamp(15px,3.5vw,18px);color:var(--text2);line-height:1.75;
+  margin-bottom:28px;max-width:520px;margin-left:auto;margin-right:auto;}
+.hero-sub strong{color:var(--text1);}
+
+.hero-btns{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;}
+@media(min-width:400px){.hero-btns{flex-direction:row;justify-content:center;}}
+.btn-hero-main{padding:15px 28px;background:linear-gradient(135deg,var(--neon),#0099cc);
+  border:none;border-radius:13px;color:#05080f;font-family:var(--font);font-size:15px;font-weight:700;
+  cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  box-shadow:0 0 30px rgba(0,212,255,0.25);transition:all 0.3s;}
+.btn-hero-main:hover{transform:translateY(-3px);box-shadow:0 8px 36px rgba(0,212,255,0.45);}
+.btn-hero-sec{padding:14px 24px;background:var(--glass2);border:1px solid var(--border2);
+  border-radius:13px;color:var(--text1);font-family:var(--font);font-size:15px;font-weight:600;
+  cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  transition:all 0.3s;}
+.btn-hero-sec:hover{border-color:var(--neon);color:var(--neon);}
+.hero-note{font-size:12px;color:var(--text3);display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;}
+.hero-note i{color:var(--amber);}
+
+/* Social proof */
+.hero-proof{margin-top:32px;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;}
+.proof-avatars{display:flex;}
+.proof-av{width:30px;height:30px;border-radius:50%;border:2px solid var(--bg);margin-left:-8px;
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#05080f;}
+.proof-av:first-child{margin-left:0;}
+.proof-text{font-size:13px;color:var(--text2);}
+.proof-text strong{color:var(--text1);}
+.proof-stars{color:var(--amber);font-size:13px;display:flex;gap:1px;}
+
+/* Stats pills */
+.hero-stats{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:24px;}
+.stat-pill{padding:7px 14px;border-radius:100px;background:var(--glass);border:1px solid var(--border);
+  font-size:13px;font-weight:600;color:var(--text1);backdrop-filter:blur(10px);}
+.stat-pill b{color:var(--neon);}
+
+/* Scroll hint */
+.scroll-hint{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  color:var(--text3);font-size:11px;cursor:pointer;z-index:1;}
+.scroll-line{width:1px;height:36px;background:linear-gradient(to bottom,var(--neon),transparent);
+  animation:scrollLine 2s ease-in-out infinite;}
+
+/* ── HOW IT WORKS ── */
+.section{position:relative;z-index:1;padding:64px 20px;}
+.section-wrap{max-width:1060px;margin:0 auto;}
+.section-label{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:100px;
+  background:var(--glass);border:1px solid var(--border);font-size:11px;font-weight:700;
+  color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:14px;}
+.section-title{font-size:clamp(24px,5vw,40px);font-weight:800;line-height:1.15;
+  letter-spacing:-0.02em;margin-bottom:10px;}
+.section-sub{font-size:16px;color:var(--text2);line-height:1.7;margin-bottom:40px;max-width:500px;}
+
+.steps{display:grid;gap:14px;grid-template-columns:1fr;}
+@media(min-width:560px){.steps{grid-template-columns:repeat(3,1fr);}}
+.step{background:var(--glass);border:1px solid var(--border);border-radius:20px;padding:26px 22px;
+  transition:all 0.35s;position:relative;overflow:hidden;}
+.step:hover{transform:translateY(-5px);border-color:rgba(0,212,255,0.25);
+  box-shadow:0 16px 40px rgba(0,0,0,0.35);}
+.step-number{font-size:11px;font-weight:800;color:var(--text3);letter-spacing:1px;
+  text-transform:uppercase;margin-bottom:14px;}
+.step-icon{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;
+  justify-content:center;font-size:22px;margin-bottom:16px;}
+.step-icon-1{background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.2);}
+.step-icon-2{background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.2);}
+.step-icon-3{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);}
+.step-title{font-size:17px;font-weight:700;margin-bottom:8px;}
+.step-desc{font-size:13px;color:var(--text2);line-height:1.7;}
+
+/* ── WHAT YOU GET ── */
+.features{display:grid;gap:12px;grid-template-columns:1fr;}
+@media(min-width:540px){.features{grid-template-columns:1fr 1fr;}}
+@media(min-width:880px){.features{grid-template-columns:repeat(3,1fr);}}
+.feature{background:var(--glass);border:1px solid var(--border);border-radius:18px;padding:24px 20px;
+  transition:all 0.3s;}
+.feature:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.3);}
+.feature.wide{grid-column:span 2;}
+@media(max-width:539px){.feature.wide{grid-column:span 1;}}
+.feature-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;
+  justify-content:center;font-size:20px;margin-bottom:14px;}
+.feature-title{font-size:16px;font-weight:700;margin-bottom:7px;}
+.feature-desc{font-size:13px;color:var(--text2);line-height:1.65;}
+.feature-stat{font-size:clamp(32px,5vw,46px);font-weight:800;line-height:1;margin-top:12px;}
+
+/* ── TESTIMONIALS ── */
+.reviews{display:grid;gap:12px;grid-template-columns:1fr;}
+@media(min-width:540px){.reviews{grid-template-columns:1fr 1fr;}}
+@media(min-width:880px){.reviews{grid-template-columns:repeat(3,1fr);}}
+.review-card{background:var(--glass);border:1px solid var(--border);border-radius:18px;
+  padding:20px;display:flex;flex-direction:column;gap:12px;transition:all 0.3s;}
+.review-card:hover{transform:translateY(-3px);border-color:var(--border2);}
+.review-stars{color:var(--amber);font-size:14px;letter-spacing:2px;}
+.review-text{font-size:14px;color:var(--text2);line-height:1.75;flex:1;}
+.review-author{display:flex;align-items:center;gap:10px;margin-top:auto;}
+.review-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:13px;font-weight:800;color:#05080f;flex-shrink:0;}
+.review-name{font-size:13px;font-weight:700;color:var(--text1);}
+.review-college{font-size:11px;color:var(--text3);margin-top:2px;}
+.review-cta{background:linear-gradient(135deg,rgba(245,158,11,0.07),rgba(0,212,255,0.05));
+  border-color:rgba(245,158,11,0.2)!important;text-align:center;align-items:center;}
+.review-cta .big-num{font-size:46px;font-weight:800;line-height:1;
+  background:linear-gradient(135deg,var(--neon),var(--purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.review-cta .big-label{font-size:15px;font-weight:700;margin-top:4px;}
+.review-cta .big-sub{font-size:13px;color:var(--text2);margin-top:4px;}
+
+/* Review submit */
+.review-submit{background:linear-gradient(135deg,rgba(245,158,11,0.07),rgba(0,212,255,0.04));
+  border:1px solid rgba(245,158,11,0.2);border-radius:18px;padding:22px;
+  display:flex;flex-direction:column;gap:14px;margin-top:12px;}
+@media(min-width:560px){.review-submit{flex-direction:row;align-items:center;}}
+.review-submit-left{display:flex;gap:14px;align-items:flex-start;flex:1;}
+.review-submit-icon{font-size:28px;flex-shrink:0;}
+.review-submit-title{font-size:15px;font-weight:700;margin-bottom:3px;}
+.review-submit-sub{font-size:13px;color:var(--text2);line-height:1.6;}
+.btn-review{padding:12px 20px;background:linear-gradient(135deg,var(--amber),#D97706);
+  border:none;border-radius:11px;color:#05080f;font-family:var(--font);font-size:14px;font-weight:700;
+  cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;
+  box-shadow:0 4px 14px rgba(245,158,11,0.28);transition:all 0.2s;}
+.btn-review:hover{transform:translateY(-2px);}
+
+/* ── ALERT SECTION ── */
+.alert-card{background:linear-gradient(135deg,rgba(0,212,255,0.05),rgba(124,58,237,0.05));
+  border:1px solid rgba(0,212,255,0.15);border-radius:22px;padding:32px 24px;
+  display:flex;flex-direction:column;gap:28px;}
+@media(min-width:700px){.alert-card{flex-direction:row;align-items:flex-start;}}
+.alert-left{flex:1;}
+.alert-title{font-size:clamp(19px,3vw,26px);font-weight:800;margin-bottom:10px;}
+.alert-sub{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:16px;}
+.alert-trust{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--text3);}
+.alert-trust i{color:var(--green);margin-right:4px;}
+.alert-form{flex:0 0 min(320px,100%);display:flex;flex-direction:column;gap:10px;}
+.alert-input{width:100%;padding:12px 16px;background:rgba(255,255,255,0.05);
+  border:1px solid var(--border2);border-radius:11px;color:var(--text1);
+  font-family:var(--font);font-size:14px;transition:all 0.2s;}
+.alert-input::placeholder{color:var(--text3);}
+.alert-input:focus{outline:none;border-color:var(--neon);box-shadow:0 0 0 3px rgba(0,212,255,0.1);}
+.btn-alert{width:100%;padding:13px;background:linear-gradient(135deg,var(--neon),#0099cc);
+  border:none;border-radius:11px;color:#05080f;font-family:var(--font);font-size:15px;font-weight:700;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
+  box-shadow:0 4px 20px rgba(0,212,255,0.25);transition:all 0.2s;}
+.btn-alert:hover:not(:disabled){transform:translateY(-2px);}
+.btn-alert:disabled{opacity:0.6;cursor:not-allowed;}
+.alert-msg{font-size:13px;text-align:center;min-height:16px;}
+
+/* ── CTA ── */
+.cta-section{position:relative;z-index:1;text-align:center;padding:72px 20px;}
+.cta-inner{max-width:640px;margin:0 auto;}
+.cta-title{font-size:clamp(26px,6vw,48px);font-weight:800;line-height:1.1;
+  letter-spacing:-0.02em;margin-bottom:12px;}
+.cta-sub{font-size:16px;color:var(--text2);margin-bottom:28px;}
+.cta-btns{display:flex;flex-direction:column;gap:10px;align-items:center;}
+@media(min-width:400px){.cta-btns{flex-direction:row;justify-content:center;}}
+.cta-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;
+  font-size:12px;color:var(--text3);margin-top:18px;}
+.cta-trust i{color:var(--green);margin-right:4px;}
+
+/* ── FOOTER ── */
+footer{position:relative;z-index:1;border-top:1px solid var(--border);}
+.footer-wrap{max-width:1060px;margin:0 auto;padding:24px 20px 18px;
+  display:flex;flex-direction:column;gap:16px;}
+@media(min-width:560px){.footer-wrap{flex-direction:row;justify-content:space-between;align-items:center;}}
+.footer-brand a{display:flex;align-items:center;gap:8px;text-decoration:none;}
+.footer-tagline{font-size:12px;color:var(--text3);margin-top:4px;}
+.footer-links{display:flex;flex-wrap:wrap;gap:14px;}
+.footer-links a{font-size:13px;color:var(--text2);text-decoration:none;transition:color 0.2s;}
+.footer-links a:hover{color:var(--neon);}
+.footer-bottom{border-top:1px solid var(--border);padding:12px 20px;text-align:center;}
+.footer-bottom p{font-size:12px;color:var(--text3);}
+
+/* ── ANIMATIONS ── */
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scrollLine{0%,100%{opacity:0.3;transform:scaleY(0.8)}50%{opacity:1;transform:scaleY(1)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ── Scroll performance ── */
+.results-grid, .tab-content {
+  will-change: auto;
+  contain: layout style;
+}
+.job-card {
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+  border-bottom:1px solid var(--border);background:rgba(0,212,255,0.015);}
+.marquee-track{display:flex;width:max-content;animation:marquee 28s linear infinite;}
+.marquee-track:hover{animation-play-state:paused;}
+.marquee-item{padding:0 24px;font-size:13px;font-weight:700;color:var(--text3);
+  white-space:nowrap;display:flex;align-items:center;gap:10px;}
+.marquee-dot{width:4px;height:4px;border-radius:50%;background:var(--neon);opacity:0.5;}
+
+/* Toast */
+.toast-container{position:fixed;top:16px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:8px;}
+</style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- NAVBAR -->
+<nav class="nav" id="navbar">
+  <a href="/" class="nav-logo">
+    <img src="logo.png" alt="Carrerlift" onerror="this.style.display='none'"/>
+    <span class="nav-logo-text">Carrerlift</span>
+  </a>
+  <div class="nav-links">
+    <a href="#how" class="nav-link">How it Works</a>
+    <a href="#features" class="nav-link">Features</a>
+    <a href="#alerts" class="nav-link">Job Alerts</a>
+    <a href="#reviews" class="nav-link">Reviews</a>
+  </div>
+  <!-- Guest -->
+  <div class="nav-right" id="navGuest">
+    <button class="btn-signin" onclick="openAuth('signin')">Sign In</button>
+    <button class="btn-start" onclick="openAuth('signup')"><i class="fas fa-rocket"></i> Get Started Free</button>
+    <button class="hamburger" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+  </div>
+  <!-- Logged in -->
+  <div class="nav-right" id="navLoggedIn" style="display:none;">
+    <a href="app.html" class="btn-start"><i class="fas fa-search"></i> Browse Jobs</a>
+    <div style="position:relative;">
+      <button id="userAvatarBtn" onclick="toggleUserMenu()" style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#00D4FF,#7C3AED);color:#05080f;font-weight:800;font-size:13px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;">P</button>
+      <div id="userDropdown" style="display:none;position:absolute;top:calc(100%+8px);right:0;background:#0a0f1e;border:1px solid rgba(255,255,255,0.12);border-radius:13px;min-width:195px;box-shadow:0 20px 50px rgba(0,0,0,0.6);overflow:hidden;z-index:3000;margin-top:6px;">
+        <div style="padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.07);">
+          <div style="font-size:10px;color:#475569;text-transform:uppercase;">Signed in as</div>
+          <div id="userEmailDisplay" style="font-size:12px;font-weight:600;color:#F0F4FF;margin-top:2px;word-break:break-all;">user@email.com</div>
+        </div>
+        <a href="app.html" style="display:flex;align-items:center;gap:10px;padding:11px 14px;color:#8B9CC8;font-size:13px;text-decoration:none;"><i class="fas fa-search" style="font-size:12px;width:14px;"></i> Browse Jobs</a>
+        <button onclick="signOut()" style="display:flex;align-items:center;gap:10px;padding:11px 14px;color:#8B9CC8;font-size:13px;background:none;border:none;width:100%;cursor:pointer;font-family:inherit;text-align:left;"><i class="fas fa-sign-out-alt" style="font-size:12px;width:14px;"></i> Sign Out</button>
+      </div>
+    </div>
+  </div>
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#how" class="mobile-link" onclick="closeMobileMenu()">How it Works</a>
+    <a href="#features" class="mobile-link" onclick="closeMobileMenu()">Features</a>
+    <a href="#alerts" class="mobile-link" onclick="closeMobileMenu()">Job Alerts</a>
+    <a href="#reviews" class="mobile-link" onclick="closeMobileMenu()">Reviews</a>
+    <div class="mobile-btns">
+      <button class="btn-signin" style="display:flex;flex:1;" onclick="openAuth('signin');closeMobileMenu()">Sign In</button>
+      <button class="btn-start" style="flex:1;" onclick="openAuth('signup');closeMobileMenu()">Get Started Free</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+
+    <div class="hero-eyebrow">
+      <div class="eyebrow-dot"></div>
+      Free for students · India & Global
+    </div>
+
+    <h1 class="hero-title">
+      Stop searching jobs manually.<br>
+      <span>Let AI do it for you.</span>
+    </h1>
+
+    <p class="hero-sub">
+      Upload your resume — Carrerlift reads it and <strong>instantly shows you jobs, internships, and IIT research</strong> that actually match your skills. No endless scrolling.
+    </p>
+
+    <div class="hero-btns">
+      <button class="btn-hero-main" onclick="openAuth('signup')">
+        <i class="fas fa-rocket"></i> Try it Free — Takes 30 seconds
+      </button>
+      <button class="btn-hero-sec" onclick="startTryNow(event)">
+        <i class="fas fa-eye"></i> See how it works
+      </button>
+    </div>
+
+    <div class="hero-note">
+      <i class="fas fa-clock"></i> 10-min free preview &nbsp;·&nbsp;
+      <i class="fas fa-credit-card" style="color:var(--text3);"></i> No credit card &nbsp;·&nbsp;
+      <i class="fas fa-ban" style="color:var(--text3);"></i> No spam
+    </div>
+
+    <div class="hero-proof">
+      <div class="proof-avatars">
+        <div class="proof-av" style="background:linear-gradient(135deg,#00D4FF,#0099cc);">A</div>
+        <div class="proof-av" style="background:linear-gradient(135deg,#7C3AED,#a855f7);">R</div>
+        <div class="proof-av" style="background:linear-gradient(135deg,#10B981,#059669);">S</div>
+        <div class="proof-av" style="background:linear-gradient(135deg,#F59E0B,#D97706);">P</div>
+        <div class="proof-av" style="background:linear-gradient(135deg,#EF4444,#DC2626);">K</div>
+      </div>
+      <span class="proof-text"><strong>1,000+</strong> students joined this month</span>
+      <div class="proof-stars">★★★★★</div>
+      <span style="font-size:12px;color:var(--text2);font-weight:600;">4.9/5</span>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-pill"><b>843+</b> India Jobs</div>
+      <div class="stat-pill"><b>1,180+</b> Global AI/ML Jobs</div>
+      <div class="stat-pill"><b>1,583</b> IIT Professors</div>
+      <div class="stat-pill"><b>1,837</b> HR Contacts</div>
+    </div>
+
+  </div>
+  <div class="scroll-hint" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- MARQUEE — trusted by -->
+<div class="marquee-wrap" style="position:relative;z-index:1;">
+  <div class="marquee-track" id="marqueeTrack"></div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="section-wrap">
+    <div class="section-label"><i class="fas fa-map-signs"></i> How it Works</div>
+    <h2 class="section-title reveal">3 steps, that's it.</h2>
+    <p class="section-sub reveal">No complex setup. No learning curve. Works on mobile too.</p>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-number">Step 01</div>
+        <div class="step-icon step-icon-1">📄</div>
+        <h3 class="step-title">Upload your resume</h3>
+        <p class="step-desc">Drop your PDF or DOCX file. Or just paste your resume text. Takes 10 seconds.</p>
+      </div>
+      <div class="step reveal" style="transition-delay:0.1s;">
+        <div class="step-number">Step 02</div>
+        <div class="step-icon step-icon-2">🤖</div>
+        <h3 class="step-title">AI finds your matches</h3>
+        <p class="step-desc">Our AI reads your resume and ranks the best jobs, internships, and research for you — by how well they match your profile.</p>
+      </div>
+      <div class="step reveal" style="transition-delay:0.2s;">
+        <div class="step-number">Step 03</div>
+        <div class="step-icon step-icon-3">✉️</div>
+        <h3 class="step-title">Apply with one click</h3>
+        <p class="step-desc">Apply directly, or generate a personalised cold email to HR or professors — written by AI in your voice.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section" id="features" style="padding-top:0;">
+  <div class="section-wrap">
+    <div class="section-label"><i class="fas fa-star"></i> What you get</div>
+    <h2 class="section-title reveal">Everything in one place</h2>
+    <div class="features reveal">
+
+      <div class="feature wide" style="border-color:rgba(0,212,255,0.18);">
+        <div class="feature-icon" style="background:rgba(0,212,255,0.1);color:var(--neon);">✨</div>
+        <h3 class="feature-title">AI Resume Matcher</h3>
+        <p class="feature-desc">Upload once — get matched with jobs, HR contacts, and IIT professors all at once. No manual searching needed.</p>
+        <div class="feature-stat" style="background:linear-gradient(135deg,var(--neon),#0099cc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">50x faster</div>
+        <p style="font-size:12px;color:var(--text3);margin-top:4px;">than searching manually</p>
+      </div>
+
+      <div class="feature" style="border-color:rgba(124,58,237,0.18);">
+        <div class="feature-icon" style="background:rgba(124,58,237,0.1);color:var(--purple);">🔬</div>
+        <h3 class="feature-title">IIT Research</h3>
+        <p class="feature-desc">Get matched with IIT professors whose research fits your interests. Send them a personalised email — that actually gets replies.</p>
+        <div class="feature-stat" style="background:linear-gradient(135deg,var(--purple),#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">1,583</div>
+        <p style="font-size:12px;color:var(--text3);margin-top:4px;">professors across all IITs</p>
+      </div>
+
+      <div class="feature" style="border-color:rgba(16,185,129,0.18);">
+        <div class="feature-icon" style="background:rgba(16,185,129,0.1);color:var(--green);">🌍</div>
+        <h3 class="feature-title">Global AI/ML Jobs</h3>
+        <p class="feature-desc">Google, NVIDIA, Microsoft and 1,000+ more companies. USA and International — updated daily.</p>
+        <div class="feature-stat" style="background:linear-gradient(135deg,var(--green),#059669);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">1,180+</div>
+        <p style="font-size:12px;color:var(--text3);margin-top:4px;">live global roles</p>
+      </div>
+
+      <div class="feature" style="border-color:rgba(245,158,11,0.18);">
+        <div class="feature-icon" style="background:rgba(245,158,11,0.1);color:var(--amber);">⚡</div>
+        <h3 class="feature-title">AI Email Generator</h3>
+        <p class="feature-desc">One click and get a professional cold email — for HR, professors, or any job. Open directly in Gmail.</p>
+      </div>
+
+      <div class="feature" style="border-color:rgba(0,212,255,0.18);">
+        <div class="feature-icon" style="background:rgba(0,212,255,0.1);color:var(--neon);">👥</div>
+        <h3 class="feature-title">Direct HR Contacts</h3>
+        <p class="feature-desc">1,837 recruiters at top companies. Skip job portals and email them directly.</p>
+      </div>
+
+      <div class="feature" style="border-color:rgba(124,58,237,0.18);">
+        <div class="feature-icon" style="background:rgba(124,58,237,0.1);color:var(--purple);">📊</div>
+        <h3 class="feature-title">Skill Gap Analyzer</h3>
+        <p class="feature-desc">See exactly what skills you're missing for a job — with a learning roadmap to close the gap fast.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section" id="reviews" style="padding-top:0;">
+  <div class="section-wrap">
+    <div class="section-label"><i class="fas fa-star"></i> Reviews</div>
+    <h2 class="section-title reveal">What students say</h2>
+    <p class="section-sub reveal">Real feedback. No fake reviews.</p>
+    <div class="reviews">
+      <div class="review-card reveal">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I uploaded my resume and within seconds got a list of matched jobs. The AI email generator is a game changer — I got 2 replies the same day!"</p>
+        <div class="review-author">
+          <div class="review-av" style="background:linear-gradient(135deg,#00D4FF,#0099cc);">A</div>
+          <div><div class="review-name">Aryan S.</div><div class="review-college">3rd Year CSE · IIT Delhi</div></div>
+        </div>
+      </div>
+      <div class="review-card reveal" style="transition-delay:0.1s;">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The IIT professor matching actually works. I emailed 5 professors, 2 replied in 3 days. Never happened before with cold emails."</p>
+        <div class="review-author">
+          <div class="review-av" style="background:linear-gradient(135deg,#7C3AED,#a855f7);">R</div>
+          <div><div class="review-name">Riya P.</div><div class="review-college">Final Year ECE · NIT Trichy</div></div>
+        </div>
+      </div>
+      <div class="review-card review-cta reveal" style="transition-delay:0.2s;justify-content:center;">
+        <div class="big-num">1,000+</div>
+        <div class="big-label">active users this month</div>
+        <div class="big-sub">Growing every day</div>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPtLnKIYZxBAQaPMFRis0-8TLCRE4FWCO_PWtC0g-VMosahA/viewform" target="_blank" class="btn-hero-main" style="margin-top:16px;font-size:13px;padding:11px 18px;">
+          <i class="fas fa-star"></i> Add Your Review
+        </a>
+      </div>
+    </div>
+    <div class="review-submit reveal">
+      <div class="review-submit-left">
+        <div class="review-submit-icon">⭐</div>
+        <div>
+          <div class="review-submit-title">Used Carrerlift? Share your experience!</div>
+          <p class="review-submit-sub">Takes 2 minutes. Helps other students find us.</p>
+        </div>
+      </div>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPtLnKIYZxBAQaPMFRis0-8TLCRE4FWCO_PWtC0g-VMosahA/viewform" target="_blank" class="btn-review"><i class="fas fa-pen"></i> Leave a Review</a>
+    </div>
+  </div>
+</section>
+
+<!-- JOB ALERTS -->
+<section class="section" id="alerts" style="padding-top:0;">
+  <div class="section-wrap">
+    <div class="alert-card reveal">
+      <div class="alert-left">
+        <div class="section-label" style="margin-bottom:12px;"><i class="fas fa-bell"></i> Job Alerts — Free</div>
+        <div class="alert-title">New jobs every day.<br>We'll email them to you.</div>
+        <p class="alert-sub">We add fresh jobs regularly. Subscribe and get a morning email with the latest ones that match your skills.</p>
+        <div class="alert-trust">
+          <span><i class="fas fa-check-circle"></i> Free forever</span>
+          <span><i class="fas fa-check-circle"></i> No spam</span>
+          <span><i class="fas fa-check-circle"></i> Unsubscribe anytime</span>
+        </div>
+      </div>
+      <div class="alert-form" id="alertForm">
+        <input type="text"  class="alert-input" id="alertName"   placeholder="Your name" />
+        <input type="email" class="alert-input" id="alertEmail"  placeholder="your@email.com" required />
+        <input type="text"  class="alert-input" id="alertSkills" placeholder="Your skills (e.g. Python, React, ML)" />
+        <button class="btn-alert" id="alertBtn" onclick="subscribeLanding()">
+          <i class="fas fa-bell"></i> Get Job Alerts
+        </button>
+        <p class="alert-msg" id="alertMsg"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="section-label" style="justify-content:center;margin-bottom:16px;"><i class="fas fa-bolt"></i> Always Free</div>
+    <h2 class="cta-title reveal">Ready to find your next opportunity?</h2>
+    <p class="cta-sub reveal">Join 1,000+ students who stopped wasting time on irrelevant job boards.</p>
+    <div class="cta-btns reveal">
+      <button class="btn-hero-main" onclick="openAuth('signup')"><i class="fas fa-rocket"></i> Get Started — It's Free</button>
+      <button class="btn-hero-sec" onclick="startTryNow(event)"><i class="fas fa-eye"></i> Preview First</button>
+    </div>
+    <div class="cta-trust reveal">
+      <span><i class="fas fa-check-circle"></i> Free forever</span>
+      <span><i class="fas fa-check-circle"></i> No credit card</span>
+      <span><i class="fas fa-check-circle"></i> No spam</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-wrap">
+    <div class="footer-brand">
+      <a href="/">
+        <img src="logo.png" style="height:22px;border-radius:5px;" onerror="this.style.display='none'">
+        <span class="nav-logo-text">Carrerlift</span>
+      </a>
+      <div class="footer-tagline">AI Career Platform for Students</div>
+    </div>
+    <div class="footer-links">
+      <a href="#how">How it Works</a>
+      <a href="#features">Features</a>
+      <a href="#reviews">Reviews</a>
+      <a href="app.html" onclick="startTryNow(event)">Try Free</a>
+      <a href="mailto:carrerlift@gmail.com">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 Carrerlift · Made with ❤️ for students</p></div>
+</footer>
+
+<!-- AUTH MODAL -->
+<div class="auth-modal" id="authModal" role="dialog" aria-modal="true">
+  <div class="auth-card">
+    <button class="auth-close-btn" onclick="closeAuth()"><i class="fas fa-times"></i></button>
+    <div class="auth-logo">
+      <img src="logo.png" alt="Carrerlift" onerror="this.style.display='none'" />
+      <span class="auth-logo-text">Carrerlift</span>
+    </div>
+    <h2 class="auth-title">Find jobs that match you 🎯</h2>
+    <p class="auth-sub">Sign in to upload your resume and get matched with jobs, internships & research — instantly. <strong>100% Free.</strong></p>
+    <button class="google-sign-btn" id="googleSignInBtn" onclick="handleGoogleSignIn()">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G" class="google-icon" />
+      Continue with Google
+    </button>
+    <div class="auth-divider">or explore first</div>
+    <button class="try-now-btn" onclick="startTryNow(); closeAuth();">
+      <i class="fas fa-eye"></i> Browse for 10 minutes — no signup needed
+    </button>
+    <p id="authError" class="auth-error"></p>
+    <p class="auth-footer-note">No spam · Free forever · 1,000+ students using this</p>
+  </div>
+</div>
+
+<script type="module" src="js/auth.js"></script>
+<script>
+/* ── 3D Background ── */
+(function(){
+  // Skip Three.js on mobile — saves 600KB + battery
+  if (window.innerWidth < 768 || !window.THREE) return;
+  const canvas = document.getElementById('bg-canvas');
+  const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setClearColor(0x000000,0);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 1000);
+  camera.position.z = 5;
+  function resize(){renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();}
+  resize(); window.addEventListener('resize',resize);
+  const count = innerWidth < 600 ? 700 : 1600;
+  const geo = new THREE.BufferGeometry();
+  const pos = new Float32Array(count*3), col = new Float32Array(count*3);
+  for(let i=0;i<count;i++){
+    pos[i*3]=(Math.random()-.5)*18; pos[i*3+1]=(Math.random()-.5)*18; pos[i*3+2]=(Math.random()-.5)*10;
+    const r=Math.random();
+    if(r<.5){col[i*3]=0;col[i*3+1]=0.83;col[i*3+2]=1;}
+    else if(r<.8){col[i*3]=.49;col[i*3+1]=.23;col[i*3+2]=.93;}
+    else{col[i*3]=.96;col[i*3+1]=.62;col[i*3+2]=.04;}
+  }
+  geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  geo.setAttribute('color',new THREE.BufferAttribute(col,3));
+  const mat = new THREE.PointsMaterial({size:0.035,vertexColors:true,transparent:true,opacity:0.55,sizeAttenuation:true});
+  const pts = new THREE.Points(geo,mat); scene.add(pts);
+  let mx=0,my=0;
+  window.addEventListener('mousemove',e=>{mx=(e.clientX/innerWidth-.5)*.25;my=(e.clientY/innerHeight-.5)*.18;});
+  let t=0;
+  (function animate(){requestAnimationFrame(animate);t+=0.002;pts.rotation.y=t*.08+mx;pts.rotation.x=t*.04+my;renderer.render(scene,camera);})();
+})();
+
+/* ── Marquee ── */
+const colleges=['IIT Delhi','IIT Bombay','IIT Madras','IIT Kanpur','NIT Trichy','BITS Pilani','DTU Delhi','NSUT','VIT Vellore','IIIT Hyderabad','Jadavpur University','Manipal Institute','IIT Roorkee','IIIT Bangalore','NIT Surathkal'];
+const track=document.getElementById('marqueeTrack');
+track.innerHTML=[...colleges,...colleges].map(c=>`<div class="marquee-item"><div class="marquee-dot"></div>${c}</div>`).join('');
+
+/* ── Scroll & Nav ── */
+window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',scrollY>20));
+window.toggleMobileMenu=()=>document.getElementById('mobileMenu').classList.toggle('open');
+window.closeMobileMenu=()=>document.getElementById('mobileMenu').classList.remove('open');
+window.toggleUserMenu=()=>{const d=document.getElementById('userDropdown');if(d)d.style.display=d.style.display==='block'?'none':'block';};
+document.addEventListener('click',e=>{
+  const btn=document.getElementById('userAvatarBtn'),dd=document.getElementById('userDropdown');
+  if(dd&&btn&&!btn.contains(e.target)&&!dd.contains(e.target))dd.style.display='none';
+});
+
+/* ── Reveal on scroll ── */
+const ro=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}}),{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+/* ── Job Alert Subscribe ── */
+window.subscribeLanding=async function(){
+  const name=document.getElementById('alertName').value.trim();
+  const email=document.getElementById('alertEmail').value.trim();
+  const skills=document.getElementById('alertSkills').value.trim();
+  const msgEl=document.getElementById('alertMsg');
+  const btn=document.getElementById('alertBtn');
+  if(!email||!email.includes('@')){msgEl.style.color='#EF4444';msgEl.textContent='Please enter a valid email.';return;}
+  btn.disabled=true;btn.innerHTML='<span class="auth-spinner"></span> Subscribing...';msgEl.textContent='';
+  try{
+    const res=await fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,skills})});
+    const data=await res.json();
+    if(data.success){
+      document.getElementById('alertForm').innerHTML=`<div style="text-align:center;padding:20px 0;"><div style="font-size:44px;margin-bottom:12px;">🎉</div><div style="font-size:17px;font-weight:800;color:#F0F4FF;margin-bottom:8px;">You're in!</div><p style="font-size:14px;color:#8B9CC8;">Check your inbox — confirmation coming shortly.</p></div>`;
+    }else{msgEl.style.color='#EF4444';msgEl.textContent=data.error||'Something went wrong.';btn.disabled=false;btn.innerHTML='<i class="fas fa-bell"></i> Get Job Alerts';}
+  }catch{msgEl.style.color='#EF4444';msgEl.textContent='Network error. Try again.';btn.disabled=false;btn.innerHTML='<i class="fas fa-bell"></i> Get Job Alerts';}
+};
+</script>
+</body>
+</html>

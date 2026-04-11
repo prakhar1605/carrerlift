@@ -1,0 +1,181 @@
+/* ============================================================
+   AUTH — modal, Google button, trial bar & expired popup
+   ============================================================ */
+
+/* ── AUTH MODAL OVERLAY ── */
+.auth-modal {
+  display: none; position: fixed; inset: 0; z-index: 2000;
+  align-items: center; justify-content: center;
+  padding: 20px;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(12px);
+}
+.auth-modal.active { display: flex; animation: fadeUp 0.25s ease; }
+
+.auth-card {
+  background: #0D1117;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  padding: 36px 32px 32px;
+  width: 100%; max-width: 400px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(0,212,255,0.06);
+  animation: modalSlideIn 0.3s cubic-bezier(0.4,0,0.2,1);
+  position: relative;
+}
+
+.auth-close-btn {
+  position: absolute; top: 16px; right: 16px;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50%; width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: #94A3B8; font-size: 14px; transition: all 0.2s;
+}
+.auth-close-btn:hover { background: rgba(255,255,255,0.12); color: #F1F5F9; }
+
+.auth-logo {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 24px;
+}
+.auth-logo img { height: 32px; border-radius: 8px; }
+.auth-logo-text {
+  font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 800;
+  background: linear-gradient(135deg, #00D4FF, #7C3AED);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+.auth-title {
+  font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 800;
+  color: #F1F5F9; margin-bottom: 6px;
+}
+.auth-sub { font-size: 14px; color: #64748B; margin-bottom: 28px; line-height: 1.5; }
+
+/* ── GOOGLE BUTTON ── */
+.google-sign-btn {
+  width: 100%; padding: 14px 20px;
+  background: #fff; color: #1a1a1a;
+  border: none; border-radius: 12px;
+  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.google-sign-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.4); }
+.google-sign-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.google-icon { width: 20px; height: 20px; }
+
+.auth-divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 22px 0; color: #334155; font-size: 13px;
+}
+.auth-divider::before, .auth-divider::after {
+  content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.07);
+}
+
+.try-now-btn {
+  width: 100%; padding: 13px 20px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.12); border-radius: 12px;
+  color: #94A3B8; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.try-now-btn:hover { border-color: rgba(0,212,255,0.4); color: #00D4FF; background: rgba(0,212,255,0.05); }
+
+.auth-error {
+  background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25);
+  border-radius: 8px; padding: 10px 14px;
+  font-size: 13px; color: #FCA5A5; margin-top: 14px;
+  display: none;
+}
+.auth-error:not(:empty) { display: block; }
+
+.auth-footer-note {
+  margin-top: 20px; text-align: center;
+  font-size: 12px; color: #475569; line-height: 1.5;
+}
+
+/* ── SPINNER inside button ── */
+.auth-spinner {
+  display: inline-block; width: 14px; height: 14px;
+  border: 2px solid rgba(26,26,26,0.3);
+  border-top-color: #1a1a1a;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+/* ── TRIAL BAR (sticky top of app.html) ── */
+.trial-bar {
+  display: none; position: sticky; top: 0; z-index: 300;
+  background: linear-gradient(90deg, rgba(245,158,11,0.15), rgba(245,158,11,0.08));
+  border-bottom: 1px solid rgba(245,158,11,0.3);
+  padding: 9px 20px;
+  align-items: center; justify-content: center; gap: 14px;
+  font-size: 13px; font-weight: 600; color: #FCD34D;
+  backdrop-filter: blur(10px);
+}
+.trial-bar i { font-size: 14px; }
+.trial-timer { font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 800; color: #F59E0B; }
+.trial-bar-cta {
+  padding: 6px 16px; background: #F59E0B; color: #080B14;
+  border: none; border-radius: 100px; font-size: 12px; font-weight: 800;
+  cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+}
+.trial-bar-cta:hover { background: #FBBF24; transform: scale(1.04); }
+
+/* ── TRIAL EXPIRED SOFT POPUP ── */
+.trial-expired-overlay {
+  display: none; position: fixed; inset: 0; z-index: 2500;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+  align-items: center; justify-content: center; padding: 20px;
+}
+.trial-expired-overlay.active { display: flex; animation: fadeUp 0.3s ease; }
+
+.trial-expired-card {
+  background: #0D1117;
+  border: 1px solid rgba(245,158,11,0.3);
+  border-radius: 20px; padding: 36px 32px;
+  max-width: 420px; width: 100%; text-align: center;
+  box-shadow: 0 0 60px rgba(245,158,11,0.12), 0 32px 80px rgba(0,0,0,0.7);
+  animation: modalSlideIn 0.3s ease;
+}
+.trial-expired-icon {
+  font-size: 48px; margin-bottom: 16px;
+}
+.trial-expired-title {
+  font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 800;
+  color: #F1F5F9; margin-bottom: 10px;
+}
+.trial-expired-sub {
+  font-size: 14px; color: #64748B; margin-bottom: 28px; line-height: 1.6;
+}
+.trial-expired-actions { display: flex; flex-direction: column; gap: 10px; }
+
+.btn-signup-now {
+  width: 100%; padding: 14px;
+  background: linear-gradient(135deg, #00D4FF, #7C3AED);
+  color: #080B14; border: none; border-radius: 12px;
+  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 800;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  box-shadow: 0 4px 20px rgba(0,212,255,0.25);
+}
+.btn-signup-now:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,212,255,0.4); }
+
+.btn-go-home {
+  width: 100%; padding: 12px;
+  background: transparent; border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px; color: #64748B;
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-go-home:hover { border-color: rgba(255,255,255,0.2); color: #94A3B8; }
+
+/* ── APP NAV AUTH SECTION ── */
+#appNavGuest, #appNavLoggedIn { display: none; align-items: center; gap: 10px; }
+.app-nav-signin-btn {
+  padding: 8px 18px; background: linear-gradient(135deg, #00D4FF, #0099cc);
+  color: #080B14; border: none; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s;
+}
+.app-nav-signin-btn:hover { transform: translateY(-1px); }
