@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #05080f;
+  --bg2: #0a0f1e;
+  --neon: #00D4FF;
+  --purple: #7C3AED;
+  --green: #10B981;
+  --amber: #F59E0B;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: #F0F4FF; overflow-x: hidden; }
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+::selection { background: rgba(0,212,255,0.2); color: #fff; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+@keyframes pulse  { 0%,100% { transform:scale(1); } 50% { transform:scale(1.05); } }
+@keyframes spin   { to { transform:rotate(360deg); } }
+@keyframes shimmer { 0% { background-position:0% center; } 100% { background-position:200% center; } }
+
+.animate-fade-up { animation: fadeUp 0.6s ease both; }
+.gradient-text {
+  background: linear-gradient(135deg,#00D4FF,#7C3AED);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
