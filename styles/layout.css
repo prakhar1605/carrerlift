@@ -349,17 +349,3 @@
   }
   .share-handle { display: none; }
 }
-
-/* ── Virtual Scroll render area — matches results-grid columns ── */
-.vs-render-area {
-  grid-template-columns: 1fr;
-}
-@media (min-width: 900px) {
-  .vs-render-area {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-/* Wrapper spans full width in parent grid */
-.results-grid > div[style*="position:relative"] {
-  grid-column: 1 / -1;
-}

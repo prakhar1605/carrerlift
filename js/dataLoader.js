@@ -127,34 +127,9 @@ export async function fetchHRContacts() {
   return result;
 }
 
-const CACHE_KEY = 'cl_sheet_cache';
-const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
-
-function getCache() {
-  try {
-    const raw = sessionStorage.getItem(CACHE_KEY);
-    if (!raw) return null;
-    const { data, ts } = JSON.parse(raw);
-    if (Date.now() - ts > CACHE_TTL) return null;
-    return data;
-  } catch { return null; }
-}
-
-function setCache(data) {
-  try {
-    sessionStorage.setItem(CACHE_KEY, JSON.stringify({ data, ts: Date.now() }));
-  } catch {}
-}
-
 export async function fetchAllData() {
-  // Return cached data if fresh
-  const cached = getCache();
-  if (cached) return cached;
-
   const [jobs, professors, hrContacts] = await Promise.all([
     fetchJobs(), fetchProfessors(), fetchHRContacts(),
   ]);
-  const result = { jobs, professors, hrContacts };
-  setCache(result);
-  return result;
+  return { jobs, professors, hrContacts };
 }

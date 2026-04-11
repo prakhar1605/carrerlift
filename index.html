@@ -272,16 +272,8 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);}
 .reveal{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease;}
 .reveal.visible{opacity:1;transform:translateY(0);}
 
-/* ── Scroll performance ── */
-.results-grid, .tab-content {
-  will-change: auto;
-  contain: layout style;
-}
-.job-card {
-  will-change: auto;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
+/* Marquee */
+.marquee-wrap{overflow:hidden;padding:20px 0;border-top:1px solid var(--border);
   border-bottom:1px solid var(--border);background:rgba(0,212,255,0.015);}
 .marquee-track{display:flex;width:max-content;animation:marquee 28s linear infinite;}
 .marquee-track:hover{animation-play-state:paused;}
@@ -628,8 +620,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);}
 <script>
 /* ── 3D Background ── */
 (function(){
-  // Skip Three.js on mobile — saves 600KB + battery
-  if (window.innerWidth < 768 || !window.THREE) return;
   const canvas = document.getElementById('bg-canvas');
   const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
   renderer.setPixelRatio(Math.min(devicePixelRatio,2));
