@@ -24,6 +24,7 @@ import {
 import { subscribeToAlerts }                          from './alerts.js';
 import { fetchGlobalJobs, renderGlobalJobs, filterGlobalJobs } from './globalJobs.js';
 import { postedTimestamp } from './dataLoader.js';
+import { VirtualScroll } from './virtualScroll.js';
 import {
   showStatus, typewriterEffect,
   animateThinkingSteps, markThinkingComplete,
@@ -42,6 +43,7 @@ let matchedJobs   = {};
 let matchedProfs  = {};
 let currentTab    = 'jobs';
 let selectedFile  = null;
+let jobsVS        = null; // VirtualScroll instance for jobs grid
 
 /* ─────────────────────────────────────────────
    DOM REFERENCES
@@ -192,24 +194,34 @@ function applyTimeFilter(jobs) {
 ───────────────────────────────────────────── */
 function renderMixedJobs(jobs, gridEl, titleEl) {
   if (!jobs || jobs.length === 0) {
+    if (jobsVS) { jobsVS.destroy(); jobsVS = null; }
     gridEl.innerHTML = `<div class="empty-state"><div class="empty-icon"><i class="fas fa-briefcase"></i></div><h3 class="empty-title">No jobs found</h3><p class="empty-text">Try adjusting your filters</p></div>`;
     if (titleEl) titleEl.textContent = 'No Jobs Found';
     return;
   }
-  gridEl.innerHTML = jobs.map((job, i) =>
+
+  // Build all HTML strings first (fast — no DOM writes yet)
+  const htmlStrings = jobs.map((job, i) =>
     job._type === 'india' ? buildMixedIndiaCard(job, i) : buildMixedGlobalCard(job)
-  ).join('');
+  );
+
+  // Init virtual scroll once, reuse after
+  if (!jobsVS) {
+    gridEl.innerHTML = ''; // clear loading state
+    jobsVS = new VirtualScroll(gridEl, { itemHeight: 220, buffer: 4 });
+  }
+  jobsVS.setItems(htmlStrings);
+
+  // Update title
   const ic = jobs.filter(j=>j._type==='india').length;
   const gc = jobs.filter(j=>j._type==='global').length;
   const timeLabel = jobTimeFilter === 'today' ? 'Today'
                   : jobTimeFilter === 'week'  ? 'This Week'
-                  : jobTimeFilter === 'month' ? 'This Month'
-                  : '';
-  const label = `${jobs.length} Latest Jobs${timeLabel ? ' — ' + timeLabel : ''}
+                  : jobTimeFilter === 'month' ? 'This Month' : '';
+  if (titleEl) titleEl.innerHTML = `${jobs.length} Latest Jobs${timeLabel ? ' — ' + timeLabel : ''}
     <span style="font-size:12px;font-weight:500;color:var(--text3);margin-left:6px;">
       🇮🇳 ${ic} India · 🌍 ${gc} Global
     </span>`;
-  if (titleEl) titleEl.innerHTML = label;
 }
 
 function buildMixedIndiaCard(job, i) {
@@ -313,6 +325,10 @@ el.tabButtons.forEach(btn => {
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
     document.getElementById(btn.dataset.tab).classList.add('active');
     currentTab = btn.dataset.tab;
+    // Destroy VS when leaving jobs tab — re-init on return
+    if (btn.dataset.tab !== 'jobs' && jobsVS) {
+      jobsVS.destroy(); jobsVS = null;
+    }
   });
 });
 

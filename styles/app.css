@@ -661,3 +661,21 @@
 /* List item spacing */
 .jd-list { margin-bottom: 12px; }
 .jd-list li { margin-bottom: 6px; }
+
+/* ══ PERFORMANCE OPTIMIZATIONS ══ */
+/* GPU layer hints for smooth scroll */
+.results-grid { contain: layout style; }
+.job-card     { transform: translateZ(0); backface-visibility: hidden; }
+.tab-content  { contain: layout style; }
+
+/* Smooth scrolling on mobile */
+.container, body {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Reduce paint on scroll */
+.header, .tab-navigation {
+  will-change: transform;
+  transform: translateZ(0);
+}
