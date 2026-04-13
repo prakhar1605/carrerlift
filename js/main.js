@@ -244,8 +244,11 @@ function buildMixedIndiaCard(job, i) {
       ${raw.Description?`<div class="job-description">${raw.Description.slice(0,130)}${raw.Description.length>130?'...':''}</div>`:''}
       <div class="job-actions">
         ${raw.ApplyLink?`<a href="${raw.ApplyLink}" target="_blank" class="btn-apply"><i class="fas fa-paper-plane"></i> Apply</a>`:''}
-        ${raw.Email?`<a href="mailto:${raw.Email}" class="btn-save"><i class="fas fa-envelope"></i> Email</a>`:''}
-        <button class="btn-generate-email" onclick="window.openJobEmailModal(${jobData})"><i class="fas fa-magic"></i> AI Email</button>
+        ${raw.Email
+          ? `<a href="mailto:${raw.Email}" class="btn-save"><i class="fas fa-envelope"></i> Email HR</a>
+             <button class="btn-generate-email" onclick="window.openJobEmailModal(${jobData})"><i class="fas fa-magic"></i> AI Email</button>`
+          : `<button class="btn-generate-email" onclick="window.openJobEmailModal(${jobData})"><i class="fas fa-magic"></i> Write Email</button>`
+        }
         <button class="btn-save-job ${isSaved?'btn-saved':''}" data-save-slug="${slug}" onclick="window._toggleSaveJob('${slug}')">
           <i class="${isSaved?'fas':'far'} fa-bookmark"></i> ${isSaved?'Saved':'Save'}
         </button>
@@ -565,6 +568,17 @@ export function openJobDetailModal(jobData) {
     applyBtn.style.display = 'flex';
   } else {
     applyBtn.style.display = 'none';
+  }
+
+  // Email HR button — show only if email exists
+  const emailHRBtn = document.getElementById('jdEmailHRBtn');
+  if (emailHRBtn) {
+    if (jobData.email) {
+      emailHRBtn.href = `mailto:${jobData.email}`;
+      emailHRBtn.style.display = 'flex';
+    } else {
+      emailHRBtn.style.display = 'none';
+    }
   }
 
   // Save button state
