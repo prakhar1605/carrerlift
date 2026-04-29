@@ -119,9 +119,9 @@ function buildJobCardHTML(job, matchScores, displayIndex) {
           ? `<a href="${job.ApplyLink}" target="_blank" class="btn-apply"><i class="fas fa-paper-plane"></i> Apply Now</a>`
           : ''}
         ${job.Email
-          ? `<a href="mailto:${job.Email}" class="btn-save"><i class="fas fa-envelope"></i> Email</a>`
+          ? `<a href="mailto:${job.Email}" class="btn-save"><i class="fas fa-envelope"></i> Email</a>
+             <button class="btn-generate-email" onclick="window.openJobEmailModal(${jobDataAttr})"><i class="fas fa-magic"></i> AI Email</button>`
           : ''}
-        <button class="btn-generate-email" onclick="window.openJobEmailModal(${jobDataAttr})"><i class="fas fa-magic"></i> AI Email</button>
         <button class="btn-save-job ${isSaved ? 'btn-saved' : ''}" data-save-slug="${slug}"
           onclick="window._toggleSaveJob('${slug}')">
           <i class="${isSaved ? 'fas' : 'far'} fa-bookmark"></i> ${isSaved ? 'Saved' : 'Save'}

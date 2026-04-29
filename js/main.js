@@ -247,7 +247,7 @@ function buildMixedIndiaCard(job, i) {
         ${raw.Email
           ? `<a href="mailto:${raw.Email}" class="btn-save"><i class="fas fa-envelope"></i> Email HR</a>
              <button class="btn-generate-email" onclick="window.openJobEmailModal(${jobData})"><i class="fas fa-magic"></i> AI Email</button>`
-          : `<button class="btn-generate-email" onclick="window.openJobEmailModal(${jobData})"><i class="fas fa-magic"></i> Write Email</button>`
+          : ''
         }
         <button class="btn-save-job ${isSaved?'btn-saved':''}" data-save-slug="${slug}" onclick="window._toggleSaveJob('${slug}')">
           <i class="${isSaved?'fas':'far'} fa-bookmark"></i> ${isSaved?'Saved':'Save'}
@@ -579,6 +579,12 @@ export function openJobDetailModal(jobData) {
     } else {
       emailHRBtn.style.display = 'none';
     }
+  }
+
+  // AI Email button — show only if email exists (no point generating an email when there's no recipient)
+  const aiEmailBtn = document.getElementById('jdAiEmailBtn');
+  if (aiEmailBtn) {
+    aiEmailBtn.style.display = jobData.email ? 'flex' : 'none';
   }
 
   // Save button state
