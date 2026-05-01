@@ -56,7 +56,7 @@ export default async function handler(req, res) {
   
       console.log('API key found, calling OpenRouter...');
   
-      // Call OpenRouter API — using claude-haiku for fastest response
+      // Call OpenRouter API — using claude-3-haiku for fast, cheap, reliable extraction
       const openRouterResponse = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -66,7 +66,7 @@ export default async function handler(req, res) {
           'X-Title': 'CarrerLift Resume Analyzer'
         },
         body: JSON.stringify({
-          model: 'anthropic/claude-haiku-4-5',
+          model: 'anthropic/claude-3-haiku',
           messages: [
             {
               role: 'user',
@@ -91,11 +91,18 @@ ${resume.slice(0, 2000)}`
       if (!openRouterResponse.ok) {
         const errorText = await openRouterResponse.text();
         console.error('OpenRouter API error:', openRouterResponse.status, errorText);
-        
-        return res.status(openRouterResponse.status).json({
+
+        // User-friendly messages — don't leak internal details to frontend
+        let userMessage = 'AI service is temporarily unavailable. Please try again in a moment.';
+        if (openRouterResponse.status === 429) {
+          userMessage = 'Too many requests right now. Please wait a moment and try again.';
+        } else if (openRouterResponse.status === 402 || openRouterResponse.status === 401) {
+          userMessage = 'AI service is temporarily unavailable. Our team has been notified.';
+        }
+
+        return res.status(503).json({
           error: 'AI service error',
-          message: `OpenRouter returned status ${openRouterResponse.status}. Please check your API key and credits.`,
-          details: errorText.substring(0, 200)
+          message: userMessage
         });
       }
   
